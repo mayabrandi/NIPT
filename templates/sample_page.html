@@ -76,13 +76,19 @@
                                         {% for c in chrom_abnorm %}
                                         <tr>
                                             <td><strong>{{ c }}</strong></td>
-                                            <td {% if db_entries[c] == "False Positive" %} class="success"{% endif %}
-                                                    {% if db_entries[c] == "Verified" %} class="danger"{% endif %}
-                                                    {% if db_entries[c] == "Probable" %} class="warning"{% endif %}><select  name="{{c}}" >
+                                            <td{% if db_entries[c] == "Suspected" %} class="warning"{% endif %}
+                                                {% if db_entries[c] == "False Positive" %} class="success"{% endif %}
+                                                {% if db_entries[c] == "Verified" %} class="danger"{% endif %}
+                                                {% if db_entries[c] == "Probable" %} class="warning"{% endif %}
+                                                {% if db_entries[c] == "False Negative" %} class="danger"{% endif %}
+                                                {% if db_entries[c] == "Other" %} class="warning"{% endif %}><select  name="{{c}}" >
+                                                <option {% if db_entries[c] == "Normal" %} selected {% endif %} value="Normal">Normal</option>
                                                 <option {% if db_entries[c] == "Suspected" %} selected {% endif %} value="Suspected">Suspected</option>
                                                 <option {% if db_entries[c] == "Probable" %} selected {% endif %} value="Probable">Probable</option>
                                                 <option {% if db_entries[c] == "Verified" %} selected {% endif %} value="Verified">Verified</option>
                                                 <option {% if db_entries[c] == "False Positive" %} selected {% endif %} value="False Positive">False Positive</option>
+                                                <option {% if db_entries[c] == "False Negative" %} selected {% endif %} value="False Negative">False Negative</option>          
+                                                <option {% if db_entries[c] == "Other" %} selected {% endif %} value="Other">Other</option>
                                                 </select>
                                             </div></td>
                                             <td> {{db_entries_change[c]}} </td>
