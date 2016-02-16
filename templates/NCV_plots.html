@@ -1,13 +1,13 @@
 <html>
 <head>
-	<title>NIPT</title>
+    <title>NIPT</title>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/1.0.8/css/sb-admin-2.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/1.0.8/css/sb-admin-2.css">
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
-	<script src="https://cdn.plot.ly/plotly-1.5.1.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdn.plot.ly/plotly-1.5.1.min.js"></script>
 
 </head>
 <body>
@@ -23,8 +23,8 @@
                 <a class="navbar-brand" href="http://127.0.0.1:5000/NIPT/">Project ID</a>
             </div>
             <!-- /.navbar-header -->
-	
- 			<div class="navbar-default sidebar" role="navigation">
+    
+             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
@@ -36,11 +36,11 @@
                     </ul>
                     <!-- /.dropdown-messages -->
                 </div>
-			</div>
-		</nav>
+            </div>
+        </nav>
 
 
-		<div id="page-wrapper">
+        <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">NCV Plots - Batch {{batch_id}}</h1>
@@ -50,13 +50,13 @@
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
-				{% for chrom in NCV_131821 %}
-					<div id="NCV131821{{chrom}}" style="min-width:800px; height:450px; "></div><br><br>
-				{% endfor %}
-               	<div id="NCVXY" style="min-width:800px; height:450px; "></div>
+                {% for chrom in NCV_131821 %}
+                    <div id="NCV131821{{chrom}}" style="min-width:800px; height:450px; "></div><br><br>
+                {% endfor %}
+                   <div id="NCVXY" style="min-width:800px; height:450px; "></div>
                 </div>
             </div>
-		</div>
+        </div>
 
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
@@ -67,50 +67,50 @@ $(function () {
 {% for chrom in ['13','18','21'] %}
 
 var layout = {
-	title: 'NCV_{{chrom}}',
-	font: {
-    	family: 'Courier New, monospace',
-    	color: '#636363'
-  	},
-	xaxis :{showline: true,
-			ticktext : {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
-        	tickvals : {{NCV_stat['NCV_'+chrom]['x_axis']}},
-		    linecolor: '#636363',
-    		linewidth: 5,
-			showgrid: true,
-    		gridcolor: '#bdbdbd'
-			},
-			
-	yaxis :{range: [-10, 20],
-			zeroline: false,
-			showline: true,
-			showgrid: false,
-			linecolor: '#636363',
-    		linewidth: 5,
-			title : 'NCV'
-			},
+    title: 'NCV_{{chrom}}',
+    font: {
+        family: 'Courier New, monospace',
+        color: '#636363'
+      },
+    xaxis :{showline: true,
+            ticktext : {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
+            tickvals : {{NCV_stat['NCV_'+chrom]['x_axis']}},
+            linecolor: '#636363',
+            linewidth: 5,
+            showgrid: true,
+            gridcolor: '#bdbdbd'
+            },
+            
+    yaxis :{range: [-10, 20],
+            zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'NCV'
+            },
 };
 
 var line = {x : [-1, {{NCV_stat['NCV_'+chrom]['x_axis'][-1]+2}}],
             y : [3, 3],
-			mode: 'lines',
-			line: {
-				dash: 'dot',
-				color : 'red',
-				width : 2},
-			name: 'NCV treshold'};
+            mode: 'lines',
+            line: {
+                dash: 'dot',
+                color : 'red',
+                width : 2},
+            name: 'NCV treshold'};
 
 var trace1 = {
-	name: 'Case',
-  	y: {{NCV_stat['NCV_'+chrom]['NCV_cases']}},
-  	x: {{NCV_stat['NCV_'+chrom]['x_axis']}},
-  	text: {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
-  	mode: 'markers',
-  	type: 'scatter',
-	marker: {
-			color: 'rgb(102, 102, 102)',
-			size: 10
-			}
+    name: 'Case',
+      y: {{NCV_stat['NCV_'+chrom]['NCV_cases']}},
+      x: {{NCV_stat['NCV_'+chrom]['x_axis']}},
+      text: {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
+      mode: 'markers',
+      type: 'scatter',
+    marker: {
+            color: 'rgb(102, 102, 102)',
+            size: 10
+            }
 };
 
 var box = {
@@ -119,11 +119,11 @@ var box = {
     jitter: 0.3,
     pointpos: 30,
     type: 'box',
-	marker: {
-    	color: 'rgba(127, 96, 0, 0.5)'},
-	name: 'validation samples',
-//	boxpoints: 'suspectedoutliers',
-	hoverinfo:'none',
+    marker: {
+        color: 'rgba(127, 96, 0, 0.5)'},
+    name: 'validation samples',
+//    boxpoints: 'suspectedoutliers',
+    hoverinfo:'none',
 }
 ;
 
@@ -143,15 +143,15 @@ var layout = {
         family: 'Courier New, monospace',
         color: '#636363'
     },
-	legend:{hovermode:'closest' },
-	hovermode:'closest',
+    legend:{hovermode:'closest' },
+    hovermode:'closest',
     xaxis :{showline: true,
             linecolor: '#636363',
             linewidth: 5,
             showgrid: true,
             gridcolor: '#bdbdbd',
-			title: 'NCV_X',
-			range: [-30,10]
+            title: 'NCV_X',
+            range: [-30,10]
             },
             
     yaxis :{range: [-50, 300],
@@ -177,7 +177,7 @@ var backstat = {
     y: {{NCV_stat['NCV_Y']['NCV_pass'][0]}},
     x: {{NCV_stat['NCV_X']['NCV_pass'][0]}},
     name: 'validation samples',
-	hoverinfo:'none',
+    hoverinfo:'none',
     mode: 'markers',
     type: 'scatter',
     marker: {color: 'rgba(127, 96, 0, 0.5)'},

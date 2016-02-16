@@ -3503,3 +3503,54 @@ INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 13:36:06] "GET /NIPT/0041/NCV_plots/ HT
 INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 13:36:10] "GET /NIPT/ HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 13:36:12] "GET /NIPT/0041/ HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 13:36:14] "GET /NIPT/0041/151223890/ HTTP/1.1" 200 -
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:05:51] "GET /NIPT/0041/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:05:54] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:06:03] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:06:04] "GET /NIPT/0041/151223889/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/nipt_db.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:07:41] "GET /NIPT/0041/151223889/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:07:44] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:07:46] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:08:38] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:08:41] "GET /NIPT/0041/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:08:44] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:11:34] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:11:37] "GET /NIPT/0041/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:11:41] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:11:44] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:11:46] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:12:42] "GET /NIPT/0041/NCV_plots/NCV_plots.html HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:12:46] "GET /NIPT/0041/NCV_plots/NCV_plots.html HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:12:49] "GET /NIPT/ HTTP/1.1" 200 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 194, in run_wsgi
+    execute(self.server.app)
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 185, in execute
+    write(data)
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 166, in write
+    self.wfile.write(data)
+IOError: [Errno 41] Protocol wrong type for socket
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:12:51] "GET /NIPT/ HTTP/1.1" 200 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 194, in run_wsgi
+    execute(self.server.app)
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 185, in execute
+    write(data)
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 166, in write
+    self.wfile.write(data)
+IOError: [Errno 41] Protocol wrong type for socket
+INFO:werkzeug:127.0.0.1 - - [16/Feb/2016 14:12:52] "GET /NIPT/ HTTP/1.1" 200 -
