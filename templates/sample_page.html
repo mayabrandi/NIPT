@@ -70,6 +70,7 @@
                                             <th>Chromosome abnormality</th>
                                             <th>Status</th>
                                             <th>Latest change</th>
+                                            <th>Comments</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -92,6 +93,11 @@
                                                 </select>
                                             </div></td>
                                             <td> {{db_entries_change[c]}} </td>
+                                            <td> 
+                                                <div class="form-group">
+                                                    <textarea class="form-control" rows="3" name = "comment_{{c}}">{{db_entries_comments[c]}}</textarea> 
+                                                </div>
+                                            </td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -137,7 +143,7 @@
 <script>
 
 var layout = {
-    title: 'Titel',
+    title: "Sample: {{sample.sample_ID}}",
     font: {
         family: 'Courier New, monospace',
         color: '#636363'
@@ -199,7 +205,7 @@ var i = 0
 
 {% for abn  in chrom_abn.keys() %} 
     var verif = {                                                                  
-            name: "Verified T{{abn}}",                                                               
+            name: "Verified",                                                               
             y: {{chrom_abn[abn]['Verified']['NCV']}},                                        
             x: {{chrom_abn[abn]['Verified']['x_axis']}},
             text: {{chrom_abn[abn]['Verified']['s_name']|tojson}},                                       
@@ -212,7 +218,7 @@ var i = 0
         }; 
 
     var prob = {                                                                  
-            name: 'Probable T{{abn}}',                                                               
+            name: 'Probable',                                                               
             y: {{chrom_abn[abn]['Probable']['NCV']}},                                        
             x: {{chrom_abn[abn]['Probable']['x_axis']}},
             text: {{chrom_abn[abn]['Probable']['s_name']|tojson}},                                                           
@@ -224,8 +230,38 @@ var i = 0
         type: 'scatter',                                                            
         };   
 
+    var false_neg = {                                                                  
+            name: 'False Negative',                                                               
+            y: {{chrom_abn[abn]['False Negative']['NCV']}},                                        
+            x: {{chrom_abn[abn]['False Negative']['x_axis']}},
+            text: {{chrom_abn[abn]['False Negative']['s_name']|tojson}},                                                           
+        mode: 'markers',  
+        marker: {symbol : "triangle-up",
+                size: 10,
+                 //color : "rgb(255, 0, 255)"
+                },                                                          
+        type: 'scatter',                                                            
+        }; 
+
+    var false_pos = {                                                                  
+            name: 'False Positive',                                                               
+            y: {{chrom_abn[abn]['False Positive']['NCV']}},                                        
+            x: {{chrom_abn[abn]['False Positive']['x_axis']}},
+            text: {{chrom_abn[abn]['False Positive']['s_name']|tojson}},                                                           
+        mode: 'markers',  
+        marker: {symbol : "triangle-up",
+                size: 10,
+                 //color : "rgb(255, 0, 255)"
+                },                                                          
+        type: 'scatter',                                                            
+        }; 
+
+
+
     data.push(prob);
     data.push(verif);
+    data.push(false_neg);
+    data.push(false_pos);
 {% endfor %}
 
 Plotly.newPlot('plot',data,  layout);

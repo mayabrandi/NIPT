@@ -83,7 +83,8 @@ class PlottPage():
                               'XXY':{},
                               'XYY':{}}
         self.X_labels = self.make_X_labels()
-
+        self.sample_state_dict = {'Probable':{},'False Positive':{},'Verified':{}, "False Negative": {}, "Other": {}, "Suspected": {}}
+    
     def make_approved_stats(self, chrom):
         NCV_pass = []
         for s in self.NCV_passed:
@@ -115,19 +116,14 @@ class PlottPage():
 
     def make_chrom_abn(self):
         x = 0.6
-        for abn in ['13','18','21']:                                       
-            self.tris_chrom_abn[abn]["Probable"] = {'NCV' : [], 's_name' : [], 'x_axis': []}             
-            self.tris_chrom_abn[abn]["Verified"] = {'NCV' : [], 's_name' : [], 'x_axis': []}
-            for s in Sample.query.filter(Sample.__dict__['status_T'+abn] == "Probable"):
-                NCV_val = NCV.query.filter_by(sample_ID = s.sample_ID).first().__dict__['NCV_' + abn]
-                self.tris_chrom_abn[abn]["Probable"]['NCV'].append(float(NCV_val))
-                self.tris_chrom_abn[abn]["Probable"]['s_name'].append(s.sample_ID)
-                self.tris_chrom_abn[abn]["Probable"]['x_axis'].append(x)
-            for s in Sample.query.filter(Sample.__dict__['status_T'+abn] == "Verified"):
-                NCV_val = NCV.query.filter_by(sample_ID = s.sample_ID).first().__dict__['NCV_' + abn]
-                self.tris_chrom_abn[abn]["Verified"]['NCV'].append(float(NCV_val))
-                self.tris_chrom_abn[abn]["Verified"]['s_name'].append(s.sample_ID)
-                self.tris_chrom_abn[abn]["Verified"]['x_axis'].append(x)
+        for abn in ['13','18','21']:
+            for status in self.sample_state_dict.keys():                                       
+                self.tris_chrom_abn[abn][status] = {'NCV' : [], 's_name' : [], 'x_axis': []}             
+                for s in Sample.query.filter(Sample.__dict__['status_T'+abn] == status):
+                    NCV_val = NCV.query.filter_by(sample_ID = s.sample_ID).first().__dict__['NCV_' + abn]
+                    self.tris_chrom_abn[abn][status]['NCV'].append(float(NCV_val))
+                    self.tris_chrom_abn[abn][status]['s_name'].append(s.sample_ID)
+                    self.tris_chrom_abn[abn][status]['x_axis'].append(x)
             x = x+1
 
 class SamplePage():
@@ -178,27 +174,63 @@ def update():
 def update_trisomi_status(batch_id, sample_id):
     dt = datetime.now()  
     sample = Sample.query.filter_by(sample_ID = sample_id).first()
+
+## Wont work.... 
+#    chr_abn = ['T13','T18', 'T21', 'X0', 'XXX','XXY','XYY']     
+#    for abn in chr_abn:
+        #sample.__dict__["comment_"+abn] = request.form["comment_"+abn]
+#        sample.__dict__["status_"+abn] = request.form[abn]
+#        sample.__dict__["status_change_"+abn] = dt.strftime('%Y/%m/%d %H:%M:%S')
+
     if sample.status_T13 != request.form['T13']:
         sample.status_T13 = request.form['T13']
         sample.status_change_T13 = dt.strftime('%Y/%m/%d %H:%M:%S')
+    if sample.comment_T13 != request.form["comment_T13"]:
+        sample.comment_T13 = request.form["comment_T13"]
+        sample.status_change_T13 = dt.strftime('%Y/%m/%d %H:%M:%S')
+
     if sample.status_T18 != request.form['T18']:
         sample.status_T18 = request.form['T18']
         sample.status_change_T18 = dt.strftime('%Y/%m/%d %H:%M:%S')
+    if sample.comment_T18 != request.form["comment_T18"]:
+        sample.comment_T18 = request.form["comment_T18"]
+        sample.status_change_T18 = dt.strftime('%Y/%m/%d %H:%M:%S')
+
     if sample.status_T21 != request.form['T21']:
         sample.status_T21 = request.form['T21']
         sample.status_change_T21 = dt.strftime('%Y/%m/%d %H:%M:%S')
+    if sample.comment_T21 != request.form["comment_T21"]:
+        sample.comment_T21 = request.form["comment_T21"]
+        sample.status_change_T21 = dt.strftime('%Y/%m/%d %H:%M:%S')
+
     if sample.status_X0 != request.form['X0']:
         sample.status_change_X0 = dt.strftime('%Y/%m/%d %H:%M:%S')
         sample.status_X0 = request.form['X0']
+    if sample.comment_X0 != request.form["comment_X0"]:
+        sample.comment_X0 = request.form["comment_X0"]
+        sample.status_change_X0 = dt.strftime('%Y/%m/%d %H:%M:%S')
+
     if sample.status_XXX != request.form['XXX']:
         sample.status_change_XXX = dt.strftime('%Y/%m/%d %H:%M:%S')
         sample.status_XXX = request.form['XXX']
+    if sample.comment_XXX != request.form["comment_XXX"]:
+        sample.comment_XXX = request.form["comment_XXX"]
+        sample.status_change_XXX = dt.strftime('%Y/%m/%d %H:%M:%S')
+
     if sample.status_XXY != request.form['XXY']:
         sample.status_change_XXY = dt.strftime('%Y/%m/%d %H:%M:%S')
         sample.status_XXY = request.form['XXY']
+    if sample.comment_XXY != request.form["comment_XXY"]:
+        sample.comment_XXY = request.form["comment_XXY"]
+        sample.status_change_XXY = dt.strftime('%Y/%m/%d %H:%M:%S')
+
     if sample.status_XYY != request.form['XYY']:
         sample.status_change_XYY = dt.strftime('%Y/%m/%d %H:%M:%S')
         sample.status_XYY = request.form['XYY']
+    if sample.comment_XYY != request.form["comment_XYY"]:
+        sample.comment_XYY = request.form["comment_XYY"]
+        sample.status_change_XYY = dt.strftime('%Y/%m/%d %H:%M:%S')
+
     db.session.add(sample)
     db.session.commit()
     return redirect(request.referrer)
@@ -220,12 +252,15 @@ def sample_page(batch_id, sample_id):
     sample = Sample.query.filter_by(sample_ID = sample_id).first()
     NCV_dat = NCV.query.filter_by(sample_ID = sample_id).first()
     chrom_abnorm = ['T13','T18', 'T21', 'X0', 'XXX','XXY','XYY']
-    db_entries = {c:sample.__dict__['status_'+c]  for c in chrom_abnorm }
+    db_entries = {c:sample.__dict__['status_'+c].replace('\r\n', '').strip() for c in chrom_abnorm }
     db_entries_change = {c:sample.__dict__['status_change_'+c]  for c in chrom_abnorm}              
-    sample_state_dict = {'Probable':{},'False Positive':{},'Verified':{}}
+    db_entries_comments = {c : sample.__dict__['comment_'+c]  for c in chrom_abnorm}
     PP = PlottPage(batch_id)
     PP.make_NCV_stat()
     PP.make_chrom_abn()
+    sample_state_dict = PP.sample_state_dict
+    print db_entries_comments
+    print sample.comment_T13
     for state in sample_state_dict:
         sample_state_dict[state]['T_13'] = Sample.query.filter_by(status_T13 = state)
         sample_state_dict[state]['T_18'] = Sample.query.filter_by(status_T18 = state)
@@ -239,6 +274,7 @@ def sample_page(batch_id, sample_id):
             sample_id = sample_id,
             chrom_abnorm = chrom_abnorm,
             db_entries = db_entries,
+            db_entries_comments = db_entries_comments,
             db_entries_change = db_entries_change,
             NCV_stat = PP.NCV_stat,
             NCV_131821 = ['NCV_13', 'NCV_18', 'NCV_21'],
