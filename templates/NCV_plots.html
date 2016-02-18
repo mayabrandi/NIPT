@@ -65,13 +65,9 @@
 <script>
 $(function () {
 {% for chrom in ['13','18','21'] %}
-
+var data = []
 var layout = {
     title: 'NCV_{{chrom}}',
-    font: {
-        family: 'Courier New, monospace',
-        color: '#636363'
-      },
     xaxis :{showline: true,
             ticktext : {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
             tickvals : {{NCV_stat['NCV_'+chrom]['x_axis']}},
@@ -91,14 +87,33 @@ var layout = {
             },
 };
 
+{% for line  in tris_thresholds %} 
 var line = {x : [-1, {{NCV_stat['NCV_'+chrom]['x_axis'][-1]+2}}],
-            y : [3, 3],
+            y : [{{tris_thresholds[line]['NCV']}},{{tris_thresholds[line]['NCV']}}],
             mode: 'lines',
+            showlegend: false,
             line: {
                 dash: 'dot',
-                color : 'red',
+                color : '{{tris_thresholds[line]['color']}}',
                 width : 2},
-            name: 'NCV treshold'};
+            name: "{{line}}"};
+data.push(line);
+{% endfor %}
+
+
+var verif = {                                                                  
+            name: "Verified T_{{chrom}}",                                                               
+            y: {{tris_chrom_abn[chrom]['Verified']['NCV']}},                                        
+            x: 1 ,
+            text: {{tris_chrom_abn[chrom]['Verified']['s_name']|tojson}},                                       
+        mode: 'markers',
+        marker: {symbol :"square",
+                size: 5,
+                } ,                                                   
+        type: 'scatter',                                                            
+        }; 
+data.push(verif);
+
 
 var trace1 = {
     name: 'Case',
@@ -116,18 +131,19 @@ var trace1 = {
 var box = {
     y: {{NCV_stat['NCV_'+chrom]['NCV_pass'][0]}},
     boxpoints: 'all',
-    jitter: 0.3,
+//    jitter: 0.3,
     pointpos: 30,
     type: 'box',
     marker: {
         color: 'rgba(127, 96, 0, 0.5)'},
-    name: 'validation samples',
-//    boxpoints: 'suspectedoutliers',
+    name: 'validation samples ({{nr_validation_samps}} pcs)',
+    boxpoints: 'suspectedoutliers',
     hoverinfo:'none',
 }
 ;
 
-var data = [ trace1, box, line];
+data.push(trace1)
+data.push(box)
 
 Plotly.newPlot({{'NCV131821NCV_'+chrom}}, data, layout);
 {% endfor %}    
@@ -136,13 +152,9 @@ Plotly.newPlot({{'NCV131821NCV_'+chrom}}, data, layout);
 
 
 <script>
-
+var data = []
 var layout = {
     title: 'X vs Y',
-    font: {
-        family: 'Courier New, monospace',
-        color: '#636363'
-    },
     legend:{hovermode:'closest' },
     hovermode:'closest',
     xaxis :{showline: true,
@@ -164,27 +176,48 @@ var layout = {
             },
 };
 
-var line = {x : [-50, 300],
-            y : [10, 10],
-            mode: 'lines',
-            line: {
-                dash: 'dot',
-                color : 'red',
-                width : 2},
-            name: 'NCV treshold'};
-
 var backstat = {
     y: {{NCV_stat['NCV_Y']['NCV_pass'][0]}},
     x: {{NCV_stat['NCV_X']['NCV_pass'][0]}},
-    name: 'validation samples',
+    name: 'validation samples ({{nr_validation_samps}} pcs)',
     hoverinfo:'none',
     mode: 'markers',
     type: 'scatter',
     marker: {color: 'rgba(127, 96, 0, 0.5)'},
             size: 10
             }
+data.push(backstat);
 
-var data = [line, backstat];
+
+{% for abn  in sex_chrom_abn.keys() %} 
+    var verif = {                                                                  
+            name: '{{abn}}',                                                               
+            y: {{sex_chrom_abn[abn]['Verified']['NCV_Y']}},                                        
+            x: {{sex_chrom_abn[abn]['Verified']['NCV_X']}},
+            text: {{sex_chrom_abn[abn]['Verified']['s_name']|tojson}},                                       
+        mode: 'markers',
+        marker: {symbol :"square",
+                size: 10,
+                } ,                                                   
+        type: 'scatter',                                                            
+        }; 
+    data.push(verif);
+{% endfor %}
+
+
+{% for line  in sex_tresholds %} 
+var line = {x : {{sex_tresholds[line]['x']}},
+            y : {{sex_tresholds[line]['y']}},
+            mode: 'lines',
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : 'red',
+                width : 2},
+            name: "{{line}}"};
+data.push(line);
+{% endfor %}
+
 
 {% for i in samp_range %}
 var trace1 = {
@@ -199,7 +232,6 @@ var trace1 = {
 };
 
 data.push(trace1);
-
 {% endfor %}
 
 Plotly.newPlot('NCVXY', data, layout);

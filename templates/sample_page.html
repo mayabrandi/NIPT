@@ -123,11 +123,18 @@
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                           <h5>NCV values</h5>
+                           <h5>NCV - chromosomes 13, 18 & 21</h5>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div id="plot" style="min-width:450px; height:450px; "></div><br><br>
+                            <div id="plot_131821" style="min-width:450px; height:450px; "></div><br><br>
+                        </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                           <h5>NCV - sex chromosomes</h5>
+                        </div>
+                        <div class="panel-body">
+                            <div id="plot_sex" style="min-width:450px; height:450px; "></div><br><br>
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -144,10 +151,6 @@
 
 var layout = {
     title: "Sample: {{sample.sample_ID}}",
-    font: {
-        family: 'Courier New, monospace',
-        color: '#636363'
-    },
     legend:{hovermode:'closest' },
     hovermode:'closest',
     xaxis :{showline: true,
@@ -169,6 +172,7 @@ var layout = {
 };
 
 var data = []
+
 var i = 0
 {% for chrom  in NCV_131821 %}
     var i = i + 1
@@ -178,14 +182,15 @@ var i = 0
     var box = {
             y: {{NCV_stat[chrom]['NCV_pass'][0]}},
             x: x,
-            boxpoints: 'all',
-            jitter: 0.3,
-            pointpos: 3,
+            //jitter: 0.3,
+            pointpos: 30,
             type: 'box',
             showlegend: false,
             marker: {
                 color: 'rgba(127, 96, 0, 0.5)'},
+            name: 'validation samples ({{nr_validation_samps}} pcs)',
             hoverinfo:'none',
+            boxpoints: 'suspectedoutliers',
             };
 
     var samp = {
@@ -203,12 +208,12 @@ var i = 0
     data.push(samp);
 {% endfor %}
 
-{% for abn  in chrom_abn.keys() %} 
+{% for abn  in tris_chrom_abn.keys() %} 
     var verif = {                                                                  
             name: "Verified",                                                               
-            y: {{chrom_abn[abn]['Verified']['NCV']}},                                        
-            x: {{chrom_abn[abn]['Verified']['x_axis']}},
-            text: {{chrom_abn[abn]['Verified']['s_name']|tojson}},                                       
+            y: {{tris_chrom_abn[abn]['Verified']['NCV']}},                                        
+            x: {{tris_chrom_abn[abn]['Verified']['x_axis']}},
+            text: {{tris_chrom_abn[abn]['Verified']['s_name']|tojson}},                                       
         mode: 'markers',
         marker: {symbol :"square",
                 size: 10,
@@ -219,9 +224,9 @@ var i = 0
 
     var prob = {                                                                  
             name: 'Probable',                                                               
-            y: {{chrom_abn[abn]['Probable']['NCV']}},                                        
-            x: {{chrom_abn[abn]['Probable']['x_axis']}},
-            text: {{chrom_abn[abn]['Probable']['s_name']|tojson}},                                                           
+            y: {{tris_chrom_abn[abn]['Probable']['NCV']}},                                        
+            x: {{tris_chrom_abn[abn]['Probable']['x_axis']}},
+            text: {{tris_chrom_abn[abn]['Probable']['s_name']|tojson}},                                                           
         mode: 'markers',  
         marker: {symbol : "triangle-up",
                 size: 10,
@@ -232,9 +237,9 @@ var i = 0
 
     var false_neg = {                                                                  
             name: 'False Negative',                                                               
-            y: {{chrom_abn[abn]['False Negative']['NCV']}},                                        
-            x: {{chrom_abn[abn]['False Negative']['x_axis']}},
-            text: {{chrom_abn[abn]['False Negative']['s_name']|tojson}},                                                           
+            y: {{tris_chrom_abn[abn]['False Negative']['NCV']}},                                        
+            x: {{tris_chrom_abn[abn]['False Negative']['x_axis']}},
+            text: {{tris_chrom_abn[abn]['False Negative']['s_name']|tojson}},                                                           
         mode: 'markers',  
         marker: {symbol : "triangle-up",
                 size: 10,
@@ -245,9 +250,9 @@ var i = 0
 
     var false_pos = {                                                                  
             name: 'False Positive',                                                               
-            y: {{chrom_abn[abn]['False Positive']['NCV']}},                                        
-            x: {{chrom_abn[abn]['False Positive']['x_axis']}},
-            text: {{chrom_abn[abn]['False Positive']['s_name']|tojson}},                                                           
+            y: {{tris_chrom_abn[abn]['False Positive']['NCV']}},                                        
+            x: {{tris_chrom_abn[abn]['False Positive']['x_axis']}},
+            text: {{tris_chrom_abn[abn]['False Positive']['s_name']|tojson}},                                                           
         mode: 'markers',  
         marker: {symbol : "triangle-up",
                 size: 10,
@@ -264,7 +269,99 @@ var i = 0
     data.push(false_pos);
 {% endfor %}
 
-Plotly.newPlot('plot',data,  layout);
+
+{% for line  in tris_thresholds.keys() %} 
+var line = {x : [0.5, 3.5],
+            y : [{{tris_thresholds[line]['NCV']}},{{tris_thresholds[line]['NCV']}}],
+            mode: 'lines',
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : "{{tris_thresholds[line]['color']}}",
+                width : 2},
+            name: "{{line}}"};
+data.push(line);
+{% endfor %}
+
+
+Plotly.newPlot('plot_131821',data,  layout);
+</script>
+
+<script>
+var data = []
+var layout = {
+    title: "Sample: {{sample.sample_ID}}",
+    legend:{hovermode:'closest' },
+    hovermode:'closest',
+    xaxis :{zeroline: false,
+            showline: true,
+            linecolor: '#636363',
+            showgrid: false,
+            linewidth: 5,
+            title : 'NCV_X'
+            },
+            
+    yaxis :{zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'NCV_Y'
+            },
+};
+
+{% for line  in sex_tresholds %} 
+var line = {x : {{sex_tresholds[line]['x']}},
+            y : {{sex_tresholds[line]['y']}},
+            mode: 'lines',
+            line: {
+                dash: 'dot',
+                color : 'red',
+                width : 2},
+            showlegend: false,
+            name: "{{line}}"};
+data.push(line);
+{% endfor %}
+
+var backstat = {
+    y: {{NCV_stat['NCV_Y']['NCV_pass'][0]}},
+    x: {{NCV_stat['NCV_X']['NCV_pass'][0]}},
+    name: 'validation samples ({{nr_validation_samps}} pcs)',
+    hoverinfo:'none',
+    mode: 'markers',
+    type: 'scatter',
+    marker: {color: 'rgba(127, 96, 0, 0.5)'},
+            size: 10
+            }
+data.push(backstat);
+
+{% for abn  in sex_chrom_abn.keys() %} 
+    var verif = {                                                                  
+            name: '{{abn}}',                                                               
+            y: {{sex_chrom_abn[abn]['Verified']['NCV_Y']}},                                        
+            x: {{sex_chrom_abn[abn]['Verified']['NCV_X']}},
+            text: {{sex_chrom_abn[abn]['Verified']['s_name']|tojson}},                                       
+        mode: 'markers',
+        marker: {symbol :"square",
+                size: 10,
+                 //color : "rgb(0, 255, 255)"
+                } ,                                                   
+        type: 'scatter',                                                            
+        }; 
+    data.push(verif);
+{% endfor %}
+
+var sample_XY = {
+    y: [{{NCV_dat.NCV_Y}}],
+    x: [{{NCV_dat.NCV_X}}],
+    name: 'Sample {{sample.sample_ID}}',
+    mode: 'markers',
+    type: 'scatter',
+    marker: {size: 10}
+        };
+data.push(sample_XY);
+
+Plotly.newPlot('plot_sex',data,  layout);
 </script>
 </body>
 </html>

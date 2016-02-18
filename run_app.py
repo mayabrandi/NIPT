@@ -22,6 +22,16 @@ class BatchDataHandler():
         self.NCV_data = {}
         self.NCV_warnings = {}
         self.warnings = {}    
+        self.sex_tresholds = {'XY_horis' :  {'x' : [-30, 10],   'y' : [13, 13]},
+                                'XY_upper': {'x' : [-30, 5.05], 'y' : [553.687, 13.6016]},
+                                'XY_lower': {'x' : [-30, -5,13],'y' : [395.371, 13.971]},
+                                'XXY' :     {'x' : [-4, -4],    'y' : [155, 350]},
+                                'X0' :      {'x' : [-4, -4],   'y' : [13, -30]},
+                                'XXX' :     {'x' : [4, 4],      'y' : [13, -30]}}
+        self.tris_thresholds = {'soft_max': {'NCV': 3 , 'color': 'orange'},
+                                'soft_min': {'NCV': -4, 'color': 'orange'},
+                                'hard_max': {'NCV': 4 , 'color': 'red'},
+                                'hard_min': {'NCV': -5, 'color': 'red'} }
 
     def fliter_NA(self):
         # Filtering out NA. Could probably be done in a more preyyt way :/
@@ -38,15 +48,23 @@ class BatchDataHandler():
             self.NCV_data[s.sample_ID] = {}
             for key in self.NCV_names:
                 if s.__dict__[key] == 'NA':
-                    warn = False
                     val = 'NA'
-                elif  key in ['NCV_13','NCV_18','NCV_21'] and float(s.__dict__[key]) > 3:
-                    samp_warn.append(key)
-                    warn = True
-                    val = round(float(s.__dict__[key]),2)
+                    warn = "default"
                 else:
-                    warn = False
                     val = round(float(s.__dict__[key]),2)
+                    if  key in ['NCV_13','NCV_18','NCV_21']:
+                        hmin = self.tris_thresholds['hard_min']['NCV']
+                        hmax = self.tris_thresholds['hard_max']['NCV']
+                        smin = self.tris_thresholds['soft_min']['NCV']
+                        smax = self.tris_thresholds['soft_max']['NCV']
+                        if (smax <= val < hmax) or (hmin < val <= smin):
+                            warn = "warning"
+                            samp_warn.append(key)
+                        elif (val >= hmax) or (val <= hmin):
+                            warn = "danger"
+                            samp_warn.append(key)
+                        else:
+                            warn = "default"
                 self.NCV_data[s.sample_ID][key] = {'val': val, 'warn': warn }
             if samp_warn:
                 self.NCV_warnings[s.sample_ID] = ', '.join(samp_warn)
@@ -71,7 +89,8 @@ class PlottPage():
     """Class to preppare data for NCV plots"""
     def __init__(self, batch_id):
         self.BDH = BatchDataHandler(batch_id)
-        self.NCV_passed = self.BDH.NCV_passed 
+        self.NCV_passed = self.BDH.NCV_passed
+        self.nr_validation_samps = len(self.BDH.NCV_passed.all()) 
         self.cases = self.BDH.cases  
         self.NCV_stat = {'NCV_13':{}, 'NCV_18':{}, 
                          'NCV_21':{}, 'NCV_X':{}, 'NCV_Y' : {}}
@@ -83,8 +102,8 @@ class PlottPage():
                               'XXY':{},
                               'XYY':{}}
         self.X_labels = self.make_X_labels()
-        self.sample_state_dict = {'Probable':{},'False Positive':{},'Verified':{}, "False Negative": {}, "Other": {}, "Suspected": {}}
-    
+        self.sample_state_dict = {'Probable' : {},'False Positive':{},'Verified':{}, "False Negative": {}, "Other": {}, "Suspected": {}}
+
     def make_approved_stats(self, chrom):
         NCV_pass = []
         for s in self.NCV_passed:
@@ -115,8 +134,8 @@ class PlottPage():
                 'NCV_pass' : NCV_pass}
 
     def make_chrom_abn(self):
-        x = 0.6
-        for abn in ['13','18','21']:
+        x = 1
+        for abn in self.tris_chrom_abn.keys():
             for status in self.sample_state_dict.keys():                                       
                 self.tris_chrom_abn[abn][status] = {'NCV' : [], 's_name' : [], 'x_axis': []}             
                 for s in Sample.query.filter(Sample.__dict__['status_T'+abn] == status):
@@ -125,6 +144,16 @@ class PlottPage():
                     self.tris_chrom_abn[abn][status]['s_name'].append(s.sample_ID)
                     self.tris_chrom_abn[abn][status]['x_axis'].append(x)
             x = x+1
+        for abn in self.sex_chrom_abn.keys():
+            for status in self.sample_state_dict.keys():                                       
+                self.sex_chrom_abn[abn][status] = {'NCV_X' : [], 'NCV_Y' : [], 's_name' : []}             
+                for s in Sample.query.filter(Sample.__dict__['status_'+abn] == status):
+                    NCV_db = NCV.query.filter_by(sample_ID = s.sample_ID).first()
+                    self.sex_chrom_abn[abn][status]['NCV_X'].append(float(NCV_db.NCV_X))
+                    self.sex_chrom_abn[abn][status]['NCV_Y'].append(float(NCV_db.NCV_Y))
+                    self.sex_chrom_abn[abn][status]['s_name'].append(s.sample_ID)
+
+        print self.sex_chrom_abn
 
 class SamplePage():
     def __init__(self, batch_id):
@@ -259,18 +288,17 @@ def sample_page(batch_id, sample_id):
     PP.make_NCV_stat()
     PP.make_chrom_abn()
     sample_state_dict = PP.sample_state_dict
-    print db_entries_comments
-    print sample.comment_T13
     for state in sample_state_dict:
         sample_state_dict[state]['T_13'] = Sample.query.filter_by(status_T13 = state)
         sample_state_dict[state]['T_18'] = Sample.query.filter_by(status_T18 = state)
         sample_state_dict[state]['T_21'] = Sample.query.filter_by(status_T21 = state)
-
     return render_template('sample_page.html',
             NCV_dat = NCV_dat,
-            chrom_abn = PP.tris_chrom_abn,
+            tris_chrom_abn = PP.tris_chrom_abn,
+            sex_chrom_abn = PP.sex_chrom_abn,
             sample = sample, 
             batch_id = batch_id,
+            nr_validation_samps = PP.nr_validation_samps,
             sample_id = sample_id,
             chrom_abnorm = chrom_abnorm,
             db_entries = db_entries,
@@ -278,24 +306,32 @@ def sample_page(batch_id, sample_id):
             db_entries_change = db_entries_change,
             NCV_stat = PP.NCV_stat,
             NCV_131821 = ['NCV_13', 'NCV_18', 'NCV_21'],
-            state_dict = sample_state_dict)
+            state_dict = sample_state_dict,
+            sex_tresholds = PP.BDH.sex_tresholds,
+            tris_thresholds = PP.BDH.tris_thresholds)
 
 @app.route('/NIPT/<batch_id>/NCV_plots/')
 def NCV_plots(batch_id):
     PP = PlottPage(batch_id)
     PP.make_NCV_stat()
+    PP.make_chrom_abn()
     state_dict = {'Probable':{},'False Positive':{},'Verified':{}}
     for state in state_dict:
         state_dict[state]['T_13'] = Sample.query.filter_by(status_T13 = state)
         state_dict[state]['T_18'] = Sample.query.filter_by(status_T18 = state)
         state_dict[state]['T_21'] = Sample.query.filter_by(status_T21 = state)
     return render_template('NCV_plots.html',
-        samples = PP.BDH.samples_on_batch,
-        batch_id = batch_id,
-        NCV_stat = PP.NCV_stat,
-        NCV_131821 = ['NCV_13', 'NCV_18', 'NCV_21'],
-        samp_range = range(len(PP.NCV_stat['NCV_X']['NCV_cases'])),
-        state_dict = state_dict)
+        samples         = PP.BDH.samples_on_batch,
+        batch_id        = batch_id,
+        NCV_stat        = PP.NCV_stat,
+        nr_validation_samps = PP.nr_validation_samps,
+        NCV_131821      = ['NCV_13', 'NCV_18', 'NCV_21'],
+        samp_range      = range(len(PP.NCV_stat['NCV_X']['NCV_cases'])),
+        state_dict      = state_dict,
+        tris_chrom_abn  = PP.tris_chrom_abn,
+        sex_chrom_abn   = PP.sex_chrom_abn,
+        sex_tresholds   = PP.BDH.sex_tresholds,
+        tris_thresholds = PP.BDH.tris_thresholds)
 
 def main():
     logging.basicConfig(filename = 'NIPT_log', level=logging.INFO)
