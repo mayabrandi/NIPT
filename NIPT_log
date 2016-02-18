@@ -4590,3 +4590,30 @@ INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:16:34] "POST /NIPT/0041/151223869/up
 INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:16:35] "GET /NIPT/0041/151223869/ HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:16:41] "POST /NIPT/0041/151223869/update_trisomi_status HTTP/1.1" 302 -
 INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:16:42] "GET /NIPT/0041/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:19:13] "GET /NIPT/ HTTP/1.1" 200 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 194, in run_wsgi
+    execute(self.server.app)
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 185, in execute
+    write(data)
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 166, in write
+    self.wfile.write(data)
+IOError: [Errno 32] Broken pipe
+INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:19:15] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:19:17] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:39:04] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:39:12] "GET /NIPT/0041/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:39:21] "POST /NIPT/0041/151223869/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:39:21] "GET /NIPT/0041/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:39:25] "POST /NIPT/0041/151223869/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:39:26] "GET /NIPT/0041/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:39:30] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -

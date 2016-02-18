@@ -16,12 +16,6 @@ class BatchDataHandler():
                                             NCV.sample_ID.notilike('%ref%'),
                                             NCV.sample_ID.notilike('%Control%'))
         self.samples_on_batch = Sample.query.filter(Sample.batch_id == batch_id)
-        self.NCV_on_batch = NCV.query.filter(NCV.batch_id == batch_id)
-        self.nr_samples_on_batch = len(self.NCV_on_batch.all())
-        self.NCV_names = ['NCV_13','NCV_18','NCV_21','NCV_X','NCV_Y']
-        self.NCV_data = {}
-        self.NCV_warnings = {}
-        self.warnings = {}    
         self.sex_tresholds = {'XY_horis' :  {'x' : [-30, 10],   'y' : [13, 13]},
                                 'XY_upper': {'x' : [-30, 5.05], 'y' : [553.687, 13.6016]},
                                 'XY_lower': {'x' : [-30, -5,13],'y' : [395.371, 13.971]},
@@ -42,6 +36,15 @@ class BatchDataHandler():
                 NCV.NCV_X!='NA',
                  NCV.NCV_Y!='NA')
 
+class BatchPage():
+    def __init__(self, batch_id):
+        self.BDH = BatchDataHandler(batch_id)
+        self.NCV_data = {} 
+        self.NCV_on_batch = NCV.query.filter(NCV.batch_id == batch_id)
+        self.NCV_names = ['NCV_13','NCV_18','NCV_21','NCV_X','NCV_Y']
+        self.NCV_warnings = {}
+        self.warnings = {}
+
     def handle_NCV(self):
         for s in self.NCV_on_batch:
             samp_warn = []
@@ -53,10 +56,10 @@ class BatchDataHandler():
                 else:
                     val = round(float(s.__dict__[key]),2)
                     if  key in ['NCV_13','NCV_18','NCV_21']:
-                        hmin = self.tris_thresholds['hard_min']['NCV']
-                        hmax = self.tris_thresholds['hard_max']['NCV']
-                        smin = self.tris_thresholds['soft_min']['NCV']
-                        smax = self.tris_thresholds['soft_max']['NCV']
+                        hmin = self.BDH.tris_thresholds['hard_min']['NCV']
+                        hmax = self.BDH.tris_thresholds['hard_max']['NCV']
+                        smin = self.BDH.tris_thresholds['soft_min']['NCV']
+                        smax = self.BDH.tris_thresholds['soft_max']['NCV']
                         if (smax <= val < hmax) or (hmin < val <= smin):
                             warn = "warning"
                             samp_warn.append(key)
@@ -70,8 +73,8 @@ class BatchDataHandler():
                 self.NCV_warnings[s.sample_ID] = ', '.join(samp_warn)
 
     def get_warnings(self):
-#        low_NES = self.samples_on_batch.filter(Sample.NonExcludedSites < 8000000)
-        QC_flagged = self.samples_on_batch.filter(Sample.QCFlag > 0)
+#        low_NES = self.BDH.samples_on_batch.filter(Sample.NonExcludedSites < 8000000)
+        QC_flagged = self.BDH.samples_on_batch.filter(Sample.QCFlag > 0)
 #        for sample in set(self.NCV_warnings.keys() + [sample.sample_ID for sample in low_NES] + [sample.sample_ID for sample in QC_flagged]):
 #            self.warnings[sample] = {'sample_ID' : sample, 'missing_data' : '', 'QC_warn' : '', 'QC_fail' : '', 'NCV_low': ''}
         for sample in set(self.NCV_warnings.keys() + [sample.sample_ID for sample in QC_flagged]):
@@ -83,7 +86,8 @@ class BatchDataHandler():
         for sample in QC_flagged:
             self.warnings[sample.sample_ID]['QC_fail'] = sample.QCFailure if sample.QCFailure else ''
             self.warnings[sample.sample_ID]['QC_warn'] = sample.QCWarning if sample.QCWarning else ''
-    
+
+
 
 class PlottPage():
     """Class to preppare data for NCV plots"""
@@ -266,15 +270,15 @@ def update_trisomi_status(batch_id, sample_id):
 
 @app.route('/NIPT/<batch_id>/')
 def sample(batch_id):
-    BDH = BatchDataHandler(batch_id)
-    BDH.handle_NCV()
-    BDH.get_warnings()
+    BP = BatchPage(batch_id)
+    BP.handle_NCV()
+    BP.get_warnings()
     return render_template('batch_page.html', 
-            samples = BDH.NCV_on_batch,
-            warnings = BDH.warnings, 
-            NCV_rounded = BDH.NCV_data,
+            samples = BP.NCV_on_batch,
+            warnings = BP.warnings, 
+            NCV_rounded = BP.NCV_data,
             batch_id = batch_id,
-            sample_ids = ','.join(sample.sample_ID for sample in BDH.NCV_on_batch))
+            sample_ids = ','.join(sample.sample_ID for sample in BP.NCV_on_batch))
 
 @app.route('/NIPT/<batch_id>/<sample_id>/')
 def sample_page(batch_id, sample_id):
