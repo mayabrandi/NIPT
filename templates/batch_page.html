@@ -63,19 +63,17 @@
                                         <tr>
                                             <th>Sample id</th>
                                             <th>Missing data</th>
-                                            <th>NCV high</th>
                                             <th>QC Warning</th>
                                             <th>QV Failure</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for s in warnings %}
+                                        {% for s in seq_warnings %}
                                         <tr>
-                                            <td> <a href={{ url_for('sample_page', batch_id=batch_id, sample_id=s) }}>{{ s }}</a></td>
-                                            <td>{{ warnings[s]['missing_data'] }}</td>
-                                            <td>{{ warnings[s]['NCV_high'] }}</td>
-                                            <td>{{ warnings[s]['QC_warn'] }}</td>
-                                            <td>{{ warnings[s]['QC_fail'] }}</td>
+                                            <td> <a href={{ url_for('sample_page', sample_id=s) }}>{{ s }}</a></td>
+                                            <td>{seq_warnings[s]['missing_data'] }}</td>
+                                            <td>{{ seq_warnings[s]['QC_warn'] }}</td>
+                                            <td>{{ seq_warnings[s]['QC_fail'] }}</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -107,6 +105,7 @@
                                             <th>NCV_21</th>
                                             <th>NCV_X</th>
                                             <th>NCV_Y</th>
+                                            <th>Chrom Warn</th>
                                             <th>Include</th>
                                             <th>Last Change</th> 
                                         </tr>
@@ -114,13 +113,14 @@
                                     <tbody>
                                         {% for s in samples %}
                                         <tr>
-                                            <td> <a href={{ url_for('sample_page', batch_id=batch_id, sample_id=s.sample_ID) }}>{{ s.sample_ID }}</a></td>
+                                            <td> <a href={{ url_for('sample_page', sample_id=s.sample_ID) }}>{{ s.sample_ID }}</a></td>
                                             <td>{{ s.SampleType }}</td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_13']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_13']['val'] }}</td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_18']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_18']['val'] }}</td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_21']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_21']['val'] }}</td>
-                                            <td>{{ NCV_rounded[s.sample_ID]['NCV_X']['val'] }}</td>
-                                            <td>{{ NCV_rounded[s.sample_ID]['NCV_Y']['val'] }}</td>
+                                            <td class = "{{ NCV_rounded[s.sample_ID]['NCV_X']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_X']['val'] }}</td>
+                                            <td class = "{{ NCV_rounded[s.sample_ID]['NCV_Y']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_Y']['val'] }}</td>
+                                            <th>{{ warnings[s.sample_ID]['NCV_high'] }}</th>
                                             <td {% if s.include %}class="success"{% endif %}> <input type="checkbox" name="{{ s.sample_ID }}" {% if s.include %}checked{% endif %}></td>    
                                             <td >{{s.change_include_date}}</td>
                                         </tr>

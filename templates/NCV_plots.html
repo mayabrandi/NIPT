@@ -152,6 +152,7 @@ Plotly.newPlot({{'NCV131821NCV_'+chrom}}, data, layout);
 
 
 <script>
+var XY_plot = document.getElementById('NCVXY')
 var data = []
 var layout = {
     title: 'X vs Y',
@@ -179,8 +180,9 @@ var layout = {
 var backstat = {
     y: {{NCV_stat['NCV_Y']['NCV_pass'][0]}},
     x: {{NCV_stat['NCV_X']['NCV_pass'][0]}},
+    text: {{NCV_stat['NCV_X']['NCV_pass_names'][0]|tojson}},
     name: 'validation samples ({{nr_validation_samps}} pcs)',
-    hoverinfo:'none',
+    //hoverinfo:'none',
     mode: 'markers',
     type: 'scatter',
     marker: {color: 'rgba(127, 96, 0, 0.5)'},
@@ -194,11 +196,11 @@ data.push(backstat);
             name: '{{abn}}',                                                               
             y: {{sex_chrom_abn[abn]['Verified']['NCV_Y']}},                                        
             x: {{sex_chrom_abn[abn]['Verified']['NCV_X']}},
+            index : {{sex_chrom_abn[abn]['Verified']['s_name']|tojson}}, 
             text: {{sex_chrom_abn[abn]['Verified']['s_name']|tojson}},                                       
         mode: 'markers',
         marker: {symbol :"square",
-                size: 10,
-                } ,                                                   
+                size: 10} ,                                                   
         type: 'scatter',                                                            
         }; 
     data.push(verif);
@@ -235,6 +237,15 @@ data.push(trace1);
 {% endfor %}
 
 Plotly.newPlot('NCVXY', data, layout);
+//XY_plot.on('plotly_click', function(verif){
+   // var pts = '';
+   // for(var i=0; i<verif.points.length; i++){
+  //      pts=verif.points[i].data.name
+ //   }
+//    alert(pts);
+    //window.location.href = 'http://127.0.0.1:5000/NIPT/samples/'+pt;
+//});
+
 </script>
 </body>
 </html>

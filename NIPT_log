@@ -4617,3 +4617,979 @@ INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:39:21] "GET /NIPT/0041/151223869/ HT
 INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:39:25] "POST /NIPT/0041/151223869/update_trisomi_status HTTP/1.1" 302 -
 INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:39:26] "GET /NIPT/0041/151223869/ HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:39:30] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:43:57] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 11:43:59] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 14:17:54] "GET /NIPT/0041/151223816/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 16:42:01] "GET /NIPT/ HTTP/1.1" 200 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 194, in run_wsgi
+    execute(self.server.app)
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 185, in execute
+    write(data)
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 153, in write
+    self.send_header(key, value)
+  File "/Users/mayabrandi/anaconda/lib/python2.7/BaseHTTPServer.py", line 401, in send_header
+    self.wfile.write("%s: %s\r\n" % (keyword, value))
+IOError: [Errno 32] Broken pipe
+INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 16:42:02] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Feb/2016 16:42:05] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:02:04] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:02:04] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:02:04] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:02:04] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:02:04] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:02:04] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:02:04] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:01] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:01] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:01] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:01] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:01] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:01] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:01] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:04] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:04] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:04] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:04] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:04] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:04] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:04] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:33] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:33] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:33] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:33] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:33] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:33] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:04:33] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:09:12] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:09:12] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:09:12] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:09:12] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:09:12] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:09:12] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:09:12] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:12:03] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:12:56] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:13:20] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:19:12] "GET /NIPT/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:19:12] "GET /NIPT/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:19:12] "GET /NIPT/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:19:12] "GET /NIPT/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:19:13] "GET /NIPT/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:19:13] "GET /NIPT/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:19:13] "GET /NIPT/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:45:57] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:46:02] "GET /NIPT/0041/151223890/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:46:25] "GET /NIPT/0180/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:46:25] "GET /NIPT/0180/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:46:25] "GET /NIPT/0180/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:46:25] "GET /NIPT/0180/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:46:25] "GET /NIPT/0180/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:46:25] "GET /NIPT/0180/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:46:25] "GET /NIPT/0180/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:46:28] "GET /NIPT/0179/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:46:32] "GET /NIPT/0179/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:46:38] "GET /NIPT/0182/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:46:45] "GET /NIPT/0185/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:46:56] "GET /NIPT/0185/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:47:00] "GET /NIPT/0252/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:47:08] "GET /NIPT/0252/2015-05504/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:47:20] "POST /NIPT/0252/2015-05504/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:47:20] "GET /NIPT/0252/2015-05504/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:48:01] "GET /NIPT/0202/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:48:01] "GET /NIPT/0202/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:48:01] "GET /NIPT/0202/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:48:01] "GET /NIPT/0202/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:48:01] "GET /NIPT/0202/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:48:01] "GET /NIPT/0202/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:48:01] "GET /NIPT/0202/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:48:08] "GET /NIPT/0220/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:48:08] "GET /NIPT/0220/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:48:08] "GET /NIPT/0220/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:48:08] "GET /NIPT/0220/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:48:08] "GET /NIPT/0220/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:48:08] "GET /NIPT/0220/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:48:08] "GET /NIPT/0220/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:50:17] "GET /NIPT/0219/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:50:27] "GET /NIPT/0219/test-2015-19771-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:50:37] "POST /NIPT/0219/test-2015-19771-06/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:50:37] "GET /NIPT/0219/test-2015-19771-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:51:14] "GET /NIPT/0272/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:51:20] "GET /NIPT/0273/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:51:20] "GET /NIPT/0273/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:51:20] "GET /NIPT/0273/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:51:20] "GET /NIPT/0273/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:51:20] "GET /NIPT/0273/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:51:20] "GET /NIPT/0273/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:51:20] "GET /NIPT/0273/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:54:48] "GET /NIPT/0273/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:55:00] "GET /NIPT/0220/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:55:04] "GET /NIPT/0219/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:55:10] "GET /NIPT/0216/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:55:18] "GET /NIPT/0216/test-2015-19360-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:55:27] "POST /NIPT/0216/test-2015-19360-05/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:55:28] "GET /NIPT/0216/test-2015-19360-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:55:42] "GET /NIPT/0215/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:55:47] "GET /NIPT/0215/test-2015-18530-02/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:55:54] "POST /NIPT/0215/test-2015-18530-02/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:55:54] "GET /NIPT/0215/test-2015-18530-02/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:56:02] "GET /NIPT/0215/test-2015-18401-02/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:56:08] "POST /NIPT/0215/test-2015-18401-02/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:56:08] "GET /NIPT/0215/test-2015-18401-02/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:56:24] "GET /NIPT/0274/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:56:28] "GET /NIPT/0214/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:56:33] "GET /NIPT/0214/test-2015-17867-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:56:39] "POST /NIPT/0214/test-2015-17867-06/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:56:39] "GET /NIPT/0214/test-2015-17867-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:56:48] "GET /NIPT/0214/test-2015-17889-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:56:53] "POST /NIPT/0214/test-2015-17889-06/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:56:53] "GET /NIPT/0214/test-2015-17889-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:57:05] "GET /NIPT/0214/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:57:12] "GET /NIPT/0214/test-2015-17867-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:57:21] "GET /NIPT/0214/test-2015-17889-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:57:29] "GET /NIPT/0213/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:57:33] "GET /NIPT/0213/test-2015-17798-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:57:44] "POST /NIPT/0213/test-2015-17798-05/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:57:44] "GET /NIPT/0213/test-2015-17798-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:58:03] "POST /NIPT/0213/test-2015-17798-05/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:58:03] "GET /NIPT/0213/test-2015-17798-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:58:12] "GET /NIPT/0210/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:58:18] "GET /NIPT/0273/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:58:25] "GET /NIPT/0209/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:58:30] "GET /NIPT/0209/test-2015-16975-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:58:35] "POST /NIPT/0209/test-2015-16975-05/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:58:36] "GET /NIPT/0209/test-2015-16975-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:58:58] "GET /NIPT/0272/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:59:02] "GET /NIPT/0208/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:59:09] "GET /NIPT/0207/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:59:15] "GET /NIPT/0206/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:59:18] "GET /NIPT/0205/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:59:22] "GET /NIPT/0270/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:59:26] "GET /NIPT/0270/test-2015-15818-02/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:59:33] "POST /NIPT/0270/test-2015-15818-02/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:59:33] "GET /NIPT/0270/test-2015-15818-02/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:59:44] "GET /NIPT/0269/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:59:48] "GET /NIPT/0204/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:59:54] "GET /NIPT/0269/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 09:59:59] "GET /NIPT/0203/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:00:06] "GET /NIPT/0203/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:00:10] "GET /NIPT/0268/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:00:14] "GET /NIPT/0266/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:00:16] "GET /NIPT/0264/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:00:20] "GET /NIPT/0262/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:00:20] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:00:20] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:00:20] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:00:20] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:00:20] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:00:20] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:04:24] "GET /NIPT/0262/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:04:24] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:04:24] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:04:24] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:04:24] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:04:24] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:04:24] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:05:31] "GET /NIPT/0262/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:05:31] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:05:31] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:05:31] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:05:31] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:05:31] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:05:31] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:05:34] "GET /NIPT/0262/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:05:34] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:05:34] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:05:34] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:05:34] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:05:34] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:05:34] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:06:13] "GET /NIPT/0262/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:06:13] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:06:13] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:06:13] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:06:13] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:06:13] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:06:13] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:06:15] "GET /NIPT/0262/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:06:15] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:06:15] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:06:15] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:06:15] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:06:15] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:06:15] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:26:41] "GET /NIPT/0262/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:26:41] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:26:41] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:26:41] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:26:41] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:26:42] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:26:42] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:27:36] "GET /NIPT/0262/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:27:36] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:27:36] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:27:36] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:27:36] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:27:36] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:27:36] "GET /NIPT/0262/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:29:07] "GET /NIPT/0262/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:29:32] "GET /NIPT/0200/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:29:36] "GET /NIPT/0259/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:29:41] "GET /NIPT/0252/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:29:46] "GET /NIPT/0252/2015-05504/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:29:53] "GET /NIPT/0191/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:29:58] "GET /NIPT/0191/2015-06553/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:30:03] "POST /NIPT/0191/2015-06553/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:30:03] "GET /NIPT/0191/2015-06553/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:30:13] "GET /NIPT/0190/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:30:18] "GET /NIPT/0190/2015-05519-5/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:30:25] "POST /NIPT/0190/2015-05519-5/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:30:25] "GET /NIPT/0190/2015-05519-5/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:30:32] "GET /NIPT/0189/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:30:36] "GET /NIPT/0189/2015-05510-5/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:30:40] "POST /NIPT/0189/2015-05510-5/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:30:41] "GET /NIPT/0189/2015-05510-5/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Feb/2016 10:30:47] "GET /NIPT/0250/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 10:19:40] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 10:22:53] "GET /NIPT/0041/151223869/ HTTP/1.1" 200 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 194, in run_wsgi
+    execute(self.server.app)
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 185, in execute
+    write(data)
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 166, in write
+    self.wfile.write(data)
+IOError: [Errno 41] Protocol wrong type for socket
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 10:22:53] "GET /NIPT/0041/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 10:23:02] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 10:39:26] "GET /NIPT/0041/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 10:39:40] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 10:39:43] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 10:45:43] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 10:45:46] "GET /NIPT/0041/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 10:45:56] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:13:08] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:13:15] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:13:15] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:13:15] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:13:15] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:13:15] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:13:15] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:13:15] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:13:56] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:13:56] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:13:56] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:13:56] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:13:56] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:13:56] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:13:56] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:14:27] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:14:27] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:14:27] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:14:27] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:14:27] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:14:27] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:14:27] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:05] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:05] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:05] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:05] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:05] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:05] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:05] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:21] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:21] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:21] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:21] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:21] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:21] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:21] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:32] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:32] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:32] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:32] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:32] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:32] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:17:32] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:20:46] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:20:46] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:20:46] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:20:46] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:20:46] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:20:46] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:20:46] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:23:31] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:23:31] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:23:31] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:23:31] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:23:31] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:23:31] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:23:31] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:24:01] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:24:01] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:24:01] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:24:01] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:24:01] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:24:01] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:24:01] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:26:41] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:26:46] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:26:50] "GET /NIPT/0041/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:26:57] "POST /NIPT/0041/151223869/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:26:58] "GET /NIPT/0041/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:27:03] "POST /NIPT/0041/151223869/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:27:04] "GET /NIPT/0041/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 11:27:08] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:07:02] "GET /NIPT/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:07:02] "GET /NIPT/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:07:02] "GET /NIPT/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:07:02] "GET /NIPT/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:07:02] "GET /NIPT/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:07:02] "GET /NIPT/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:07:02] "GET /NIPT/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:07:41] "GET /NIPT/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:07:41] "GET /NIPT/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:07:41] "GET /NIPT/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:07:41] "GET /NIPT/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:07:41] "GET /NIPT/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:07:41] "GET /NIPT/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:07:41] "GET /NIPT/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:08:35] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:09:31] "GET /NIPT/0250/2015-05529/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:09:57] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:13:39] "GET /NIPT/0195/test-2015-20513-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:13:47] "GET /NIPT/0195/test-2015-20770-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:16:10] "GET /NIPT/0195/test-2015-20770-05/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:34:14] "GET /NIPT/0195/NCV_plots/ HTTP/1.1" 500 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 194, in run_wsgi
+    execute(self.server.app)
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 185, in execute
+    write(data)
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 166, in write
+    self.wfile.write(data)
+IOError: [Errno 32] Broken pipe
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:34:15] "GET /NIPT/0195/NCV_plots/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:34:15] "GET /NIPT/0195/NCV_plots/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:34:15] "GET /NIPT/0195/NCV_plots/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:34:15] "GET /NIPT/0195/NCV_plots/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:34:15] "GET /NIPT/0195/NCV_plots/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:34:15] "GET /NIPT/0195/NCV_plots/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:34:15] "GET /NIPT/0195/NCV_plots/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:35:35] "GET /NIPT/0195/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:36:26] "GET /NIPT/0195/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:37:54] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:40:30] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:41:01] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:41:12] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:42:38] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:50:24] "GET /NIPT/0203/test-2015-15076-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:50:33] "GET /NIPT/0203/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:53:38] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:54:17] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 12:54:41] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:09:40] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:10:03] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:12:14] "GET /NIPT/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:12:14] "GET /NIPT/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:12:14] "GET /NIPT/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:12:14] "GET /NIPT/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:12:14] "GET /NIPT/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:12:15] "GET /NIPT/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:12:15] "GET /NIPT/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:14:45] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:15:35] "GET /NIPT/0199/test-2015-21973-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:15:55] "POST /NIPT/0199/test-2015-21973-05/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:15:55] "GET /NIPT/0199/test-2015-21973-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:16:19] "GET /NIPT/0272/test-2015-16372-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:16:35] "POST /NIPT/0272/test-2015-16372-06/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:16:36] "GET /NIPT/0272/test-2015-16372-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:16:37] "POST /NIPT/0272/test-2015-16372-06/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:16:37] "GET /NIPT/0272/test-2015-16372-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:16:42] "GET /NIPT/ HTTP/1.1" 200 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 194, in run_wsgi
+    execute(self.server.app)
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 185, in execute
+    write(data)
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 166, in write
+    self.wfile.write(data)
+IOError: [Errno 32] Broken pipe
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:16:44] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:17:00] "GET /NIPT/0252/2015-06616-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:17:28] "POST /NIPT/0252/2015-06616-05/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:17:28] "GET /NIPT/0252/2015-06616-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:17:43] "GET /NIPT/0255/2015-08526/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:17:50] "POST /NIPT/0255/2015-08526/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:17:50] "GET /NIPT/0255/2015-08526/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:18:11] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:18:30] "GET /NIPT/0199/2015-09534/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:18:47] "POST /NIPT/0199/2015-09534/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:18:48] "GET /NIPT/0199/2015-09534/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:19:05] "GET /NIPT/0265/test-2015-13704-09/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:19:13] "POST /NIPT/0265/test-2015-13704-09/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:19:13] "GET /NIPT/0265/test-2015-13704-09/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:19:24] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:19:56] "GET /NIPT/0202/test-2015-14126-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:20:03] "POST /NIPT/0202/test-2015-14126-05/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:20:04] "GET /NIPT/0202/test-2015-14126-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:20:11] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:20:31] "GET /NIPT/0203/test-2015-13704-10/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:20:40] "POST /NIPT/0203/test-2015-13704-10/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:20:40] "GET /NIPT/0203/test-2015-13704-10/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:21:01] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:21:28] "GET /NIPT/0203/test-2015-15076-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:21:46] "POST /NIPT/0203/test-2015-15076-05/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:21:46] "GET /NIPT/0203/test-2015-15076-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:22:06] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:22:33] "GET /NIPT/0205/test-2015-14126-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:22:44] "POST /NIPT/0205/test-2015-14126-06/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:22:44] "GET /NIPT/0205/test-2015-14126-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:22:51] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:22:55] "GET /NIPT/0205/test-2015-15988-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:23:03] "POST /NIPT/0205/test-2015-15988-05/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:23:03] "GET /NIPT/0205/test-2015-15988-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:23:10] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:23:22] "GET /NIPT/0206/test-2015-16198-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:23:31] "POST /NIPT/0206/test-2015-16198-06/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:23:31] "GET /NIPT/0206/test-2015-16198-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:23:40] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:23:47] "GET /NIPT/0272/test-2015-16372-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:23:52] "POST /NIPT/0272/test-2015-16372-06/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:23:52] "GET /NIPT/0272/test-2015-16372-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:24:02] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:24:30] "GET /NIPT/0041/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:24:55] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:25:03] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:25:27] "GET /NIPT/0252/2015-06616-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:25:37] "GET /NIPT/0252/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:25:46] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:25:54] "GET /NIPT/0252/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:32:08] "GET /NIPT/0252/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:33:24] "GET /NIPT/0252/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:39:52] "GET /NIPT/0252/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:39:52] "GET /NIPT/0252/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:39:52] "GET /NIPT/0252/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:39:52] "GET /NIPT/0252/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:39:52] "GET /NIPT/0252/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:39:52] "GET /NIPT/0252/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:39:52] "GET /NIPT/0252/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:40:38] "GET /NIPT/0252/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:42:01] "GET /NIPT/0252/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:42:13] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:44:57] "GET /NIPT/0259/2015-06619/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 13:45:53] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:12:25] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:14:13] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:15:42] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:16:06] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:17:14] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:19:51] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:22:09] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:22:47] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:23:06] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:25:02] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:25:28] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:25:40] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:26:21] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:26:38] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:26:48] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:28:22] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:28:36] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:28:47] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:28:55] "GET /NIPT/0041/NCV_plots/NCV_plots.html HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:29:00] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:29:02] "GET /NIPT/0041/151223817/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:29:34] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:29:41] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:32:46] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:32:46] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:32:46] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:32:46] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:32:47] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:32:47] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:32:47] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:35:53] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:35:53] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:35:53] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:35:53] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:35:53] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:35:54] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:38:20] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:38:20] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:38:20] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:38:20] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:38:20] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:38:20] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:38:55] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:40:42] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:40:42] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:40:42] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:40:42] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:40:42] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:40:42] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:40:58] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:40:58] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:40:58] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:40:58] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:40:58] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:40:58] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:41:01] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:41:01] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:41:01] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:41:01] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:41:01] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:41:01] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:41:06] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:46:17] "GET /NIPT/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:46:17] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:46:17] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:46:17] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:46:17] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:46:17] "GET /NIPT/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:48:19] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 14:50:03] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:03:10] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:05:41] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:06:06] "POST /update HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:06:06] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:06:30] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:08:52] "GET /NIPT/0041/NCV_plots/NCV_plots.html HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:08:57] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:10:42] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:11:01] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:14:36] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:16:30] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:18:37] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:19:32] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:21:28] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:25:24] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:25:35] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:26:22] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:28:40] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:28:55] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:29:46] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:33:56] "GET /NIPT/0041/NCV_plots/NCV_plots.html HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:34:08] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:42:29] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:43:44] "GET /NIPT/0255/2015-08461/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 16:58:59] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 17:03:17] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 17:03:45] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 17:05:39] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 17:06:28] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 17:07:11] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 17:08:16] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 17:08:33] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 17:43:00] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 17:43:36] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Feb/2016 17:44:55] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 08:47:53] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 08:50:05] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 08:50:47] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 08:51:29] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 08:52:09] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:09:31] "GET /NIPT/0255/2015-08526 HTTP/1.1" 301 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:09:31] "GET /NIPT/0255/2015-08526/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:10:13] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:14:11] "GET /NIPT/0255/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:14:16] "GET /NIPT/0255/2015-08526/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:22:08] "GET /NIPT/0255/2015-08526/ HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:22:13] "GET /NIPT/2015-08526/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:22:37] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:22:39] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:22:42] "GET /NIPT/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:22:47] "GET /NIPT/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:22:49] "GET /NIPT/151223869/NCV_plots/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:22:50] "GET /NIPT/151223869/NCV_plots/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:22:50] "GET /NIPT/151223869/NCV_plots/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:22:50] "GET /NIPT/151223869/NCV_plots/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:22:50] "GET /NIPT/151223869/NCV_plots/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:22:50] "GET /NIPT/151223869/NCV_plots/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:22:50] "GET /NIPT/151223869/NCV_plots/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:26:01] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:26:03] "GET /NIPT/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:26:12] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:26:19] "GET /NIPT/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:28:32] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:28:34] "GET /NIPT/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:28:40] "GET /NIPT/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:29:30] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:30:55] "GET /NIPT/151223869/ HTTP/1.1" 200 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 194, in run_wsgi
+    execute(self.server.app)
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 185, in execute
+    write(data)
+  File "/Users/mayabrandi/anaconda/lib/python2.7/site-packages/werkzeug/serving.py", line 166, in write
+    self.wfile.write(data)
+IOError: [Errno 32] Broken pipe
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:30:55] "GET /NIPT/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:33:16] "GET /NIPT/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:33:18] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:33:21] "GET /NIPT/151223822/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:42:29] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:42:32] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:42:38] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:42:42] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:42:44] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:42:57] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:43:04] "GET /NIPT/samples/2015-08526/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:43:35] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:43:36] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:43:41] "GET /NIPT/samples/151216335/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:44:32] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:44:37] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:44:39] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:44:48] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:48:24] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:48:31] "GET /NIPT/samples/151223817 HTTP/1.1" 301 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:48:32] "GET /NIPT/samples/151223817/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:48:51] "GET /NIPT/samples/validation%20samples%20(1004%20pcs) HTTP/1.1" 301 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:48:51] "GET /NIPT/samples/validation%20samples%20%281004%20pcs%29/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:48:51] "GET /NIPT/samples/validation%20samples%20%281004%20pcs%29/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:48:51] "GET /NIPT/samples/validation%20samples%20%281004%20pcs%29/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:48:51] "GET /NIPT/samples/validation%20samples%20%281004%20pcs%29/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:48:51] "GET /NIPT/samples/validation%20samples%20%281004%20pcs%29/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:48:51] "GET /NIPT/samples/validation%20samples%20%281004%20pcs%29/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:48:51] "GET /NIPT/samples/validation%20samples%20%281004%20pcs%29/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:48:51] "GET /NIPT/samples/validation%20samples%20%281004%20pcs%29/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:49:52] "GET /NIPT/samples/X0 HTTP/1.1" 301 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:49:52] "GET /NIPT/samples/X0/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:49:52] "GET /NIPT/samples/X0/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:49:52] "GET /NIPT/samples/X0/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:49:52] "GET /NIPT/samples/X0/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:49:52] "GET /NIPT/samples/X0/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:49:52] "GET /NIPT/samples/X0/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:49:52] "GET /NIPT/samples/X0/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:54:06] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:54:35] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:56:13] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:56:46] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:57:10] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:59:27] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:59:35] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 09:59:49] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:00:05] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:01:45] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:02:19] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:03:19] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:03:46] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:04:52] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:05:17] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:06:00] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:06:22] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:07:10] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:07:26] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:08:21] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:09:03] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:10:13] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:10:27] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:11:28] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:12:47] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:13:28] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:14:53] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:15:12] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:15:54] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:16:15] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:16:45] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:17:08] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:17:32] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:19:07] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:19:31] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:19:41] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:20:43] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:25:08] "GET /NIPT/samples/X0/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:25:08] "GET /NIPT/samples/X0/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:25:08] "GET /NIPT/samples/X0/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:25:08] "GET /NIPT/samples/X0/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:25:08] "GET /NIPT/samples/X0/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:25:08] "GET /NIPT/samples/X0/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:25:12] "GET /NIPT/samples/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:25:37] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:25:39] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:25:42] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:25:49] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:25:52] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:25:54] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:26:24] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:27:44] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:28:07] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:28:28] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:29:05] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:30:14] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:33:20] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:34:33] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:35:04] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:36:27] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:39:32] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:39:49] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:40:20] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:41:26] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:42:37] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:46:55] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:47:07] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:55:05] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:55:14] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:55:52] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:57:07] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:57:42] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:58:29] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 10:58:48] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 11:00:48] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 11:01:12] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 11:01:58] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 11:04:26] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 11:05:23] "GET /NIPT/0041/NCV_plots/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 11:05:33] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 11:05:46] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 11:07:55] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 11:07:59] "GET /NIPT/ HTTP/1.1" 200 -

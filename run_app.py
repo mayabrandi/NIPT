@@ -16,6 +16,23 @@ class BatchDataHandler():
                                             NCV.sample_ID.notilike('%ref%'),
                                             NCV.sample_ID.notilike('%Control%'))
         self.samples_on_batch = Sample.query.filter(Sample.batch_id == batch_id)
+
+    def fliter_NA(self):
+        # Filtering out NA. Could probably be done in a more preyyt way :/
+        return NCV.query.filter(
+                NCV.NCV_13!='NA',
+                NCV.NCV_18!='NA',
+                NCV.NCV_21!='NA',
+                NCV.NCV_X!='NA',
+                NCV.NCV_Y!='NA')
+
+
+class DataClasifyer():
+    def __init__(self):
+        self.NCV_data = {} 
+        self.NCV_names = ['13','18','21','X','Y']
+        self.NCV_warnings = {}
+        self.warnings = {}
         self.sex_tresholds = {'XY_horis' :  {'x' : [-30, 10],   'y' : [13, 13]},
                                 'XY_upper': {'x' : [-30, 5.05], 'y' : [553.687, 13.6016]},
                                 'XY_lower': {'x' : [-30, -5,13],'y' : [395.371, 13.971]},
@@ -27,60 +44,72 @@ class BatchDataHandler():
                                 'hard_max': {'NCV': 4 , 'color': 'red'},
                                 'hard_min': {'NCV': -5, 'color': 'red'} }
 
-    def fliter_NA(self):
-        # Filtering out NA. Could probably be done in a more preyyt way :/
-        return NCV.query.filter(
-                NCV.NCV_13!='NA',
-                NCV.NCV_18!='NA',
-                NCV.NCV_21!='NA',
-                NCV.NCV_X!='NA',
-                 NCV.NCV_Y!='NA')
-
-class BatchPage():
-    def __init__(self, batch_id):
-        self.BDH = BatchDataHandler(batch_id)
-        self.NCV_data = {} 
-        self.NCV_on_batch = NCV.query.filter(NCV.batch_id == batch_id)
-        self.NCV_names = ['NCV_13','NCV_18','NCV_21','NCV_X','NCV_Y']
-        self.NCV_warnings = {}
-        self.warnings = {}
-
-    def handle_NCV(self):
-        for s in self.NCV_on_batch:
+    def handle_NCV(self, NCV_db):
+        #NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
+        for s in NCV_db:
             samp_warn = []
+            sex_warn = []
             self.NCV_data[s.sample_ID] = {}
+            exceptions = ['NA','']
             for key in self.NCV_names:
-                if s.__dict__[key] == 'NA':
-                    val = 'NA'
+                if s.__dict__['NCV_'+key] in exceptions:
+                    val = s.__dict__['NCV_'+key]
                     warn = "default"
                 else:
-                    val = round(float(s.__dict__[key]),2)
-                    if  key in ['NCV_13','NCV_18','NCV_21']:
-                        hmin = self.BDH.tris_thresholds['hard_min']['NCV']
-                        hmax = self.BDH.tris_thresholds['hard_max']['NCV']
-                        smin = self.BDH.tris_thresholds['soft_min']['NCV']
-                        smax = self.BDH.tris_thresholds['soft_max']['NCV']
+                    val = round(float(s.__dict__['NCV_'+key]),2)
+                    if  key in ['13','18','21']:
+                        hmin = self.tris_thresholds['hard_min']['NCV']
+                        hmax = self.tris_thresholds['hard_max']['NCV']
+                        smin = self.tris_thresholds['soft_min']['NCV']
+                        smax = self.tris_thresholds['soft_max']['NCV']
                         if (smax <= val < hmax) or (hmin < val <= smin):
                             warn = "warning"
-                            samp_warn.append(key)
+                            samp_warn.append('T'+key)
                         elif (val >= hmax) or (val <= hmin):
                             warn = "danger"
-                            samp_warn.append(key)
+                            samp_warn.append('T'+key)
                         else:
                             warn = "default"
-                self.NCV_data[s.sample_ID][key] = {'val': val, 'warn': warn }
-            if samp_warn:
-                self.NCV_warnings[s.sample_ID] = ', '.join(samp_warn)
+                self.NCV_data[s.sample_ID]['NCV_'+key] = {'val': val, 'warn': warn }
+            if not set([s.NCV_X , s.NCV_Y]).issubset(exceptions):
+                x = float(s.NCV_X)
+                y = float(s.NCV_Y)
+                f_h = -15.35*x + 91.42 - y
+                f_l = -15.35*x - 64.70 - y
+                if 0>=f_h and x<=-4:
+                    sex_warn = 'XYY'
+                    
+                elif 0>=f_h and x>=-4 and y>13:
+                    sex_warn = 'XXY'
+                elif y<13 and x>=4:
+                    sex_warn = 'XXX'
+              ##  elif f_l<0<=f_h and y>13:
+                ##    sex_warn = 'XY'
+                elif f_l>0 and x< -4:
+                    sex_warn = 'X0'
+              #  elif -4>=x>=4 and y<13:
+              #      sex_warn = 'XX'
+            if sex_warn:
+                self.NCV_data[s.sample_ID]['NCV_Y']['warn'] = "danger"
+                self.NCV_data[s.sample_ID]['NCV_X']['warn'] = "danger"
+                samp_warn.append(sex_warn)
+            else:
+                self.NCV_data[s.sample_ID]['NCV_Y']['warn'] = "default"
+                self.NCV_data[s.sample_ID]['NCV_X']['warn'] = "default"
+            #self.NCV_warnings[s.sample_ID] = ', '.join(sex_warn)
+            self.NCV_warnings[s.sample_ID] = ', '.join(samp_warn)
 
-    def get_warnings(self):
+    def get_warnings(self, samples):
 #        low_NES = self.BDH.samples_on_batch.filter(Sample.NonExcludedSites < 8000000)
-        QC_flagged = self.BDH.samples_on_batch.filter(Sample.QCFlag > 0)
+        QC_flagged = samples.filter(Sample.QCFlag > 0)
+        ##QC_flagged = self.BDH.samples_on_batch.filter(Sample.QCFlag > 0)
 #        for sample in set(self.NCV_warnings.keys() + [sample.sample_ID for sample in low_NES] + [sample.sample_ID for sample in QC_flagged]):
 #            self.warnings[sample] = {'sample_ID' : sample, 'missing_data' : '', 'QC_warn' : '', 'QC_fail' : '', 'NCV_low': ''}
-        for sample in set(self.NCV_warnings.keys() + [sample.sample_ID for sample in QC_flagged]):
+#        for sample in set(self.NCV_warnings.keys() + [sample.sample_ID for sample in QC_flagged]):
+        for sample in set([sample.sample_ID for sample in QC_flagged]):
             self.warnings[sample] = {'sample_ID' : sample, 'QC_warn' : '', 'QC_fail' : ''}
-        for sample_id, warning in self.NCV_warnings.items():
-            self.warnings[sample_id]['NCV_high'] = warning
+       # for sample_id, warning in self.NCV_warnings.items():
+         #   self.warnings[sample_id]['NCV_high'] = warning
 #        for sample in low_NES:
 #            self.warnings[sample.sample_ID]['missing_data'] = 'warning: lt 8M reads'
         for sample in QC_flagged:
@@ -110,12 +139,15 @@ class PlottPage():
 
     def make_approved_stats(self, chrom):
         NCV_pass = []
+        NCV_pass_names = []
         for s in self.NCV_passed:
             try: 
                 NCV_pass.append(float(s.__dict__[chrom])) 
+                NCV_pass_names.append(s.sample_ID)
             except:
                 pass
-        return [list( NCV_pass)]
+        
+        return [NCV_pass], [NCV_pass_names]
 
     def make_X_labels(self):
         X_labels = [s.__dict__['sample_ID'] for s in self.cases]
@@ -123,7 +155,7 @@ class PlottPage():
 
     def make_NCV_stat(self):
         for chrom in self.NCV_stat.keys():
-            NCV_pass = self.make_approved_stats(chrom)
+            NCV_pass , NCV_pass_names = self.make_approved_stats(chrom)
             NCV_list = [[s.__dict__['sample_ID'], 
                     round(float(s.__dict__[chrom]),2)] for s in self.cases]
             NCV_cases = [round(float(s.__dict__[chrom]),2) for s in self.cases]
@@ -135,7 +167,8 @@ class PlottPage():
                 'x_axis' : range(2,len(NCV_cases)+2),
                 'X_labels' : X_labels,
                 'chrom' : chrom,
-                'NCV_pass' : NCV_pass}
+                'NCV_pass' : NCV_pass,
+                'NCV_pass_names' : NCV_pass_names}
 
     def make_chrom_abn(self):
         x = 1
@@ -157,7 +190,6 @@ class PlottPage():
                     self.sex_chrom_abn[abn][status]['NCV_Y'].append(float(NCV_db.NCV_Y))
                     self.sex_chrom_abn[abn][status]['s_name'].append(s.sample_ID)
 
-        print self.sex_chrom_abn
 
 class SamplePage():
     def __init__(self, batch_id):
@@ -173,9 +205,15 @@ def login():
 
 @app.route('/NIPT/')
 def batch():
+    NCV_db = NCV.query
+    sample_db = Sample.query
+    DC = DataClasifyer()
+    DC.handle_NCV(NCV_db)
+    DC.get_warnings(sample_db)
     return render_template('start_page.html', 
         batches = Batch.query,
-        samples = Sample.query)
+        samples = Sample.query,
+        NCV_warnings = DC.NCV_warnings)
 
 @app.route('/update', methods=['POST'])
 def update():
@@ -270,19 +308,24 @@ def update_trisomi_status(batch_id, sample_id):
 
 @app.route('/NIPT/<batch_id>/')
 def sample(batch_id):
-    BP = BatchPage(batch_id)
-    BP.handle_NCV()
-    BP.get_warnings()
+    DC = DataClasifyer() 
+    NCV_db = NCV.query.filter(NCV.batch_id == batch_id) 
+    sample_db = Sample.query.filter(Sample.batch_id == batch_id)   
+    DC.handle_NCV(NCV_db)
+    DC.get_warnings(sample_db)
     return render_template('batch_page.html', 
-            samples = BP.NCV_on_batch,
-            warnings = BP.warnings, 
-            NCV_rounded = BP.NCV_data,
+            samples = NCV_db,
+            seq_warning = DC.warnings,
+            warnings = DC.NCV_warnings, 
+            NCV_rounded = DC.NCV_data,
             batch_id = batch_id,
-            sample_ids = ','.join(sample.sample_ID for sample in BP.NCV_on_batch))
+            sample_ids = ','.join(sample.sample_ID for sample in NCV_db))
 
-@app.route('/NIPT/<batch_id>/<sample_id>/')
-def sample_page(batch_id, sample_id):
+@app.route('/NIPT/samples/<sample_id>/')
+def sample_page( sample_id):
     sample = Sample.query.filter_by(sample_ID = sample_id).first()
+    batch_id = sample.batch_id
+    DC = DataClasifyer()
     NCV_dat = NCV.query.filter_by(sample_ID = sample_id).first()
     chrom_abnorm = ['T13','T18', 'T21', 'X0', 'XXX','XXY','XYY']
     db_entries = {c:sample.__dict__['status_'+c].replace('\r\n', '').strip() for c in chrom_abnorm }
@@ -311,12 +354,13 @@ def sample_page(batch_id, sample_id):
             NCV_stat = PP.NCV_stat,
             NCV_131821 = ['NCV_13', 'NCV_18', 'NCV_21'],
             state_dict = sample_state_dict,
-            sex_tresholds = PP.BDH.sex_tresholds,
-            tris_thresholds = PP.BDH.tris_thresholds)
+            sex_tresholds = DC.sex_tresholds,
+            tris_thresholds = DC.tris_thresholds)
 
 @app.route('/NIPT/<batch_id>/NCV_plots/')
 def NCV_plots(batch_id):
     PP = PlottPage(batch_id)
+    DC = DataClasifyer()
     PP.make_NCV_stat()
     PP.make_chrom_abn()
     state_dict = {'Probable':{},'False Positive':{},'Verified':{}}
@@ -325,7 +369,7 @@ def NCV_plots(batch_id):
         state_dict[state]['T_18'] = Sample.query.filter_by(status_T18 = state)
         state_dict[state]['T_21'] = Sample.query.filter_by(status_T21 = state)
     return render_template('NCV_plots.html',
-        samples         = PP.BDH.samples_on_batch,
+        samples         = Sample.query.filter(Sample.batch_id == batch_id),
         batch_id        = batch_id,
         NCV_stat        = PP.NCV_stat,
         nr_validation_samps = PP.nr_validation_samps,
@@ -334,8 +378,8 @@ def NCV_plots(batch_id):
         state_dict      = state_dict,
         tris_chrom_abn  = PP.tris_chrom_abn,
         sex_chrom_abn   = PP.sex_chrom_abn,
-        sex_tresholds   = PP.BDH.sex_tresholds,
-        tris_thresholds = PP.BDH.tris_thresholds)
+        sex_tresholds   = DC.sex_tresholds,
+        tris_thresholds = DC.tris_thresholds)
 
 def main():
     logging.basicConfig(filename = 'NIPT_log', level=logging.INFO)
