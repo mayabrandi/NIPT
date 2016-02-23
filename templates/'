@@ -18,48 +18,27 @@
     <script src="http://listjs.com/no-cdn/list.js"></script>
 
 
-<!--style>
-tr{
+<style>
+tr {
 width: 100%;
 display: inline-table;
 }
 
 table{
- height:560px; 
+ height:300px; 
 }
 tbody{
   overflow-y: scroll;
-  height: 520px;
+  height: 200px;
   width: 100%;
   position: absolute;
 }
-</style-->
-
-<style>
-/* tab color */
-.nav-tabs>li>a {
-  background-color: #666; 
-  border-color: #888888;
-  text:white;
-  ;
-}
-
-/* active tab color */
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
-  color: #fff;
-  background-color: orange;
-  border: 1px solid orange;
-}
-
-/* hover tab color */
-.nav-tabs>li>a:hover {
-  border-color: #666;
-  background-color: #888888;
-}
 </style>
+
 
 </head>
 <body>
+    <div class="container">
         <!-- Navigation -->
            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
              <!-- navbar-header -->
@@ -68,15 +47,14 @@ tbody{
             </div>
             <!-- /.navbar-header -->
         </nav>
-<div class="container">
         <!--div id="page-wrapper"-->
            <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header"><strong>NIPT results</strong></h1>
+                <h1 class="page-header">NIPT results</h1>
              </div>
           </div>
-        <div class="row">
-            <div class="col-lg-6">
+        <!--div class="row">
+            <div class="col-lg-10">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h5>Project details</h5>
@@ -103,7 +81,7 @@ tbody{
                       </div>
                    </div>
               </div>
-          </div>        
+          </div-->        
                             <ul class="nav nav-tabs">
                                 <li class="active"><a href="#batches" data-toggle="tab">Batches</a>
                                 </li>
@@ -119,7 +97,7 @@ tbody{
                         <div class="table-responsive">
                             <div id="batch_list">
                                 <label>Search:
-                                    <input type="search" class="form-control search"  placeholder="" />
+                                    <input type="search" class="form-control search" placeholder="" />
                                            <!--input type="search" class="form-control input-sm" placeholder=""-->
                                   </label>
                                 <table  class="table table-striped table-bordered table-hover">
@@ -164,7 +142,7 @@ tbody{
                                 <table  class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Sample id</th>
+                                            <th>Sample id</th>'
                                             <th>Warnings</th>
                                             <th>T13</th>
                                             <th>T18</th>
@@ -175,7 +153,7 @@ tbody{
                                             <th>X0</th>
                                           </tr>
                                        </thead>
-                                      <tbody   class="list">
+                                      <tbody  height=200px class="list">
                                         {% for sample in samples %}
                                         <tr>
                                             <td class="Sample id"> <a href={{ url_for('sample_page', sample_id=sample.sample_ID) }}>{{ sample.sample_ID }}</a></td-->

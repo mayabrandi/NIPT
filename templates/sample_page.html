@@ -12,12 +12,30 @@
     <script src="https://cdn.plot.ly/plotly-1.5.1.min.js"></script>
 
 
+<style>
+/* tab color */
+.nav-tabs>li>a {
+  background-color: #666;
+  border-color: #888888;
+  text:white;
+  ;
+}
 
+/* active tab color */
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+  color: #fff;
+  background-color: orange;
+  border: 1px solid orange;
+}
+
+/* hover tab color */
+.nav-tabs>li>a:hover {
+  border-color: #666;
+  background-color: #888888;
+}
+</style>
 </head>
 <body>
-    <div id="wrapper">
-
-
        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -29,42 +47,35 @@
                 <a class="navbar-brand" href="http://127.0.0.1:5000/NIPT/">Project ID</a>
             </div>
             <!-- /.navbar-header -->
-    
-             <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li>
-                            <a href="http://127.0.0.1:5000/NIPT/"><i class="fa fa-dashboard fa-fw"></i>Project Summary</a>
-                        </li>
-                        <li>
-                            <a href="http://127.0.0.1:5000/NIPT/{{batch_id}}/NCV_plots/"><i class="fa fa-table fa-fw"></i>NCV plots</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-messages -->
-                </div>
-            </div>
         </nav>
 
-
-        <div id="page-wrapper">
+<div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Sample: <strong>{{sample_id}}</strong></h1>
+                    <h1 class="page-header"><strong>Sample: {{sample_id}}</strong></h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-             <div class="row">
-                <div class="col-lg-9">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                           <h5>Chromosome Abnormality Status Table</h5>
-                        </div>
+
+            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#table" data-toggle="tab">Status table</a>
+                                </li>
+                                <li><a href="#131821" data-toggle="tab">NCV plot - crom: 13, 18 & 21</a>
+                                </li>
+                                <li><a href="#XY" data-toggle="tab">NCV plot - sex chromosomes</a>
+                                </li>
+                            </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id='table'>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default"><br><br>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
 
                                 <form action="{{ url_for('update_trisomi_status', batch_id=batch_id, sample_id = sample_id) }}" method="post">
-                                <table class="table table-striped table-bordered table-hover" >
+                                <table class="table table-bordered table-striped table-hover" >
                                     <thead>
                                         <tr>
                                             <th>Chromosome abnormality</th>
@@ -76,8 +87,8 @@
                                     <tbody>
                                         {% for c in chrom_abnorm %}
                                         <tr>
-                                            <td><strong>{{ c }}</strong></td>
-                                            <td{% if db_entries[c] == "Suspected" %} class="warning"{% endif %}
+                                            <td width=10%><strong>{{ c }}</strong></td>
+                                            <td width=10% {% if db_entries[c] == "Suspected" %} class="warning"{% endif %}
                                                 {% if db_entries[c] == "False Positive" %} class="success"{% endif %}
                                                 {% if db_entries[c] == "Verified" %} class="danger"{% endif %}
                                                 {% if db_entries[c] == "Probable" %} class="warning"{% endif %}
@@ -92,7 +103,7 @@
                                                 <option {% if db_entries[c] == "Other" %} selected {% endif %} value="Other">Other</option>
                                                 </select>
                                             </div></td>
-                                            <td> {{db_entries_change[c]}} </td>
+                                            <td width=10%> {{db_entries_change[c]}} </td>
                                             <td> 
                                                 <div class="form-group">
                                                     <textarea class="form-control" rows="3" name = "comment_{{c}}">{{db_entries_comments[c]}}</textarea> 
@@ -118,30 +129,32 @@
                             </div>
                             <!-- /.table-responsive -->
                         </div>
+                    </div>
                         <!-- /.panel-body -->
                     </div>
+                </div>
                     <!-- /.panel -->
+                    </div>
+                    <div class="tab-pane fade in active" id='131821'>
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                           <h5>NCV - chromosomes 13, 18 & 21</h5>
-                        </div>
-                        <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div id="plot_131821" style="min-width:450px; height:450px; "></div><br><br>
+                            <div id="plot_131821" style="min-width:450px; height:700px; "></div><br><br>
                         </div>
+                    </div>
+                    </div>
+                    <div class="tab-pane fade in active" id='XY'>
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                           <h5>NCV - sex chromosomes</h5>
-                        </div>
                         <div class="panel-body">
-                            <div id="plot_sex" style="min-width:450px; height:450px; "></div><br><br>
+                            <div id="plot_sex" style="min-width:450px; height:700px; "></div><br><br>
                         </div>
                         <!-- /.panel-body -->
+                    </div>
                     </div>
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-8 -->
             </div>
+    </div>
             <!-- /.row -->
 </div>
         <!-- /#page-wrapper -->

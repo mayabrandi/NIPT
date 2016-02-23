@@ -306,20 +306,20 @@ def update_trisomi_status(batch_id, sample_id):
     db.session.commit()
     return redirect(request.referrer)
 
-@app.route('/NIPT/<batch_id>/')
-def sample(batch_id):
-    DC = DataClasifyer() 
-    NCV_db = NCV.query.filter(NCV.batch_id == batch_id) 
-    sample_db = Sample.query.filter(Sample.batch_id == batch_id)   
-    DC.handle_NCV(NCV_db)
-    DC.get_warnings(sample_db)
-    return render_template('batch_page.html', 
-            samples = NCV_db,
-            seq_warning = DC.warnings,
-            warnings = DC.NCV_warnings, 
-            NCV_rounded = DC.NCV_data,
-            batch_id = batch_id,
-            sample_ids = ','.join(sample.sample_ID for sample in NCV_db))
+#@app.route('/NIPT/<batch_id>/')
+#def iisample(batch_id):
+#    DC = DataClasifyer() 
+ #   NCV_db = NCV.query.filter(NCV.batch_id == batch_id) 
+  #  sample_db = Sample.query.filter(Sample.batch_id == batch_id)   
+  #  DC.handle_NCV(NCV_db)
+  #  DC.get_warnings(sample_db)
+  #  return render_template('batch_page.html', 
+  #          samples = NCV_db,
+  #          seq_warning = DC.warnings,
+  #          warnings = DC.NCV_warnings, 
+  #          NCV_rounded = DC.NCV_data,
+  #          batch_id = batch_id,
+  #          sample_ids = ','.join(sample.sample_ID for sample in NCV_db))
 
 @app.route('/NIPT/samples/<sample_id>/')
 def sample_page( sample_id):
@@ -357,10 +357,14 @@ def sample_page( sample_id):
             sex_tresholds = DC.sex_tresholds,
             tris_thresholds = DC.tris_thresholds)
 
-@app.route('/NIPT/<batch_id>/NCV_plots/')
-def NCV_plots(batch_id):
-    PP = PlottPage(batch_id)
+@app.route('/NIPT/<batch_id>/')
+def sample(batch_id):
+    NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
+    sample_db = Sample.query.filter(Sample.batch_id == batch_id)
     DC = DataClasifyer()
+    DC.handle_NCV(NCV_db)
+    DC.get_warnings(sample_db)
+    PP = PlottPage(batch_id)
     PP.make_NCV_stat()
     PP.make_chrom_abn()
     state_dict = {'Probable':{},'False Positive':{},'Verified':{}}
@@ -368,8 +372,9 @@ def NCV_plots(batch_id):
         state_dict[state]['T_13'] = Sample.query.filter_by(status_T13 = state)
         state_dict[state]['T_18'] = Sample.query.filter_by(status_T18 = state)
         state_dict[state]['T_21'] = Sample.query.filter_by(status_T21 = state)
-    return render_template('NCV_plots.html',
+    return render_template('batch_page.html',
         samples         = Sample.query.filter(Sample.batch_id == batch_id),
+        NCV_samples     = NCV.query.filter(NCV.batch_id == batch_id),
         batch_id        = batch_id,
         NCV_stat        = PP.NCV_stat,
         nr_validation_samps = PP.nr_validation_samps,
@@ -379,7 +384,14 @@ def NCV_plots(batch_id):
         tris_chrom_abn  = PP.tris_chrom_abn,
         sex_chrom_abn   = PP.sex_chrom_abn,
         sex_tresholds   = DC.sex_tresholds,
-        tris_thresholds = DC.tris_thresholds)
+        tris_thresholds = DC.tris_thresholds,
+        seq_warning = DC.warnings,
+        warnings = DC.NCV_warnings,
+        NCV_rounded = DC.NCV_data,
+        sample_ids = ','.join(sample.sample_ID for sample in NCV_db))
+
+
+
 
 def main():
     logging.basicConfig(filename = 'NIPT_log', level=logging.INFO)
