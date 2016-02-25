@@ -45,7 +45,6 @@ class DataClasifyer():
                                 'hard_min': {'NCV': -5, 'color': 'red'} }
 
     def handle_NCV(self, NCV_db):
-        #NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
         for s in NCV_db:
             samp_warn = []
             sex_warn = []
@@ -74,8 +73,8 @@ class DataClasifyer():
             if not set([s.NCV_X , s.NCV_Y]).issubset(exceptions):
                 x = float(s.NCV_X)
                 y = float(s.NCV_Y)
-                f_h = -15.35*x + 91.42 - y
-                f_l = -15.35*x - 64.70 - y
+                f_h = -15.409*x + 91.417 - y
+                f_l = -15.256*x - 62.309 - y
                 if 0>=f_h and x<=-4:
                     sex_warn = 'XYY'
                     
@@ -96,7 +95,6 @@ class DataClasifyer():
             else:
                 self.NCV_data[s.sample_ID]['NCV_Y']['warn'] = "default"
                 self.NCV_data[s.sample_ID]['NCV_X']['warn'] = "default"
-            #self.NCV_warnings[s.sample_ID] = ', '.join(sex_warn)
             self.NCV_warnings[s.sample_ID] = ', '.join(samp_warn)
 
     def get_warnings(self, samples):
@@ -121,15 +119,18 @@ class DataClasifyer():
 class PlottPage():
     """Class to preppare data for NCV plots"""
     def __init__(self, batch_id):
+        self.batch_id = batch_id
         self.BDH = BatchDataHandler(batch_id)
         self.NCV_passed = self.BDH.NCV_passed
         self.nr_validation_samps = len(self.BDH.NCV_passed.all()) 
         self.cases = self.BDH.cases  
         self.NCV_stat = {'NCV_13':{}, 'NCV_18':{}, 
                          'NCV_21':{}, 'NCV_X':{}, 'NCV_Y' : {}}
+        self.coverage_plot = {'samples':{},'x_axis':[]}
         self.tris_chrom_abn = {'13':{},
                                '18':{},
                                '21':{}}
+        self.tris_abn = {}
         self.sex_chrom_abn = {'X0':{},
                               'XXX':{},
                               'XXY':{},
@@ -148,6 +149,15 @@ class PlottPage():
                 pass
         
         return [NCV_pass], [NCV_pass_names]
+
+    def make_cov_plot_data(self):
+        cov = Coverage.query.filter(Coverage.batch_id == self.batch_id) 
+        x_axis = range(1,23)
+        self.coverage_plot['x_axis'] = x_axis
+        for samp in cov:
+            self.coverage_plot['samples'][samp.sample_ID] = {'cov':[], 'samp_id':[samp.sample_ID]}
+            for i in x_axis:
+                self.coverage_plot['samples'][samp.sample_ID]['cov'].append(float(samp.__dict__['Chr'+str(i)+'_Coverage']))
 
     def make_X_labels(self):
         X_labels = [s.__dict__['sample_ID'] for s in self.cases]
@@ -172,14 +182,21 @@ class PlottPage():
 
     def make_chrom_abn(self):
         x = 1
-        for abn in self.tris_chrom_abn.keys():
-            for status in self.sample_state_dict.keys():                                       
+        status_x = {'Probable':0.1,'Verified':0.2,'False Positive':0.3,'False Negative':0.4}
+        for status in self.sample_state_dict.keys():
+            
+            self.tris_abn[status] = {'NCV' : [], 's_name' : [], 'x_axis': []}
+        for abn in ['13','18','21']:
+            for status in self.sample_state_dict.keys():                                      
                 self.tris_chrom_abn[abn][status] = {'NCV' : [], 's_name' : [], 'x_axis': []}             
                 for s in Sample.query.filter(Sample.__dict__['status_T'+abn] == status):
                     NCV_val = NCV.query.filter_by(sample_ID = s.sample_ID).first().__dict__['NCV_' + abn]
+                    self.tris_abn[status]['NCV'].append(float(NCV_val))
+                    self.tris_abn[status]['s_name'].append(s.sample_ID)
+                    self.tris_abn[status]['x_axis'].append(x+status_x[status])
                     self.tris_chrom_abn[abn][status]['NCV'].append(float(NCV_val))
                     self.tris_chrom_abn[abn][status]['s_name'].append(s.sample_ID)
-                    self.tris_chrom_abn[abn][status]['x_axis'].append(x)
+                    self.tris_chrom_abn[abn][status]['x_axis'].append(0)
             x = x+1
         for abn in self.sex_chrom_abn.keys():
             for status in self.sample_state_dict.keys():                                       
@@ -341,7 +358,7 @@ def sample_page( sample_id):
         sample_state_dict[state]['T_21'] = Sample.query.filter_by(status_T21 = state)
     return render_template('sample_page.html',
             NCV_dat = NCV_dat,
-            tris_chrom_abn = PP.tris_chrom_abn,
+            tris_abn = PP.tris_abn,
             sex_chrom_abn = PP.sex_chrom_abn,
             sample = sample, 
             batch_id = batch_id,
@@ -357,16 +374,19 @@ def sample_page( sample_id):
             sex_tresholds = DC.sex_tresholds,
             tris_thresholds = DC.tris_thresholds)
 
-@app.route('/NIPT/<batch_id>/')
+@app.route('/NIPT/batches/<batch_id>/')
 def sample(batch_id):
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
     sample_db = Sample.query.filter(Sample.batch_id == batch_id)
     DC = DataClasifyer()
     DC.handle_NCV(NCV_db)
     DC.get_warnings(sample_db)
+    print DC.NCV_warnings
+    print '***'
     PP = PlottPage(batch_id)
     PP.make_NCV_stat()
     PP.make_chrom_abn()
+    PP.make_cov_plot_data()
     state_dict = {'Probable':{},'False Positive':{},'Verified':{}}
     for state in state_dict:
         state_dict[state]['T_13'] = Sample.query.filter_by(status_T13 = state)
@@ -388,6 +408,7 @@ def sample(batch_id):
         seq_warning = DC.warnings,
         warnings = DC.NCV_warnings,
         NCV_rounded = DC.NCV_data,
+        samp_cov_db = PP.coverage_plot,
         sample_ids = ','.join(sample.sample_ID for sample in NCV_db))
 
 

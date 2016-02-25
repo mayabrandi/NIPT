@@ -5891,3 +5891,597 @@ INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 16:57:28] "GET /NIPT/samples/151223869/
 INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 16:58:12] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 16:58:56] "GET /NIPT/ HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 16:59:00] "GET /NIPT/0041/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 17:03:45] "GET /NIPT/0041/ HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 17:03:51] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 17:05:01] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 17:05:05] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 17:05:13] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 17:05:58] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 17:06:22] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 17:06:42] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 17:07:15] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 17:07:53] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 17:08:01] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 17:08:12] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 17:08:20] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 18:57:30] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 18:58:34] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 18:58:40] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 18:59:07] "POST /NIPT/0041/151223869/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 18:59:08] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 19:00:45] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 19:01:35] "GET /NIPT/samples/151223816/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 19:02:10] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:11:52] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:12:44] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:12:49] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:13:35] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:13:46] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:13:57] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:14:28] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:14:59] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:15:14] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:16:30] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:26:49] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:27:09] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:31:48] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:36:21] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:39:19] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:42:40] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:42:57] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:47:07] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:48:23] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:50:23] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Feb/2016 23:53:20] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 00:00:44] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 00:01:00] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:36:19] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:36:25] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:39:59] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:40:19] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:40:40] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:41:54] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:43:03] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:43:07] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:43:49] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:44:46] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:45:28] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:47:30] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:47:47] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:47:58] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:48:01] "GET /login/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:48:14] "GET /batches/ HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:48:57] "GET /batches/ HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:49:00] "GET /batches/ HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:49:02] "GET /login/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:49:17] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:50:20] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:51:02] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:51:30] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:57:32] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:57:59] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:58:03] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:58:09] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:58:32] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:59:19] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:59:43] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 09:59:53] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:00:02] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:03:22] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:04:48] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:05:18] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:06:52] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:08:39] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:09:54] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:10:23] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:11:38] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:17:16] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:17:34] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:19:43] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:25:57] "GET /NIPT/samples/151223869/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:25:57] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:25:57] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:25:57] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:25:57] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:25:58] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:25:58] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:26:18] "GET /NIPT/samples/151223869/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:26:18] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:26:18] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:26:18] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:26:18] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:26:18] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:26:18] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:26:44] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:27:43] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:27:50] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:35:44] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:37:04] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:38:23] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:38:56] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:39:39] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:45:36] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:50:59] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:55:25] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:55:38] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:56:08] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:56:48] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:57:10] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:57:27] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:57:43] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:58:55] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 10:59:56] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:00:43] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:02:35] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:04:35] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:05:00] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:05:36] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:07:15] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:09:03] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:13:06] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:13:09] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:13:39] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:14:01] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:14:16] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:14:18] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:15:01] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:16:09] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:16:49] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:17:35] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:42:07] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:43:46] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:44:20] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:44:42] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:44:53] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:44:58] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:45:44] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:45:54] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:46:18] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:46:35] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:46:41] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:47:30] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:47:55] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:48:37] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:49:10] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:51:17] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:52:48] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 11:58:18] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:00:17] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:03:17] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:13:34] "GET /NIPT/batches/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:13:34] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:13:34] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:13:34] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:13:34] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:13:34] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:13:34] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:15:22] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:17:10] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:41:19] "GET /NIPT/batches/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:41:19] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:41:19] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:41:19] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:41:19] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:41:19] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:41:19] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:42:17] "GET /NIPT/batches/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:42:17] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:42:17] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:42:17] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:42:17] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:42:17] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:47:04] "GET /NIPT/batches/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:47:04] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:47:04] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:47:04] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:47:04] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:47:04] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:47:55] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:52:01] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:52:53] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:54:58] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:55:57] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:56:18] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:57:40] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 12:58:10] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:01:46] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:03:09] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:03:34] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:04:52] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:05:33] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:06:19] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:06:44] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:08:38] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:09:26] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:10:43] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:10:45] "POST /NIPT/0041/151223869/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:10:46] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:10:52] "POST /NIPT/0041/151223869/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:10:52] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:12:13] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:12:33] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:15:08] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:17:52] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:18:19] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:18:42] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:18:56] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:20:14] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:21:00] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:21:19] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:21:32] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:21:48] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:22:39] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:23:45] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:24:06] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:24:39] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:24:58] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:25:26] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:25:51] "GET /NIPT/samples/test-2015-21973-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:26:01] "GET /NIPT/batches/0199/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:27:52] "GET /NIPT/batches/0199/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:30:50] "GET /NIPT/batches/0199/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:31:47] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:32:42] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:33:00] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:34:55] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:35:32] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:35:51] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:38:05] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:39:01] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:39:40] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:40:48] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:41:36] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:44:32] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:45:25] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:46:30] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:46:46] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 13:47:35] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:12:10] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:12:10] "GET /NIPT/samples/2015-09533/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:12:10] "GET /NIPT/samples/2015-09533/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:12:10] "GET /NIPT/samples/2015-09533/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:12:10] "GET /NIPT/samples/2015-09533/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:12:10] "GET /NIPT/samples/2015-09533/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:12:11] "GET /NIPT/samples/2015-09533/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:12:46] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:25:57] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:26:08] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:28:22] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:28:28] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:28:30] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:29:34] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:30:57] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:31:07] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:31:10] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:34:30] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:41:24] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:43:17] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:45:39] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:45:52] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:46:11] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:46:29] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:48:01] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:48:26] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:49:00] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:50:24] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:52:03] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:53:00] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:53:05] "GET /NIPT/samples/151223869/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:53:05] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:53:05] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:53:05] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:53:05] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:53:05] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:53:05] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:54:33] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 14:56:40] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/nipt_db.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:08:48] "GET /NIPT/samples/151223869/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:08:48] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:08:48] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:08:48] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:08:48] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:08:48] "GET /NIPT/samples/151223869/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:09:20] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:10:38] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:10:47] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:11:06] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:11:20] "GET /NIPT/samples/2015-08461/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:11:36] "POST /NIPT/0255/2015-08461/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:11:36] "GET /NIPT/samples/2015-08461/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:12:03] "GET /NIPT/samples/2015-08528/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:12:05] "GET /NIPT/samples/2015-08511/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:12:07] "GET /NIPT/samples/2015-08521/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:12:09] "GET /NIPT/samples/ref-2015-11759-12/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:12:14] "GET /NIPT/samples/ref-2015-11563-12/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:12:19] "GET /NIPT/samples/test-2015-20629-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:12:21] "GET /NIPT/samples/test-2015-21924-04/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:12:23] "GET /NIPT/samples/test-2015-21973-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:12:36] "POST /NIPT/0255/2015-08528/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:12:36] "GET /NIPT/samples/2015-08528/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:12:46] "POST /NIPT/0195/2015-08511/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:12:46] "GET /NIPT/samples/2015-08511/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:12:55] "POST /NIPT/0196/2015-08521/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:12:56] "GET /NIPT/samples/2015-08521/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:13:04] "POST /NIPT/0201/ref-2015-11759-12/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:13:05] "GET /NIPT/samples/ref-2015-11759-12/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:13:13] "POST /NIPT/0201/ref-2015-11563-12/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:13:14] "GET /NIPT/samples/ref-2015-11563-12/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:13:22] "POST /NIPT/0195/test-2015-20629-05/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:13:22] "GET /NIPT/samples/test-2015-20629-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:13:30] "POST /NIPT/0199/test-2015-21924-04/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:13:31] "GET /NIPT/samples/test-2015-21924-04/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:13:38] "POST /NIPT/0199/test-2015-21973-05/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:13:39] "GET /NIPT/samples/test-2015-21973-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:13:50] "GET /NIPT/samples/2015-08461/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:14:20] "GET /NIPT/samples/2015-08461/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:15:17] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:15:22] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:16:22] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:16:27] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:16:54] "GET /NIPT/samples/2015-08461/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:19:12] "GET /NIPT/samples/2015-08461/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:20:06] "GET /NIPT/samples/2015-08461/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:22:11] "GET /NIPT/samples/2015-08461/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:22:41] "GET /NIPT/samples/2015-08461/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:23:27] "GET /NIPT/samples/2015-08461/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:26:03] "GET /NIPT/samples/2015-08461/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 16:26:59] "GET /NIPT/samples/2015-08461/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:16:29] "GET /NIPT/batches/0255/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:17:36] "GET /NIPT/samples/2015-08461/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:17:40] "GET /NIPT/samples/2015-08461/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:17:53] "GET /NIPT/samples/2015-08461/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:18:10] "GET /NIPT/samples/2015-08461/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:18:14] "GET /NIPT/samples/ HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:18:18] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:18:22] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:19:45] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:19:50] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:19:54] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:19:59] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:21:06] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:21:09] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:21:13] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:21:27] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:21:36] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:21:45] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:22:10] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:22:18] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:22:19] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:23:04] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:23:06] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:23:13] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:23:37] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:24:55] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:24:59] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:26:03] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:26:06] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:27:30] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:27:37] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:30:28] "GET /batches/ HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:30:33] "GET /batches/0041/ HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:30:36] "GET /batches/ HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Feb/2016 17:30:41] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:02:01] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:02:05] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:02:13] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:02:19] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:02:22] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:30:18] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:30:51] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:31:40] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:31:47] "POST /NIPT/0041/151223869/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:31:47] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:31:51] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:32:30] "POST /NIPT/0041/151223869/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:32:31] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:32:36] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:33:21] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:34:05] "GET /NIPT/samples/ref-2015-11759-12/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:34:19] "POST /NIPT/0201/ref-2015-11759-12/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:34:19] "GET /NIPT/samples/ref-2015-11759-12/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:34:30] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:35:24] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:35:50] "GET /NIPT/samples/2015-05529/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:35:58] "POST /NIPT/0250/2015-05529/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:35:59] "GET /NIPT/samples/2015-05529/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:36:10] "GET /NIPT/batches/0179/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:36:19] "GET /NIPT/samples/2015-06042/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:36:24] "POST /NIPT/0251/2015-06042/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:36:24] "GET /NIPT/samples/2015-06042/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:36:28] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:48:08] "GET /NIPT/samples/2015-06042/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:49:13] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:49:30] "GET /NIPT/samples/2015-05534-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:49:37] "POST /NIPT/0253/2015-05534-05/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:49:37] "GET /NIPT/samples/2015-05534-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:49:55] "GET /NIPT/samples/ref-2015-06553-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:50:02] "POST /NIPT/0201/ref-2015-06553-06/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:50:02] "GET /NIPT/samples/ref-2015-06553-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:50:03] "POST /NIPT/0201/ref-2015-06553-06/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:50:03] "GET /NIPT/samples/ref-2015-06553-06/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:50:08] "GET /NIPT/samples/2015-06042/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:52:16] "GET /NIPT/samples/2015-06042/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:56:24] "GET /NIPT/samples/2015-06042/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:58:00] "GET /NIPT/samples/2015-06042/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:59:04] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 09:59:09] "GET /NIPT/samples/152871227/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:01:40] "GET /NIPT/samples/152871227/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:03:34] "GET /NIPT/samples/152871227/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:04:07] "GET /NIPT/samples/152871227/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:04:07] "GET /NIPT/samples/152871227/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:04:07] "GET /NIPT/samples/152871227/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:04:07] "GET /NIPT/samples/152871227/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:04:07] "GET /NIPT/samples/152871227/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:04:07] "GET /NIPT/samples/152871227/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:04:07] "GET /NIPT/samples/152871227/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:05:10] "GET /NIPT/samples/152871227/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:09:39] "GET /NIPT/samples/152871227/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:13:05] "GET /NIPT/samples/152871227/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:14:31] "GET /NIPT/samples/152871227/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:15:36] "GET /NIPT/samples/152871227/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:17:37] "GET /NIPT/samples/152871227/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:18:25] "GET /NIPT/samples/152871227/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:19:14] "GET /NIPT/samples/152871227/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:22:34] "GET /NIPT/samples/152871227/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:23:23] "GET /NIPT/samples/152871227/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:25:37] "GET /NIPT/samples/152871227/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:27:08] "GET /NIPT/samples/152871227/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:27:35] "GET /NIPT/samples/152871227/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:28:33] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:33:02] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:37:04] "GET /NIPT/batches/0041/ HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:37:04] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:37:04] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:37:04] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:37:04] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:37:04] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:37:04] "GET /NIPT/batches/0041/?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:37:21] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:37:47] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:40:31] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:45:04] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:46:38] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:47:47] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:48:13] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:49:37] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:50:02] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:51:00] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:51:40] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:51:54] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:52:26] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:54:59] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:57:11] "GET /NIPT/batches/0179/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:58:26] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:59:08] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:59:19] "GET /NIPT/samples/test-2015-21973-05/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 10:59:27] "GET /NIPT/batches/0199/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 11:09:19] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 11:13:22] "POST /NIPT/0199/2015-09533/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 11:13:23] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 11:13:44] "POST /NIPT/0199/2015-09533/update_trisomi_status HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 11:13:44] "GET /NIPT/samples/2015-09533/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 11:14:54] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 11:19:45] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 11:20:09] "GET /NIPT/batches/0041/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 11:20:23] "GET /NIPT/samples/2015-05529/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 11:20:27] "GET /NIPT/batches/0250/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 11:48:15] "GET /NIPT/batches/0250/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 11:48:22] "GET /NIPT/batches/0250/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 11:56:42] "GET /NIPT/batches/0250/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 11:59:43] "GET /NIPT/batches/0250/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 12:03:13] "GET /NIPT/samples/2015-05529/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 12:03:45] "GET /NIPT/samples/2015-05529/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 12:06:57] "GET /NIPT/samples/2015-05529/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 12:07:51] "GET /NIPT/samples/2015-05529/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 12:11:34] "GET /NIPT/samples/2015-05529/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 12:16:19] "GET /NIPT/samples/2015-05529/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/mayabrandi/opt/NIPT_viewer/NIPT/run_app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger pin code: 598-683-433
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 12:17:36] "GET /NIPT/samples/2015-05529/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 12:18:47] "GET /NIPT/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [25/Feb/2016 12:18:52] "GET /NIPT/samples/151223869/ HTTP/1.1" 200 -
