@@ -17,7 +17,7 @@
 <div id="wrapper">
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
-            <a class="navbar-brand"   href="http://127.0.0.1:5000/NIPT/">NIPT</a>
+            <a class="navbar-brand"   href="{{ url_for('batch') }}">NIPT</a>
         </div>
         <ul class="nav navbar-top-links navbar-right">
 
@@ -26,7 +26,7 @@
                     <i class="fa fa-align-justify fa-fw"></i>  <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
-                        <a class="active" href="http://127.0.0.1:5000/NIPT/"><i class="fa fa-home"></i> Start</a>
+                        <a class="active" href="{{ url_for('batch') }}"><i class="fa fa-home"></i> Start</a>
                     <li class="divider"></li>
                         <a class="active" href={{ url_for('logout') }}><i class="fa fa-user"></i>  Sign Out</a>
                     <li class="divider"></li>
@@ -79,7 +79,7 @@
     </div>
 </div>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js" type="text/javascript"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script src="http://ironsummitmedia.github.io/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.4.0/metisMenu.js" type="text/javascript"></script>
