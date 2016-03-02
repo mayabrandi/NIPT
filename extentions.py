@@ -30,7 +30,6 @@ def ssl(app):
 app = Flask(__name__)
 app.config.from_pyfile('../../config/config.py')
 mail = Mail(app)
-ssl(app)
 
 login_manager = LoginManager(app)
 oauth = OAuth(app)
