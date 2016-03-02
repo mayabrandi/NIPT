@@ -4,7 +4,7 @@ from flask_login import login_user,logout_user, current_user, login_required
 from flask.ext.mail import Message
 from flask_oauthlib.client import OAuthException
 from database import User, Sample, Batch, Coverage, NCV, BatchStat, db
-from extentions import login_manager, google, app, mail, ssl
+from extentions import login_manager, google, app, mail, ssl, ctx
 import numpy as np
 import logging
 import os
@@ -512,7 +512,7 @@ def main():
     ssl(app)
     db.init_app(app)
     logging.basicConfig(filename = 'NIPT_log', level=logging.INFO)
-    app.run(host='0.0.0.0', port=8082)    
+    app.run(ssl_context = ctx, host='0.0.0.0', port=8082)    
 
 if __name__ == "__main__":
     main()
