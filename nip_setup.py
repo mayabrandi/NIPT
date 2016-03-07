@@ -70,7 +70,7 @@ class NiptDBSetup():
             return None
 
 
-def main(csv_files, users_file):
+def main(csv_files, users_file, sample_sheets):
     db.init_app(app)
     logging.basicConfig(filename = 'NIPT_log', level=logging.INFO)
     db.create_all()
@@ -92,6 +92,13 @@ def main(csv_files, users_file):
             NDBS = NiptDBSetup(path, db)
             if NDBS.nipt_results:
                 NDBS.update_nipt_db()
+        except:
+            #log error
+            pass
+    for path in sample_sheets:
+        try:
+            path = path.rstrip('/')
+            NDBS = NiptDBSetup(path, db)
             if NDBS.sample_sheet:
                 NDBS.set_batch_id_from_sample_sheet()
         except:
@@ -99,16 +106,20 @@ def main(csv_files, users_file):
             pass
 
 
+
 if __name__ == '__main__':
     parser = ArgumentParser(description= 'bla bla')
     parser.add_argument('--csv_files',nargs='+',
             default = [] ,
             dest = 'csv', help = 'list of pathes to NIPT csv resultfiles')
+    parser.add_argument('--sample_sheets',nargs='+',
+            default = [] ,
+            dest = 'sheets', help = 'list of pathes to NIPT csv sample_sheets')
     parser.add_argument('--users',
             default = None,
             dest = 'users', help = 'json file with Users')
     args = parser.parse_args()
-    main(args.csv, args.users)
+    main(args.csv, args.users, args.sheets)
 
 
 
