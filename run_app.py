@@ -254,7 +254,7 @@ def submit_status():
     return render_template('submit_status.html')
 
 
-@app.route('/index/')
+@app.route('/')
 def index():
     print 'AA'
     return render_template('index.html')
