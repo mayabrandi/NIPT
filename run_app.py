@@ -274,7 +274,7 @@ def logout():
     logout_user()
     session.pop('google_token', None)
     flash('Logged out', 'success')
-    return redirect(url_for('index'))
+    return redirect(url_for('/'))
 
 @google.tokengetter
 def get_google_token():
@@ -293,7 +293,7 @@ def authorized(oauth_response):
     elif isinstance(oauth_response, OAuthException):
         #current_app.logger.warning(oauth_response.message)
         flash("{} - try again!".format(oauth_response.message))
-        return redirect(url_for('index'))
+        return redirect(url_for('/'))
 
     # add token to session, do it before validation to be able to fetch
     # additional data (like email) on the authenticated user
