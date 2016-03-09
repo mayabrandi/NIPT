@@ -1,3 +1,8 @@
+#!/user/bin/env python
+DESC="""Model definitions for the NIPT-database. 
+
+Written by Maya Brandi"""
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask.ext.mail import Mail
