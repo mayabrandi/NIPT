@@ -55,7 +55,7 @@ class NiptDBSetup():
             if 'Investigator Name' in l:
                 try:
                     investigator_name = l.split(',')[1].split('_')
-                    batch_name = investigator_name[0]
+                    batch_name = '_'.join(investigator_name[0:2])
                     batch = Batch.query.filter_by(batch_id = self.batch_id).first()
                     batch.batch_name = batch_name
                     self.db.session.add(batch)
