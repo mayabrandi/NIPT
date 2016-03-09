@@ -1,7 +1,14 @@
+#!/user/bin/env python
+DESC="""Script to set up the NIPT-database. Fetching info from sample sheets 
+for sequencing, NIPT analysisi results from ...??? 
+
+Written by Maya Brandi"""
+
 from argparse import ArgumentParser
 import json
 import csv
 import logging
+import os
 import sys
 import glob
 from extentions import app
@@ -72,12 +79,11 @@ class NiptDBSetup():
 
 def main(csv_files, users_file, sample_sheets):
     db.init_app(app)
-    logging.basicConfig(filename = 'NIPT_log', level=logging.INFO)
+    logging.basicConfig(filename = 'NIPT_database_log', level=logging.INFO)
     db.create_all()
     if users_file:
         users_data = open(users_file)
         users = json.load(users_data)
-        logging.basicConfig(filename = 'NIPT_log', level=logging.INFO)
         db.create_all()
         for usr, inf in users.items():
             in_db = User.query.filter_by(email = inf['Email']).first()
@@ -92,8 +98,10 @@ def main(csv_files, users_file, sample_sheets):
             NDBS = NiptDBSetup(path, db)
             if NDBS.nipt_results:
                 NDBS.update_nipt_db()
+            else:
+                logging.warning("Could not add to database from resultfile: %s" % path)
         except:
-            #log error
+            logging.warning("Issues getting info from resultfile: %s" % path)
             pass
     for path in sample_sheets:
         try:
@@ -101,24 +109,25 @@ def main(csv_files, users_file, sample_sheets):
             NDBS = NiptDBSetup(path, db)
             if NDBS.sample_sheet:
                 NDBS.set_batch_id_from_sample_sheet()
+            else:
+                logging.warning("Could not add batch name to database from sample sheet: %s" % path)
         except:
-            #log error
+            logging.warning("Could not get batch name from sample sheet: %s" % path)
             pass
 
 
 
 if __name__ == '__main__':
-    parser = ArgumentParser(description= 'bla bla')
-    parser.add_argument('--csv_files',nargs='+',
-            default = [] ,
-            dest = 'csv', help = 'list of pathes to NIPT csv resultfiles')
-    parser.add_argument('--sample_sheets',nargs='+',
-            default = [] ,
-            dest = 'sheets', help = 'list of pathes to NIPT csv sample_sheets')
-    parser.add_argument('--users',
-            default = None,
-            dest = 'users', help = 'json file with Users')
+    parser = ArgumentParser(description=DESC)
+    parser.add_argument('--csv_files', nargs='+', default = [], dest = 'csv', 
+                    help ='List of paths to NIPT csv resultfiles.')
+    parser.add_argument('--sample_sheets', nargs='+', default = [], dest = 'sheets',
+                    help = 'List of pathes to NIPT sample_sheets.')
+    parser.add_argument('--users', default = None, dest = 'users', 
+                    help = 'json file with Users')
+
     args = parser.parse_args()
+
     main(args.csv, args.users, args.sheets)
 
 
