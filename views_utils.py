@@ -30,8 +30,9 @@ class DataClasifyer():
     def __init__(self):
         self.NCV_data = {} 
         self.NCV_names = ['13','18','21','X','Y']
-        self.NCV_warnings = {}
-        self.warnings = {}
+        self.NCV_classified = {}
+        self.NCV_sex = {}
+        self.QC_warnings = {}
         self.sex_tresholds = {'XY_horis' :  {'x' : [-30, 10],   'y' : [13, 13]},
                                 'XY_upper': {'x' : [-30, 5.05], 'y' : [553.687, 13.6016]},
                                 'XY_lower': {'x' : [-30, -5,13],'y' : [395.371, 13.971]},
@@ -45,6 +46,7 @@ class DataClasifyer():
 
     def handle_NCV(self, NCV_db):
         for s in NCV_db:
+            print s
             samp_warn = []
             sex_warn = []
             self.NCV_data[s.sample_ID] = {}
@@ -75,43 +77,49 @@ class DataClasifyer():
                 f_h = -15.409*x + 91.417 - y
                 f_l = -15.256*x - 62.309 - y
                 if 0>=f_h and x<=-4:
-                    sex_warn = 'XYY'
-                    
+                    sex_warn = 'XYY' 
                 elif 0>=f_h and x>=-4 and y>13:
                     sex_warn = 'XXY'
                 elif y<13 and x>=4:
                     sex_warn = 'XXX'
-              ##  elif f_l<0<=f_h and y>13:
-                ##    sex_warn = 'XY'
+                elif f_l<0<=f_h and y>13:
+                    sex_warn = 'XY'
                 elif f_l>0 and x< -4:
                     sex_warn = 'X0'
-              #  elif -4>=x>=4 and y<13:
-              #      sex_warn = 'XX'
-            if sex_warn:
+                elif -4<=x<=4 and y<13:
+                    sex_warn = 'XX'
+            if sex_warn in ['XX','XY']:
+                self.NCV_data[s.sample_ID]['NCV_Y']['warn'] = "default"
+                self.NCV_data[s.sample_ID]['NCV_X']['warn'] = "default"  
+                sex = sex_warn              
+            elif sex_warn:
                 self.NCV_data[s.sample_ID]['NCV_Y']['warn'] = "danger"
                 self.NCV_data[s.sample_ID]['NCV_X']['warn'] = "danger"
                 samp_warn.append(sex_warn)
+                sex = 'ambiguous'
             else:
                 self.NCV_data[s.sample_ID]['NCV_Y']['warn'] = "default"
                 self.NCV_data[s.sample_ID]['NCV_X']['warn'] = "default"
-            self.NCV_warnings[s.sample_ID] = ', '.join(samp_warn)
+                sex = 'ambiguous'
+            self.NCV_sex[s.sample_ID] = sex
+            self.NCV_classified[s.sample_ID] = ', '.join(samp_warn)
 
-    def get_warnings(self, samples):
+    def get_QC_warnings(self, samples):
 #        low_NES = self.BDH.samples_on_batch.filter(Sample.NonExcludedSites < 8000000)
         QC_flagged = samples.filter(Sample.QCFlag > 0)
         ##QC_flagged = self.BDH.samples_on_batch.filter(Sample.QCFlag > 0)
-#        for sample in set(self.NCV_warnings.keys() + [sample.sample_ID for sample in low_NES] + [sample.sample_ID for sample in QC_flagged]):
-#            self.warnings[sample] = {'sample_ID' : sample, 'missing_data' : '', 'QC_warn' : '', 'QC_fail' : '', 'NCV_low': ''}
-#        for sample in set(self.NCV_warnings.keys() + [sample.sample_ID for sample in QC_flagged]):
+#        for sample in set(self.NCV_classified.keys() + [sample.sample_ID for sample in low_NES] + [sample.sample_ID for sample in QC_flagged]):
+#            self.QC_warnings[sample] = {'sample_ID' : sample, 'missing_data' : '', 'QC_warn' : '', 'QC_fail' : '', 'NCV_low': ''}
+#        for sample in set(self.NCV_classified.keys() + [sample.sample_ID for sample in QC_flagged]):
         for sample in set([sample.sample_ID for sample in QC_flagged]):
-            self.warnings[sample] = {'sample_ID' : sample, 'QC_warn' : '', 'QC_fail' : ''}
-       # for sample_id, warning in self.NCV_warnings.items():
-         #   self.warnings[sample_id]['NCV_high'] = warning
+            self.QC_warnings[sample] = {'sample_ID' : sample, 'QC_warn' : '', 'QC_fail' : ''}
+       # for sample_id, warning in self.NCV_classified.items():
+         #   self.QC_warnings[sample_id]['NCV_high'] = warning
 #        for sample in low_NES:
-#            self.warnings[sample.sample_ID]['missing_data'] = 'warning: lt 8M reads'
+#            self.QC_warnings[sample.sample_ID]['missing_data'] = 'warning: lt 8M reads'
         for sample in QC_flagged:
-            self.warnings[sample.sample_ID]['QC_fail'] = sample.QCFailure if sample.QCFailure else ''
-            self.warnings[sample.sample_ID]['QC_warn'] = sample.QCWarning if sample.QCWarning else ''
+            self.QC_warnings[sample.sample_ID]['QC_fail'] = sample.QCFailure if sample.QCFailure else ''
+            self.QC_warnings[sample.sample_ID]['QC_warn'] = sample.QCWarning if sample.QCWarning else ''
 
 
 
@@ -181,7 +189,7 @@ class PlottPage():
 
     def make_chrom_abn(self):
         x = 1
-        status_x = {'Probable':0.1,'Verified':0.2,'False Positive':0.3,'False Negative':0.4}
+        status_x = {'Probable':0.1,'Verified':0.2,'False Positive':0.3,'False Negative':0.4, 'Suspected':0.5}
         for status in self.sample_state_dict.keys():
             
             self.tris_abn[status] = {'NCV' : [], 's_name' : [], 'x_axis': []}

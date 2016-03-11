@@ -114,11 +114,11 @@ def authorized(oauth_response):
     else:
         print 'F4'
         flash('Your email is not on the whitelist, contact an admin.')
-        return redirect('index')
+        return redirect(url_for('index'))
     if login_user(user_obj):
         return redirect(request.args.get('next') or url_for('batch'))
         print 'F5'
-    return redirect('index')
+    return redirect(url_for('index'))
 
 @app.route('/NIPT/')
 @login_required
@@ -127,11 +127,12 @@ def batch():
     sample_db = Sample.query
     DC = DataClasifyer()
     DC.handle_NCV(NCV_db)
-    DC.get_warnings(sample_db)
+    DC.get_QC_warnings(sample_db)
     return render_template('start_page.html', 
         batches = Batch.query,
         samples = Sample.query,
-        NCV_warnings = DC.NCV_warnings)
+        NCV_sex = DC.NCV_sex,
+        NCV_warnings = DC.NCV_classified)
 
 
 
@@ -233,8 +234,19 @@ def update_trisomi_status(batch_id, sample_id):
 def sample_page( sample_id):
     sample = Sample.query.filter_by(sample_ID = sample_id).first()
     batch_id = sample.batch_id
+    batch = Batch.query.filter_by(batch_id = batch_id).first()
+    print batch
+    print batch.date
+    NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
+    print NCV_db
+    print 'GGG'
     DC = DataClasifyer()
+    print 'aaa'
+    print NCV_db
+    DC.handle_NCV(NCV_db)
+    print 'aaa'
     NCV_dat = NCV.query.filter_by(sample_ID = sample_id).first()
+    print 'aal'
     chrom_abnorm = ['T13','T18', 'T21', 'X0', 'XXX','XXY','XYY']
     db_entries = {c:sample.__dict__['status_'+c].replace('\r\n', '').strip() for c in chrom_abnorm }
     db_entries_change = {c:sample.__dict__['status_change_'+c]  for c in chrom_abnorm}              
@@ -243,16 +255,18 @@ def sample_page( sample_id):
     PP.make_NCV_stat()
     PP.make_chrom_abn()
     sample_state_dict = PP.sample_state_dict
+    print 'aaa'
     for state in sample_state_dict:
         sample_state_dict[state]['T_13'] = Sample.query.filter_by(status_T13 = state)
         sample_state_dict[state]['T_18'] = Sample.query.filter_by(status_T18 = state)
         sample_state_dict[state]['T_21'] = Sample.query.filter_by(status_T21 = state)
-    return render_template('sample_page.html',
-            NCV_dat = NCV_dat,
+    print 'aaa'
+    temt=dict(NCV_dat = NCV_dat,
             tris_abn = PP.tris_abn,
             sex_chrom_abn = PP.sex_chrom_abn,
             sample = sample, 
             batch_id = batch_id,
+            batch = batch,
             nr_validation_samps = PP.nr_validation_samps,
             sample_id = sample_id,
             chrom_abnorm = chrom_abnorm,
@@ -263,7 +277,34 @@ def sample_page( sample_id):
             NCV_131821 = ['NCV_13', 'NCV_18', 'NCV_21'],
             state_dict = sample_state_dict,
             sex_tresholds = DC.sex_tresholds,
-            tris_thresholds = DC.tris_thresholds)
+            tris_thresholds = DC.tris_thresholds,
+            NCV_sex = DC.NCV_sex[sample_id],
+            NCV_warn = DC.NCV_classified[sample_id])
+    print 'LLLL'
+    print temt
+    for key,val in temt.items():
+        print '***'
+        print key, val
+    return render_template('sample_page.html',
+            NCV_dat = NCV_dat,
+            tris_abn = PP.tris_abn,
+            sex_chrom_abn = PP.sex_chrom_abn,
+            sample = sample, 
+            batch_id = batch_id,
+            batch = batch,
+            nr_validation_samps = PP.nr_validation_samps,
+            sample_id = sample_id,
+            chrom_abnorm = chrom_abnorm,
+            db_entries = db_entries,
+            db_entries_comments = db_entries_comments,
+            db_entries_change = db_entries_change,
+            NCV_stat = PP.NCV_stat,
+            NCV_131821 = ['NCV_13', 'NCV_18', 'NCV_21'],
+            state_dict = sample_state_dict,
+            sex_tresholds = DC.sex_tresholds,
+            tris_thresholds = DC.tris_thresholds,
+            NCV_sex = DC.NCV_sex[sample_id],
+            NCV_warn = DC.NCV_classified[sample_id])
 
 @app.route('/NIPT/batches/<batch_id>/')
 @login_required
@@ -272,7 +313,7 @@ def sample(batch_id):
     sample_db = Sample.query.filter(Sample.batch_id == batch_id)
     DC = DataClasifyer()
     DC.handle_NCV(NCV_db)
-    DC.get_warnings(sample_db)
+    DC.get_QC_warnings(sample_db)
     PP = PlottPage(batch_id)
     PP.make_NCV_stat()
     PP.make_chrom_abn()
@@ -295,8 +336,8 @@ def sample(batch_id):
         sex_chrom_abn   = PP.sex_chrom_abn,
         sex_tresholds   = DC.sex_tresholds,
         tris_thresholds = DC.tris_thresholds,
-        seq_warning = DC.warnings,
-        warnings = DC.NCV_warnings,
+        seq_warning = DC.QC_warnings,
+        warnings = DC.NCV_classified,
         NCV_rounded = DC.NCV_data,
         samp_cov_db = PP.coverage_plot,
         sample_ids = ','.join(sample.sample_ID for sample in NCV_db))

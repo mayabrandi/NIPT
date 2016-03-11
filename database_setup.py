@@ -79,7 +79,7 @@ class NiptDBSetup():
 
 def main(csv_files, users_file, sample_sheets):
     db.init_app(app)
-    logging.basicConfig(filename = 'NIPT_database_log', level=logging.INFO)
+    logging.basicConfig(filename = 'NIPT_database_log', level=logging.DEBUG)
     db.create_all()
     if users_file:
         users_data = open(users_file)

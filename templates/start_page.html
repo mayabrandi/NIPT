@@ -62,12 +62,12 @@
         </div>
     </nav>
     <div class="container">
-<div class="jumbotron vertical-center">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header"><strong>NIPT Data</strong></h1>
+        <div class="jumbotron vertical-center">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header"><strong>NIPT Data</strong></h1>
+                </div>
             </div>
-</div>
         </div>
                             <ul class="nav nav-tabs">
                                 <li class="active"><a href="#batches" data-toggle="tab">Batches</a>
@@ -76,97 +76,100 @@
                                 </li>
                             </ul>
         <div class="tab-content">
-        <div class="tab-pane active" id="batches">
-            <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default chat-panel">
-                    <div id="batch_list">
-                        <div class="panel-heading panel-default">
-                        <label>Search:
-                            <input type="search" class="form-control search"  placeholder="" />
+            <div class="tab-pane active" id="batches">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default chat-panel">
+                            <div id="batch_list">
+                                <div class="panel-heading panel-default">
+                                    <label>Search:
+                                    <input type="search" class="form-control search"  placeholder="" />
                                            <!--input type="search" class="form-control input-sm" placeholder=""-->
-                        </label>
-                        </div>
-                       <div class="panel-body">
-                        <div class="table-responsive">
-                            <table  class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th><p href="#" data-toggle="tooltip" title="Unique. Defined by ...?">Batch ID</p></th>
-                                            <th><p href="#" data-toggle="tooltip" title="Defined by...?">Star Lims Number</p></th>
-                                            <th><p href="#" data-toggle="tooltip" title="Date when flowcell was run">Date</p></th>
-                                            <th><p href="#" data-toggle="tooltip" title="Hooray!">Flowcell ID</p></th>
-                                        </tr>
-                                    </thead>
-                                    
-                                    <tbody class=list >
-                                        {% for batch in batches %}
-                                           <tr>
-                                             <td class="Batch id"> <a href={{ url_for('sample', batch_id=batch.batch_id) }}>{{ batch.batch_id }}</a></td>
+                                    </label>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table  class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                <th><p href="#" data-toggle="tooltip" title="Unique. Defined by ...?">Batch ID</p></th>
+                                                <th><p href="#" data-toggle="tooltip" title="Defined by...?">Star Lims Number</p></th>
+                                                <th><p href="#" data-toggle="tooltip" title="Date when flowcell was run">Date</p></th>
+                                                <th><p href="#" data-toggle="tooltip" title="Hooray!">Flowcell ID</p></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class=list >
+                                            {% for batch in batches %}
+                                            <tr>
+                                            <td class="Batch id"> <a href={{ url_for('sample', batch_id=batch.batch_id) }}>{{ batch.batch_id }}</a></td>
                                             <td>{{batch.batch_name }}</td>
                                             <td class="Date">  {{batch.date }}</td>
                                             <td class="Flowcell"> {{ batch.flowcell }}</td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                   </div>
-</div>
-               </div>
-           </div>
-            </div>
-           <div class="tab-pane" id="samples">         
-               <div class="col-lg-12">
-                <div class="row">
-                <div class="panel panel-default chat-panel">
-                <div id="sample_list">
-                <div class="panel-heading panel-default" background-color:"orange">
-                <label>Search:
-                    <input type="search" class="form-control search" placeholder="" />
-                    <!--input type="search" class="form-control input-sm" placeholder=""-->
-                </label>
-               
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table  class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th><p href="#" data-toggle="tooltip" title="Unique. Defined by ...?">Sample id</p></th>
-                                            <th><p href="#" data-toggle="tooltip" title="(T13,T18,T21,XXX,XXY,X0) Automatically generated. Based on predefined tresholds.">Warnings</p></th>
-                                            <th><p href="#" data-toggle="tooltip" title="Manually classified through the sample page. 'Normal' is the default value.">T13</p></th>
-                                            <th><p href="#" data-toggle="tooltip" title="Manually classified through the sample page. 'Normal' is the default value.">T18</p></th>
-                                            <th><p href="#" data-toggle="tooltip" title="Manually classified through the sample page. 'Normal' is the default value.">T21</p></th>
-                                            <th><p href="#" data-toggle="tooltip" title="Manually classified through the sample page. 'Normal' is the default value.">XXX</p></th>
-                                            <th><p href="#" data-toggle="tooltip" title="Manually classified through the sample page. 'Normal' is the default value.">XXY</p></th>
-                                            <th><p href="#" data-toggle="tooltip" title="Manually classified through the sample page. 'Normal' is the default value.">XYY</p></th>
-                                            <th><p href="#" data-toggle="tooltip" title="Manually classified through the sample page. 'Normal' is the default value.">X0</p></th>
-                                          </tr>
-                                       </thead>
-                                      <tbody   class="list">
-                                        {% for sample in samples %}
-                                        <tr>
-                                            <td class="Sample id"> <a href={{ url_for('sample_page', sample_id=sample.sample_ID) }}>{{ sample.sample_ID }}</a></td-->
-                                            <td class="warn">  {{NCV_warnings[sample.sample_ID] }}</td>
-                                            <td class="T13">  {{sample.status_T13 }}</td>
-                                            <td class="T18"> {{ sample.status_T18 }}</td>
-                                            <td class="T21"> {{ sample.status_T21 }}</td>
-                                            <td class="XXX"> {{ sample.status_XXX }}</td>
-                                            <td class="XXY"> {{ sample.status_XXY }}</td>
-                                            <td class="XYY"> {{ sample.status_XYY }}</td>
-                                            <td class="X0"> {{ sample.status_X0 }}</td>
-                                           </tr>
-                                        {% endfor %}
-                                      </tbody>
-                           </table>
-                       </div>
                     </div>
                 </div>
             </div>
+            <div class="tab-pane" id="samples">         
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="panel panel-default chat-panel">
+                            <div id="sample_list">
+                                <div class="panel-heading panel-default" background-color:"orange">
+                                    <label>Search:
+                                    <input type="search" class="form-control search" placeholder="" />
+                                    <!--input type="search" class="form-control input-sm" placeholder=""-->
+                                    </label>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table  class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                <th><p href="#" data-toggle="tooltip" title="Unique. Defined by ...?">Sample id</p></th>
+                                                <th><p href="#" data-toggle="tooltip" title="(T13,T18,T21,XXX,XXY,X0) Automatically generated. Based on predefined NCV-tresholds.">Sex</p></th>
+                                                <th><p href="#" data-toggle="tooltip" title="(T13,T18,T21,XXX,XXY,X0) Automatically generated. Based on predefined NCV-tresholds.">Warnings</p></th>
+                                                <th><p href="#" data-toggle="tooltip" title="Manually classified through the sample page. 'Normal' is the default value.">T13</p></th>
+                                                <th><p href="#" data-toggle="tooltip" title="Manually classified through the sample page. 'Normal' is the default value.">T18</p></th>
+                                                <th><p href="#" data-toggle="tooltip" title="Manually classified through the sample page. 'Normal' is the default value.">T21</p></th>
+                                                <th><p href="#" data-toggle="tooltip" title="Manually classified through the sample page. 'Normal' is the default value.">XXX</p></th>
+                                                <th><p href="#" data-toggle="tooltip" title="Manually classified through the sample page. 'Normal' is the default value.">XXY</p></th>
+                                                <th><p href="#" data-toggle="tooltip" title="Manually classified through the sample page. 'Normal' is the default value.">XYY</p></th>
+                                                <th><p href="#" data-toggle="tooltip" title="Manually classified through the sample page. 'Normal' is the default value.">X0</p></th>
+                                                </tr>
+                                            </thead>
+                                        <tbody   class="list">
+                                        {% for sample in samples %}
+                                        <tr>
+                                            <td class="Sample id"> <a href={{ url_for('sample_page', sample_id=sample.sample_ID) }}>{{ sample.sample_ID }}</a></td-->
+                                            <td class="sex">  {{NCV_sex[sample.sample_ID] }}</td>
+                                            <td class="warn">  {{NCV_warnings[sample.sample_ID] }}</td>
+                                            <td class="T13">  {{ '-' if sample.status_T13=='Normal' else sample.status_T13 }}</td>
+                                            <td class="T18"> {{ '-' if sample.status_T18=='Normal' else sample.status_T18 }}</td>
+                                            <td class="T21"> {{ '-' if sample.status_T21=='Normal' else sample.status_T21 }}</td>
+                                            <td class="XXX"> {{ '-' if sample.status_XXX=='Normal' else sample.status_XXX }}</td>
+                                            <td class="XXY"> {{ '-' if sample.status_XXY=='Normal' else sample.status_XXY }}</td>
+                                            <td class="XYY"> {{ '-' if sample.status_XYY=='Normal' else sample.status_XYY }}</td>
+                                            <td class="X0"> {{ '-' if sample.status_X0 =='Normal' else sample.status_X0 }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
         </div>
-        </div> 
- </div>
+    </div>
+</div>
 
     <!-- Latest compiled and minified JavaScript -->
 
@@ -177,7 +180,7 @@
 <script>
     var options = { valueNames: ['Flowcell', 'Date', 'Batch id']};
     var userList = new List('batch_list', options);
-    var options = { valueNames: ["Sample id", "warn", "T13","T18","T21","XXX","XXY","XYY","X0"]};
+    var options = { valueNames: ["Sample id", "sex","warn", "T13","T18","T21","XXX","XXY","XYY","X0"]};
     var userList = new List('sample_list', options);
 </script>
 <script>

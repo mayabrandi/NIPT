@@ -90,6 +90,14 @@
                                         <td>{{ sample.batch_id }}</td>
                                     </tr>
                                     <tr>
+                                        <td><strong>Sequencing date</strong></td>
+                                        <td>{{batch.date }} </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Batch ID</strong></td>
+                                        <td>{{ sample.batch_id }}</td>
+                                    </tr>
+                                    <tr>
                                         <td><strong>Star Lims Number</strong></td>
                                         <td>{{ sample.batch.batch_name }}</td>
                                     </tr>
@@ -104,6 +112,14 @@
                                     <tr>
                                         <td><strong># QCFlags</strong></td>
                                         <td>{{ sample.QCFlag}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Sex (NCV-classifyed)</strong></td>
+                                        <td>{{NCV_sex}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Abnormality (NCV-class)</strong></td>
+                                        <td>{{NCV_warn}}</td>
                                     </tr>
                             </table>
                         </div>
