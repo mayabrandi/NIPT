@@ -216,3 +216,90 @@ class PlottPage():
 
 
 
+
+
+class Statistics():
+    """Class to preppare data for NCV plots"""
+    def __init__(self):
+        self.batches = Batch.query.all()
+        self.NonExcludedSites2Tags={}
+        self.TotalIndexedReads2Clusters = {}
+        self.Tags2IndexedReads = {}
+        self.GCBias = {}
+        self.Library_nM = {}
+        self.batch_ids = []
+        self.dates = []
+
+    def get_20_latest(self):
+        all_batches = {}
+        for batch in self.batches:
+            all_batches[batch.date] = batch.batch_id
+        last_20 = sorted(all_batches.items())[0:20]            
+        for date, batch_id in last_20:
+            self.batch_ids.append(batch_id)        
+            self.dates.append(date)   
+ 
+    def make_Library_nM(self):
+        i=1
+        for batch_id in self.batch_ids:
+            self.Library_nM[batch_id]={'x':[],'y':[]}
+            samps = Sample.query.filter(Sample.batch_id==batch_id)
+            for samp in samps:
+                try:                    
+                    self.Library_nM[batch_id]['y'].append(float(samp.Library_nM))
+                    self.Library_nM[batch_id]['x'].append(i)
+                except:
+                    pass
+            i+=1
+
+    def make_NonExcludedSites2Tags(self):
+        i=1
+        for batch_id in self.batch_ids:
+            self.NonExcludedSites2Tags[batch_id]={'x':[],'y':[]}
+            samps = Sample.query.filter(Sample.batch_id==batch_id)
+            for samp in samps:
+                try:
+                    self.NonExcludedSites2Tags[batch_id]['y'].append(float(samp.NonExcludedSites2Tags))
+                    self.NonExcludedSites2Tags[batch_id]['x'].append(i)
+                except:
+                    pass
+            i+=1
+
+    def make_GCBias(self):
+        i=1
+        for batch_id in self.batch_ids:
+            self.GCBias[batch_id]={'x':[],'y':[]}
+            samps = Sample.query.filter(Sample.batch_id==batch_id)
+            for samp in samps:
+                try:
+                    self.GCBias[batch_id]['y'].append(float(samp.GCBias))
+                    self.GCBias[batch_id]['x'].append(i)
+                except:
+                    pass
+            i+=1
+
+    def make_Tags2IndexedReads(self):
+        i=1
+        for batch_id in self.batch_ids:
+            self.Tags2IndexedReads[batch_id]={'x':[],'y':[]}
+            samps = Sample.query.filter(Sample.batch_id==batch_id)
+            for samp in samps:
+                try:
+                    self.Tags2IndexedReads[batch_id]['y'].append(float(samp.Tags2IndexedReads))
+                    self.Tags2IndexedReads[batch_id]['x'].append(i)
+                except:
+                    pass
+            i+=1
+
+    def make_TotalIndexedReads2Clusters(self):
+        i=1
+        for batch_id in self.batch_ids:
+            self.TotalIndexedReads2Clusters[batch_id]={'x':[],'y':[]}
+            samps = Sample.query.filter(Sample.batch_id==batch_id)
+            for samp in samps:
+                try:
+                    self.TotalIndexedReads2Clusters[batch_id]['y'].append(float(samp.TotalIndexedReads2Clusters))
+                    self.TotalIndexedReads2Clusters[batch_id]['x'].append(i)
+                except:
+                    pass
+            i+=1

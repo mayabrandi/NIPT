@@ -51,12 +51,12 @@
                 </a>
                 <ul class="dropdown-menu">
                         <a class="active" href="{{ url_for('batch') }}"><i class="fa fa-home"></i>   Start</a>
-                    </a>
                        <li class="divider"></li>
                         <a class="active" href={{ url_for('logout') }}><i class="fa fa-user"></i>  Sign Out</a>
                         <li class="divider"></li>
                         <a class="active" href={{ url_for('submit') }}><i class="fa fa-user"></i>  New User</a>
-                    </a>
+                    <li class="divider"></li>
+                        <a class="active" href={{ url_for('statistics') }}><i class="fa fa-user"></i>  Statistics</a>
                 </ul>
             </li>
         </ul>
@@ -427,7 +427,7 @@ var colors = ['#1a1aff','#8cff1a','#ff531a', '#1affff']
     var verif = {                                                                  
             name: 'Verified {{abn}}',                                                               
             y: {{sex_chrom_abn[abn]['Verified']['NCV_Y']}},                                        
-            x: {{sex_chrom_abn[abn]['Verified']['NCV_X']}},
+        //    x: {{sex_chrom_abn[abn]['Verified']['NCV_X']}},
             text: {{sex_chrom_abn[abn]['Verified']['s_name']|tojson}},                                       
         mode: 'markers',
         marker: {symbol :"square",

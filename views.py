@@ -8,7 +8,7 @@ from extentions import login_manager, google, app, mail, ssl, ctx
 import logging
 import os
 from datetime import datetime
-from views_utils import BatchDataHandler, DataClasifyer, PlottPage
+from views_utils import BatchDataHandler, DataClasifyer, PlottPage, Statistics
 
 
 
@@ -235,18 +235,10 @@ def sample_page( sample_id):
     sample = Sample.query.filter_by(sample_ID = sample_id).first()
     batch_id = sample.batch_id
     batch = Batch.query.filter_by(batch_id = batch_id).first()
-    print batch
-    print batch.date
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
-    print NCV_db
-    print 'GGG'
     DC = DataClasifyer()
-    print 'aaa'
-    print NCV_db
     DC.handle_NCV(NCV_db)
-    print 'aaa'
     NCV_dat = NCV.query.filter_by(sample_ID = sample_id).first()
-    print 'aal'
     chrom_abnorm = ['T13','T18', 'T21', 'X0', 'XXX','XXY','XYY']
     db_entries = {c:sample.__dict__['status_'+c].replace('\r\n', '').strip() for c in chrom_abnorm }
     db_entries_change = {c:sample.__dict__['status_change_'+c]  for c in chrom_abnorm}              
@@ -255,12 +247,10 @@ def sample_page( sample_id):
     PP.make_NCV_stat()
     PP.make_chrom_abn()
     sample_state_dict = PP.sample_state_dict
-    print 'aaa'
     for state in sample_state_dict:
         sample_state_dict[state]['T_13'] = Sample.query.filter_by(status_T13 = state)
         sample_state_dict[state]['T_18'] = Sample.query.filter_by(status_T18 = state)
         sample_state_dict[state]['T_21'] = Sample.query.filter_by(status_T21 = state)
-    print 'aaa'
     temt=dict(NCV_dat = NCV_dat,
             tris_abn = PP.tris_abn,
             sex_chrom_abn = PP.sex_chrom_abn,
@@ -280,11 +270,6 @@ def sample_page( sample_id):
             tris_thresholds = DC.tris_thresholds,
             NCV_sex = DC.NCV_sex[sample_id],
             NCV_warn = DC.NCV_classified[sample_id])
-    print 'LLLL'
-    print temt
-    for key,val in temt.items():
-        print '***'
-        print key, val
     return render_template('sample_page.html',
             NCV_dat = NCV_dat,
             tris_abn = PP.tris_abn,
@@ -343,4 +328,23 @@ def sample(batch_id):
         sample_ids = ','.join(sample.sample_ID for sample in NCV_db))
 
 
-
+@app.route('/NIPT/statistics/')
+@login_required
+def statistics():
+    ST = Statistics()
+    ST.get_20_latest()
+    ST.make_NonExcludedSites2Tags()
+    ST.make_GCBias()
+    ST.make_Tags2IndexedReads()
+    ST.make_TotalIndexedReads2Clusters()
+    ST.make_Library_nM()
+    return render_template('statistics.html',
+        ticks = range(1,len(ST.NonExcludedSites2Tags)+1),
+        NonExcludedSites2Tags = ST.NonExcludedSites2Tags,
+        GCBias = ST.GCBias,
+        Library_nM = ST.Library_nM,
+        Tags2IndexedReads = ST.Tags2IndexedReads,
+        TotalIndexedReads2Clusters = ST.TotalIndexedReads2Clusters,
+        batch_ids = ST.batch_ids,
+        dates = ST.dates)
+        

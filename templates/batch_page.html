@@ -51,6 +51,8 @@
                         <a class="active" href={{ url_for('logout') }}><i class="fa fa-user"></i>  Sign Out</a>
                     <li class="divider"></li>
                         <a class="active" href={{ url_for('submit') }}><i class="fa fa-user"></i>  New User</a>
+                    <li class="divider"></li>
+                        <a class="active" href={{ url_for('statistics') }}><i class="fa fa-user"></i>  Statistics</a>
                 </ul>
             </li>
         </ul>
@@ -79,7 +81,7 @@
                             </div>
                             <div class="panel-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped">
+                                <table class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Sample id</th>
@@ -126,7 +128,7 @@
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <form action="{{ url_for('update') }}" method="post">
-                                    <table class="table table-striped table-bordered table-hover" >
+                                    <table class="table table-bordered table-hover" >
                                     <thead>
                                         <tr>
                                             <th>Sample id</th>
