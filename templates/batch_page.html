@@ -141,7 +141,7 @@
                                             <th>NCV_21</th>
                                             <th>NCV_X</th>
                                             <th>NCV_Y</th>
-                                            <th>Chrom Warn</th>
+                                            <th><a href="#" data-toggle="tooltip" title="Warning for chomosome abnormality. Automatically generated. Based on pre defined NCV trsholds">Warn</a></th>
                                             <th>Include</th>
                                             <th>Last Change</th> 
                                         </tr>
@@ -441,6 +441,11 @@ data.push(trace1);
 Plotly.newPlot('cov_plot', data, layout);
 </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
 </body>
 </html>
 
