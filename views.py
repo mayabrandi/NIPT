@@ -70,7 +70,6 @@ def logout():
     print 'CC'
     logout_user()
     session.pop('google_token', None)
-    flash('Logged out', 'success')
     return redirect(url_for('index'))
 
 @google.tokengetter

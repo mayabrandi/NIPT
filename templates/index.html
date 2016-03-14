@@ -68,6 +68,15 @@
                 <div class="row"><br></br>
                 </div>
                 <a class="btn btn-block btn-social btn-google-plus" href={{ url_for('login') }} > Sign in with Google</a>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class=flashes>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                {% endwith %}
             </div>
         </div>
     </div>
