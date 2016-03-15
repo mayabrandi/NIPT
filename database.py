@@ -1,14 +1,51 @@
+#!/user/bin/env python
+DESC="""Model definitions for the NIPT-database. 
+
+Written by Maya Brandi"""
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask.ext.mail import Mail
 from argparse import ArgumentParser
+import json
 import csv
 import logging
 import sys
 import glob
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/new_nipt.db'
+from flask.ext.login import LoginManager
+from flask_oauthlib.client import OAuth
+from extentions import app
 db = SQLAlchemy(app)
+
+
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    email = db.Column(db.String, unique = True)
+    name = db.Column(db.String, unique = False)
+
+    def __init__(self, email, name):
+        self.email = email
+        self.name = name
+
+    # Flask-Login integration
+    def is_authenticated(self):
+        """Perform a faux check that the user if properly authenticated."""
+        return True
+
+    def is_active(self):
+        """Perform a faux check that the user is active."""
+        return True
+
+    def is_anonymous(self):
+        """Perform a faux check whether the user is anonymous."""
+        return False
+
+    def get_id(self):
+        # the id property is assigned each model automatically
+        return str(self.id)
+
 
 class Sample(db.Model):
     __table_name__ = 'sample'
@@ -330,85 +367,5 @@ class Batch(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.batch_id
-
-
-class NiptDBSetup():
-
-    def __init__(self, csv_file_path):
-        self.nipt_results = self.parse_path(csv_file_path+'/*NIPT_RESULTS.csv')
-        self.sample_sheet = self.parse_path(csv_file_path+'/SampleSheet.csv')
-        f_name_info = csv_file_path.split('/')[-1].split('_')
-        self.batch_id = f_name_info[2]
-        self.date = f_name_info[0]
-        self.flowcell = f_name_info[3]
-        
-
-    def update_nipt_db(self):
-        reader = csv.DictReader(open(self.nipt_results, 'rb'))
-        batch = Batch.query.filter_by(batch_id = self.batch_id).first()    
-        if not batch:
-            batch = Batch(self.batch_id, self.date, self.flowcell)
-            db.session.add(batch)
-        for row in reader:
-            if not Sample.query.filter_by(sample_ID = row['SampleID']).first():
-                sample = Sample(row, batch)
-                db.session.add(sample)
-                cov = Coverage(row, sample, batch)
-                db.session.add(cov)
-                ncv = NCV(row, sample, batch)
-                db.session.add(ncv)
-            if not BatchStat.query.filter_by(batch_id = self.batch_id).first():
-                batchstat = BatchStat(row, batch)
-                db.session.add(batchstat)
-        try:
-            db.session.commit()
-        except: 
-            error = sys.exc_info()
-            logging.error('error in update_nipt_db!!!!!!!')
-            logging.error(error)
-            pass
-
-
-    def set_batch_id_from_sample_sheet(self):
-        sheet = open(self.sample_sheet, 'rb')
-        for l in sheet:
-            if 'Investigator Name' in l:
-                try:
-                    investigator_name = l.split(',')[1].split('_')
-                    batch_name = investigator_name[1]
-                    batch = Batch.query.filter_by(batch_id = self.batch_id).first()
-                    batch.batch_name = batch_name
-                    db.session.add(batch)
-                    db.session.commit()
-                except:
-                    pass
-
-    def parse_path(self, path):
-        if glob.glob(path):
-            return glob.glob(path)[0]
-        else:
-            return None
-
-
-def main(csv_files):
-    logging.basicConfig(filename = 'NIPT_log', level=logging.INFO)
-    db.create_all()
-    for path in csv_files:
-        path = path.rstrip('/')
-        NDBS = NiptDBSetup(path)
-        if NDBS.nipt_results:
-            NDBS.update_nipt_db()
-        if NDBS.sample_sheet:
-            NDBS.set_batch_id_from_sample_sheet()
-    
-if __name__ == '__main__':
-    parser = ArgumentParser(description= 'bla bla')
-    parser.add_argument('--csv_files',nargs='+', 
-            default = None , 
-            dest = 'csv', help = 'list of pathes to NIPT csv resultfiles')
-
-    args = parser.parse_args()
-    main(args.csv)
-
 
 
