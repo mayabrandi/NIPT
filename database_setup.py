@@ -12,25 +12,30 @@ import os
 import sys
 import glob
 from extentions import app
-from database import db, Batch, BatchStat, NCV, Coverage, Sample, User
+from database import db, Batch, NCV, Coverage, Sample, User ,BatchStat
 
 
 
 
 class NiptDBSetup():
 
-    def __init__(self, csv_file_path, nipt_db):
+    def __init__(self, nipt_db):
         self.db = nipt_db
-        self.nipt_results = self.parse_path(csv_file_path+'/*NIPT_RESULTS.csv')
-        self.sample_sheet = self.parse_path(csv_file_path+'/SampleSheet.csv')
-        f_name_info = csv_file_path.split('/')[-1].split('_')
+        self.batch_id = None 
+	self.date = None
+	self.flowcell = None
+
+
+    def get_run_folder_info(self, folder_path):
+        f_name_info = folder_path.split('/')[-2].split('_')
         self.batch_id = f_name_info[2]
         self.date = f_name_info[0]
         self.flowcell = f_name_info[3]
 
-
-    def update_nipt_db(self):
-        reader = csv.DictReader(open(self.nipt_results, 'rb'))
+    def update_nipt_db(self, csv_file_path):
+        nipt_results = self.parse_path(csv_file_path)
+        self.get_run_folder_info(nipt_results)
+        reader = csv.DictReader(open(nipt_results, 'rb'))
         batch = Batch.query.filter_by(batch_id = self.batch_id).first()
         if not batch:
             batch = Batch(self.batch_id, self.date, self.flowcell)
@@ -56,8 +61,10 @@ class NiptDBSetup():
             pass
 
 
-    def set_batch_id_from_sample_sheet(self):
-        sheet = open(self.sample_sheet, 'rb')
+    def set_batch_id_from_sample_sheet(self, sample_sheet):
+	sample_sheet = self.parse_path(sample_sheet)
+	self.get_run_folder_info(sample_sheet)
+        sheet = open(sample_sheet, 'rb')
         for l in sheet:
             if 'Investigator Name' in l:
                 try:
@@ -70,6 +77,7 @@ class NiptDBSetup():
                 except:
                     pass
 
+
     def parse_path(self, path):
         if glob.glob(path):
             return glob.glob(path)[0]
@@ -80,7 +88,9 @@ class NiptDBSetup():
 def main(csv_files, users_file, sample_sheets):
     db.init_app(app)
     logging.basicConfig(filename = 'NIPT_database_log', level=logging.DEBUG)
+    db.engine.execute("SET foreign_key_checks = 0")
     db.create_all()
+    db.engine.execute("SET foreign_key_checks = 1")
     if users_file:
         users_data = open(users_file)
         users = json.load(users_data)
@@ -94,10 +104,11 @@ def main(csv_files, users_file, sample_sheets):
                 db.session.commit()
     for path in csv_files:
         try:
-            path = path.rstrip('/')
-            NDBS = NiptDBSetup(path, db)
-            if NDBS.nipt_results:
-                NDBS.update_nipt_db()
+            csv_path = path.rstrip('/')
+            NDBS = NiptDBSetup(db)
+            NDBS.get_run_folder_info(csv_path)
+            if NDBS.batch_id:
+                NDBS.update_nipt_db(csv_path)
             else:
                 logging.warning("Could not add to database from resultfile: %s" % path)
         except:
@@ -106,9 +117,10 @@ def main(csv_files, users_file, sample_sheets):
     for path in sample_sheets:
         try:
             path = path.rstrip('/')
-            NDBS = NiptDBSetup(path, db)
-            if NDBS.sample_sheet:
-                NDBS.set_batch_id_from_sample_sheet()
+            NDBS = NiptDBSetup(db)
+            NDBS.get_run_folder_info(path)
+            if NDBS.batch_id:
+                NDBS.set_batch_id_from_sample_sheet(path)
             else:
                 logging.warning("Could not add batch name to database from sample sheet: %s" % path)
         except:
