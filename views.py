@@ -250,25 +250,6 @@ def sample_page( sample_id):
         sample_state_dict[state]['T_13'] = Sample.query.filter_by(status_T13 = state)
         sample_state_dict[state]['T_18'] = Sample.query.filter_by(status_T18 = state)
         sample_state_dict[state]['T_21'] = Sample.query.filter_by(status_T21 = state)
-    temt=dict(NCV_dat = NCV_dat,
-            tris_abn = PP.tris_abn,
-            sex_chrom_abn = PP.sex_chrom_abn,
-            sample = sample, 
-            batch_id = batch_id,
-            batch = batch,
-            nr_validation_samps = PP.nr_validation_samps,
-            sample_id = sample_id,
-            chrom_abnorm = chrom_abnorm,
-            db_entries = db_entries,
-            db_entries_comments = db_entries_comments,
-            db_entries_change = db_entries_change,
-            NCV_stat = PP.NCV_stat,
-            NCV_131821 = ['NCV_13', 'NCV_18', 'NCV_21'],
-            state_dict = sample_state_dict,
-            sex_tresholds = DC.sex_tresholds,
-            tris_thresholds = DC.tris_thresholds,
-            NCV_sex = DC.NCV_sex[sample_id],
-            NCV_warn = DC.NCV_classified[sample_id])
     return render_template('sample_page.html',
             NCV_dat = NCV_dat,
             tris_abn = PP.tris_abn,
