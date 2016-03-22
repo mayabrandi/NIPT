@@ -190,19 +190,38 @@
                     </div>
                 </div>
                 <div class="tab-pane active" id='NCV_13'>
-                    <div id="NCV131821NCV_13" style="min-width:1000px; height:600px; "></div><br><br>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div id="NCV131821NCV_13" style="min-width:1000px; height:800px; "></div><br><br>
+                        </div>
                     </div>
+                </div>
                 <div class="tab-pane active" id='NCV_18'>
-                    <div id="NCV131821NCV_18" style="min-width:800px; height:700px; "></div><br><br>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div id="NCV131821NCV_18" style="min-width:1000px; height:800px; "></div><br><br>
+                        </div>
                     </div>
+                </div>
                 <div class="tab-pane active" id='NCV_21'>
-                    <div id="NCV131821NCV_21" style="min-width:800px; height:700px; "></div><br><br>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="NCV131821NCV_21" style="min-width:1000px; height:800px; "></div><br><br>
+                        </div>
                     </div>
+                </div>
                 <div class="tab-pane active" id='NCV_XY'>
-                   <div id="NCVXY" style="min-width:800px; height:700px; "></div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">                
+                            <div id="NCVXY" style="min-width:1000px; height:800px; "></div>
+                        </div>
                     </div>
+                </div>
                 <div class="tab-pane active" id='norm_cov'>
-                    <div id="cov_plot" style="min-width:800px; height:700px; "></div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">                
+                            <div id="cov_plot" style="min-width:1000px; height:800px; "></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -220,14 +239,14 @@ var layout = {
     xaxis :{showline: true,
             ticktext : {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
             tickvals : {{NCV_stat['NCV_'+chrom]['x_axis']}},
-            tickangle : 45,
+            tickangle : 20,
             linecolor: '#636363',
             linewidth: 5,
             showgrid: true,
             gridcolor: '#bdbdbd'
             },
             
-    yaxis :{range: [-10, 20],
+    yaxis :{range: [-10,],
             zeroline: false,
             showline: true,
             showgrid: false,
@@ -309,15 +328,15 @@ var layout = {
     legend:{hovermode:'closest' },
     hovermode:'closest',
     xaxis :{showline: true,
+            zeroline: false,
             linecolor: '#636363',
             linewidth: 5,
             showgrid: true,
             gridcolor: '#bdbdbd',
-            title: 'NCV_X',
-            range: [-30,10]
+            title: 'NCV_X'
             },
             
-    yaxis :{range: [-50, 300],
+    yaxis :{range: [-50,],
             zeroline: false,
             showline: true,
             showgrid: false,

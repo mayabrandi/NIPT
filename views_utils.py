@@ -33,12 +33,12 @@ class DataClasifyer():
         self.NCV_classified = {}
         self.NCV_sex = {}
         self.QC_warnings = {}
-        self.sex_tresholds = {'XY_horis' :  {'x' : [-30, 10],   'y' : [13, 13]},
-                                'XY_upper': {'x' : [-30, 5.05], 'y' : [553.687, 13.6016]},
-                                'XY_lower': {'x' : [-30, -5,13],'y' : [395.371, 13.971]},
-                                'XXY' :     {'x' : [-4, -4],    'y' : [155, 350]},
-                                'X0' :      {'x' : [-4, -4],   'y' : [13, -30]},
-                                'XXX' :     {'x' : [4, 4],      'y' : [13, -30]}}
+        self.sex_tresholds = {'XY_horis' :  {'x' : [-40, 10],   'y' : [13, 13]},
+                                'XY_upper': {'x' : [-40, 5.05], 'y' : [707.777, 13.6016]},#-30,553.687
+                                'XY_lower': {'x' : [-40, -5.13],'y' : [551.659, 13.971]}, #-30,395.371
+                                'XXY' :     {'x' : [-4, -4],    'y' : [155, 700]},
+                                'X0' :      {'x' : [-4, -4],   'y' : [13, -40]},
+                                'XXX' :     {'x' : [4, 4],      'y' : [13, -40]}}
         self.tris_thresholds = {'soft_max': {'NCV': 3 , 'color': 'orange'},
                                 'soft_min': {'NCV': -4, 'color': 'orange'},
                                 'hard_max': {'NCV': 4 , 'color': 'red'},
