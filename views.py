@@ -279,6 +279,7 @@ def sample(batch_id):
     DC = DataClasifyer()
     DC.handle_NCV(NCV_db)
     DC.get_QC_warnings(sample_db)
+    DC.get_manually_classified(sample_db)
     PP = PlottPage(batch_id)
     PP.make_NCV_stat()
     PP.make_chrom_abn()
@@ -292,6 +293,7 @@ def sample(batch_id):
         samples         = Sample.query.filter(Sample.batch_id == batch_id),
         NCV_samples     = NCV.query.filter(NCV.batch_id == batch_id),
         batch_id        = batch_id,
+        man_class       = DC.man_class,
         NCV_stat        = PP.NCV_stat,
         nr_validation_samps = PP.nr_validation_samps,
         NCV_131821      = ['NCV_13', 'NCV_18', 'NCV_21'],

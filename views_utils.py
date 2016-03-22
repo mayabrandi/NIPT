@@ -33,6 +33,7 @@ class DataClasifyer():
         self.NCV_classified = {}
         self.NCV_sex = {}
         self.QC_warnings = {}
+        self.man_class = {}
         self.sex_tresholds = {'XY_horis' :  {'x' : [-40, 10],   'y' : [13, 13]},
                                 'XY_upper': {'x' : [-40, 5.05], 'y' : [707.777, 13.6016]},#-30,553.687
                                 'XY_lower': {'x' : [-40, -5.13],'y' : [551.659, 13.971]}, #-30,395.371
@@ -44,9 +45,17 @@ class DataClasifyer():
                                 'hard_max': {'NCV': 4 , 'color': 'red'},
                                 'hard_min': {'NCV': -5, 'color': 'red'} }
 
+    def get_manually_classified(self, sample_db):
+        for s in sample_db:
+            self.man_class[s.sample_ID] = []
+            for key in ['T13','T18','T21','X0','XXX','XXY','XYY']:  
+                status = s.__dict__['status_'+key]
+                if status!='Normal':
+                    self.man_class[s.sample_ID].append(' '.join([status, key]))
+            self.man_class[s.sample_ID] = ', '.join(self.man_class[s.sample_ID])       
+
     def handle_NCV(self, NCV_db):
         for s in NCV_db:
-            print s
             samp_warn = []
             sex_warn = []
             self.NCV_data[s.sample_ID] = {}

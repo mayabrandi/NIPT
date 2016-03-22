@@ -134,14 +134,15 @@
                                     <table class="table table-bordered table-hover" >
                                     <thead>
                                         <tr>
-                                            <th>Sample id</th>
-                                            <th>Sample type</th>
+                                            <th>Sample Id</th>
+                                            <th>Sample Type</th>
                                             <th>NCV_13</th>
                                             <th>NCV_18</th>
                                             <th>NCV_21</th>
                                             <th>NCV_X</th>
                                             <th>NCV_Y</th>
                                             <th><a href="#" data-toggle="tooltip" title="Warning for chomosome abnormality. Automatically generated. Based on pre defined NCV trsholds">Warn</a></th>
+                                            <th>Class</th>
                                             <th>Include</th>
                                             <th>Last Change</th> 
                                         </tr>
@@ -156,7 +157,8 @@
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_21']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_21']['val'] }}</td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_X']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_X']['val'] }}</td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_Y']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_Y']['val'] }}</td>
-                                            <th>{{ warnings[s.sample_ID]}}</th>
+                                            <th><p> <small>{{ warnings[s.sample_ID]  }}</small></p></th>
+                                            <th><p> <small>{{ man_class[s.sample_ID] }}</small></p></th>
                                             <td {% if s.include %}class="success"{% endif %}> <input type="checkbox" name="{{ s.sample_ID }}" {% if s.include %}checked{% endif %}></td>    
                                             <td >{{s.change_include_date}}</td>
                                         </tr>
