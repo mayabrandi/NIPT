@@ -90,7 +90,7 @@
                                         <td>{{ sample.batch_id }}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Sequencing date</strong></td>
+                                        <td><strong>Sequencing Date</strong></td>
                                         <td>{{batch.date }} </td>
                                     </tr>
                                     <tr>
@@ -114,13 +114,17 @@
                                         <td>{{ sample.QCFlag}}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Sex (NCV-classifyed)</strong></td>
+                                        <td><strong>Sex (NCV-classified)</strong></td>
                                         <td>{{NCV_sex}}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Abnormality (NCV-class)</strong></td>
                                         <td>{{NCV_warn}}</td>
                                     </tr>
+                                    <tr>
+                                        <td><strong>Included in Validation Data Set</strong></td>
+                                        <td>{{NCV_dat.include}}</td>
+                                   </tr>
                             </table>
                         </div>
  </div>
