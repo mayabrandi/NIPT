@@ -86,13 +86,13 @@
                             <div id="batch_list">
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <table  id="batch_table" class="table table-striped table-bordered table-hover">
+                                        <table  id="batch_table" width="100%"  class="table table-striped table-bordered table-hover">
                                             <thead>
                                                 <tr>
-                                                <th><a href="#" data-toggle="tooltip" title="Unique. Defined by ...?">Batch ID</a></th>
-                                                <th><a href="#" data-toggle="tooltip" title="Defined as StarLimsNumber_TicketID">Batch Name</a></th>
-                                                <th><a href="#" data-toggle="tooltip" title="Date when flowcell was run">Date</a></th>
-                                                <th><a href="#" data-toggle="tooltip" title="Flowcell ID">Flowcell ID</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="right" title="Unique. Defined by ...?">Batch ID</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Defined as StarLimsNumber_TicketID">Batch Name</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Date when flowcell was run">Date</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="left" title="Flowcell ID">Flowcell ID</a></th>
                                                 </tr>
                                             </thead>
                                             <tbody class=list >
@@ -120,20 +120,20 @@
                             <div id="sample_list">
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <table id="sample_table"  class="table table-striped table-bordered table-hover">
+                                        <table id="sample_table"   width="100%" class="table table-striped table-bordered table-hover">
                                             <thead>
                                                 <tr>
-                                                <th><a href="#" data-toggle="tooltip" title="Unique. Defined by ...?">Sample id</a></th>
-                                                <th><a href="#" data-toggle="tooltip" title="Unique. Defined by ...?">Batch ID</a></th>
-                                                <th><a href="#" data-toggle="tooltip" title="(XX, XY) Automatically generated. Based on predefined NCV-tresholds.">Sex</a></th>
-                                                <th><a href="#" data-toggle="tooltip" title="(T13,T18,T21,XXX,XXY,X0) Automatically generated. Based on predefined NCV-tresholds.">Warnings</a></th>
-                                                <th><a href="#" data-toggle="tooltip" title="Manually classified through the sample page.">T13</a></th>
-                                                <th><a href="#" data-toggle="tooltip" title="Manually classified through the sample page.">T18</a></th>
-                                                <th><a href="#" data-toggle="tooltip" title="Manually classified through the sample page.">T21</a></th>
-                                                <th><a href="#" data-toggle="tooltip" title="Manually classified through the sample page.">XXX</a></th>
-                                                <th><a href="#" data-toggle="tooltip" title="Manually classified through the sample page.">XXY</a></th>
-                                                <th><a href="#" data-toggle="tooltip" title="Manually classified through the sample page.">XYY</a></th>
-                                                <th><a href="#" data-toggle="tooltip" title="Manually classified through the sample page.">X0</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="right" title="Unique. Defined by ...?">Sample id</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Unique. Defined by ...?">Batch ID</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="(XX, XY) Automatically generated. Based on predefined NCV-tresholds.">Sex</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="(T13,T18,T21,XXX,XXY,X0) Automatically generated. Based on predefined NCV-tresholds.">Warnings</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Manually classified through the sample page.">T13</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Manually classified through the sample page.">T18</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Manually classified through the sample page.">T21</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Manually classified through the sample page.">XXX</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom"title="Manually classified through the sample page.">XXY</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Manually classified through the sample page.">XYY</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="left" title="Manually classified through the sample page.">X0</a></th>
                                                 </tr>
                                             </thead>
                                             <tbody   class="list">
@@ -176,6 +176,19 @@
 
 
 <script>
+$(document).ready(function() {
+    $('#batch_table').DataTable({
+        "order": [[ 2, "desc" ]],
+        "paging":         false
+    });
+} );
+$(document).ready(function() {
+    $('#sample_table').DataTable({
+        "paging":         false
+});
+} );
+</script>
+<script>
     var options = { valueNames: ['Flowcell', 'Date', 'Batch id']};
     var userList = new List('batch_list', options);
     var options = { valueNames: ["Sample id", "sex","warn", "T13","T18","T21","XXX","XXY","XYY","X0"]};
@@ -185,16 +198,6 @@
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   
 });
-</script>
-<script>
-$(document).ready(function() {
-    $('#batch_table').DataTable();
-} );
-</script>
-<script>
-$(document).ready(function() {
-    $('#sample_table').DataTable();
-} );
 </script>
 </body>
 
