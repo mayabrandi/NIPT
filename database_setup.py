@@ -28,7 +28,7 @@ class NiptDBSetup():
 
     def get_run_folder_info(self, folder_path):
         f_name_info = folder_path.split('/')[-2].split('_')
-        self.batch_id = f_name_info[2]
+        self.batch_id = f_name_info[3]
         self.date = f_name_info[0]
         self.flowcell = f_name_info[3]
 
