@@ -289,6 +289,7 @@ class NCV(db.Model):
     NCD_Y = db.Column(db.String(255), unique = False)
     include = db.Column(db.Boolean, unique = False)
     change_include_date = db.Column(db.String(255), unique = False)
+    comment = db.Column(db.String(255), unique = False)
 
     def __init__(self, nipt_dict, sample, batch): 
         self.sample = sample
@@ -311,6 +312,7 @@ class NCV(db.Model):
         self.NCD_Y = nipt_dict['NCD_Y']
         self.include = True             # set to False by default before handing over!!!
         self.change_include_date = ''
+        self.comment = ''
 
     def __repr__(self):
         return '<User %r>' % self.sample_ID

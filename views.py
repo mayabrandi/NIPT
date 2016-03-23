@@ -159,6 +159,15 @@ def update():
                 if sample.include:
                     sample.change_include_date = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
                 sample.include = False
+    if 'sample_ids' in request.form:
+        all_samples = request.form['sample_ids'].split(',')
+        for sample_id in all_samples:
+            sample = NCV.query.filter_by(sample_ID = sample_id).first()
+            samp_comment = 'comment_'+sample_id
+            if samp_comment in request.form:
+                if request.form[samp_comment] != sample.comment:
+                    sample.comment = request.form[samp_comment]
+                    sample.change_include_date = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
     db.session.commit()
     return redirect(request.referrer)
 
@@ -317,6 +326,8 @@ def sample(batch_id):
 def statistics():
     ST = Statistics()
     ST.get_20_latest()
+    print ST.batch_ids
+    print ST.dates
     ST.make_NonExcludedSites2Tags()
     ST.make_GCBias()
     ST.make_Tags2IndexedReads()
