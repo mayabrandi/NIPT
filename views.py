@@ -256,6 +256,7 @@ def sample_page( sample_id):
             sex_chrom_abn = PP.sex_chrom_abn,
             sample = sample, 
             batch_id = batch_id,
+            batch_name = batch.batch_name,
             batch = batch,
             nr_validation_samps = PP.nr_validation_samps,
             sample_id = sample_id,
@@ -276,6 +277,7 @@ def sample_page( sample_id):
 def sample(batch_id):
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
     sample_db = Sample.query.filter(Sample.batch_id == batch_id)
+    batch = Batch.query.filter(Batch.batch_id == batch_id).first()
     DC = DataClasifyer()
     DC.handle_NCV(NCV_db)
     DC.get_QC_warnings(sample_db)
@@ -292,7 +294,7 @@ def sample(batch_id):
     return render_template('batch_page.html',
         samples         = Sample.query.filter(Sample.batch_id == batch_id),
         NCV_samples     = NCV.query.filter(NCV.batch_id == batch_id),
-        batch_id        = batch_id,
+        batch_name        = batch.batch_name,
         man_class       = DC.man_class,
         NCV_stat        = PP.NCV_stat,
         nr_validation_samps = PP.nr_validation_samps,

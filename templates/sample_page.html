@@ -86,43 +86,35 @@
                         <div class="table-responsive">
                             <table class="table table-bordered ">
                                     <tr>
-                                        <td><strong>Batch ID</strong></td>
-                                        <td>{{ sample.batch_id }}</td>
+                                        <td><strong>Batch:</strong></td>
+                                        <td>{{ batch_name }}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Sequencing Date</strong></td>
+                                        <td><strong>Sequencing Date:</strong></td>
                                         <td>{{batch.date }} </td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Batch ID</strong></td>
-                                        <td>{{ sample.batch_id }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Star Lims Number</strong></td>
-                                        <td>{{ sample.batch.batch_name }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Sample Type</strong></td>
+                                        <td><strong>Sample Type:</strong></td>
                                         <td>{{NCV_dat.SampleType}}</td>
                                       </tr>
                                     <tr>
-                                        <td><strong>NonExcludedSites</strong></td>
+                                        <td><strong>NonExcludedSites:</strong></td>
                                         <td>{{ sample.NonExcludedSites}}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong># QCFlags</strong></td>
+                                        <td><strong># QCFlags:</strong></td>
                                         <td>{{ sample.QCFlag}}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Sex (NCV-classified)</strong></td>
+                                        <td><strong>Sex (NCV-classified):</strong></td>
                                         <td>{{NCV_sex}}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Abnormality (NCV-class)</strong></td>
+                                        <td><strong>Abnormality (NCV-class):</strong></td>
                                         <td>{{NCV_warn}}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Included in Validation Data Set</strong></td>
+                                        <td><strong>Included in Validation Data Set:</strong></td>
                                         <td>{{NCV_dat.include}}</td>
                                    </tr>
                             </table>

@@ -89,19 +89,17 @@
                                         <table  id="batch_table" width="100%"  class="table table-striped table-bordered table-hover">
                                             <thead>
                                                 <tr>
-                                                <th><a href="#" data-toggle="tooltip" data-placement="right" title="Unique. Defined by ...?">Batch ID</a></th>
-                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Defined as StarLimsNumber_TicketID">Batch Name</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Defined as StarLimsNumber_TicketID">Batch</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Date when flowcell was run">Date</a></th>
-                                                <th><a href="#" data-toggle="tooltip" data-placement="left" title="Flowcell ID">Flowcell ID</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="right" title="Unique. Defined by ...?">Flowcell</a></th>
                                                 </tr>
                                             </thead>
                                             <tbody class=list >
                                             {% for batch in batches %}
                                             <tr>
-                                            <td class="Batch id"> <a href={{ url_for('sample', batch_id=batch.batch_id) }}>{{ batch.batch_id }}</a></td>
-                                            <td>{{batch.batch_name }}</td>
+                                            <td><a href={{ url_for('sample', batch_id=batch.batch_id) }}>{{batch.batch_name if batch.batch_name else "No Batch Name"}}</a></td>
                                             <td class="Date">  {{batch.date }}</td>
-                                            <td class="Flowcell"> {{ batch.flowcell }}</td>
+                                            <td class="Batch id">{{ batch.batch_id}}</td>
                                             </tr>
                                             {% endfor %}
                                             </tbody>
@@ -123,8 +121,8 @@
                                         <table id="sample_table"   width="100%" class="table table-striped table-bordered table-hover">
                                             <thead>
                                                 <tr>
-                                                <th><a href="#" data-toggle="tooltip" data-placement="right" title="Unique. Defined by ...?">Sample id</a></th>
-                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Unique. Defined by ...?">Batch ID</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="right" title="Unique. Defined by ...?">Sample</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Unique. Defined by ...?">Batch</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="(XX, XY) Automatically generated. Based on predefined NCV-tresholds.">Sex</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="(T13,T18,T21,XXX,XXY,X0) Automatically generated. Based on predefined NCV-tresholds.">Warnings</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Manually classified through the sample page.">T13</a></th>
@@ -140,7 +138,7 @@
                                             {% for sample in samples %}
                                             <tr>
                                             <td class="Sample id"> <a href={{ url_for('sample_page', sample_id=sample.sample_ID) }}>{{ sample.sample_ID }}</a></td-->
-                                            <td class="Batch id"> <a href={{ url_for('sample', batch_id=sample.batch_id) }}>{{ sample.batch_id }}</a></td>
+                                            <td class="Batch id"> <a href={{ url_for('sample', batch_id=sample.batch_id) }}>{{sample.batch.batch_name if sample.batch.batch_name else "No Batch Name"}}</a></td>
                                             <td class="sex">  {{NCV_sex[sample.sample_ID] }}</td>
                                             <td class="warn">  {{NCV_warnings[sample.sample_ID] }}</td>
                                             <td class="T13">  {{ '-' if sample.status_T13=='Normal' else sample.status_T13 }}</td>
@@ -178,12 +176,13 @@
 <script>
 $(document).ready(function() {
     $('#batch_table').DataTable({
-        "order": [[ 2, "desc" ]],
+        "order": [[ 1, "desc" ]],
         "paging":         false
     });
 } );
 $(document).ready(function() {
     $('#sample_table').DataTable({
+        "order": [[ 1, "asc" ]],
         "paging":         false
 });
 } );
