@@ -71,11 +71,12 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+</div>
             <!-- /.row -->
             <div class="row">
             </div>
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#GCBias" data-toggle="tab">GCBias</a></li>
+            <ul class="nav nav-tabs" id="myTab">
+                <li><a href="#GCBias" data-toggle="tab">GCBias</a></li>
                 <li><a href="#NonExcludedSites2Tags" data-toggle="tab">NonExcludedSites2Tags</a></li>
                 <li><a href="#Tags2IndexedReads" data-toggle="tab">Tags2IndexedReads</a></li>
                 <li><a href="#TotalIndexedReads2Clusters" data-toggle="tab">TotalIndexedReads2Clusters</a></li>
@@ -99,7 +100,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
 </div>
 
@@ -139,7 +139,7 @@ var layout = {
             //pointpos: 30,
             type: 'box',
             showlegend: true,
-            name: "{{batch_id}}",
+            name: "{{batch_names[batch_id]}}",
             boxpoints: 'suspectedoutliers',
             };
 
@@ -186,7 +186,7 @@ var layout = {
             //pointpos: 30,
             type: 'box',
             showlegend: true,
-            name: "{{batch_id}}",
+            name: "{{batch_names[batch_id]}}",
             boxpoints: 'suspectedoutliers',
             };
 
@@ -235,7 +235,7 @@ var layout = {
             //pointpos: 30,
             type: 'box',
             showlegend: true,
-            name: "{{batch_id}}",
+            name: "{{batch_names[batch_id]}}",
             boxpoints: 'suspectedoutliers',
             };
 
@@ -281,7 +281,7 @@ var layout = {
             mode: 'markers',
             type: 'scatter',
             showlegend: true,
-            name: "{{batch_id}}",
+            name: "{{batch_names[batch_id]}}",
             };
 
 
@@ -327,7 +327,7 @@ var layout = {
             //pointpos: 30,
             type: 'box',
             showlegend: true,
-            name: "{{batch_id}}",
+            name: "{{batch_names[batch_id]}}",
             boxpoints: 'suspectedoutliers',
             };
     data.push(box); 
@@ -337,6 +337,11 @@ Plotly.newPlot('Library_nM', data, layout);
 
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+ <script>
+          jQuery(function () {
+            jQuery('#myTab a:first').tab('show')
+          })
+</script>
 </body>
 </html>
 

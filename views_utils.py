@@ -238,16 +238,18 @@ class Statistics():
         self.Library_nM = {}
         self.batch_ids = []
         self.dates = []
+        self.batch_names = {}
 
     def get_20_latest(self):
         all_batches = {}
         for batch in self.batches:
-            all_batches[batch.date] = batch.batch_id
+            all_batches[batch.date] = batch
         last_20 = sorted(all_batches.items(), reverse=True)[0:20]   
         last_20 = sorted(last_20)
-        for date, batch_id in last_20:
-            self.batch_ids.append(batch_id)        
-            self.dates.append(date)   
+        for date, batch in last_20:
+            self.batch_ids.append(batch.batch_id)        
+            self.dates.append(date)
+            self.batch_names[batch.batch_id] = batch.batch_name
  
     def make_Library_nM(self):
         i=1

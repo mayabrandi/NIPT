@@ -64,10 +64,11 @@
 
 
     <div class="container">
-<div class="jumbotron vertical-center">
+        <div class="jumbotron vertical-center">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"><strong>Batch: {{batch_name}}</strong></h1>
+                    <h1 class="page-header">Batch: {{batch_name}}</h1>
+                    <h1><small><em> Sequenced {{seq_date}}</em></small></h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -111,8 +112,8 @@
             
                 <!-- /.col-lg-6 -->
             </div>
-            <ul class="nav nav-tabs">
-                                <li class="active"><a href="#table" data-toggle="tab">NCV Table</a>
+            <ul class="nav nav-tabs" id="myTab">
+                                <li><a href="#table" data-toggle="tab">NCV Table</a>
                                 </li>
                                 <li><a href="#NCV_13" data-toggle="tab">NCV_13</a>
                                 </li>
@@ -127,6 +128,7 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane fade in active" id='table'>
+                    <div class="col-lg-16">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -134,39 +136,39 @@
                                     <table class="table table-bordered table-hover" >
                                     <thead>
                                         <tr>
-                                            <th>Sample Id</th>
-                                            <th>Sample Type</th>
+                                            <th width="18%">Sample Id</th>
                                             <th>NCV_13</th>
                                             <th>NCV_18</th>
                                             <th>NCV_21</th>
                                             <th>NCV_X</th>
                                             <th>NCV_Y</th>
+                                            <th><a href="#" data-toggle="tooltip" title="XX, XY or ambigous. Automatically generated. Based on pre defined NCV trsholds">Sex</a></th>
                                             <th><a href="#" data-toggle="tooltip" title="Warning for chomosome abnormality. Automatically generated. Based on pre defined NCV trsholds">Warn</a></th>
-                                            <th>Class</th>
-                                            <th>Include</th>
-                                            <th>Comment</th>
-                                            <th>Last Change</th> 
+                                            <th><a href="#" data-toggle="tooltip" title="Chomosome abnormalies. Manually classified by user through the sample page">Class</a></th>
+                                            <th width="1%">Include</th>
+                                            <th width="18%">Comment</th>
+                                            <th  width="15%">Last Change</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for s in NCV_samples %}
                                         <tr>
-                                            <td> <a href={{ url_for('sample_page', sample_id=s.sample_ID) }}>{{ s.sample_ID }}</a></td>
-                                            <td>{{ s.SampleType }}</td>
+                                            <td width="18%"> <a href={{ url_for('sample_page', sample_id=s.sample_ID) }}>{{ s.sample_ID }}</a></td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_13']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_13']['val'] }}</td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_18']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_18']['val'] }}</td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_21']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_21']['val'] }}</td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_X']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_X']['val'] }}</td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_Y']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_Y']['val'] }}</td>
+                                            <th><p> <small>{{ NCV_sex[s.sample_ID]  }}</small></p></th>
                                             <th><p> <small>{{ warnings[s.sample_ID]  }}</small></p></th>
                                             <th><p> <small>{{ man_class[s.sample_ID] }}</small></p></th>
-                                            <td {% if s.include %}class="success"{% endif %}> <input type="checkbox" name="{{ s.sample_ID }}" {% if s.include %}checked{% endif %}></td>    
-                                            <td>
+                                            <td width="1%" {% if s.include %}class="success"{% endif %}> <input type="checkbox" name="{{ s.sample_ID }}" {% if s.include %}checked{% endif %}></td>    
+                                            <td width="18%">
                                                 <div class="form-group">
-                                                    <textarea class="form-control" rows="2" name = "comment_{{ s.sample_ID }}">{{s.comment}}</textarea>
+                                                    <textarea class="form-control" rows="1" name = "comment_{{ s.sample_ID }}">{{s.comment}}</textarea>
                                                 </div>
                                             </td>
-                                            <td >{{s.change_include_date}}</td>
+                                            <td width="15%"><small>{{s.change_include_date}}</small></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -182,17 +184,18 @@
                                                 <input type=text name="current_user" value="{{current_user.name}}" hidden>
                                             </td> 
                                                 <p align="right">           
-                                                    <input type="submit" class="btn btn-default" value="Save checked samples">
+                                                    <input type="submit" class="btn btn-warning" value="Save checked samples">
                                                 </p>
                                             </td>
                                             <td> 
                                                 <p align="right">            
-                                                    <button type="submit" class="btn btn-default" name="All samples" value="{{sample_ids}}"> Set all OK</button>
+                                                    <button type="submit" class="btn btn-warning" name="All samples" value="{{sample_ids}}"> Set all OK</button>
                                                 </p>
                                             </td>
                                         </tr>
                                     </table>
                                 </form>    
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -472,6 +475,11 @@ Plotly.newPlot('cov_plot', data, layout);
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   
 });
+</script>
+ <script>
+          jQuery(function () {
+            jQuery('#myTab a:first').tab('show')
+          })
 </script>
 </body>
 </html>

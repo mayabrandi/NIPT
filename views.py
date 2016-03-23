@@ -306,6 +306,8 @@ def sample(batch_id):
         batch_name        = batch.batch_name,
         man_class       = DC.man_class,
         NCV_stat        = PP.NCV_stat,
+        NCV_sex         = DC.NCV_sex,
+        seq_date        = batch.date,
         nr_validation_samps = PP.nr_validation_samps,
         NCV_131821      = ['NCV_13', 'NCV_18', 'NCV_21'],
         samp_range      = range(len(PP.NCV_stat['NCV_X']['NCV_cases'])),
@@ -326,8 +328,6 @@ def sample(batch_id):
 def statistics():
     ST = Statistics()
     ST.get_20_latest()
-    print ST.batch_ids
-    print ST.dates
     ST.make_NonExcludedSites2Tags()
     ST.make_GCBias()
     ST.make_Tags2IndexedReads()
@@ -341,5 +341,6 @@ def statistics():
         Tags2IndexedReads = ST.Tags2IndexedReads,
         TotalIndexedReads2Clusters = ST.TotalIndexedReads2Clusters,
         batch_ids = ST.batch_ids,
+        batch_names = ST.batch_names,
         dates = ST.dates)
         
