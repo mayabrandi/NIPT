@@ -243,7 +243,8 @@ class Statistics():
         all_batches = {}
         for batch in self.batches:
             all_batches[batch.date] = batch.batch_id
-        last_20 = sorted(all_batches.items())[0:20]            
+        last_20 = sorted(all_batches.items(), reverse=True)[0:20]   
+        last_20 = sorted(last_20)
         for date, batch_id in last_20:
             self.batch_ids.append(batch_id)        
             self.dates.append(date)   
