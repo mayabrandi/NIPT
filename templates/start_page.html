@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.10/css/dataTables.bootstrap.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/tabletools/2.2.2/css/dataTables.tableTools.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
 
@@ -50,13 +51,15 @@
                     <i class="fa fa-align-justify fa-fw"></i>  <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
-                        <a class="active" href="{{ url_for('batch') }}"><i class="fa fa-home"></i> Start</a>
+                    <a class="active" href="{{ url_for('batch') }}"><i class="fa fa-home"></i> Start</a>
                     <li class="divider"></li>
-                        <a class="active" href={{ url_for('statistics') }}><i class="fa fa-bar-chart"></i>  Statistics</a>
+                    <a class="active" href={{ url_for('statistics') }}><i class="fa fa-bar-chart"></i>  Statistics</a>
                     <li class="divider"></li>
-                        <a class="active" href={{ url_for('logout') }}><i class="fa fa-sign-out"></i>  Sign Out</a>
+                    <a class="active" href={{"https://github.com/Clinical-Genomics/NIPT/issues/new"}}><i class="fa fa-comment-o"></i>  Issues</a>
                     <li class="divider"></li>
-                        <a class="active" href={{ url_for('submit') }}><i class="fa fa-user"></i>  New User</a>
+                    <a class="active" href={{ url_for('logout') }}><i class="fa fa-sign-out"></i>  Sign Out</a>
+                    <li class="divider"></li>
+                    <a class="active" href={{ url_for('submit') }}><i class="fa fa-user"></i>  New User</a>
                 </ul>
             </li>
         </ul>
@@ -86,7 +89,7 @@
                             <div id="batch_list">
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <table  id="batch_table" width="100%"  class="table table-striped table-bordered table-hover">
+                                        <table  id="batch_table" width="100%" cellspacing="0"  class="table table-striped table-bordered table-hover">
                                             <thead>
                                                 <tr>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="right" title="Defined as StarLimsNumber_TicketID">Batch</a></th>
@@ -171,15 +174,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/1.0.8/js/sb-admin-2.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
-
+<script src="https://cdn.datatables.net/tabletools/2.2.2/js/dataTables.tableTools.js"></script>
 
 <script>
+
+$.fn.dataTable.TableTools.defaults.aButtons = [ "pdf", "xls" ];
+
 $(document).ready(function() {
     $('#batch_table').DataTable({
-        "order": [[ 1, "desc" ]],
-        "paging":         false
-    });
+                "dom" : 'T<"clear">lfrtip',
+                "tableTools": {"sSwfPath": "../../../swf/copy_csv_xls_pdf.swf"},
+                "order" : [[ 1, "desc" ]],
+                "paging" :         false,
+                });
 } );
+
 $(document).ready(function() {
     $('#sample_table').DataTable({
         "order": [[ 1, "asc" ]],
@@ -198,6 +207,7 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   
 });
 </script>
+
 </body>
 
 </html>
