@@ -433,7 +433,7 @@ var layout = {
             linewidth: 5,
             showgrid: true,
             gridcolor: '#bdbdbd',
-            title: 'Normalized Coverage',
+            title: 'Chromosome',
             tickvals :{{samp_cov_db['x_axis']}},
             },            
     yaxis :{zeroline: false,
@@ -441,7 +441,7 @@ var layout = {
             showgrid: false,
             linecolor: '#636363',
             linewidth: 5,
-            title : 'Chromosome'
+            title : 'Normalized Coverage'
             },};
 {% for samp in samp_cov_db['samples'] %}
 var trace1 = {
