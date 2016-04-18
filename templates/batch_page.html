@@ -403,6 +403,7 @@ var trace1 = {
     x: [{{NCV_stat['NCV_X']['NCV_cases'][i]}}],
     name: {{NCV_stat['NCV_X']['X_labels'][i]|tojson}},
     mode: 'markers',
+    text: {{NCV_stat['NCV_X']['X_labels'][i]|tojson}},
     type: 'scatter',
     marker: {
             size: 10
@@ -445,13 +446,12 @@ var layout = {
             },};
 {% for samp in samp_cov_db['samples'] %}
 var trace1 = {
-        name: {{samp_cov_db['samples'][samp]['samp_id']|tojson}},
-      y: {{samp_cov_db['samples'][samp]['cov']}},
-      x: {{samp_cov_db['x_axis']}},
-      mode: 'markers',
-      type: 'scatter',
-    marker: {
-            }};
+      name: {{samp_cov_db['samples'][samp]['samp_id']|tojson}},
+        y: {{samp_cov_db['samples'][samp]['cov']}},
+        x: {{samp_cov_db['x_axis']}},
+        mode: 'markers',
+        text: {{samp_cov_db['samples'][samp]['samp_id']|tojson}},
+        type: 'scatter'};
 data.push(trace1);
 {% endfor %}
 Plotly.newPlot('cov_plot', data, layout);
