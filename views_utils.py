@@ -239,6 +239,10 @@ class Statistics():
         self.batch_ids = []
         self.dates = []
         self.batch_names = {}
+        self.Ratio_13 = {}
+        self.Ratio_18 = {}
+        self.Ratio_21 = {}
+        self.NCD_Y = {}
 
     def get_20_latest(self):
         all_batches = {}
@@ -312,6 +316,40 @@ class Statistics():
                 try:
                     self.TotalIndexedReads2Clusters[batch_id]['y'].append(float(samp.TotalIndexedReads2Clusters))
                     self.TotalIndexedReads2Clusters[batch_id]['x'].append(i)
+                except:
+                    pass
+            i+=1
+
+    def make_Ratio(self):
+        i=1
+        for batch_id in self.batch_ids:
+            self.Ratio_13[batch_id]={'x':[],'y':[]}
+            self.Ratio_18[batch_id]={'x':[],'y':[]}
+            self.Ratio_21[batch_id]={'x':[],'y':[]}
+            samps = NCV.query.filter(NCV.batch_id==batch_id)
+            for samp in samps:
+                try:
+                    self.Ratio_13[batch_id]['y'].append(float(samp.Ratio_13))
+                    self.Ratio_13[batch_id]['x'].append(i)
+                    self.Ratio_18[batch_id]['y'].append(float(samp.Ratio_18))
+                    self.Ratio_18[batch_id]['x'].append(i)
+                    self.Ratio_21[batch_id]['y'].append(float(samp.Ratio_21))
+                    self.Ratio_21[batch_id]['x'].append(i)
+                except:
+                    pass
+            i+=1
+
+    def make_NCD_Y(self):
+        i=1
+        for batch_id in self.batch_ids:
+            self.NCD_Y[batch_id]={'x':[],'y':[]}
+            self.NCD_Y[batch_id]={'x':[],'y':[]}
+            self.NCD_Y[batch_id]={'x':[],'y':[]}
+            samps = NCV.query.filter(NCV.batch_id==batch_id)
+            for samp in samps:
+                try:
+                    self.NCD_Y[batch_id]['y'].append(float(samp.NCD_Y))
+                    self.NCD_Y[batch_id]['x'].append(i)
                 except:
                     pass
             i+=1

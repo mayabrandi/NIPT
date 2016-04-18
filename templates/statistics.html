@@ -82,7 +82,11 @@
                 <li><a href="#NonExcludedSites2Tags" data-toggle="tab">NonExcludedSites2Tags</a></li>
                 <li><a href="#Tags2IndexedReads" data-toggle="tab">Tags2IndexedReads</a></li>
                 <li><a href="#TotalIndexedReads2Clusters" data-toggle="tab">TotalIndexedReads2Clusters</a></li>
-                <li><a href="#Library_nM" data-toggle="tab">Library_nM</a></li>
+                <li><a href="#Library_nM" data-toggle="tab">Library yield</a></li>
+                <li><a href="#Ratio_13" data-toggle="tab">Ratio_13</a></li>
+                <li><a href="#Ratio_18" data-toggle="tab">Ratio_18</a></li>
+                <li><a href="#Ratio_21" data-toggle="tab">Ratio_21</a></li>
+                <li><a href="#NCD_Y" data-toggle="tab">NCD_Y</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane fade in active" id='GCBias'>
@@ -99,6 +103,18 @@
                 </div>
                 <div class="tab-pane active" id='Library_nM'>
                     <div id="Library_nM" style="min-width:1000px; height:600px; "></div>
+                </div>
+                <div class="tab-pane active" id='Ratio_13'>
+                    <div id="Ratio_13" style="min-width:1000px; height:600px; "></div>
+                </div>
+                <div class="tab-pane active" id='Ratio_18'>
+                    <div id="Ratio_18" style="min-width:1000px; height:600px; "></div>
+                </div>
+                <div class="tab-pane active" id='Ratio_21'>
+                    <div id="Ratio_21" style="min-width:1000px; height:600px; "></div>
+                </div>
+                <div class="tab-pane active" id='NCD_Y'>
+                    <div id="NCD_Y" style="min-width:1000px; height:600px; "></div>
                 </div>
             </div>
         </div>
@@ -151,7 +167,187 @@ var layout = {
 Plotly.newPlot('NonExcludedSites2Tags', data, layout);
 </script>
 
+<script>
+var XY_plot = document.getElementById('')
+var data = []
 
+var layout = {
+    title: 'Ratio_13 - (20 most recent batches)',
+    hovermode:'closest',
+    xaxis :{showline: true,
+            tickvals : {{ticks}},
+            ticktext : {{dates|tojson}},
+            tickangle : 45,
+            zeroline: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            showgrid: true,
+            gridcolor: '#bdbdbd',
+            title: 'Batch Sequencing Date',
+            },
+            
+    yaxis :{zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'Ratio_13'
+            },};
+
+{% for batch_id  in batch_ids %}
+    var box = {
+            y: {{Ratio_13[batch_id]['y']}},
+            x: {{Ratio_13[batch_id]['x']}},
+            //jitter: 0.3,
+            //pointpos: 30,
+            type: 'box',
+            showlegend: true,
+            name: "{{batch_names[batch_id]}}",
+            boxpoints: 'suspectedoutliers',
+            };
+
+
+    data.push(box); 
+{% endfor %}
+Plotly.newPlot('Ratio_13', data, layout);
+</script>
+
+<script>
+var XY_plot = document.getElementById('')
+var data = []
+
+var layout = {
+    title: 'Ratio_18 - (20 most recent batches)',
+    hovermode:'closest',
+    xaxis :{showline: true,
+            tickvals : {{ticks}},
+            ticktext : {{dates|tojson}},
+            tickangle : 45,
+            zeroline: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            showgrid: true,
+            gridcolor: '#bdbdbd',
+            title: 'Batch Sequencing Date',
+            },
+            
+    yaxis :{zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'Ratio_18'
+            },};
+
+{% for batch_id  in batch_ids %}
+    var box = {
+            y: {{Ratio_18[batch_id]['y']}},
+            x: {{Ratio_18[batch_id]['x']}},
+            //jitter: 0.3,
+            //pointpos: 30,
+            type: 'box',
+            showlegend: true,
+            name: "{{batch_names[batch_id]}}",
+            boxpoints: 'suspectedoutliers',
+            };
+
+
+    data.push(box); 
+{% endfor %}
+Plotly.newPlot('Ratio_18', data, layout);
+</script>
+
+<script>
+var XY_plot = document.getElementById('')
+var data = []
+
+var layout = {
+    title: 'Ratio_21 - (20 most recent batches)',
+    hovermode:'closest',
+    xaxis :{showline: true,
+            tickvals : {{ticks}},
+            ticktext : {{dates|tojson}},
+            tickangle : 45,
+            zeroline: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            showgrid: true,
+            gridcolor: '#bdbdbd',
+            title: 'Batch Sequencing Date',
+            },
+            
+    yaxis :{zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'Ratio_21'
+            },};
+
+{% for batch_id  in batch_ids %}
+    var box = {
+            y: {{Ratio_21[batch_id]['y']}},
+            x: {{Ratio_21[batch_id]['x']}},
+            //jitter: 0.3,
+            //pointpos: 30,
+            type: 'box',
+            showlegend: true,
+            name: "{{batch_names[batch_id]}}",
+            boxpoints: 'suspectedoutliers',
+            };
+
+
+    data.push(box); 
+{% endfor %}
+Plotly.newPlot('Ratio_21', data, layout);
+</script>
+
+
+
+<script>
+var XY_plot = document.getElementById('')
+var data = []
+
+var layout = {
+    title: 'NCD_Y - (20 most recent batches)',
+    hovermode:'closest',
+    xaxis :{showline: true,
+            tickvals : {{ticks}},
+            ticktext : {{dates|tojson}},
+            tickangle : 45,
+            zeroline: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            showgrid: true,
+            gridcolor: '#bdbdbd',
+            title: 'Batch Sequencing Date',
+            },
+            
+    yaxis :{zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'NCD_Y'
+            },};
+
+{% for batch_id  in batch_ids %}
+    var box = {
+            y: {{NCD_Y[batch_id]['y']}},
+            x: {{NCD_Y[batch_id]['x']}},
+            //jitter: 0.3,
+            //pointpos: 30,
+            type: 'box',
+            showlegend: true,
+            name: "{{batch_names[batch_id]}}",
+            boxpoints: 'suspectedoutliers',
+            };
+
+
+    data.push(box); 
+{% endfor %}
+Plotly.newPlot('NCD_Y', data, layout);
+</script>
 
 <script>
 var XY_plot = document.getElementById('')
@@ -299,7 +495,7 @@ var XY_plot = document.getElementById('')
 var data = []
 
 var layout = {
-    title: 'Library_nM - (20 most recent batches)',
+    title: 'Library yield - (20 most recent batches)',
     hovermode:'closest',
     xaxis :{showline: true,
             tickvals : {{ticks}},

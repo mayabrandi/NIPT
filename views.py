@@ -330,6 +330,8 @@ def statistics():
     ST.get_20_latest()
     ST.make_NonExcludedSites2Tags()
     ST.make_GCBias()
+    ST.make_Ratio()
+    ST.make_NCD_Y()
     ST.make_Tags2IndexedReads()
     ST.make_TotalIndexedReads2Clusters()
     ST.make_Library_nM()
@@ -337,6 +339,10 @@ def statistics():
         ticks = range(1,len(ST.NonExcludedSites2Tags)+1),
         NonExcludedSites2Tags = ST.NonExcludedSites2Tags,
         GCBias = ST.GCBias,
+        Ratio_13 = ST.Ratio_13,
+        Ratio_18 = ST.Ratio_18,
+        Ratio_21 = ST.Ratio_21,
+        NCD_Y = ST.NCD_Y,
         Library_nM = ST.Library_nM,
         Tags2IndexedReads = ST.Tags2IndexedReads,
         TotalIndexedReads2Clusters = ST.TotalIndexedReads2Clusters,
