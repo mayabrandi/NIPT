@@ -243,6 +243,16 @@ class Statistics():
         self.Ratio_18 = {}
         self.Ratio_21 = {}
         self.NCD_Y = {}
+        self.thresholds = {
+            'GCBias': {'upper': 0.5, 'lower': -0.5},
+            'NonExcludedSites2Tags': {'upper':1, 'lower':0.8},
+            'Tags2IndexedReads': {'upper':0.9, 'lower':0.75},
+            'TotalIndexedReads2Clusters': {'upper':1, 'lower':0.7},
+            'Library_nM': {'upper':150, 'lower':10, 'wished':40},
+            'Ratio_13': {'upper':0.20043, 'lower':0.1996},
+            'Ratio_18': {'upper':0.25061, 'lower':0.2495},
+            'Ratio_21': {'upper':0.25083, 'lower':0.2492},
+            'NCD_Y': {'lower' : 80}}
 
     def get_20_latest(self):
         all_batches = {}

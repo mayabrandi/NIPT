@@ -335,6 +335,7 @@ def statistics():
     ST.make_Tags2IndexedReads()
     ST.make_TotalIndexedReads2Clusters()
     ST.make_Library_nM()
+    print ST.thresholds
     return render_template('statistics.html',
         ticks = range(1,len(ST.NonExcludedSites2Tags)+1),
         NonExcludedSites2Tags = ST.NonExcludedSites2Tags,
@@ -343,6 +344,7 @@ def statistics():
         Ratio_18 = ST.Ratio_18,
         Ratio_21 = ST.Ratio_21,
         NCD_Y = ST.NCD_Y,
+        thresholds = ST.thresholds,
         Library_nM = ST.Library_nM,
         Tags2IndexedReads = ST.Tags2IndexedReads,
         TotalIndexedReads2Clusters = ST.TotalIndexedReads2Clusters,

@@ -164,6 +164,17 @@ var layout = {
 
     data.push(box); 
 {% endfor %}
+{% for tres in thresholds['NonExcludedSites2Tags'].keys() %} 
+var line = {x : [0.5, 20.5],
+            y : [{{thresholds['NonExcludedSites2Tags'][tres]}},{{thresholds['NonExcludedSites2Tags'][tres]}}],
+            mode: 'lines',
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : "red",
+                width : 2}};
+data.push(line);
+{% endfor %}
 Plotly.newPlot('NonExcludedSites2Tags', data, layout);
 </script>
 
@@ -209,6 +220,18 @@ var layout = {
 
     data.push(box); 
 {% endfor %}
+{% for tres in thresholds['Ratio_13'].keys() %} 
+var line = {x : [0.5, 20.5],
+            y : [{{thresholds['Ratio_13'][tres]}},{{thresholds['Ratio_13'][tres]}}],
+            mode: 'lines',
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : "red",
+                width : 2}};
+data.push(line);
+{% endfor %}
+
 Plotly.newPlot('Ratio_13', data, layout);
 </script>
 
@@ -254,6 +277,18 @@ var layout = {
 
     data.push(box); 
 {% endfor %}
+{% for tres in thresholds['Ratio_18'].keys() %} 
+var line = {x : [0.5, 20.5],
+            y : [{{thresholds['Ratio_18'][tres]}},{{thresholds['Ratio_18'][tres]}}],
+            mode: 'lines',
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : "red",
+                width : 2}};
+data.push(line);
+{% endfor %}
+
 Plotly.newPlot('Ratio_18', data, layout);
 </script>
 
@@ -299,6 +334,18 @@ var layout = {
 
     data.push(box); 
 {% endfor %}
+{% for tres in thresholds['Ratio_21'].keys() %} 
+var line = {x : [0.5, 20.5],
+            y : [{{thresholds['Ratio_21'][tres]}},{{thresholds['Ratio_21'][tres]}}],
+            mode: 'lines',
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : "red",
+                width : 2}};
+data.push(line);
+{% endfor %}
+
 Plotly.newPlot('Ratio_21', data, layout);
 </script>
 
@@ -346,6 +393,19 @@ var layout = {
 
     data.push(box); 
 {% endfor %}
+
+{% for tres in thresholds['NCD_Y'].keys() %} 
+var line = {x : [0.5, 20.5],
+            y : [{{thresholds['NCD_Y'][tres]}},{{thresholds['NCD_Y'][tres]}}],
+            mode: 'lines',
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : "red",
+                width : 2}};
+data.push(line);
+{% endfor %}
+
 Plotly.newPlot('NCD_Y', data, layout);
 </script>
 
@@ -391,6 +451,20 @@ var layout = {
 
     data.push(box); 
 {% endfor %}
+
+{% for tres in thresholds['GCBias'].keys() %} 
+var line = {x : [0.5, 20.5],
+            y : [{{thresholds['GCBias'][tres]}},{{thresholds['GCBias'][tres]}}],
+            mode: 'lines',
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : "red",
+                width : 2}};
+data.push(line);
+{% endfor %}
+
+
 Plotly.newPlot('GCBias', data, layout);
 </script>
 
@@ -440,6 +514,18 @@ var layout = {
 
     data.push(box); 
 {% endfor %}
+{% for tres in thresholds['Tags2IndexedReads'].keys() %} 
+var line = {x : [0.5, 20.5],
+            y : [{{thresholds['Tags2IndexedReads'][tres]}},{{thresholds['Tags2IndexedReads'][tres]}}],
+            mode: 'lines',
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : "red",
+                width : 2}};
+data.push(line);
+{% endfor %}
+
 Plotly.newPlot('Tags2IndexedReads', data, layout);
 </script>
 
@@ -485,6 +571,17 @@ var layout = {
 
     data.push(box); 
 {% endfor %}
+{% for tres in thresholds['TotalIndexedReads2Clusters'].keys() %} 
+var line = {x : [0, 20.5],
+            y : [{{thresholds['TotalIndexedReads2Clusters'][tres]}},{{thresholds['TotalIndexedReads2Clusters'][tres]}}],
+            mode: 'lines',
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : "red",
+                width : 2}};
+data.push(line);
+{% endfor %}
 Plotly.newPlot('TotalIndexedReads2Clusters', data, layout);
 </script>
 
@@ -529,6 +626,17 @@ var layout = {
             boxpoints: 'suspectedoutliers',
             };
     data.push(box); 
+{% endfor %}
+{% for tres in thresholds['Library_nM'].keys() %} 
+var line = {x : [0.5, 20.5],
+            y : [{{thresholds['Library_nM'][tres]}},{{thresholds['Library_nM'][tres]}}],
+            mode: 'lines',
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : "red",
+                width : 2}};
+data.push(line);
 {% endfor %}
 Plotly.newPlot('Library_nM', data, layout);
 </script>
