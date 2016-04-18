@@ -2,6 +2,7 @@
 from database import User, Sample, Batch, Coverage, NCV, BatchStat, db
 import logging ### Add logging!!
 import os
+import statistics
 from datetime import datetime
 
 
@@ -253,8 +254,7 @@ class Statistics():
             'Ratio_13': {'upper':0.20043, 'lower':0.1996},
             'Ratio_18': {'upper':0.25061, 'lower':0.2495},
             'Ratio_21': {'upper':0.25083, 'lower':0.2492},
-            'NCD_Y': {'lower' : 80},
-            'PCS':{'upper':1.45, 'lower':-1.45}}
+            'NCD_Y': {'lower' : 80}}
 
     def get_20_latest(self):
         all_batches = {}
@@ -269,12 +269,16 @@ class Statistics():
 
     def make_PCS(self):
         i=1
+        NCV_all = []
         for batch_id in self.batch_ids:
             samps = NCV.query.filter(NCV.batch_id==batch_id)
             self.PCS[batch_id] = {'x':[],'y':[],'sample':[]}
             for samp in samps:
-                print samp.sample_ID
                 if samp.sample_ID.split('-')[0].lower()=='pcs':
+                    try:
+                        NCV_all.append(float(samp.NCV_X))
+                    except:
+                        pass
                     try:
                         self.PCS[batch_id]['y'].append(float(samp.NCV_X))
                         self.PCS[batch_id]['x'].append(i)
@@ -282,7 +286,10 @@ class Statistics():
                     except:
                         pass
             i+=1
-        
+        med = float(statistics.median(NCV_all))
+        print NCV_all
+        print med 
+        self.thresholds['PCS'] = {'lower' :med-1.45, 'upper':med +1.45}
  
     def make_Library_nM(self):
         i=1
