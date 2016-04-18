@@ -243,6 +243,7 @@ class Statistics():
         self.Ratio_18 = {}
         self.Ratio_21 = {}
         self.NCD_Y = {}
+        self.PCS = {}
         self.thresholds = {
             'GCBias': {'upper': 0.5, 'lower': -0.5},
             'NonExcludedSites2Tags': {'upper':1, 'lower':0.8},
@@ -252,7 +253,8 @@ class Statistics():
             'Ratio_13': {'upper':0.20043, 'lower':0.1996},
             'Ratio_18': {'upper':0.25061, 'lower':0.2495},
             'Ratio_21': {'upper':0.25083, 'lower':0.2492},
-            'NCD_Y': {'lower' : 80}}
+            'NCD_Y': {'lower' : 80},
+            'PCS':{'upper':1.45, 'lower':-1.45}}
 
     def get_20_latest(self):
         all_batches = {}
@@ -264,6 +266,23 @@ class Statistics():
             self.batch_ids.append(batch.batch_id)        
             self.dates.append(date)
             self.batch_names[batch.batch_id] = batch.batch_name
+
+    def make_PCS(self):
+        i=1
+        for batch_id in self.batch_ids:
+            samps = NCV.query.filter(NCV.batch_id==batch_id)
+            self.PCS[batch_id] = {'x':[],'y':[],'sample':[]}
+            for samp in samps:
+                print samp.sample_ID
+                if samp.sample_ID.split('-')[0].lower()=='pcs':
+                    try:
+                        self.PCS[batch_id]['y'].append(float(samp.NCV_X))
+                        self.PCS[batch_id]['x'].append(i)
+                        self.PCS[batch_id]['sample'] = samp.sample_ID
+                    except:
+                        pass
+            i+=1
+        
  
     def make_Library_nM(self):
         i=1
