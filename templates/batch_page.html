@@ -97,7 +97,7 @@
                                         {% for s in seq_warnings %}
                                         <tr>
                                             <td> <a href={{ url_for('sample_page', sample_id=s) }}>{{ s }}</a></td>
-                                            <td>{seq_warnings[s]['missing_data'] }}</td>
+                                            <td>{{seq_warnings[s]['missing_data'] }}</td>
                                             <td>{{ seq_warnings[s]['QC_warn'] }}</td>
                                             <td>{{ seq_warnings[s]['QC_fail'] }}</td>
                                         </tr>

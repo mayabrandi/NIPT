@@ -115,21 +115,26 @@ class DataClasifyer():
             self.NCV_classified[s.sample_ID] = ', '.join(samp_warn)
 
     def get_QC_warnings(self, samples):
-#        low_NES = self.BDH.samples_on_batch.filter(Sample.NonExcludedSites < 8000000)
-        QC_flagged = samples.filter(Sample.QCFlag > 0)
-        ##QC_flagged = self.BDH.samples_on_batch.filter(Sample.QCFlag > 0)
-#        for sample in set(self.NCV_classified.keys() + [sample.sample_ID for sample in low_NES] + [sample.sample_ID for sample in QC_flagged]):
-#            self.QC_warnings[sample] = {'sample_ID' : sample, 'missing_data' : '', 'QC_warn' : '', 'QC_fail' : '', 'NCV_low': ''}
 #        for sample in set(self.NCV_classified.keys() + [sample.sample_ID for sample in QC_flagged]):
-        for sample in set([sample.sample_ID for sample in QC_flagged]):
-            self.QC_warnings[sample] = {'sample_ID' : sample, 'QC_warn' : '', 'QC_fail' : ''}
        # for sample_id, warning in self.NCV_classified.items():
          #   self.QC_warnings[sample_id]['NCV_high'] = warning
+        for sample in samples:
+            if (sample.NonExcludedSites < 8000000) or sample.QCFailure or sample.QCWarning:
+                print 'hek'
+                self.QC_warnings[sample.sample_ID] = {'sample_ID' : sample, 'missing_data' : '', 'QC_warn' : '', 'QC_fail' : ''}
+            print self.QC_warnings
+            if sample.NonExcludedSites < 8000000:  
+                self.QC_warnings[sample.sample_ID]['missing_data'] = sample.NonExcludedSites #'Less than 8M reads'
+            if sample.QCFailure:
+                self.QC_warnings[sample.sample_ID]['QC_fail'] = sample.QCFailure
+            if sample.QCWarning:
+                self.QC_warnings[sample.sample_ID]['QC_warn'] = sample.QCWarning
+
 #        for sample in low_NES:
-#            self.QC_warnings[sample.sample_ID]['missing_data'] = 'warning: lt 8M reads'
-        for sample in QC_flagged:
-            self.QC_warnings[sample.sample_ID]['QC_fail'] = sample.QCFailure if sample.QCFailure else ''
-            self.QC_warnings[sample.sample_ID]['QC_warn'] = sample.QCWarning if sample.QCWarning else ''
+#            self.QC_warnings[sample.sample_ID]['missing_data'] = sample.NonExcludedSites #'Less than 8M reads'
+#        for sample in QC_flagged:
+#            self.QC_warnings[sample.sample_ID]['QC_fail'] = sample.QCFailure if sample.QCFailure else ''
+#            self.QC_warnings[sample.sample_ID]['QC_warn'] = sample.QCWarning if sample.QCWarning else ''
 
 
 
@@ -141,17 +146,11 @@ class PlottPage():
         self.NCV_passed = self.BDH.NCV_passed
         self.nr_validation_samps = len(self.BDH.NCV_passed.all()) 
         self.cases = self.BDH.cases  
-        self.NCV_stat = {'NCV_13':{}, 'NCV_18':{}, 
-                         'NCV_21':{}, 'NCV_X':{}, 'NCV_Y' : {}}
+        self.NCV_stat = {'NCV_13':{}, 'NCV_18':{}, 'NCV_21':{}, 'NCV_X':{}, 'NCV_Y' : {}}
         self.coverage_plot = {'samples':{},'x_axis':[]}
-        self.tris_chrom_abn = {'13':{},
-                               '18':{},
-                               '21':{}}
+        self.tris_chrom_abn = {'13':{}, '18':{}, '21':{}}
+        self.sex_chrom_abn = {'X0':{}, 'XXX':{}, 'XXY':{},'XYY':{}}
         self.tris_abn = {}
-        self.sex_chrom_abn = {'X0':{},
-                              'XXX':{},
-                              'XXY':{},
-                              'XYY':{}}
         self.X_labels = self.make_X_labels()
         self.sample_state_dict = {'Probable' : {},'False Positive':{},'Verified':{}, "False Negative": {}, "Other": {}, "Suspected": {}}
 
@@ -188,7 +187,7 @@ class PlottPage():
             NCV_cases = [round(float(s.__dict__[chrom]),2) for s in self.cases]
             X_labels = [s.__dict__['sample_ID'] for s in self.cases]
             self.NCV_stat[chrom] = {
-                'nr_pass':len(NCV_pass[0]),
+                'nr_pass' : len(NCV_pass[0]),
                 'NCV_list' : NCV_list,
                 'NCV_cases' : NCV_cases,
                 'x_axis' : range(2,len(NCV_cases)+2),
@@ -208,20 +207,23 @@ class PlottPage():
                 self.tris_chrom_abn[abn][status] = {'NCV' : [], 's_name' : [], 'x_axis': []}             
                 for s in Sample.query.filter(Sample.__dict__['status_T'+abn] == status):
                     NCV_val = NCV.query.filter_by(sample_ID = s.sample_ID).first().__dict__['NCV_' + abn]
-                    self.tris_abn[status]['NCV'].append(float(NCV_val))
-                    self.tris_abn[status]['s_name'].append(s.sample_ID)
-                    self.tris_abn[status]['x_axis'].append(x+status_x[status])
-                    self.tris_chrom_abn[abn][status]['NCV'].append(float(NCV_val))
-                    self.tris_chrom_abn[abn][status]['s_name'].append(s.sample_ID)
-                    self.tris_chrom_abn[abn][status]['x_axis'].append(0)
+                    if NCV_val!='NA':
+                        self.tris_abn[status]['NCV'].append(float(NCV_val))
+                        self.tris_abn[status]['s_name'].append(s.sample_ID)
+                        self.tris_abn[status]['x_axis'].append(x+status_x[status])
+                        self.tris_chrom_abn[abn][status]['NCV'].append(float(NCV_val))
+                        self.tris_chrom_abn[abn][status]['s_name'].append(s.sample_ID)
+                        self.tris_chrom_abn[abn][status]['x_axis'].append(0)
             x = x+1
         for abn in self.sex_chrom_abn.keys():
             for status in self.sample_state_dict.keys():                                       
                 self.sex_chrom_abn[abn][status] = {'NCV_X' : [], 'NCV_Y' : [], 's_name' : []}             
                 for s in Sample.query.filter(Sample.__dict__['status_'+abn] == status):
                     NCV_db = NCV.query.filter_by(sample_ID = s.sample_ID).first()
-                    self.sex_chrom_abn[abn][status]['NCV_X'].append(float(NCV_db.NCV_X))
-                    self.sex_chrom_abn[abn][status]['NCV_Y'].append(float(NCV_db.NCV_Y))
+                    if NCV_db.NCV_X!='NA':
+                        self.sex_chrom_abn[abn][status]['NCV_X'].append(float(NCV_db.NCV_X))
+                    if NCV_db.NCV_Y!='NA':
+                        self.sex_chrom_abn[abn][status]['NCV_Y'].append(float(NCV_db.NCV_Y))
                     self.sex_chrom_abn[abn][status]['s_name'].append(s.sample_ID)
 
 

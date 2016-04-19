@@ -295,28 +295,20 @@ def sample(batch_id):
     PP.make_NCV_stat()
     PP.make_chrom_abn()
     PP.make_cov_plot_data()
-    state_dict = {'Probable':{},'False Positive':{},'Verified':{}}
-    for state in state_dict:
-        state_dict[state]['T_13'] = Sample.query.filter_by(status_T13 = state)
-        state_dict[state]['T_18'] = Sample.query.filter_by(status_T18 = state)
-        state_dict[state]['T_21'] = Sample.query.filter_by(status_T21 = state)
     return render_template('batch_page.html',
-        samples         = Sample.query.filter(Sample.batch_id == batch_id),
         NCV_samples     = NCV.query.filter(NCV.batch_id == batch_id),
-        batch_name        = batch.batch_name,
+        batch_name      = batch.batch_name,
         man_class       = DC.man_class,
         NCV_stat        = PP.NCV_stat,
         NCV_sex         = DC.NCV_sex,
         seq_date        = batch.date,
         nr_validation_samps = PP.nr_validation_samps,
-        NCV_131821      = ['NCV_13', 'NCV_18', 'NCV_21'],
         samp_range      = range(len(PP.NCV_stat['NCV_X']['NCV_cases'])),
-        state_dict      = state_dict,
         tris_chrom_abn  = PP.tris_chrom_abn,
         sex_chrom_abn   = PP.sex_chrom_abn,
         sex_tresholds   = DC.sex_tresholds,
         tris_thresholds = DC.tris_thresholds,
-        seq_warning = DC.QC_warnings,
+        seq_warnings = DC.QC_warnings,
         warnings = DC.NCV_classified,
         NCV_rounded = DC.NCV_data,
         samp_cov_db = PP.coverage_plot,
