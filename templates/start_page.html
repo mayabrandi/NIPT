@@ -72,6 +72,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header"><strong>NIPT Data</strong></h1>
+                    <h5 class="page-header">{{nr_included_samps}} samples are currently included in the historical data set</h5>
                 </div>
             </div>
         </div>
@@ -135,22 +136,24 @@
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom"title="Manually classified through the sample page.">XXY</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Manually classified through the sample page.">XYY</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="left" title="Manually classified through the sample page.">X0</a></th>
+                                                <th><a href="#">Comment</a></th>
                                                 </tr>
                                             </thead>
                                             <tbody   class="list">
-                                            {% for sample in samples %}
+                                            {% for sample in NCV_db %}
                                             <tr>
                                             <td class="Sample id"> <a href={{ url_for('sample_page', sample_id=sample.sample_ID) }}>{{ sample.sample_ID }}</a></td-->
                                             <td class="Batch id"> <a href={{ url_for('sample', batch_id=sample.batch_id) }}>{{sample.batch.batch_name if sample.batch.batch_name else "No Batch Name"}}</a></td>
                                             <td class="sex">  {{NCV_sex[sample.sample_ID] }}</td>
                                             <td class="warn">  {{NCV_warnings[sample.sample_ID] }}</td>
-                                            <td class="T13">  {{ '-' if sample.status_T13=='Normal' else sample.status_T13 }}</td>
-                                            <td class="T18"> {{ '-' if sample.status_T18=='Normal' else sample.status_T18 }}</td>
-                                            <td class="T21"> {{ '-' if sample.status_T21=='Normal' else sample.status_T21 }}</td>
-                                            <td class="XXX"> {{ '-' if sample.status_XXX=='Normal' else sample.status_XXX }}</td>
-                                            <td class="XXY"> {{ '-' if sample.status_XXY=='Normal' else sample.status_XXY }}</td>
-                                            <td class="XYY"> {{ '-' if sample.status_XYY=='Normal' else sample.status_XYY }}</td>
-                                            <td class="X0"> {{ '-' if sample.status_X0 =='Normal' else sample.status_X0 }}</td>
+                                            <td class="T13">  {{ '-' if sample.sample.status_T13=='Normal' else sample.sample.status_T13 }}</td>
+                                            <td class="T18"> {{ '-' if sample.sample.status_T18=='Normal' else sample.sample.status_T18 }}</td>
+                                            <td class="T21"> {{ '-' if sample.sample.status_T21=='Normal' else sample.sample.status_T21 }}</td>
+                                            <td class="XXX"> {{ '-' if sample.sample.status_XXX=='Normal' else sample.sample.status_XXX }}</td>
+                                            <td class="XXY"> {{ '-' if sample.sample.status_XXY=='Normal' else sample.sample.status_XXY }}</td>
+                                            <td class="XYY"> {{ '-' if sample.sample.status_XYY=='Normal' else sample.sample.status_XYY }}</td>
+                                            <td class="X0"> {{ '-' if sample.sample.status_X0 =='Normal' else sample.sample.status_X0 }}</td>
+                                            <td class="comments">{{sample.comment}}</td>
                                             </tr>
                                             {% endfor %}
                                             </tbody>

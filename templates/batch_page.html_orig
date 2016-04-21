@@ -292,12 +292,11 @@ var line = {x : [-1, {{NCV_stat['NCV_'+chrom]['x_axis'][-1]+2}}],
             name: "{{line}}"};
 data.push(line);
 {% endfor %}
-{% for abn_status  in abn_status_list %}
 var verif = {                                                                  
-            name: "{{abn_status}} T_{{chrom}}",                                                               
-            y: {{tris_chrom_abn[chrom][abn_status]['NCV']}},                                        
-            x: {{tris_chrom_abn[chrom][abn_status]['x_axis']}} ,
-            text: {{tris_chrom_abn[chrom][abn_status]['s_name']|tojson}},                                       
+            name: "Verified T_{{chrom}}",                                                               
+            y: {{tris_chrom_abn[chrom]['Verified']['NCV']}},                                        
+            x: {{tris_chrom_abn[chrom]['Verified']['x_axis']}} ,
+            text: {{tris_chrom_abn[chrom]['Verified']['s_name']|tojson}},                                       
         mode: 'markers',
         marker: {symbol :"square",
                 size: 5,
@@ -305,7 +304,6 @@ var verif = {
         type: 'scatter',                                                            
         }; 
 data.push(verif);
-{% endfor %}
 var trace1 = {
     name: 'Case',
       y: {{NCV_stat['NCV_'+chrom]['NCV_cases']}},
@@ -371,15 +369,14 @@ var backstat = {
             size: 10}
 data.push(backstat);
 var i = 0
-var colors = ['#FF9999','#FF3333','#CC0000', '#FFFF99','#FFFF00','#999900','#99FF99', '#00FF00','#009900','#99CCFF','#3399FF', '#004C99']
+var colors = ['#1a1aff','#8cff1a','#ff531a', '#1affff']
 {% for abn  in sex_chrom_abn.keys() %} 
-{% for abn_status  in abn_status_list %} 
     var verif = {                                                                  
-            name: '{{abn_status}} {{abn}}',                                                               
-            y: {{sex_chrom_abn[abn][abn_status]['NCV_Y']}},                                        
-            x: {{sex_chrom_abn[abn][abn_status]['NCV_X']}},
-            index : {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}}, 
-            text: {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}},                                       
+            name: 'Verified {{abn}}',                                                               
+            y: {{sex_chrom_abn[abn]['Verified']['NCV_Y']}},                                        
+            x: {{sex_chrom_abn[abn]['Verified']['NCV_X']}},
+            index : {{sex_chrom_abn[abn]['Verified']['s_name']|tojson}}, 
+            text: {{sex_chrom_abn[abn]['Verified']['s_name']|tojson}},                                       
         mode: 'markers',
         marker: {symbol :"square",
                 color: colors[i]} ,                                                   
@@ -387,7 +384,6 @@ var colors = ['#FF9999','#FF3333','#CC0000', '#FFFF99','#FFFF00','#999900','#99F
         }; 
     data.push(verif);
     var i = i +1
-{% endfor %}
 {% endfor %}
 {% for line  in sex_tresholds %} 
 var line = {x : {{sex_tresholds[line]['x']}},

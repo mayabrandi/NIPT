@@ -138,7 +138,7 @@ var box = {
     type: 'box',
     marker: {
         color: 'rgba(127, 96, 0, 0.5)'},
-    name: 'validation samples ({{nr_validation_samps}} pcs)',
+    name: 'validation samples (N={{nr_validation_samps}})',
     boxpoints: 'suspectedoutliers',
     hoverinfo:'none',
 }
@@ -183,7 +183,7 @@ var backstat = {
     y: {{NCV_stat['NCV_Y']['NCV_pass'][0]}},
     x: {{NCV_stat['NCV_X']['NCV_pass'][0]}},
     text: {{NCV_stat['NCV_X']['NCV_pass_names'][0]|tojson}},
-    name: 'validation samples ({{nr_validation_samps}} pcs)',
+    name: 'validation samples (N={{nr_validation_samps}})',
     //hoverinfo:'none',
     mode: 'markers',
     type: 'scatter',

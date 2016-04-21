@@ -26,6 +26,20 @@ class BatchDataHandler():
                 NCV.NCV_X!='NA',
                 NCV.NCV_Y!='NA')
 
+class DataHandler():
+    def __init__(self):
+        self.filtered_NCV = self.fliter_NA()
+        self.NCV_passed = self.filtered_NCV.filter(NCV.include)
+        self.nr_included_samps = len(self.NCV_passed.all())
+
+    def fliter_NA(self):
+        # Filtering out NA. Could probably be done in a more preyyt way :/
+        return NCV.query.filter(
+                NCV.NCV_13!='NA',
+                NCV.NCV_18!='NA',
+                NCV.NCV_21!='NA',
+                NCV.NCV_X!='NA',
+                NCV.NCV_Y!='NA')
 
 class DataClasifyer():
     def __init__(self):
@@ -120,9 +134,7 @@ class DataClasifyer():
          #   self.QC_warnings[sample_id]['NCV_high'] = warning
         for sample in samples:
             if (sample.NonExcludedSites < 8000000) or sample.QCFailure or sample.QCWarning:
-                print 'hek'
                 self.QC_warnings[sample.sample_ID] = {'sample_ID' : sample, 'missing_data' : '', 'QC_warn' : '', 'QC_fail' : ''}
-            print self.QC_warnings
             if sample.NonExcludedSites < 8000000:  
                 self.QC_warnings[sample.sample_ID]['missing_data'] = sample.NonExcludedSites #'Less than 8M reads'
             if sample.QCFailure:
@@ -162,6 +174,7 @@ class PlottPage():
                 NCV_pass.append(float(s.__dict__[chrom])) 
                 NCV_pass_names.append(s.sample_ID)
             except:
+                logging.exception('')
                 pass
         
         return [NCV_pass], [NCV_pass_names]
@@ -280,17 +293,17 @@ class Statistics():
                     try:
                         NCV_all.append(float(samp.NCV_X))
                     except:
+                        logging.exception('')
                         pass
                     try:
                         self.PCS[batch_id]['y'].append(float(samp.NCV_X))
                         self.PCS[batch_id]['x'].append(i)
                         self.PCS[batch_id]['sample'] = samp.sample_ID
                     except:
+                        logging.exception('')
                         pass
             i+=1
         med = float(statistics.median(NCV_all))
-        print NCV_all
-        print med 
         self.thresholds['PCS'] = {'lower' :med-1.45, 'upper':med +1.45}
  
     def make_Library_nM(self):
@@ -303,6 +316,7 @@ class Statistics():
                     self.Library_nM[batch_id]['y'].append(float(samp.Library_nM))
                     self.Library_nM[batch_id]['x'].append(i)
                 except:
+                    logging.exception('')
                     pass
             i+=1
 
@@ -316,6 +330,7 @@ class Statistics():
                     self.NonExcludedSites2Tags[batch_id]['y'].append(float(samp.NonExcludedSites2Tags))
                     self.NonExcludedSites2Tags[batch_id]['x'].append(i)
                 except:
+                    logging.exception('')
                     pass
             i+=1
 
@@ -329,6 +344,7 @@ class Statistics():
                     self.GCBias[batch_id]['y'].append(float(samp.GCBias))
                     self.GCBias[batch_id]['x'].append(i)
                 except:
+                    logging.exception('')
                     pass
             i+=1
 
@@ -342,6 +358,7 @@ class Statistics():
                     self.Tags2IndexedReads[batch_id]['y'].append(float(samp.Tags2IndexedReads))
                     self.Tags2IndexedReads[batch_id]['x'].append(i)
                 except:
+                    logging.exception('')
                     pass
             i+=1
 
@@ -355,6 +372,7 @@ class Statistics():
                     self.TotalIndexedReads2Clusters[batch_id]['y'].append(float(samp.TotalIndexedReads2Clusters))
                     self.TotalIndexedReads2Clusters[batch_id]['x'].append(i)
                 except:
+                    logging.exception('')
                     pass
             i+=1
 
@@ -374,6 +392,7 @@ class Statistics():
                     self.Ratio_21[batch_id]['y'].append(float(samp.Ratio_21))
                     self.Ratio_21[batch_id]['x'].append(i)
                 except:
+                    logging.exception('')
                     pass
             i+=1
 
@@ -389,5 +408,6 @@ class Statistics():
                     self.NCD_Y[batch_id]['y'].append(float(samp.NCD_Y))
                     self.NCD_Y[batch_id]['x'].append(i)
                 except:
+                    logging.exception('')
                     pass
             i+=1

@@ -239,9 +239,6 @@
 </div>
 
 </div>
-
-
-
 <script>
 
 var layout = {
@@ -424,14 +421,15 @@ var backstat = {
 data.push(backstat);
 
 var i = 0
-var colors = ['#FF9999','#FF3333','#CC0000', '#FFFF99','#FFFF00','#999900','#99FF99', '#00FF00','#009900','#99CCFF','#3399FF', '#004C99']
+var colors = ['#1a1aff','#8cff1a','#ff531a', '#1affff','#1a1aff','#8cff1a','#ff531a', '#1affff','#1a1aff','#8cff1a','#ff531a', '#1affff']
+var abn_status = ['Verified','False Positive', 'Probable']
 {% for abn  in sex_chrom_abn.keys() %} 
-{% for abn_status  in abn_status_list %} 
+{% for stat  in abn_status %} 
     var verif = {                                                                  
-            name: '{{abn_status}} {{abn}}',                                                               
-            y: {{sex_chrom_abn[abn][abn_status]['NCV_Y']}},                                        
-            x: {{sex_chrom_abn[abn][abn_status]['NCV_X']}},
-            text: {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}},                                       
+            name: '{{stat}} {{abn}}',                                                               
+            y: {{sex_chrom_abn[abn][stat]['NCV_Y']}},                                        
+            x: {{sex_chrom_abn[abn][stat]['NCV_X']}},
+            text: {{sex_chrom_abn[abn][stat]['s_name']|tojson}},                                       
         mode: 'markers',
         marker: {symbol :"square",
                  color : colors[i],

@@ -8,13 +8,12 @@ from extentions import login_manager, google, app, mail, ssl, ctx
 import logging
 import os
 from datetime import datetime
-from views_utils import BatchDataHandler, DataClasifyer, PlottPage, Statistics
+from views_utils import DataHandler, DataClasifyer, PlottPage, Statistics
 
 
 
 @app.route('/login/')
 def login():
-    print 'DD'
     callback_url = url_for('authorized', _external = True)
     return google.authorize(callback=callback_url)
 
@@ -22,7 +21,6 @@ def login():
 @app.route('/submit/')
 @login_required
 def submit():
-    print 'SS'
     return render_template('submit.html') 
 
 
@@ -53,13 +51,11 @@ def submit_status():
 
 @app.route('/')
 def index():
-    print 'AA'
     return render_template('index.html')
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    print 'BB'
     """Returns the currently active user as an object."""
     return User.query.filter_by(id=user_id).first()
 
@@ -67,14 +63,12 @@ def load_user(user_id):
 @app.route('/logout/')
 @login_required
 def logout():
-    print 'CC'
     logout_user()
     session.pop('google_token', None)
     return redirect(url_for('index'))
 
 @google.tokengetter
 def get_google_token():
-    print 'EE'
     """Returns a tuple of Google tokens, if they exist"""
     return session.get('google_token')
 
@@ -111,25 +105,26 @@ def authorized(oauth_response):
         except:
             flash('Sorry, you could not log in', 'warning')
     else:
-        print 'F4'
         flash('Your email is not on the whitelist, contact an admin.')
         return redirect(url_for('index'))
     if login_user(user_obj):
         return redirect(request.args.get('next') or url_for('batch'))
-        print 'F5'
     return redirect(url_for('index'))
 
 @app.route('/NIPT/')
 @login_required
 def batch():
     NCV_db = NCV.query
+    DH = DataHandler()
     sample_db = Sample.query
     DC = DataClasifyer()
     DC.handle_NCV(NCV_db)
     DC.get_QC_warnings(sample_db)
     return render_template('start_page.html', 
         batches = Batch.query,
+        nr_included_samps = DH.nr_included_samps,
         samples = Sample.query,
+        NCV_db  = NCV.query,
         NCV_sex = DC.NCV_sex,
         NCV_warnings = DC.NCV_classified)
 
@@ -137,7 +132,10 @@ def batch():
 
 @app.route('/update', methods=['POST'])
 def update():
-    user = request.form['current_user']
+    if 'current_user' in request.form:
+        user = request.form['current_user']
+    else:
+        user = 'unknown'
     dt = datetime.now()
     if 'All samples' in request.form:
         samples = request.form['All samples'].split(',')
@@ -168,6 +166,13 @@ def update():
                 if request.form[samp_comment] != sample.comment:
                     sample.comment = request.form[samp_comment]
                     sample.change_include_date = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
+    if 'comment' in request.form:
+        sample_id = request.form['sample_id']
+        sample = NCV.query.filter_by(sample_ID = sample_id).first()
+        if request.form['comment'] != sample.comment:
+            sample.comment = request.form['comment']
+        
+
     db.session.commit()
     return redirect(request.referrer)
 
@@ -187,51 +192,24 @@ def update_trisomi_status(batch_id, sample_id):
     if sample.status_T13 != request.form['T13']:
         sample.status_T13 = request.form['T13']
         sample.status_change_T13 = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
-    if sample.comment_T13 != request.form["comment_T13"]:
-        sample.comment_T13 = request.form["comment_T13"]
-        sample.status_change_T13 = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
-
     if sample.status_T18 != request.form['T18']:
         sample.status_T18 = request.form['T18']
         sample.status_change_T18 = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
-    if sample.comment_T18 != request.form["comment_T18"]:
-        sample.comment_T18 = request.form["comment_T18"]
-        sample.status_change_T18 = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
-
     if sample.status_T21 != request.form['T21']:
         sample.status_T21 = request.form['T21']
         sample.status_change_T21 = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
-    if sample.comment_T21 != request.form["comment_T21"]:
-        sample.comment_T21 = request.form["comment_T21"]
-        sample.status_change_T21 = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
-
     if sample.status_X0 != request.form['X0']:
         sample.status_change_X0 = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
         sample.status_X0 = request.form['X0']
-    if sample.comment_X0 != request.form["comment_X0"]:
-        sample.comment_X0 = request.form["comment_X0"]
-        sample.status_change_X0 = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
-
     if sample.status_XXX != request.form['XXX']:
         sample.status_change_XXX =' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
         sample.status_XXX = request.form['XXX']
-    if sample.comment_XXX != request.form["comment_XXX"]:
-        sample.comment_XXX = request.form["comment_XXX"]
-        sample.status_change_XXX = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
-
     if sample.status_XXY != request.form['XXY']:
         sample.status_change_XXY = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
         sample.status_XXY = request.form['XXY']
-    if sample.comment_XXY != request.form["comment_XXY"]:
-        sample.comment_XXY = request.form["comment_XXY"]
-        sample.status_change_XXY = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
-
     if sample.status_XYY != request.form['XYY']:
         sample.status_change_XYY = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
         sample.status_XYY = request.form['XYY']
-    if sample.comment_XYY != request.form["comment_XYY"]:
-        sample.comment_XYY = request.form["comment_XYY"]
-        sample.status_change_XYY = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
 
     db.session.add(sample)
     db.session.commit()
@@ -263,7 +241,9 @@ def sample_page( sample_id):
             NCV_dat = NCV_dat,
             tris_abn = PP.tris_abn,
             sex_chrom_abn = PP.sex_chrom_abn,
+            abn_status_list = ['Verified','False Positive', 'Probable'],
             sample = sample, 
+            NCV_db = NCV.query.filter_by(sample_ID = sample_id).first(), 
             batch_id = batch_id,
             batch_name = batch.batch_name,
             batch = batch,
@@ -306,6 +286,7 @@ def sample(batch_id):
         samp_range      = range(len(PP.NCV_stat['NCV_X']['NCV_cases'])),
         tris_chrom_abn  = PP.tris_chrom_abn,
         sex_chrom_abn   = PP.sex_chrom_abn,
+        abn_status_list = ['Verified','False Positive', 'Probable'],
         sex_tresholds   = DC.sex_tresholds,
         tris_thresholds = DC.tris_thresholds,
         seq_warnings = DC.QC_warnings,
@@ -328,7 +309,6 @@ def statistics():
     ST.make_TotalIndexedReads2Clusters()
     ST.make_Library_nM()
     ST.make_PCS()
-    print ST.PCS
     return render_template('statistics.html',
         ticks = range(1,len(ST.NonExcludedSites2Tags)+1),
         NonExcludedSites2Tags = ST.NonExcludedSites2Tags,
