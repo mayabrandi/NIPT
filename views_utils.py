@@ -165,6 +165,10 @@ class PlottPage():
         self.tris_abn = {}
         self.X_labels = self.make_X_labels()
         self.sample_state_dict = {'Probable' : {},'False Positive':{},'Verified':{}, "False Negative": {}, "Other": {}, "Suspected": {}}
+        self.sex_abn_colors = {  'X0' : {'Verified': '#FF9999', 'Probable' : '#FF3333',"Suspected": '#CC0000','False Positive': '#660000'},
+                            'XXX' : {'Verified': '#FFFF00', 'Probable' : '#CCCC00',"Suspected": '#999900','False Positive': '#666600'},
+                            'XXY' : {'Verified': '#99FF99', 'Probable' : '#00FF00',"Suspected": '#00CC00','False Positive':'#006600' },
+                            'XYY' : {'Verified': '#99FFFF', 'Probable' : '#99CCFF',"Suspected": '#0080FF','False Positive':'#0000FF' }}
 
     def make_approved_stats(self, chrom):
         NCV_pass = []

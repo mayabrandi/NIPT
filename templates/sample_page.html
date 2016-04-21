@@ -424,7 +424,7 @@ var backstat = {
 data.push(backstat);
 
 var i = 0
-var colors = ['#FF9999','#FF3333','#CC0000','#660000', '#FFFF00','#CCCC00','#999900','#666600','#99FF99', '#00FF00','#00CC00','#006600','#99FFFF','#99CCFF', '#0080FF','#0000FF']
+
 {% for abn  in sex_chrom_abn.keys() %} 
 {% for abn_status  in abn_status_list %} 
     var verif = {                                                                  
@@ -434,7 +434,7 @@ var colors = ['#FF9999','#FF3333','#CC0000','#660000', '#FFFF00','#CCCC00','#999
             text: {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}},                                       
         mode: 'markers',
         marker: {symbol :"square",
-                 color : colors[i],
+                 color : "{{sex_abn_colors[abn][abn_status]}}",
                 } ,                                                   
         type: 'scatter',                                                            
         }; 
