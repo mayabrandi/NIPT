@@ -288,6 +288,7 @@ def sample(batch_id):
         tris_chrom_abn  = PP.tris_chrom_abn,
         sex_chrom_abn   = PP.sex_chrom_abn,
         abn_status_list = ['Verified','False Positive', 'Probable', 'Suspected'],
+        many_colors     = PP.many_colors,
         sex_abn_colors  = PP.sex_abn_colors,
         sex_tresholds   = DC.sex_tresholds,
         tris_thresholds = DC.tris_thresholds,
