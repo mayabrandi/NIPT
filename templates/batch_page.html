@@ -262,6 +262,8 @@ $(function () {
 var data = []
 var layout = {
     title: 'NCV_{{chrom}}',
+    legend:{hovermode:'closest' },
+    hovermode:'closest',
     xaxis :{showline: true,
             ticktext : {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
             tickvals : {{NCV_stat['NCV_'+chrom]['x_axis']}},
@@ -378,7 +380,6 @@ var colors = ['#FF9999','#FF3333','#CC0000', '#FFFF99','#FFFF00','#999900','#99F
             name: '{{abn_status}} {{abn}}',                                                               
             y: {{sex_chrom_abn[abn][abn_status]['NCV_Y']}},                                        
             x: {{sex_chrom_abn[abn][abn_status]['NCV_X']}},
-            index : {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}}, 
             text: {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}},                                       
         mode: 'markers',
         marker: {symbol :"square",
