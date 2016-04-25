@@ -310,7 +310,7 @@ class NCV(db.Model):
         self.NCD_21 = nipt_dict['NCD_21']
         self.NCD_X = nipt_dict['NCD_X']
         self.NCD_Y = nipt_dict['NCD_Y']
-        self.include = True             # set to False by default before handing over!!!
+        self.include = False             # set to False by default before handing over!!!
         self.change_include_date = ''
         self.comment = ''
 
