@@ -49,14 +49,13 @@ class NiptDBSetup():
                 self.db.session.add(cov)
                 ncv = NCV(row, sample, batch)
                 self.db.session.add(ncv)
-            if not batch:
                 batchstat = BatchStat(row, batch)
                 self.db.session.add(batchstat)
         try:
             self.db.session.commit()
         except:
             error = sys.exc_info()
-            logging.error('error in update_nipt_db!!!!!!!')
+            logging.exception('error in update_nipt_db!!!!!!!')
             logging.error(error)
             pass
 
@@ -75,6 +74,7 @@ class NiptDBSetup():
                     self.db.session.add(batch)
                     self.db.session.commit()
                 except:
+                    logging.exception('')
                     pass
 
 
@@ -88,9 +88,9 @@ class NiptDBSetup():
 def main(csv_files, users_file, sample_sheets):
     db.init_app(app)
     logging.basicConfig(filename = 'NIPT_database_log', level=logging.DEBUG)
-    db.engine.execute("SET foreign_key_checks = 0")
+  #  db.engine.execute("SET foreign_key_checks = 0")
     db.create_all()
-    db.engine.execute("SET foreign_key_checks = 1")
+  #  db.engine.execute("SET foreign_key_checks = 1")
     if users_file:
         users_data = open(users_file)
         users = json.load(users_data)
@@ -112,7 +112,7 @@ def main(csv_files, users_file, sample_sheets):
             else:
                 logging.warning("Could not add to database from resultfile: %s" % path)
         except:
-            logging.warning("Issues getting info from resultfile: %s" % path)
+            logging.exception("Issues getting info from resultfile: %s" % path)
             pass
     for path in sample_sheets:
         try:
@@ -124,7 +124,7 @@ def main(csv_files, users_file, sample_sheets):
             else:
                 logging.warning("Could not add batch name to database from sample sheet: %s" % path)
         except:
-            logging.warning("Could not get batch name from sample sheet: %s" % path)
+            logging.exception("Could not get batch name from sample sheet: %s" % path)
             pass
 
 

@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.10/css/dataTables.bootstrap.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css">
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/tabletools/2.2.2/css/dataTables.tableTools.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
 
 <style>
@@ -44,19 +45,23 @@
             <a class="navbar-brand"   href="{{ url_for('batch') }}">NIPT</a>
         </div>
         <ul class="nav navbar-top-links navbar-right">
-          
+
             <li class="dropdown">
                 <a class="navbar-brand" data-toggle="dropdown">
                     <i class="fa fa-align-justify fa-fw"></i>  <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
-                        <a class="active" href="{{ url_for('batch') }}"><i class="fa fa-home"></i> Start</a>
+                    <a class="active" href="{{ url_for('batch') }}"><i class="fa fa-home"></i> Start</a>
                     <li class="divider"></li>
-                        <a class="active" href={{ url_for('statistics') }}><i class="fa fa-bar-chart"></i>  Statistics</a>
+                    <a class="active" href={{ url_for('statistics') }}><i class="fa fa-bar-chart"></i>  Statistics</a>
                     <li class="divider"></li>
-                        <a class="active" href={{ url_for('logout') }}><i class="fa fa-sign-out"></i>  Sign Out</a>
+                    <a class="active" href={{"https://github.com/Clinical-Genomics/NIPT/issues/new"}}><i class="fa fa-comment-o"></i>  Issues</a>
                     <li class="divider"></li>
-                        <a class="active" href={{ url_for('submit') }}><i class="fa fa-user"></i>  New User</a>
+                    <a class="active" href={{ url_for('logout') }}><i class="fa fa-sign-out"></i>  Sign Out</a>
+                    <li class="divider"></li>
+                    <a class="active" href={{ url_for('submit') }}><i class="fa fa-user"></i>  New User</a>
+                    <li class="divider"></li>
+                    <a class="active" href={{ url_for('download') }}><i class="fa fa-arrow-down"></i>  Download DB</a>
                 </ul>
             </li>
         </ul>
@@ -69,6 +74,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header"><strong>NIPT Data</strong></h1>
+                    <h5 class="page-header">{{nr_included_samps}} samples are currently included in the historical data set</h5>
                 </div>
             </div>
         </div>
@@ -86,10 +92,10 @@
                             <div id="batch_list">
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <table  id="batch_table" width="100%"  class="table table-striped table-bordered table-hover">
+                                        <table id="batch_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
-                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Defined as StarLimsNumber_TicketID">Batch</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="right" title="Defined as StarLimsNumber_TicketID">Batch</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Date when flowcell was run">Date</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="right" title="Unique. Defined by ...?">Flowcell</a></th>
                                                 </tr>
@@ -111,7 +117,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane" id="samples">         
+            <div class="tab-pane" id="samples">
                 <div class="col-lg-12">
                     <div class="row">
                         <div class="panel panel-default">
@@ -121,7 +127,7 @@
                                         <table id="sample_table"   width="100%" class="table table-striped table-bordered table-hover">
                                             <thead>
                                                 <tr>
-                                                <th><a href="#" data-toggle="tooltip" data-placement="right" title="Unique. Defined by ...?">Sample</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="right" title="Unique. Defined by ...?">Sample_Name</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Unique. Defined by ...?">Batch</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="(XX, XY) Automatically generated. Based on predefined NCV-tresholds.">Sex</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="(T13,T18,T21,XXX,XXY,X0) Automatically generated. Based on predefined NCV-tresholds.">Warnings</a></th>
@@ -132,22 +138,24 @@
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom"title="Manually classified through the sample page.">XXY</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Manually classified through the sample page.">XYY</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="left" title="Manually classified through the sample page.">X0</a></th>
+                                                <th><a href="#">Comment</a></th>
                                                 </tr>
                                             </thead>
                                             <tbody   class="list">
-                                            {% for sample in samples %}
+                                            {% for sample in NCV_db %}
                                             <tr>
                                             <td class="Sample id"> <a href={{ url_for('sample_page', sample_id=sample.sample_ID) }}>{{ sample.sample_ID }}</a></td-->
                                             <td class="Batch id"> <a href={{ url_for('sample', batch_id=sample.batch_id) }}>{{sample.batch.batch_name if sample.batch.batch_name else "No Batch Name"}}</a></td>
                                             <td class="sex">  {{NCV_sex[sample.sample_ID] }}</td>
                                             <td class="warn">  {{NCV_warnings[sample.sample_ID] }}</td>
-                                            <td class="T13">  {{ '-' if sample.status_T13=='Normal' else sample.status_T13 }}</td>
-                                            <td class="T18"> {{ '-' if sample.status_T18=='Normal' else sample.status_T18 }}</td>
-                                            <td class="T21"> {{ '-' if sample.status_T21=='Normal' else sample.status_T21 }}</td>
-                                            <td class="XXX"> {{ '-' if sample.status_XXX=='Normal' else sample.status_XXX }}</td>
-                                            <td class="XXY"> {{ '-' if sample.status_XXY=='Normal' else sample.status_XXY }}</td>
-                                            <td class="XYY"> {{ '-' if sample.status_XYY=='Normal' else sample.status_XYY }}</td>
-                                            <td class="X0"> {{ '-' if sample.status_X0 =='Normal' else sample.status_X0 }}</td>
+                                            <td class="T13">  {{ '-' if sample.sample.status_T13=='Normal' else sample.sample.status_T13 }}</td>
+                                            <td class="T18"> {{ '-' if sample.sample.status_T18=='Normal' else sample.sample.status_T18 }}</td>
+                                            <td class="T21"> {{ '-' if sample.sample.status_T21=='Normal' else sample.sample.status_T21 }}</td>
+                                            <td class="XXX"> {{ '-' if sample.sample.status_XXX=='Normal' else sample.sample.status_XXX }}</td>
+                                            <td class="XXY"> {{ '-' if sample.sample.status_XXY=='Normal' else sample.sample.status_XXY }}</td>
+                                            <td class="XYY"> {{ '-' if sample.sample.status_XYY=='Normal' else sample.sample.status_XYY }}</td>
+                                            <td class="X0"> {{ '-' if sample.sample.status_X0 =='Normal' else sample.sample.status_X0 }}</td>
+                                            <td class="comments">{{sample.comment}}</td>
                                             </tr>
                                             {% endfor %}
                                             </tbody>
@@ -157,36 +165,58 @@
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
         </div>
     </div>
 </div>
-
     <!-- Latest compiled and minified JavaScript -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+<!--script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script-->
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.4.0/metisMenu.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/1.0.8/js/sb-admin-2.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
-
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.colVis.min.js"></script>
 
 <script>
 $(document).ready(function() {
-    $('#batch_table').DataTable({
-        "order": [[ 1, "desc" ]],
-        "paging":         false
-    });
-} );
-$(document).ready(function() {
-    $('#sample_table').DataTable({
-        "order": [[ 1, "asc" ]],
-        "paging":         false
-});
+    var table = $('#batch_table').DataTable( {
+        lengthChange: false,
+        buttons: [ 'excel', 'pdf' ],
+        order: [[ 1, "dec" ]],
+        paging:         true
+    } );
+ 
+    table.buttons().container()
+        .appendTo( '#batch_table_wrapper .col-sm-6:eq(0)' );
 } );
 </script>
+
+<script>
+$(document).ready(function() {
+    var table = $('#sample_table').DataTable( {
+        lengthChange: false,
+        buttons: [ 'excel', 'pdf' ],
+        order: [[ 1, "dec" ]],
+        paging:         true
+    } );
+ 
+    table.buttons().container()
+        .appendTo( '#sample_table_wrapper .col-sm-6:eq(0)' );
+} );
+</script>
+
+
 <script>
     var options = { valueNames: ['Flowcell', 'Date', 'Batch id']};
     var userList = new List('batch_list', options);
@@ -198,6 +228,8 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   
 });
 </script>
+
+
 </body>
 
 </html>
