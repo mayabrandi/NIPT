@@ -1,5 +1,5 @@
 # encoding: utf-8
-from flask import flash, abort, url_for, redirect, render_template, request, session
+from flask import make_response, flash, abort, url_for, redirect, render_template, request, session
 from flask_login import login_user,logout_user, current_user, login_required
 from flask.ext.mail import Message
 from flask_oauthlib.client import OAuthException
@@ -8,7 +8,7 @@ from extentions import login_manager, google, app, mail, ssl, ctx
 import logging
 import os
 from datetime import datetime
-from views_utils import DataHandler, DataClasifyer, PlottPage, Statistics
+from views_utils import DataBaseToCSV, DataHandler, DataClasifyer, PlottPage, Statistics
 
 
 
@@ -128,7 +128,14 @@ def batch():
         NCV_sex = DC.NCV_sex,
         NCV_warnings = DC.NCV_classified)
 
-
+@app.route('/download')
+def download():
+    DB2CSV = DataBaseToCSV()
+    DB2CSV.get_dict_data()
+    csvData = DB2CSV.WriteDictToCSV()
+    response = make_response(csvData)
+    response.headers["Content-Disposition"] = "attachment; filename=NIPT_db.csv"
+    return response
 
 @app.route('/update', methods=['POST'])
 def update():
@@ -171,10 +178,11 @@ def update():
         sample = NCV.query.filter_by(sample_ID = sample_id).first()
         if request.form['comment'] != sample.comment:
             sample.comment = request.form['comment']
-        
-
     db.session.commit()
     return redirect(request.referrer)
+
+
+
 
 @app.route('/NIPT/<batch_id>/<sample_id>/update_trisomi_status', methods=['POST'])
 @login_required

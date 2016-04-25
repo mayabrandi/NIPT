@@ -2,9 +2,48 @@
 from database import User, Sample, Batch, Coverage, NCV, BatchStat, db
 import logging ### Add logging!!
 import os
+import csv
 import statistics
 from datetime import datetime
 
+class DataBaseToCSV:
+    def __init__(self):
+        columns = Sample.query.all()[0].__dict__.keys() + Coverage.query.all()[0].__dict__.keys() + NCV.query.all()[0].__dict__.keys() + BatchStat.query.all()[0].__dict__.keys()+ Batch.query.all()[0].__dict__.keys()
+        self.columns  = list(set(columns))
+        self.all_samps = Sample.query.with_entities(Sample.sample_ID)
+        self.dict_data = []
+
+    def WriteDictToCSV(self):
+        csv_file = 'temp.csv'
+        csvfile = open(csv_file, 'w')
+        writer = csv.DictWriter(csvfile, fieldnames = self.columns)
+        writer.writeheader()
+        for data in self.dict_data:
+            writer.writerow(data)
+        csvfile = open(csv_file, 'r')
+        csvReader = csv.reader(csvfile)
+        csvData = list(csvReader)
+        csvStrings= []
+        for csvLine in csvData:
+            csvStrings += [",".join(csvLine)]
+        return "\n".join(csvStrings) 
+ 
+    def get_dict_data(self): 
+        for s in self.all_samps:
+            sample_id = s.sample_ID
+            db_dict = db_dict = dict.fromkeys(self.columns, '') 
+            samp_dict = Sample.query.filter_by(sample_ID = sample_id).first().__dict__
+            ncv_dict = NCV.query.filter_by(sample_ID = sample_id).first().__dict__
+            cov_dict = Coverage.query.filter_by(sample_ID = sample_id).first().__dict__
+            batch_id = samp_dict['batch_id']
+            bs_dict = BatchStat.query.filter_by(batch_id = batch_id).first().__dict__
+            btc_dict = Batch.query.filter_by(batch_id = batch_id).first().__dict__
+            db_dict.update(samp_dict)
+            db_dict.update(ncv_dict)
+            db_dict.update(cov_dict)
+            db_dict.update(btc_dict)
+            db_dict.update(bs_dict)
+            self.dict_data.append(db_dict)
 
 
 class BatchDataHandler():
@@ -293,7 +332,7 @@ class Statistics():
         NCV_all = []
         for batch_id in self.batch_ids:
             samps = NCV.query.filter(NCV.batch_id==batch_id)
-            self.PCS[batch_id] = {'x':[],'y':[],'sample':[]}
+            self.PCS[batch_id] = {} #{'x':[],'y':[],'sample':[]}
             for samp in samps:
                 if samp.sample_ID.split('-')[0].lower()=='pcs':
                     try:
@@ -302,9 +341,10 @@ class Statistics():
                         logging.exception('')
                         pass
                     try:
-                        self.PCS[batch_id]['y'].append(float(samp.NCV_X))
-                        self.PCS[batch_id]['x'].append(i)
-                        self.PCS[batch_id]['sample'] = samp.sample_ID
+                        self.PCS[batch_id][samp.sample_ID] = {'x':[],'y':[],'sample':[]}
+                        self.PCS[batch_id][samp.sample_ID]['y'].append(float(samp.NCV_X))
+                        self.PCS[batch_id][samp.sample_ID]['x'].append(i)
+                        self.PCS[batch_id][samp.sample_ID]['sample'] = samp.sample_ID
                     except:
                         logging.exception('')
                         pass

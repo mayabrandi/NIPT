@@ -54,6 +54,8 @@
                     <a class="active" href={{ url_for('logout') }}><i class="fa fa-sign-out"></i>  Sign Out</a>
                     <li class="divider"></li>
                     <a class="active" href={{ url_for('submit') }}><i class="fa fa-user"></i>  New User</a>
+                    <li class="divider"></li>
+                    <a class="active" href={{ url_for('download') }}><i class="fa fa-arrow-down"></i>  Download DB</a>
                 </ul>
             </li>
         </ul>
@@ -137,7 +139,7 @@
                                     <table id="batch_table" class="table table-bordered table-hover" >
                                     <thead>
                                         <tr>
-                                            <th width="18%">Sample Id</th>
+                                            <th width="20%">Sample_Name</th>
                                             <th>NCV_13</th>
                                             <th>NCV_18</th>
                                             <th>NCV_21</th>
@@ -148,13 +150,13 @@
                                             <th><a href="#" data-toggle="tooltip" title="Chomosome abnormalies. Manually classified by user through the sample page">Class</a></th>
                                             <th width="1%">Include</th>
                                             <th width="18%">Comment</th>
-                                            <th  width="15%">Last Change</th> 
+                                            <th>Last Change</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for s in NCV_samples %}
                                         <tr>
-                                            <td width="18%"> <a href={{ url_for('sample_page', sample_id=s.sample_ID) }}>{{ s.sample_ID }}</a></td>
+                                            <td width="20%"> <a href={{ url_for('sample_page', sample_id=s.sample_ID) }}>{{ s.sample_ID }}</a></td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_13']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_13']['val'] }}</td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_18']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_18']['val'] }}</td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_21']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_21']['val'] }}</td>
@@ -169,7 +171,7 @@
                                                     <textarea class="form-control" rows="1" name = "comment_{{ s.sample_ID }}">{{s.comment}}</textarea>
                                                 </div>
                                             </td>
-                                            <td width="15%"><small>{{s.change_include_date}}</small></td>
+                                            <td ><small>{{s.change_include_date}}</small></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>

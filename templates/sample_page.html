@@ -59,6 +59,8 @@
                     <a class="active" href={{ url_for('logout') }}><i class="fa fa-sign-out"></i>  Sign Out</a>
                     <li class="divider"></li>
                     <a class="active" href={{ url_for('submit') }}><i class="fa fa-user"></i>  New User</a>
+                    <li class="divider"></li>
+                    <a class="active" href={{ url_for('download') }}><i class="fa fa-arrow-down"></i>  Download DB</a>
                 </ul>
             </li>
         </ul>
@@ -90,7 +92,7 @@
                                     <table class="table table-bordered ">
                                     <tr>
                                         <td><strong>Batch:</strong></td>
-                                        <td>{{ batch_name }}</td>
+                                        <td><a href={{ url_for('sample', batch_id=sample.batch_id) }}>{{ batch_name }}</a></td>
                                         <td><strong># QCFlags:</strong></td>
                                         <td>{{ sample.QCFlag}}</td>
                                     </tr>
@@ -127,11 +129,6 @@
                             <input type="submit" class="btn btn-warning" value="Save comment">
                             </p>
                             </td>
-                    </div>
-                    <div class="col-lg-5">
-                    <p align="botom">
-                        <a role="button" href={{ url_for('sample', batch_id=sample.batch_id) }} class="btn btn-warning btn-lg">Go to Batch</a>
-                    </p>
                     </div>
                 </div>
             </div>

@@ -211,16 +211,18 @@ var layout = {
             },};
 
 {% for batch_id  in batch_ids %}
+{% for sample  in PCS[batch_id].keys() %}
     var box = {
-            y: {{PCS[batch_id]['y']}},
-            x: {{PCS[batch_id]['x']}},
+            y: {{PCS[batch_id][sample]['y']}},
+            x: {{PCS[batch_id][sample]['x']}},
             mode: 'markers',
             type: 'scatter',
-            text: "{{PCS[batch_id]['sample']}}",
-            name: "{{batch_names[batch_id]}}",
+            text: "{{batch_id}} {{sample}}",
+            name: "{{sample}}",
             };
 
     data.push(box); 
+{% endfor %}
 {% endfor %}
 {% for tres in thresholds['PCS'].keys() %} 
 var line = {x : [0.5, 20.5],
