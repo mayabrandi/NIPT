@@ -11,33 +11,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/tabletools/2.2.2/css/dataTables.tableTools.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.bootstrap.min.css">
-<style>
-/* tab color */
-.nav-tabs>li>a {
-  text-color:orange;
-  ;
-}
-
-/* active tab color */
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
-  color: #fff;
-  background-color: #666;
-  border: 1px solid #666;
-}
-
-/* hover tab color */
-.nav-tabs>li>a:hover {
-  border-color: #666;
-  background-color: #888888;
-}
-</style>
 </head>
 <body>
 <div id="wrapper">
         <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ url_for('batch')}}" >NIPT 1.0</a>
+            <a class="navbar-brand" href="{{ url_for('batch')}}" >NIPT</a>
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown">
@@ -54,8 +34,6 @@
                     <a class="active" href={{ url_for('logout') }}><i class="fa fa-sign-out"></i>  Sign Out</a>
                     <li class="divider"></li>
                     <a class="active" href={{ url_for('submit') }}><i class="fa fa-user"></i>  New User</a>
-                    <li class="divider"></li>
-                    <a class="active" href={{ url_for('download') }}><i class="fa fa-arrow-down"></i>  Download DB</a>
                 </ul>
             </li>
         </ul>
@@ -67,79 +45,15 @@
 
 
     <div class="container">
-        <div class="jumbotron vertical-center">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Batch: {{batch_name}}</h1>
-                    <h1><small><em> Sequenced {{seq_date}}</em></small></h1>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            {% if seq_warnings %}
-            <div class="row">
-                <div id = "custom-tag"> </div>
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                            <div class="panel-heading">
-                            <h5>Batch Warnins </h5>
-                            </div>
-                            <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Sample id</th>
-                                            <th>Missing data</th>
-                                            <th>QC Warning</th>
-                                            <th>QV Failure</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for s in seq_warnings %}
-                                        <tr>
-                                            <td> <a href={{ url_for('sample_page', sample_id=s) }}>{{ s }}</a></td>
-                                            <td>{{seq_warnings[s]['missing_data'] }}</td>
-                                            <td>{{ seq_warnings[s]['QC_warn'] }}</td>
-                                            <td>{{ seq_warnings[s]['QC_fail'] }}</td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
-            
-                <!-- /.col-lg-6 -->
-            </div>
-            <ul class="nav nav-tabs" id="myTab">
-                                <li><a href="#table" data-toggle="tab">NCV Table</a>
-                                </li>
-                                <li><a href="#NCV_13" data-toggle="tab">NCV_13</a>
-                                </li>
-                                <li><a href="#NCV_18" data-toggle="tab">NCV_18</a>
-                                </li>
-                                <li><a href="#NCV_21" data-toggle="tab">NCV_21</a>
-                                </li>
-                                <li><a href="#NCV_XY" data-toggle="tab">NCV_XY</a>
-                                </li>
-                                <li><a href="#norm_cov" data-toggle="tab">Coverage (Chr 1-22)</a>
-                                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane fade in active" id='table'>
                     <div class="col-lg-16">
                     <div class="panel panel-default">
                         <div class="panel-body">
+                        <h1 class="page-header">Batch: {{batch_name}}</h1>
                             <div class="table-responsive">
-                                <form action="{{ url_for('update') }}" method="post">
                                     <table id="batch_table" class="table table-bordered table-hover" >
                                     <thead>
                                         <tr>
-                                            <th width="20%">Sample_Name</th>
+                                            <th width="18%">Sample Id</th>
                                             <th>NCV_13</th>
                                             <th>NCV_18</th>
                                             <th>NCV_21</th>
@@ -150,13 +64,13 @@
                                             <th><a href="#" data-toggle="tooltip" title="Chomosome abnormalies. Manually classified by user through the sample page">Class</a></th>
                                             <th width="1%">Include</th>
                                             <th width="18%">Comment</th>
-                                            <th>Last Change</th> 
+                                            <th  width="15%">Last Change</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for s in NCV_samples %}
                                         <tr>
-                                            <td width="20%"> <a href={{ url_for('sample_page', sample_id=s.sample_ID) }}>{{ s.sample_ID }}</a></td>
+                                            <td width="18%"> <a href={{ url_for('sample_page', sample_id=s.sample_ID) }}>{{ s.sample_ID }}</a></td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_13']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_13']['val'] }}</td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_18']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_18']['val'] }}</td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_21']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_21']['val'] }}</td>
@@ -166,78 +80,19 @@
                                             <th><p> <small>{{ warnings[s.sample_ID]  }}</small></p></th>
                                             <th><p> <small>{{ man_class[s.sample_ID] }}</small></p></th>
                                             <td width="1%" {% if s.include %}class="success"{% endif %}> <input type="checkbox" name="{{ s.sample_ID }}" {% if s.include %}checked{% endif %}></td>    
-                                            <td width="18%">
-                                                <div class="form-group">
-                                                    <textarea class="form-control" rows="1" name = "comment_{{ s.sample_ID }}">{{s.comment}}</textarea>
-                                                </div>
-                                            </td>
-                                            <td ><small>{{s.change_include_date}}</small></td>
+                                            <td width="18%">{{s.comment}}</textarea></td>
+                                            <td width="15%"><small>{{s.change_include_date}}</small></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
                                     </table>
-                                    <table>
-                                        <tr>
-                                            <td>
-                                            <p>Samples checked in the 'Include' column are added to the validation sample set for comparison. Check the checkboxes for samples to include and save. If all samples are ok, just press 'set all OK'.</p>
-                                            </td>
-                                                <input type=text name="sample_ids" value="{{sample_ids}}" hidden>
-                                            <td>
-                                            <td>
-                                                <input type=text name="current_user" value="{{current_user.name}}" hidden>
-                                            </td> 
-                                                <p align="right">           
-                                                    <input type="submit" class="btn btn-warning" value="Save checked samples">
-                                                </p>
-                                            </td>
-                                            <td> 
-                                                <p align="right">            
-                                                    <button type="submit" class="btn btn-warning" name="All samples" value="{{sample_ids}}"> Set all OK</button>
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </form>    
                             </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane active" id='NCV_13'>
-                    <div class="panel panel-default">
-                        <div class="panel-body">
                             <div id="NCV131821NCV_13" style="min-width:800px; height:800px; "></div><br><br>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane active" id='NCV_18'>
-                    <div class="panel panel-default">
-                        <div class="panel-body">
                             <div id="NCV131821NCV_18" style="min-width:800px; height:800px; "></div><br><br>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane active" id='NCV_21'>
-                <div class="panel panel-default">
-                    <div class="panel-body">
                         <div id="NCV131821NCV_21" style="min-width:800px; height:800px; "></div><br><br>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane active" id='NCV_XY'>
-                    <div class="panel panel-default">
-                        <div class="panel-body">                
                             <div id="NCVXY" style="min-width:800px; height:800px; "></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane active" id='norm_cov'>
-                    <div class="panel panel-default">
-                        <div class="panel-body">                
                             <div id="cov_plot" style="min-width:800px; height:800px; "></div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -264,8 +119,6 @@ $(function () {
 var data = []
 var layout = {
     title: 'NCV_{{chrom}}',
-    legend:{hovermode:'closest' },
-    hovermode:'closest',
     xaxis :{showline: true,
             ticktext : {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
             tickvals : {{NCV_stat['NCV_'+chrom]['x_axis']}},
@@ -296,12 +149,11 @@ var line = {x : [-1, {{NCV_stat['NCV_'+chrom]['x_axis'][-1]+2}}],
             name: "{{line}}"};
 data.push(line);
 {% endfor %}
-{% for abn_status  in abn_status_list %}
 var verif = {                                                                  
-            name: "{{abn_status}} T_{{chrom}}",                                                               
-            y: {{tris_chrom_abn[chrom][abn_status]['NCV']}},                                        
-            x: {{tris_chrom_abn[chrom][abn_status]['x_axis']}} ,
-            text: {{tris_chrom_abn[chrom][abn_status]['s_name']|tojson}},                                       
+            name: "Verified T_{{chrom}}",                                                               
+            y: {{tris_chrom_abn[chrom]['Verified']['NCV']}},                                        
+            x: {{tris_chrom_abn[chrom]['Verified']['x_axis']}} ,
+            text: {{tris_chrom_abn[chrom]['Verified']['s_name']|tojson}},                                       
         mode: 'markers',
         marker: {symbol :"square",
                 size: 5,
@@ -309,7 +161,6 @@ var verif = {
         type: 'scatter',                                                            
         }; 
 data.push(verif);
-{% endfor %}
 var trace1 = {
     name: 'Case',
       y: {{NCV_stat['NCV_'+chrom]['NCV_cases']}},
@@ -375,21 +226,21 @@ var backstat = {
             size: 10}
 data.push(backstat);
 var i = 0
+var colors = ['#1a1aff','#8cff1a','#ff531a', '#1affff']
 {% for abn  in sex_chrom_abn.keys() %} 
-{% for abn_status  in abn_status_list %} 
     var verif = {                                                                  
-            name: '{{abn_status}} {{abn}}',                                                               
-            y: {{sex_chrom_abn[abn][abn_status]['NCV_Y']}},                                        
-            x: {{sex_chrom_abn[abn][abn_status]['NCV_X']}},
-            text: {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}},                                       
+            name: 'Verified {{abn}}',                                                               
+            y: {{sex_chrom_abn[abn]['Verified']['NCV_Y']}},                                        
+            x: {{sex_chrom_abn[abn]['Verified']['NCV_X']}},
+            index : {{sex_chrom_abn[abn]['Verified']['s_name']|tojson}}, 
+            text: {{sex_chrom_abn[abn]['Verified']['s_name']|tojson}},                                       
         mode: 'markers',
         marker: {symbol :"square",
-                color: "{{sex_abn_colors[abn][abn_status]}}"} ,                                                   
+                color: colors[i]} ,                                                   
         type: 'scatter',                                                            
         }; 
     data.push(verif);
     var i = i +1
-{% endfor %}
 {% endfor %}
 {% for line  in sex_tresholds %} 
 var line = {x : {{sex_tresholds[line]['x']}},
@@ -412,20 +263,11 @@ var trace1 = {
     text: {{NCV_stat['NCV_X']['X_labels'][i]|tojson}},
     type: 'scatter',
     marker: {
-            color: '{{many_colors[i]}}',
             size: 10
             }};
 data.push(trace1);
 {% endfor %}
 Plotly.newPlot('NCVXY', data, layout);
-//XY_plot.on('plotly_click', function(verif){
-   // var pts = '';
-   // for(var i=0; i<verif.points.length; i++){
-  //      pts=verif.points[i].data.name
- //   }
-//    alert(pts);
-    //window.location.href = 'http://127.0.0.1:5000/NIPT/samples/'+pt;
-//});
 </script>
 
 <script>
@@ -480,7 +322,6 @@ Plotly.newPlot('cov_plot', data, layout);
 $(document).ready(function() {
     var table = $('#batch_table').DataTable( {
         lengthChange: false,
-        buttons:    [ 'excel', 'pdf' ],
         paging:     false,
         info: false,
         searching:  false

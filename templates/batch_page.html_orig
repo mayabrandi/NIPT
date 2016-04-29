@@ -37,7 +37,7 @@
         <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ url_for('batch')}}" >NIPT 1.0</a>
+            <a class="navbar-brand" href="{{ url_for('batch')}}" >NIPT</a>
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown">
@@ -54,8 +54,6 @@
                     <a class="active" href={{ url_for('logout') }}><i class="fa fa-sign-out"></i>  Sign Out</a>
                     <li class="divider"></li>
                     <a class="active" href={{ url_for('submit') }}><i class="fa fa-user"></i>  New User</a>
-                    <li class="divider"></li>
-                    <a class="active" href={{ url_for('download') }}><i class="fa fa-arrow-down"></i>  Download DB</a>
                 </ul>
             </li>
         </ul>
@@ -139,7 +137,7 @@
                                     <table id="batch_table" class="table table-bordered table-hover" >
                                     <thead>
                                         <tr>
-                                            <th width="20%">Sample_Name</th>
+                                            <th width="18%">Sample Id</th>
                                             <th>NCV_13</th>
                                             <th>NCV_18</th>
                                             <th>NCV_21</th>
@@ -150,13 +148,13 @@
                                             <th><a href="#" data-toggle="tooltip" title="Chomosome abnormalies. Manually classified by user through the sample page">Class</a></th>
                                             <th width="1%">Include</th>
                                             <th width="18%">Comment</th>
-                                            <th>Last Change</th> 
+                                            <th  width="15%">Last Change</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for s in NCV_samples %}
                                         <tr>
-                                            <td width="20%"> <a href={{ url_for('sample_page', sample_id=s.sample_ID) }}>{{ s.sample_ID }}</a></td>
+                                            <td width="18%"> <a href={{ url_for('sample_page', sample_id=s.sample_ID) }}>{{ s.sample_ID }}</a></td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_13']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_13']['val'] }}</td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_18']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_18']['val'] }}</td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_21']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_21']['val'] }}</td>
@@ -171,7 +169,7 @@
                                                     <textarea class="form-control" rows="1" name = "comment_{{ s.sample_ID }}">{{s.comment}}</textarea>
                                                 </div>
                                             </td>
-                                            <td ><small>{{s.change_include_date}}</small></td>
+                                            <td width="15%"><small>{{s.change_include_date}}</small></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -264,8 +262,6 @@ $(function () {
 var data = []
 var layout = {
     title: 'NCV_{{chrom}}',
-    legend:{hovermode:'closest' },
-    hovermode:'closest',
     xaxis :{showline: true,
             ticktext : {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
             tickvals : {{NCV_stat['NCV_'+chrom]['x_axis']}},
@@ -296,12 +292,11 @@ var line = {x : [-1, {{NCV_stat['NCV_'+chrom]['x_axis'][-1]+2}}],
             name: "{{line}}"};
 data.push(line);
 {% endfor %}
-{% for abn_status  in abn_status_list %}
 var verif = {                                                                  
-            name: "{{abn_status}} T_{{chrom}}",                                                               
-            y: {{tris_chrom_abn[chrom][abn_status]['NCV']}},                                        
-            x: {{tris_chrom_abn[chrom][abn_status]['x_axis']}} ,
-            text: {{tris_chrom_abn[chrom][abn_status]['s_name']|tojson}},                                       
+            name: "Verified T_{{chrom}}",                                                               
+            y: {{tris_chrom_abn[chrom]['Verified']['NCV']}},                                        
+            x: {{tris_chrom_abn[chrom]['Verified']['x_axis']}} ,
+            text: {{tris_chrom_abn[chrom]['Verified']['s_name']|tojson}},                                       
         mode: 'markers',
         marker: {symbol :"square",
                 size: 5,
@@ -309,7 +304,6 @@ var verif = {
         type: 'scatter',                                                            
         }; 
 data.push(verif);
-{% endfor %}
 var trace1 = {
     name: 'Case',
       y: {{NCV_stat['NCV_'+chrom]['NCV_cases']}},
@@ -375,21 +369,21 @@ var backstat = {
             size: 10}
 data.push(backstat);
 var i = 0
+var colors = ['#1a1aff','#8cff1a','#ff531a', '#1affff']
 {% for abn  in sex_chrom_abn.keys() %} 
-{% for abn_status  in abn_status_list %} 
     var verif = {                                                                  
-            name: '{{abn_status}} {{abn}}',                                                               
-            y: {{sex_chrom_abn[abn][abn_status]['NCV_Y']}},                                        
-            x: {{sex_chrom_abn[abn][abn_status]['NCV_X']}},
-            text: {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}},                                       
+            name: 'Verified {{abn}}',                                                               
+            y: {{sex_chrom_abn[abn]['Verified']['NCV_Y']}},                                        
+            x: {{sex_chrom_abn[abn]['Verified']['NCV_X']}},
+            index : {{sex_chrom_abn[abn]['Verified']['s_name']|tojson}}, 
+            text: {{sex_chrom_abn[abn]['Verified']['s_name']|tojson}},                                       
         mode: 'markers',
         marker: {symbol :"square",
-                color: "{{sex_abn_colors[abn][abn_status]}}"} ,                                                   
+                color: colors[i]} ,                                                   
         type: 'scatter',                                                            
         }; 
     data.push(verif);
     var i = i +1
-{% endfor %}
 {% endfor %}
 {% for line  in sex_tresholds %} 
 var line = {x : {{sex_tresholds[line]['x']}},
@@ -412,7 +406,6 @@ var trace1 = {
     text: {{NCV_stat['NCV_X']['X_labels'][i]|tojson}},
     type: 'scatter',
     marker: {
-            color: '{{many_colors[i]}}',
             size: 10
             }};
 data.push(trace1);

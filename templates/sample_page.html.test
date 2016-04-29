@@ -42,7 +42,7 @@
         <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ url_for('batch') }}">NIPT 1.0</a>
+            <a class="navbar-brand" href="{{ url_for('batch') }}">NIPT</a>
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown">
@@ -59,8 +59,6 @@
                     <a class="active" href={{ url_for('logout') }}><i class="fa fa-sign-out"></i>  Sign Out</a>
                     <li class="divider"></li>
                     <a class="active" href={{ url_for('submit') }}><i class="fa fa-user"></i>  New User</a>
-                    <li class="divider"></li>
-                    <a class="active" href={{ url_for('download') }}><i class="fa fa-arrow-down"></i>  Download DB</a>
                 </ul>
             </li>
         </ul>
@@ -92,7 +90,7 @@
                                     <table class="table table-bordered ">
                                     <tr>
                                         <td><strong>Batch:</strong></td>
-                                        <td><a href={{ url_for('sample', batch_id=sample.batch_id) }}>{{ batch_name }}</a></td>
+                                        <td>{{ batch_name }}</td>
                                         <td><strong># QCFlags:</strong></td>
                                         <td>{{ sample.QCFlag}}</td>
                                     </tr>
@@ -129,6 +127,11 @@
                             <input type="submit" class="btn btn-warning" value="Save comment">
                             </p>
                             </td>
+                    </div>
+                    <div class="col-lg-5">
+                    <p align="botom">
+                        <a role="button" href={{ url_for('sample', batch_id=sample.batch_id) }} class="btn btn-warning btn-lg">Go to Batch</a>
+                    </p>
                     </div>
                 </div>
             </div>
@@ -236,9 +239,6 @@
 </div>
 
 </div>
-
-
-
 <script>
 
 var layout = {
@@ -421,17 +421,18 @@ var backstat = {
 data.push(backstat);
 
 var i = 0
-
+var colors = ['#1a1aff','#8cff1a','#ff531a', '#1affff','#1a1aff','#8cff1a','#ff531a', '#1affff','#1a1aff','#8cff1a','#ff531a', '#1affff']
+var abn_status = ['Verified','False Positive', 'Probable']
 {% for abn  in sex_chrom_abn.keys() %} 
-{% for abn_status  in abn_status_list %} 
+{% for stat  in abn_status %} 
     var verif = {                                                                  
-            name: '{{abn_status}} {{abn}}',                                                               
-            y: {{sex_chrom_abn[abn][abn_status]['NCV_Y']}},                                        
-            x: {{sex_chrom_abn[abn][abn_status]['NCV_X']}},
-            text: {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}},                                       
+            name: '{{stat}} {{abn}}',                                                               
+            y: {{sex_chrom_abn[abn][stat]['NCV_Y']}},                                        
+            x: {{sex_chrom_abn[abn][stat]['NCV_X']}},
+            text: {{sex_chrom_abn[abn][stat]['s_name']|tojson}},                                       
         mode: 'markers',
         marker: {symbol :"square",
-                 color : "{{sex_abn_colors[abn][abn_status]}}",
+                 color : colors[i],
                 } ,                                                   
         type: 'scatter',                                                            
         }; 
