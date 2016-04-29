@@ -241,12 +241,20 @@ class PlottPage():
 
     def make_NCV_stat(self):
         for chrom in self.NCV_stat.keys():
-            NCV_pass , NCV_pass_names = self.make_approved_stats(chrom)
-          
-            NCV_list = [[s.__dict__['sample_ID'], 
-                    s.__dict__[chrom]] for s in self.cases]
-            NCV_cases = [s.__dict__[chrom] for s in self.cases]
-            X_labels = [s.__dict__['sample_ID'] for s in self.cases]
+            NCV_pass , NCV_pass_names = self.make_approved_stats(chrom) 
+            NCV_list = []
+            NCV_cases = []
+            X_labels = []
+            for s in self.cases:
+                try:
+                    NCV_list.append([s.__dict__['sample_ID'], round(float(s.__dict__[chrom]),2)])
+                    NCV_cases.append(round(float(s.__dict__[chrom]),2))
+                    X_labels.append(s.__dict__['sample_ID'])
+                except:
+                    #NCV_list.append([s.__dict__['sample_ID'], s.__dict__[chrom]])
+                    #NCV_cases.append(s.__dict__[chrom])
+                    #X_labels.append(s.__dict__['sample_ID'])
+                    pass
             self.NCV_stat[chrom] = {
                 'nr_pass' : len(NCV_pass[0]),
                 'NCV_list' : NCV_list,
