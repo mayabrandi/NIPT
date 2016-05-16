@@ -231,19 +231,30 @@ class PlottPage():
         for samp in cov:
             self.coverage_plot['samples'][samp.sample_ID] = {'cov':[], 'samp_id':[samp.sample_ID]}
             for i in x_axis:
-                self.coverage_plot['samples'][samp.sample_ID]['cov'].append(float(samp.__dict__['Chr'+str(i)+'_Coverage']))
-
+                try:
+                    self.coverage_plot['samples'][samp.sample_ID]['cov'].append(float(samp.__dict__['Chr'+str(i)+'_Coverage']))
+                except:
+                    pass
     def make_X_labels(self):
         X_labels = [s.__dict__['sample_ID'] for s in self.cases]
         return X_labels
 
     def make_NCV_stat(self):
         for chrom in self.NCV_stat.keys():
-            NCV_pass , NCV_pass_names = self.make_approved_stats(chrom)
-            NCV_list = [[s.__dict__['sample_ID'], 
-                    round(float(s.__dict__[chrom]),2)] for s in self.cases]
-            NCV_cases = [round(float(s.__dict__[chrom]),2) for s in self.cases]
-            X_labels = [s.__dict__['sample_ID'] for s in self.cases]
+            NCV_pass , NCV_pass_names = self.make_approved_stats(chrom) 
+            NCV_list = []
+            NCV_cases = []
+            X_labels = []
+            for s in self.cases:
+                try:
+                    NCV_list.append([s.__dict__['sample_ID'], round(float(s.__dict__[chrom]),2)])
+                    NCV_cases.append(round(float(s.__dict__[chrom]),2))
+                    X_labels.append(s.__dict__['sample_ID'])
+                except:
+                    #NCV_list.append([s.__dict__['sample_ID'], s.__dict__[chrom]])
+                    #NCV_cases.append(s.__dict__[chrom])
+                    #X_labels.append(s.__dict__['sample_ID'])
+                    pass
             self.NCV_stat[chrom] = {
                 'nr_pass' : len(NCV_pass[0]),
                 'NCV_list' : NCV_list,
