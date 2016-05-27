@@ -260,6 +260,7 @@ class PlottPage():
                 'NCV_list' : NCV_list,
                 'NCV_cases' : NCV_cases,
                 'x_axis' : range(2,len(NCV_cases)+2),
+                'x_range' : [-1, len(NCV_cases)+3],
                 'X_labels' : X_labels,
                 'chrom' : chrom,
                 'NCV_pass' : NCV_pass,

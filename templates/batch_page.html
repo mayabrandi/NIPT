@@ -285,7 +285,7 @@ var layout = {
             title : 'NCV'
             }};
 {% for line  in tris_thresholds %} 
-var line = {x : [-1, {{NCV_stat['NCV_'+chrom]['x_axis'][-1]+2}}],
+var line = {x : {{NCV_stat['NCV_'+chrom]['x_range']}},
             y : [{{tris_thresholds[line]['NCV']}},{{tris_thresholds[line]['NCV']}}],
             mode: 'lines',
             showlegend: false,
