@@ -42,7 +42,7 @@
         <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ url_for('batch') }}">NIPT 1.0</a>
+            <a class="navbar-brand" href="{{ url_for('batch') }}">NIPT 2.0</a>
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown">
@@ -53,6 +53,8 @@
                     <a class="active" href="{{ url_for('batch') }}"><i class="fa fa-home"></i> Start</a>
                     <li class="divider"></li>
                     <a class="active" href={{ url_for('statistics') }}><i class="fa fa-bar-chart"></i>  Statistics</a>
+                    <li class="divider"></li>
+                    <a class="active" href={{ url_for('samples') }}><i class="fa fa-table"></i>  Sample List</a>
                     <li class="divider"></li>
                     <a class="active" href={{"https://github.com/Clinical-Genomics/NIPT/issues/new"}}><i class="fa fa-comment-o"></i>  Issues</a>
                     <li class="divider"></li>
@@ -213,14 +215,53 @@
                     <div class="tab-pane fade in active" id='131821'>
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <div id="plot_131821" style="min-width:800px; height:700px; "></div><br><br>
+                            <div id="plot_131821" style="min-width:400px; height:700px; "></div><br><br>
+                                <div>
+                                    <div align="right"> 
+                                    <table width="300">
+                                    <tr height="1" style="border-bottom: 1px solid black">
+                                        <td></td>
+                                        <td><strong><p style="font-size:14px">T_13</p></strong></td>
+                                        <td><strong><p style="font-size:14px">T_18</p></strong></td>
+                                        <td><strong><p style="font-size:14px">T_21</p></strong></td>
+                                    </tr>
+                                    {% for abn in ncv_abn_colors.keys() %}
+                                    <tr>
+                                        <td><strong><p style="font-size:14px"><font color="{{ncv_abn_colors[abn]}}">{{abn}}</font></p></strong></td>
+                                        <td><p style="font-size:14px">{{tris_chrom_abn["13"][abn]['nr']}}</p></td>
+                                        <td><p style="font-size:14px">{{tris_chrom_abn["18"][abn]['nr']}}</p></td>
+                                        <td><p style="font-size:14px">{{tris_chrom_abn["21"][abn]['nr']}}</p></td>
+                                    </tr>
+                                    {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     </div>
                     <div class="tab-pane fade in active" id='XY'>
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <div id="plot_sex" style="min-width:800px; height:700px; "></div><br><br>
+                            <div id="plot_sex" style="min-width:400px; height:700px; "></div><br><br>
+                                <div align="right">
+                                    <table width="300">
+                                    <tr height="1" style="border-bottom: 1px solid black">
+                                        <td><strong><p style="font-size:14px">Class</p></strong></td>
+                                        <td><strong><p style="font-size:14px">XXX</p></strong></td>
+                                        <td><strong><p style="font-size:14px">XYY</p></strong></td>
+                                        <td><strong><p style="font-size:14px">XXY</p></strong></td>
+                                        <td><strong><p style="font-size:14px">X0</p></strong></td>
+                                    </tr>
+                                    {% for abn in ncv_abn_colors.keys() %} 
+                                    <tr height="0,5"><td><p style="font-size:14px"><font color="{{ncv_abn_colors[abn]}}"><strong>{{abn}}</strong></font></p></td>
+                                        <td><p style="font-size:14px">{{sex_chrom_abn["XXX"][abn]['nr_cases']}}</p></td>
+                                        <td><p style="font-size:14px">{{sex_chrom_abn["XYY"][abn]['nr_cases']}}</p></td>
+                                        <td><p style="font-size:14px">{{sex_chrom_abn["XXY"][abn]['nr_cases']}}</p></td>
+                                        <td><p style="font-size:14px">{{sex_chrom_abn["X0"][abn]['nr_cases']}}</p></td>
+                                    </tr> 
+                                    {% endfor %}            
+                                    </table>
+                                </div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -264,53 +305,21 @@ var layout = {
 };
 
 var data = []
-    var verif = {                                                                  
-            name: "Verified",                                                               
-            y: {{tris_abn['Verified']['NCV']}},                                        
-            x: {{tris_abn['Verified']['x_axis']}},
-            text: {{tris_abn['Verified']['s_name']|tojson}},
+{% for abn_status  in abn_status_list %} 
+    var ncv_abn = {                                                                  
+            name: "{{abn_status}}",                                                               
+            y: {{tris_abn[abn_status]['NCV']}},                                        
+            x: {{tris_abn[abn_status]['x_axis']}},
+            text: {{tris_abn[abn_status]['s_name']|tojson}},
         mode: 'markers',
         marker: {symbol :"square",
-                 color : "#77b300",
+                 color : "{{ncv_abn_colors[abn_status]}}",
                 } ,                                                   
         type: 'scatter',                                                            
         }; 
 
-    var prob = {                                                                  
-            name: 'Probable',                                                               
-            y: {{tris_abn['Probable']['NCV']}},                                        
-            x: {{tris_abn['Probable']['x_axis']}},
-            text: {{tris_abn['Probable']['s_name']|tojson}},
-        mode: 'markers',  
-        marker: {symbol : "square",
-                 color : "#ffcc00",
-                },                                                          
-        type: 'scatter',                                                            
-        };   
-
-    var false_neg = {                                                                  
-            name: 'False Negative',                                                               
-            y: {{tris_abn['False Negative']['NCV']}},                                        
-            x: {{tris_abn['False Negative']['x_axis']}},
-            text: {{tris_abn['False Negative']['s_name']|tojson}},
-        mode: 'markers',  
-        marker: {symbol : "square",
-                 color : "#ff1aff",
-                },                                                          
-        type: 'scatter',                                                            
-        }; 
-
-    var false_pos = {                                                                  
-            name: 'False Positive',                                                               
-            y: {{tris_abn['False Positive']['NCV']}},                                        
-            x: {{tris_abn['False Positive']['x_axis']}},
-            text: {{tris_abn['False Positive']['s_name']|tojson}},
-        mode: 'markers',  
-        marker: {symbol : "square",
-                 color : "#ff0000",
-                },                                                          
-        type: 'scatter',                                                            
-        }; 
+    data.push(ncv_abn)
+{% endfor %}
 
 var i = 0
 var colors = ['#1a1aff','#00bfff','#1affff']
@@ -329,7 +338,7 @@ var legends = [true,false,false]
             showlegend: legends[i-1],
             marker: {
                 color: '#ccccb3'},
-            name: 'Validation samples (N={{nr_validation_samps}})',
+            name: 'Negative (N={{nr_validation_samps}})',
             hoverinfo:'none',
             boxpoints: 'suspectedoutliers',
             };
@@ -350,10 +359,6 @@ var legends = [true,false,false]
     data.push(samp);
 {% endfor %}
 
-    data.push(prob);
-    data.push(verif);
-    data.push(false_neg);
-    data.push(false_pos);
 
 
 {% for line  in tris_thresholds.keys() %} 
@@ -412,7 +417,7 @@ data.push(line);
 var backstat = {
     y: {{NCV_stat['NCV_Y']['NCV_pass'][0]}},
     x: {{NCV_stat['NCV_X']['NCV_pass'][0]}},
-    name: 'Validation samples (N={{nr_validation_samps}})',
+    name: 'Negative (N={{nr_validation_samps}})',
     hoverinfo:'none',
     mode: 'markers',
     type: 'scatter',
@@ -425,14 +430,16 @@ var i = 0
 {% for abn  in sex_chrom_abn.keys() %} 
 {% for abn_status  in abn_status_list %} 
     var verif = {                                                                  
-            name: '{{abn_status}} {{abn}}',                                                               
+            name: '{{abn_status}} {{abn}} (N={{sex_chrom_abn[abn][abn_status]['nr_cases']}})',                                                               
             y: {{sex_chrom_abn[abn][abn_status]['NCV_Y']}},                                        
             x: {{sex_chrom_abn[abn][abn_status]['NCV_X']}},
             text: {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}},                                       
         mode: 'markers',
         marker: {symbol :"square",
-                 color : "{{sex_abn_colors[abn][abn_status]}}",
-                } ,                                                   
+                 size: 11,
+                 color : "{{ncv_abn_colors[abn_status]}}",
+                } ,    
+        showlegend: false,                                                
         type: 'scatter',                                                            
         }; 
     data.push(verif);
@@ -447,9 +454,25 @@ var sample_XY = {
     text: '{{sample.sample_ID}}',
     mode: 'markers',
     type: 'scatter',
-    marker: {size: 10}
+    marker: {size: 12}
         };
 data.push(sample_XY);
+
+var trace = {
+  x: [-8, 0, 8, -20, -8, 0],
+  y: [-40, -40, -40, 300, 300, 300],
+  mode: 'text',
+  name: 'NCV Clasifications',
+  text: ['X0', 'XX', 'XXX','XY','XYY','XXY'],
+  textposition: 'top',
+  showlegend: false,
+  textfont: {
+    size: 18,
+    },
+  type: 'scatter'
+};
+
+data.push(trace);
 
 Plotly.newPlot('plot_sex',data,  layout);
 </script>

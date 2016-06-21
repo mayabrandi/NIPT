@@ -38,7 +38,7 @@
         <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ url_for('batch')}}" >NIPT 1.0</a>
+            <a class="navbar-brand" href="{{ url_for('batch')}}" >NIPT 2.0</a>
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown">
@@ -49,6 +49,8 @@
                     <a class="active" href="{{ url_for('batch') }}"><i class="fa fa-home"></i> Start</a>
                     <li class="divider"></li>
                     <a class="active" href={{ url_for('statistics') }}><i class="fa fa-bar-chart"></i>  Statistics</a>
+                    <li class="divider"></li>
+                    <a class="active" href={{ url_for('samples') }}><i class="fa fa-table"></i>  Sample List</a>
                     <li class="divider"></li>
                     <a class="active" href={{"https://github.com/Clinical-Genomics/NIPT/issues/new"}}><i class="fa fa-comment-o"></i>  Issues</a>
                     <li class="divider"></li>

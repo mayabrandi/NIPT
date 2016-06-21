@@ -53,8 +53,6 @@
                 <ul class="dropdown-menu">
                     <a class="active" href="{{ url_for('batch') }}"><i class="fa fa-home"></i> Start</a>
                     <li class="divider"></li>
-                    <a class="active" href={{ url_for('samples') }}><i class="fa fa-table"></i>  Sample List</a>
-                    <li class="divider"></li>
                     <a class="active" href={{ url_for('statistics') }}><i class="fa fa-bar-chart"></i>  Statistics</a>
                     <li class="divider"></li>
                     <a class="active" href={{"https://github.com/Clinical-Genomics/NIPT/issues/new"}}><i class="fa fa-comment-o"></i>  Issues</a>
@@ -76,29 +74,47 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header"><strong>NIPT Data</strong></h1>
+                    <h5 class="page-header">{{nr_included_samps}} samples are currently included in the complete data set</h5>
                 </div>
             </div>
         </div>
-                <div class="row">
-                    <div class="col-lg-12">
+                    <div class="row">
                         <div class="panel panel-default">
-                            <div id="batch_list">
+                            <div id="sample_list">
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <table id="batch_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                                        <table id="sample_table"   width="100%" class="table table-striped table-bordered table-hover">
                                             <thead>
                                                 <tr>
-                                                <th><a href="#" data-toggle="tooltip" data-placement="right" title="Defined as StarLimsNumber_TicketID">Batch</a></th>
-                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Date when flowcell was run">Date</a></th>
-                                                <th><a href="#" data-toggle="tooltip" data-placement="right" title="Unique. Defined by ...?">Flowcell</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="right" title="Unique. Defined by ...?">Sample_Name</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Unique. Defined by ...?">Batch</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="(XX, XY) Automatically generated. Based on predefined NCV-tresholds.">Sex</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="(T13,T18,T21,XXX,XXY,X0) Automatically generated. Based on predefined NCV-tresholds.">Warnings</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Manually classified through the sample page.">T13</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Manually classified through the sample page.">T18</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Manually classified through the sample page.">T21</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Manually classified through the sample page.">XXX</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom"title="Manually classified through the sample page.">XXY</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Manually classified through the sample page.">XYY</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="left" title="Manually classified through the sample page.">X0</a></th>
+                                                <th><a href="#">Comment</a></th>
                                                 </tr>
                                             </thead>
-                                            <tbody class=list >
-                                            {% for batch in batches %}
+                                            <tbody   class="list">
+                                            {% for sample_ID in NCV_sex.keys() %}
                                             <tr>
-                                            <td><a href={{ url_for('sample', batch_id=batch.batch_id) }}>{{batch.batch_name if batch.batch_name else "No Batch Name"}}</a></td>
-                                            <td class="Date">  {{batch.date }}</td>
-                                            <td class="Batch id">{{ batch.batch_id}}</td>
+                                            <td class="Sample id"> <a href={{ url_for('sample_page', sample_id=sample_ID) }}>{{ sample_ID }}</a></td>
+                                            <td class="Batch id"> <a href={{ url_for('sample', batch_id=batch_info[sample_ID]['id']) }}>{{batch_info[sample_ID]['name']}}</a></td>
+                                            <td class="sex"> {{NCV_sex[sample_ID] }}</td>
+                                            <td class="warn"> {{NCV_warnings[sample_ID] }}</td>
+                                            <td class="T13"> {{NCV_man_class[sample_ID]['T13'] }}</td>
+                                            <td class="T18"> {{NCV_man_class[sample_ID]['T18'] }}</td>
+                                            <td class="T21"> {{NCV_man_class[sample_ID]['T21']  }}</td>
+                                            <td class="XXX"> {{NCV_man_class[sample_ID]['XXX']  }}</td>
+                                            <td class="XXY"> {{NCV_man_class[sample_ID]['XXY']  }}</td>
+                                            <td class="XYY"> {{NCV_man_class[sample_ID]['XYY'] }}</td>
+                                            <td class="X0"> {{NCV_man_class[sample_ID]['X0']}}</td>
+                                            <td class="comments">{{NCV_comment[sample_ID]}}</td>
                                             </tr>
                                             {% endfor %}
                                             </tbody>
@@ -108,7 +124,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
         </div>
     </div>
 </div>
@@ -130,9 +145,10 @@
 <script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.colVis.min.js"></script>
 
+
 <script>
 $(document).ready(function() {
-    var table = $('#batch_table').DataTable( {
+    var table = $('#sample_table').DataTable( {
         lengthChange: false,
         buttons: [ 'excel', 'pdf' ],
         order: [[ 1, "dec" ]],
@@ -140,7 +156,7 @@ $(document).ready(function() {
     } );
  
     table.buttons().container()
-        .appendTo( '#batch_table_wrapper .col-sm-6:eq(0)' );
+        .appendTo( '#sample_table_wrapper .col-sm-6:eq(0)' );
 } );
 </script>
 

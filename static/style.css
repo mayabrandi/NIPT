@@ -1,0 +1,10 @@
+
+//@media print { 
+//body { font-family: Georgia, Times, serif; font-size: 10pt; }
+//}
+
+
+
+@media print {
+    footer {page-break-after: always;}
+}
