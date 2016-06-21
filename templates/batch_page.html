@@ -37,7 +37,7 @@
         <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ url_for('batch')}}" >NIPT 1.0</a>
+            <a class="navbar-brand" href="{{ url_for('batch')}}" >NIPT 2.0</a>
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown">
@@ -48,6 +48,8 @@
                     <a class="active" href="{{ url_for('batch') }}"><i class="fa fa-home"></i> Start</a>
                     <li class="divider"></li>
                     <a class="active" href={{ url_for('statistics') }}><i class="fa fa-bar-chart"></i>  Statistics</a>
+                    <li class="divider"></li>
+                    <a class="active" href={{ url_for('samples') }}><i class="fa fa-table"></i>  Sample List</a>
                     <li class="divider"></li>
                     <a class="active" href={{"https://github.com/Clinical-Genomics/NIPT/issues/new"}}><i class="fa fa-comment-o"></i>  Issues</a>
                     <li class="divider"></li>
@@ -72,30 +74,31 @@
                 <div class="col-lg-12">
                     <h1 class="page-header">Batch: {{batch_name}}</h1>
                     <h1><small><em> Sequenced {{seq_date}}</em></small></h1>
+                    <p align="right">
+                        <a href={{ url_for('report', batch_id=batch_id) }}> Batch Report</a>
+                    </p>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
             {% if seq_warnings %}
             <div class="row">
                 <div id = "custom-tag"> </div>
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
                             <div class="panel-heading">
-                            <h5>Batch Warnins </h5>
+                                <h5>Batch Warnins </h5>
                             </div>
                             <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
                                             <th>Sample id</th>
                                             <th>Missing data</th>
                                             <th>QC Warning</th>
                                             <th>QV Failure</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                         {% for s in seq_warnings %}
                                         <tr>
                                             <td> <a href={{ url_for('sample_page', sample_id=s) }}>{{ s }}</a></td>
@@ -104,18 +107,17 @@
                                             <td>{{ seq_warnings[s]['QC_fail'] }}</td>
                                         </tr>
                                         {% endfor %}
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div><!--NY- ta bort om ej funkar -->
             {% endif %}
-            
-                <!-- /.col-lg-6 -->
             </div>
-            <ul class="nav nav-tabs" id="myTab">
+                <ul class="nav nav-tabs" id="myTab">
                                 <li><a href="#table" data-toggle="tab">NCV Table</a>
                                 </li>
                                 <li><a href="#NCV_13" data-toggle="tab">NCV_13</a>
@@ -126,19 +128,21 @@
                                 </li>
                                 <li><a href="#NCV_XY" data-toggle="tab">NCV_XY</a>
                                 </li>
+                                {% if bool_warns %}
                                 <li><a href="#norm_cov" data-toggle="tab">Coverage (Chr 1-22)</a>
                                 </li>
-            </ul>
+                                {% endif %}
+                </ul>
             <div class="tab-content">
                 <div class="tab-pane fade in active" id='table'>
                     <div class="col-lg-16">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <form action="{{ url_for('update') }}" method="post">
-                                    <table id="batch_table" class="table table-bordered table-hover" >
-                                    <thead>
-                                        <tr>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <form action="{{ url_for('update') }}" method="post">
+                                        <table id="batch_table" class="table table-bordered table-hover" >
+                                        <thead>
+                                            <tr>
                                             <th width="20%">Sample_Name</th>
                                             <th>NCV_13</th>
                                             <th>NCV_18</th>
@@ -151,9 +155,9 @@
                                             <th width="1%">Include</th>
                                             <th width="18%">Comment</th>
                                             <th>Last Change</th> 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                         {% for s in NCV_samples %}
                                         <tr>
                                             <td width="20%"> <a href={{ url_for('sample_page', sample_id=s.sample_ID) }}>{{ s.sample_ID }}</a></td>
@@ -174,10 +178,10 @@
                                             <td ><small>{{s.change_include_date}}</small></td>
                                         </tr>
                                         {% endfor %}
-                                    </tbody>
-                                    </table>
-                                    <table>
-                                        <tr>
+                                        </tbody>
+                                        </table>
+                                        <table>
+                                            <tr>
                                             <td>
                                             <p>Samples checked in the 'Include' column are added to the validation sample set for comparison. Check the checkboxes for samples to include and save. If all samples are ok, just press 'set all OK'.</p>
                                             </td>
@@ -195,10 +199,10 @@
                                                     <button type="submit" class="btn btn-warning" name="All samples" value="{{sample_ids}}"> Set all OK</button>
                                                 </p>
                                             </td>
-                                        </tr>
-                                    </table>
-                                </form>    
-                            </div>
+                                            </tr>
+                                        </table>
+                                    </form>    
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -206,38 +210,61 @@
                 <div class="tab-pane active" id='NCV_13'>
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <div id="NCV131821NCV_13" style="min-width:800px; height:800px; "></div><br><br>
+                            <div id="NCV131821NCV_13" style="min-width:400px; height:800px; "></div><br><br>
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane active" id='NCV_18'>
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <div id="NCV131821NCV_18" style="min-width:800px; height:800px; "></div><br><br>
+                            <div id="NCV131821NCV_18" style="min-width:400px; height:800px; "></div><br><br>
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane active" id='NCV_21'>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <div id="NCV131821NCV_21" style="min-width:800px; height:800px; "></div><br><br>
+                        <div id="NCV131821NCV_21" style="min-width:400px; height:800px; "></div><br><br>
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane active" id='NCV_XY'>
                     <div class="panel panel-default">
-                        <div class="panel-body">                
-                            <div id="NCVXY" style="min-width:800px; height:800px; "></div>
+                        <div class="panel-body">   
+                            <div id="NCVXY" style="min-width:400px; height:800px; ">
+                            </div>
+                            <div align="right">
+                                <table width="300">
+                                    <tr height="1" style="border-bottom: 1px solid black">
+                                        <td><strong><p style="font-size:12px">Class</font></strong></td>
+                                        <td><strong><p style="font-size:12px">XXX</p></strong></td>
+                                        <td><strong><p style="font-size:12px">XYY</p></strong></td>
+                                        <td><strong><p style="font-size:12px">XXY</p></strong></td>
+                                        <td><strong><p style="font-size:12px">X0</p></strong></td>
+                                    </tr>
+                                    {% for abn in ncv_abn_colors.keys() %}
+                                    <tr height="0,5">
+                                        <td><p style="font-size:12px"><font color="{{ncv_abn_colors[abn]}}"><strong>{{abn}}</strong></font></p></td>
+                                        <td><p style="font-size:12px">{{sex_chrom_abn["XXX"][abn]['nr_cases']}}</p></td>
+                                        <td><p style="font-size:12px">{{sex_chrom_abn["XYY"][abn]['nr_cases']}}</p></td>
+                                        <td><p style="font-size:12px">{{sex_chrom_abn["XXY"][abn]['nr_cases']}}</p></td>
+                                        <td><p style="font-size:12px">{{sex_chrom_abn["X0"][abn]['nr_cases']}}</p></td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
+                {% if bool_warns %}
                 <div class="tab-pane active" id='norm_cov'>
                     <div class="panel panel-default">
                         <div class="panel-body">                
-                            <div id="cov_plot" style="min-width:800px; height:800px; "></div>
+                            <div id="cov_plot" style="min-width:400px; height:800px; "></div>
                         </div>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -259,10 +286,10 @@
 
 
 <script>
-$(function () {
-{% for chrom in ['13','18','21'] %}
-var data = []
-var layout = {
+    $(function () {
+    {% for chrom in ['13','18','21'] %}
+    var data = []
+    var layout = {
     title: 'NCV_{{chrom}}',
     legend:{hovermode:'closest' },
     hovermode:'closest',
@@ -284,8 +311,8 @@ var layout = {
             linewidth: 5,
             title : 'NCV'
             }};
-{% for line  in tris_thresholds %} 
-var line = {x : {{NCV_stat['NCV_'+chrom]['x_range']}},
+    {% for line  in tris_thresholds %} 
+    var line = {x : {{NCV_stat['NCV_'+chrom]['x_range']}},
             y : [{{tris_thresholds[line]['NCV']}},{{tris_thresholds[line]['NCV']}}],
             mode: 'lines',
             showlegend: false,
@@ -294,11 +321,11 @@ var line = {x : {{NCV_stat['NCV_'+chrom]['x_range']}},
                 color : '{{tris_thresholds[line]['color']}}',
                 width : 2},
             name: "{{line}}"};
-data.push(line);
-{% endfor %}
-{% for abn_status  in abn_status_list %}
-var verif = {                                                                  
-            name: "{{abn_status}} T_{{chrom}}",                                                               
+    data.push(line);
+    {% endfor %}
+    {% for abn_status  in abn_status_list %}
+    var verif = {                                                                  
+            name: "{{abn_status}} T_{{chrom}} (N={{tris_chrom_abn[chrom][abn_status]['nr']}})",                                                               
             y: {{tris_chrom_abn[chrom][abn_status]['NCV']}},                                        
             x: {{tris_chrom_abn[chrom][abn_status]['x_axis']}} ,
             text: {{tris_chrom_abn[chrom][abn_status]['s_name']|tojson}},                                       
@@ -308,10 +335,10 @@ var verif = {
                 } ,                                                   
         type: 'scatter',                                                            
         }; 
-data.push(verif);
-{% endfor %}
-var trace1 = {
-    name: 'Case',
+    data.push(verif);
+    {% endfor %}
+    var trace1 = {
+    name: "Current batch (N={{NCV_stat['NCV_'+chrom]['nr_cases']}})",
       y: {{NCV_stat['NCV_'+chrom]['NCV_cases']}},
       x: {{NCV_stat['NCV_'+chrom]['x_axis']}},
       text: {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
@@ -321,28 +348,26 @@ var trace1 = {
             color: 'rgb(102, 102, 102)',
             size: 10
             }};
-var box = {
+    var box = {
     y: {{NCV_stat['NCV_'+chrom]['NCV_pass'][0]}},
-    boxpoints: 'all',
-//    jitter: 0.3,
     pointpos: 30,
     type: 'box',
     marker: {
         color: '#ccccb3'},
-    name: 'Validation samples (N={{nr_validation_samps}})',
-    boxpoints: 'suspectedoutliers',
-    hoverinfo:'none',};
-data.push(trace1)
-data.push(box)
-Plotly.newPlot({{'NCV131821NCV_'+chrom}}, data, layout);
-{% endfor %}    
-});
+        name: 'Negative (N={{nr_validation_samps}})',
+        hoverinfo:'none'};
+
+    data.push(trace1)
+    data.push(box)
+    Plotly.newPlot({{'NCV131821NCV_'+chrom}}, data, layout);
+    {% endfor %}    
+    });
 </script>
 
 <script>
-var XY_plot = document.getElementById('NCVXY')
-var data = []
-var layout = {
+    var XY_plot = document.getElementById('NCVXY')
+    var data = []
+    var layout = {
     title: 'X vs Y',
     legend:{hovermode:'closest' },
     hovermode:'closest',
@@ -350,7 +375,7 @@ var layout = {
             zeroline: false,
             linecolor: '#636363',
             linewidth: 5,
-            showgrid: true,
+            showgrid: false,
             gridcolor: '#bdbdbd',
             title: 'NCV_X'
             },
@@ -363,36 +388,40 @@ var layout = {
             linewidth: 5,
             title : 'NCV_Y'
             },};
-var backstat = {
+    var backstat = {
     y: {{NCV_stat['NCV_Y']['NCV_pass'][0]}},
     x: {{NCV_stat['NCV_X']['NCV_pass'][0]}},
     text: {{NCV_stat['NCV_X']['NCV_pass_names'][0]|tojson}},
-    name: 'Validation samples (N={{nr_validation_samps}})',
+    name: 'Negative (N={{nr_validation_samps}})',
     hoverinfo:'none',
     mode: 'markers',
     type: 'scatter',
     marker: {color: '#ccccb3'},
             size: 10}
-data.push(backstat);
-var i = 0
-{% for abn  in sex_chrom_abn.keys() %} 
-{% for abn_status  in abn_status_list %} 
+    data.push(backstat);
+    var i = 0
+
+    {% for abn  in sex_chrom_abn.keys() %} 
+    {% for abn_status  in abn_status_list %} 
     var verif = {                                                                  
-            name: '{{abn_status}} {{abn}}',                                                               
+            name: '{{abn}} {{abn_status}} (N={{sex_chrom_abn[abn][abn_status]['nr_cases']}})',                                                               
             y: {{sex_chrom_abn[abn][abn_status]['NCV_Y']}},                                        
             x: {{sex_chrom_abn[abn][abn_status]['NCV_X']}},
             text: {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}},                                       
         mode: 'markers',
-        marker: {symbol :"square",
-                color: "{{sex_abn_colors[abn][abn_status]}}"} ,                                                   
-        type: 'scatter',                                                            
-        }; 
+        marker: {   size: 11,
+                    symbol :"square",
+                    color: "{{ncv_abn_colors[abn_status]}}"} ,                                                   
+                    type: 'scatter',                
+                    showlegend: false,                                            
+                }; 
     data.push(verif);
     var i = i +1
-{% endfor %}
-{% endfor %}
-{% for line  in sex_tresholds %} 
-var line = {x : {{sex_tresholds[line]['x']}},
+    {% endfor %}
+    {% endfor %}
+
+    {% for line  in sex_tresholds %} 
+    var line = {x : {{sex_tresholds[line]['x']}},
             y : {{sex_tresholds[line]['y']}},
             mode: 'lines',
             showlegend: false,
@@ -401,10 +430,10 @@ var line = {x : {{sex_tresholds[line]['x']}},
                 color : 'red',
                 width : 2},
             name: "{{line}}"};
-data.push(line);
-{% endfor %}
-{% for i in samp_range %}
-var trace1 = {
+    data.push(line);
+    {% endfor %}
+    {% for i in samp_range %}
+    var trace1 = {
     y: [{{NCV_stat['NCV_Y']['NCV_cases'][i]}}],
     x: [{{NCV_stat['NCV_X']['NCV_cases'][i]}}],
     name: {{NCV_stat['NCV_X']['X_labels'][i]|tojson}},
@@ -413,25 +442,41 @@ var trace1 = {
     type: 'scatter',
     marker: {
             color: '{{many_colors[i]}}',
-            size: 10
+            size: 12
             }};
-data.push(trace1);
-{% endfor %}
-Plotly.newPlot('NCVXY', data, layout);
-//XY_plot.on('plotly_click', function(verif){
-   // var pts = '';
-   // for(var i=0; i<verif.points.length; i++){
-  //      pts=verif.points[i].data.name
- //   }
-//    alert(pts);
+    data.push(trace1);
+    {% endfor %}
+
+    var trace = {
+    x: [-8, 0, 8, -20, -8, 0],
+    y: [-40, -40, -40, 300, 300, 300],
+    mode: 'text',
+    name: 'NCV Clasifications',
+    text: ['X0', 'XX', 'XXX','XY','XYY','XXY'],
+    textposition: 'top',
+    showlegend: false,
+    textfont: {
+    size: 18,
+    },
+    type: 'scatter'
+    };
+
+    data.push(trace);
+    Plotly.newPlot('NCVXY', data, layout);
+    //XY_plot.on('plotly_click', function(verif){
+    // var pts = '';
+    // for(var i=0; i<verif.points.length; i++){
+    //      pts=verif.points[i].data.name
+    //   }
+    //    alert(pts);
     //window.location.href = 'http://127.0.0.1:5000/NIPT/samples/'+pt;
-//});
+    //});
 </script>
 
 <script>
-var XY_plot = document.getElementById('cov_plot')
-var data = []
-var layout = {
+    var XY_plot = document.getElementById('cov_plot')
+    var data = []
+    var layout = {
     title: 'Normalized Coverage',
     legend:{hovermode:'closest' },
     hovermode:'closest',
@@ -451,17 +496,17 @@ var layout = {
             linewidth: 5,
             title : 'Normalized Coverage'
             },};
-{% for samp in samp_cov_db['samples'] %}
-var trace1 = {
+    {% for samp in samp_cov_db['samples'] %}
+    var trace1 = {
       name: {{samp_cov_db['samples'][samp]['samp_id']|tojson}},
         y: {{samp_cov_db['samples'][samp]['cov']}},
         x: {{samp_cov_db['x_axis']}},
         mode: 'markers',
         text: {{samp_cov_db['samples'][samp]['samp_id']|tojson}},
         type: 'scatter'};
-data.push(trace1);
-{% endfor %}
-Plotly.newPlot('cov_plot', data, layout);
+    data.push(trace1);
+    {% endfor %}
+    Plotly.newPlot('cov_plot', data, layout);
 </script>
 
 <script>
@@ -477,7 +522,7 @@ Plotly.newPlot('cov_plot', data, layout);
 </script>
 
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
     var table = $('#batch_table').DataTable( {
         lengthChange: false,
         buttons:    [ 'excel', 'pdf' ],
@@ -485,11 +530,11 @@ $(document).ready(function() {
         info: false,
         searching:  false
     } );
- 
     table.buttons().container()
         .appendTo( '#batch_table_wrapper .col-sm-6:eq(0)' );
 } );
 </script>
+
 
 
 </body>
