@@ -49,7 +49,7 @@ def main(batch_id):
 if __name__ == '__main__':
     parser = ArgumentParser(description=DESC)
     parser.add_argument('-b', default = None, dest = 'batch_id', 
-                    help = '')
+                    help = 'The batch_id in the database is what we usually refere to as the flowcell id. Eg: BH3FKLADXY')
     args = parser.parse_args()
     main(args.batch_id)
 
