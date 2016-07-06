@@ -91,6 +91,7 @@ class DataClasifyer():
         self.exceptions = ['NA','']
         self.NCV_classified = {}
         self.NCV_sex = {}
+        self.sample_names = {}
         self.QC_warnings = {}
         self.NCV_comment = {}
         self.man_class = {}
@@ -124,6 +125,7 @@ class DataClasifyer():
     def handle_NCV(self, NCV_db): ############ takes time
         """Get automated warnings, based on preset NCV tresholds"""
         for s in NCV_db:
+            self.sample_names[s.sample_ID] = s.sample_name
             s_id = s.sample_ID
             self.NCV_comment[s_id] = s.comment
             self.batch[s_id] = {'id':s.batch_id ,'name':s.batch.batch_name}
@@ -251,7 +253,7 @@ class PlottPage():
         for s in self.NCV_passed:
             try: 
                 NCV_pass.append(float(s.__dict__[chrom])) 
-                NCV_pass_names.append(s.sample_ID)
+                NCV_pass_names.append(s.sample_name)
             except:
                 logging.exception('')
                 pass
@@ -263,7 +265,7 @@ class PlottPage():
         x_axis = range(1,23)
         self.coverage_plot['x_axis'] = x_axis
         for samp in cov:
-            self.coverage_plot['samples'][samp.sample_ID] = {'cov':[], 'samp_id':[samp.sample_ID]}
+            self.coverage_plot['samples'][samp.sample_ID] = {'cov':[], 'samp_id':[samp.sample.sample_name]}
             for i in x_axis:
                 try:
                     self.coverage_plot['samples'][samp.sample_ID]['cov'].append(float(samp.__dict__['Chr'+str(i)+'_Coverage']))
@@ -284,7 +286,7 @@ class PlottPage():
                 try:
                     NCV_list.append([s.__dict__['sample_ID'], round(float(s.__dict__[chrom]),2)])
                     NCV_cases.append(round(float(s.__dict__[chrom]),2))
-                    X_labels.append(s.__dict__['sample_ID'])
+                    X_labels.append(s.__dict__['sample_name'])
                 except:
                     #NCV_list.append([s.__dict__['sample_ID'], s.__dict__[chrom]])
                     #NCV_cases.append(s.__dict__[chrom])
@@ -315,10 +317,10 @@ class PlottPage():
                     NCV_val = NCV.query.filter_by(sample_ID = s.sample_ID).first().__dict__['NCV_' + abn]
                     if NCV_val!='NA':
                         self.tris_abn[status]['NCV'].append(float(NCV_val))
-                        self.tris_abn[status]['s_name'].append(s.sample_ID)
+                        self.tris_abn[status]['s_name'].append(s.sample_name)
                         self.tris_abn[status]['x_axis'].append(x+status_x[status])
                         self.tris_chrom_abn[abn][status]['NCV'].append(float(NCV_val))
-                        self.tris_chrom_abn[abn][status]['s_name'].append(s.sample_ID)
+                        self.tris_chrom_abn[abn][status]['s_name'].append(s.sample_name)
                         self.tris_chrom_abn[abn][status]['x_axis'].append(status_x[status]-0.2)#.append(0)
                         self.tris_chrom_abn[abn][status]['nr']+=1
             x = x+1
@@ -332,7 +334,7 @@ class PlottPage():
                         self.sex_chrom_abn[abn][status]['NCV_X'].append(float(NCV_db.NCV_X))
                     if NCV_db.NCV_Y!='NA':
                         self.sex_chrom_abn[abn][status]['NCV_Y'].append(float(NCV_db.NCV_Y))
-                    self.sex_chrom_abn[abn][status]['s_name'].append(s.sample_ID)
+                    self.sex_chrom_abn[abn][status]['s_name'].append(s.sample_name)
                     self.sex_chrom_abn[abn][status]['nr_cases']+=1
 
 

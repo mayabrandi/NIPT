@@ -103,7 +103,7 @@
                                             <tbody   class="list">
                                             {% for sample_ID in NCV_sex.keys() %}
                                             <tr>
-                                            <td class="Sample id"> <a href={{ url_for('sample_page', sample_id=sample_ID) }}>{{ sample_ID }}</a></td>
+                                            <td class="Sample id"> <a href={{ url_for('sample_page', sample_id=sample_ID) }}>{{ sample_names[sample_ID] }}</a></td>
                                             <td class="Batch id"> <a href={{ url_for('sample', batch_id=batch_info[sample_ID]['id']) }}>{{batch_info[sample_ID]['name']}}</a></td>
                                             <td class="sex"> {{NCV_sex[sample_ID] }}</td>
                                             <td class="warn"> {{NCV_warnings[sample_ID] }}</td>
