@@ -22,32 +22,32 @@ class BatchMaker():
         self.batch_name = None
         self.date = None
         self.flowcell = None
+        self.nipt_results = None
+        self.sample_sheet = None
 
-    def get_run_folder_info(self, folder):
-        print folder
-        f_name_info = folder.split('_')
-        self.batch_id = f_name_info[3]
-        self.date = f_name_info[0]
-        self.flowcell = f_name_info[3]
 
-    def update_nipt_db(self, folder):
-        nipt_results = app.config.get('ANALYSIS_PATH') + folder + '*/*NIPT_RESULTS.csv'
-        sample_sheet = app.config.get('RUN_FOLDER_PATH') + folder + '/SampleSheet.csv'
-        nipt_results = self.parse_path(nipt_results)
-        sample_sheet = self.parse_path(sample_sheet)
+    def get_run_folder_info(self):
+        try:
+            print self.sample_sheet
+            folder = self.sample_sheet.split('/')[-2] 
+            f_name_info = folder.split('_')
+            self.batch_id = f_name_info[3]
+            self.date = f_name_info[0]
+            self.flowcell = f_name_info[3]
+        except:
+            pass
+
+    def update_nipt_db(self):
         batch = Batch.query.filter_by(batch_id = self.batch_id).first()
-        if sample_sheet and not batch:
-            self.get_batch_name_from_sample_sheet(sample_sheet)
+        if self.sample_sheet and not batch:
+            self.get_batch_name_from_sample_sheet(self.sample_sheet)
             if self.batch_name:
                 batch = Batch(self.batch_id, self.date, self.flowcell)
                 batch.batch_name = self.batch_name
                 self.db.session.add(batch)
                 self.db.session.commit()
-        print nipt_results
-        print sample_sheet
-        print self.batch_name
-        if nipt_results and self.batch_name:
-            reader = csv.DictReader(open(nipt_results, 'rb'))
+        if self.nipt_results and self.batch_name:
+            reader = csv.DictReader(open(self.nipt_results, 'rb'))
             for row in reader:
                 sample = Sample.query.filter_by(sample_ID = row['SampleID']).first()
                 if not sample:
@@ -60,10 +60,10 @@ class BatchMaker():
                     batchstat = BatchStat(row, batch)
                     self.db.session.add(batchstat)
         else:
-            logging.warning("Could not get analysis info from file: %s" % nipt_results)
+            logging.warning("Could not get analysis info from file: %s" % self.nipt_results)
         try:
             self.db.session.commit()
-        except:
+        except: 
             error = sys.exc_info()
             logging.exception('error in update_nipt_db!!!!!!!')
             logging.error(error)
@@ -77,14 +77,16 @@ class BatchMaker():
                     investigator_name = l.split(',')[1].split('_')
                     self.batch_name = '_'.join(investigator_name[0:2])
                 except:
-                    logging.exception("Could not get batch name from sample sheet: %s" % path)
+                    logging.exception("Could not get batch name from sample sheet: %s" %path)
                     pass
 
-    def parse_path(self, path):
-        if glob.glob(path):
-            return glob.glob(path)[0]
-        else:
-            return None
+    def parse_path(self, flowcell_id):
+        nipt_results = app.config.get('ANALYSIS_PATH') +'*' + flowcell_id + '*/*NIPT_RESULTS.csv'
+        sample_sheet = app.config.get('RUN_FOLDER_PATH')+'*' + flowcell_id + '*/SampleSheet.csv'        
+        if glob.glob(nipt_results) and glob.glob(sample_sheet):
+            self.nipt_results = glob.glob(nipt_results)[0]
+            self.sample_sheet = glob.glob(sample_sheet)[0]
+
 
 class NiptDBSetup():
     def __init__(self, nipt_db):
@@ -103,20 +105,22 @@ class NiptDBSetup():
                     self.db.session.add(user)
                     self.db.session.commit()
 
-def main(run_folders, users_file):
+def main(flowcell_ids, users_file):
     db.init_app(app)
     logging.basicConfig(filename = 'NIPT_database_log', level=logging.DEBUG)
     db.create_all()
     NDBS = NiptDBSetup(db)
     NDBS.set_users(users_file)
 
-    for folder in run_folders:
+    for flowcell_id in flowcell_ids:
         BM = BatchMaker(db)
-        BM.get_run_folder_info(folder)
+        BM.parse_path(flowcell_id)
+        BM.get_run_folder_info()
+        print BM.batch_id
         if BM.batch_id:
-            BM.update_nipt_db(folder)
+            BM.update_nipt_db()
         else:
-            logging.warning("Could not add to database from resultfile: %s" % path)
+            logging.warning("Could not add to database from run: %s" % flowcell_id)
 
 
 logging.basicConfig(datefmt='%m/%d/%Y %I:%M:%S %p', filename = 'NIPT_log', level=logging.DEBUG)
@@ -134,13 +138,13 @@ logging.getLogger('').addHandler(console)
 
 if __name__ == '__main__':
     parser = ArgumentParser(description=DESC)
-    parser.add_argument('--run_folders', nargs='+', default = [], dest = 'run_folders',
-                    help ='List of run folder names. Format example: 160511_D00410_0245_AH23VMADXY')
+    parser.add_argument('--flowcell_ids', nargs='+', default = [], dest = 'flowcell_ids',
+                    help ='List of run flowcell ids. Format example: AH23VMADXY')
     parser.add_argument('--users', default = None, dest = 'users',
                     help = 'json file with Users')
 
     args = parser.parse_args()
 
-    main(args.run_folders, args.users)
+    main(args.flowcell_ids, args.users)
 
 
