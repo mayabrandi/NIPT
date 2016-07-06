@@ -116,7 +116,6 @@ def main(flowcell_ids, users_file):
         BM = BatchMaker(db)
         BM.parse_path(flowcell_id)
         BM.get_run_folder_info()
-        print BM.batch_id
         if BM.batch_id:
             BM.update_nipt_db()
         else:

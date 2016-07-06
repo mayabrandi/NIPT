@@ -125,6 +125,7 @@ def samples():
         nr_included_samps = NCV.query.filter(NCV.include).count(),
         NCV_db  = sample_db,
         NCV_sex = DC.NCV_sex,
+        sample_names = DC.sample_names,
         NCV_man_class = DC.man_class,
         NCV_warnings = DC.NCV_classified,
         NCV_comment = DC.NCV_comment,

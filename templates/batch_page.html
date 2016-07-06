@@ -160,7 +160,7 @@
                                         <tbody>
                                         {% for s in NCV_samples %}
                                         <tr>
-                                            <td width="20%"> <a href={{ url_for('sample_page', sample_id=s.sample_ID) }}>{{ s.sample_ID }}</a></td>
+                                            <td width="20%"> <a href={{ url_for('sample_page', sample_id=s.sample_ID) }}>{{ s.sample_name }}</a></td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_13']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_13']['val'] }}</td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_18']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_18']['val'] }}</td>
                                             <td class = "{{ NCV_rounded[s.sample_ID]['NCV_21']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_21']['val'] }}</td>
