@@ -255,7 +255,7 @@ class PlottPage():
                 NCV_pass.append(float(s.__dict__[chrom])) 
                 NCV_pass_names.append(s.sample_name)
             except:
-                logging.exception('')
+                logging.exception()
                 pass
         
         return [NCV_pass], [NCV_pass_names]
@@ -306,7 +306,7 @@ class PlottPage():
 
     def make_chrom_abn(self):
         x = 1
-        status_x = {'Probable':0.1,'Verified':0.2,'False Positive':0.3,'False Negative':0.4, 'Suspected':0.5}
+        status_x = {'Probable':0.1,'Verified':0.2,'False Positive':0.3,'False Negative':0.4, 'Suspected':0.5, 'Other': 0.6}
         for status in self.sample_state_dict.keys():
             
             self.tris_abn[status] = {'NCV' : [], 's_name' : [], 'x_axis': []}
@@ -391,7 +391,7 @@ class Statistics():
                     try:
                         NCV_all.append(float(samp.NCV_X))
                     except:
-                        logging.exception('')
+                        logging.exception()
                         pass
                     try:
                         self.PCS[batch_id][samp.sample_ID] = {'x':[],'y':[],'sample':[]}
@@ -399,7 +399,7 @@ class Statistics():
                         self.PCS[batch_id][samp.sample_ID]['x'].append(i)
                         self.PCS[batch_id][samp.sample_ID]['sample'] = samp.sample_ID
                     except:
-                        logging.exception('')
+                        logging.exception()
                         pass
             i+=1
         med = float(statistics.median(NCV_all))
@@ -415,7 +415,7 @@ class Statistics():
                     self.Library_nM[batch_id]['y'].append(float(samp.Library_nM))
                     self.Library_nM[batch_id]['x'].append(i)
                 except:
-                    logging.exception('')
+                    logging.exception()
                     pass
             i+=1
 
@@ -429,7 +429,7 @@ class Statistics():
                     self.NonExcludedSites2Tags[batch_id]['y'].append(float(samp.NonExcludedSites2Tags))
                     self.NonExcludedSites2Tags[batch_id]['x'].append(i)
                 except:
-                    logging.exception('')
+                    logging.exception()
                     pass
             i+=1
 
@@ -443,7 +443,7 @@ class Statistics():
                     self.GCBias[batch_id]['y'].append(float(samp.GCBias))
                     self.GCBias[batch_id]['x'].append(i)
                 except:
-                    logging.exception('')
+                    logging.exception()
                     pass
             i+=1
 
@@ -457,7 +457,7 @@ class Statistics():
                     self.Tags2IndexedReads[batch_id]['y'].append(float(samp.Tags2IndexedReads))
                     self.Tags2IndexedReads[batch_id]['x'].append(i)
                 except:
-                    logging.exception('')
+                    logging.exception()
                     pass
             i+=1
 
@@ -471,7 +471,7 @@ class Statistics():
                     self.TotalIndexedReads2Clusters[batch_id]['y'].append(float(samp.TotalIndexedReads2Clusters))
                     self.TotalIndexedReads2Clusters[batch_id]['x'].append(i)
                 except:
-                    logging.exception('')
+                    logging.exception()
                     pass
             i+=1
 
@@ -491,7 +491,7 @@ class Statistics():
                     self.Ratio_21[batch_id]['y'].append(float(samp.Ratio_21))
                     self.Ratio_21[batch_id]['x'].append(i)
                 except:
-                    logging.exception('')
+                    logging.exception()
                     pass
             i+=1
 
@@ -507,6 +507,6 @@ class Statistics():
                     self.NCD_Y[batch_id]['y'].append(float(samp.NCD_Y))
                     self.NCD_Y[batch_id]['x'].append(i)
                 except:
-                    logging.exception('')
+                    logging.exception()
                     pass
             i+=1

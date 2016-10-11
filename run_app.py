@@ -1,7 +1,6 @@
 # encoding: utf-8
 from database import  db
 from extentions import ssl, ctx
-import logging
 import os
 from views import app  
 
