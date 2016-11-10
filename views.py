@@ -129,6 +129,7 @@ def samples():
         NCV_man_class = DC.man_class,
         NCV_warnings = DC.NCV_classified,
         NCV_comment = DC.NCV_comment,
+        NCV_included = DC.NCV_included,
         batch_info = DC.batch
         )
 

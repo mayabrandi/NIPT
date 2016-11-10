@@ -125,26 +125,26 @@
                             <footer>
                             <div class="panel-body">
                             <h2 class="page-header"><small>NCV 13</small></h2>
-                            <div id="NCV131821NCV_13" style="min-width:600px; height:800px; margin-right: 1.8cm;"></div><br><br>
+                            <div id="NCV131821NCV_13" style="min-width:600px; height:800px; margin-right: 2.0cm;"></div><br><br>
                             </div>
                             </footer>
                             <footer>
                             <div class="panel-body">
                             <h2 class="page-header"><small>NCV 18 </small></h2>
-                            <div id="NCV131821NCV_18" style="min-width:600px; height:800px; margin-right: 1.8cm;"></div><br><br>
+                            <div id="NCV131821NCV_18" style="min-width:600px; height:800px; margin-right: 2.0cm;"></div><br><br>
                             </div>
                             </footer>
                             <footer>
                             <div class="panel-body">
                             <h2 class="page-header"><small>NCV 21</small></h2>
-                            <div id="NCV131821NCV_21" style="min-width:600px; height:800px; margin-right: 1.8cm;"></div><br><br>
+                            <div id="NCV131821NCV_21" style="min-width:600px; height:800px; margin-right: 2.0cm;"></div><br><br>
                             </div>
                             </footer>
                             <footer>
                             <div class="panel-body">
                             <h2 class="page-header"><small>NCV X vs Y</small></h2>
-                            <div id="NCVXY" style="min-width:600px; height:800px; margin-right: 1.8cm;"></div>
-                            <div align="right" style="margin-right: 1.8cm;" >
+                            <div id="NCVXY" style="min-width:600px; height:800px; margin-right: 2.0cm;"></div>
+                            <div align="right" style="margin-right: 2.0cm;" >
                                 <table width="300">
                                     <tr height="1" style="border-bottom: 1px solid black">
                                         <td><strong><p style="font-size:14px">Class</font></strong></td>
@@ -169,7 +169,7 @@
                             <footer>
                             <div class="panel-body">
                             <h2 class="page-header"><small>Normalized Coverage</small></h2>
-                            <div id="cov_plot" style="min-width:600px; height:800px; margin-right: 1.8cm;"></div>
+                            <div id="cov_plot" style="min-width:600px; height:800px; margin-right: 2.0cm;"></div>
                             </div>
                             </footer>
                             {% endif %}
@@ -313,7 +313,7 @@ Plotly.newPlot({{'NCV131821NCV_'+chrom}}, data, layout);
         mode: 'markers',
         marker: {size : 8,
                  symbol :"square",
-                    color: "{{sex_chrom_abn[abn][abn_status]}}"} ,                                                   
+                    color: "{{ncv_abn_colors[abn_status]}}"} ,                                                   
                     type: 'scatter',  
                 }; 
     data.push(verif);
