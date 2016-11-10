@@ -497,7 +497,6 @@
         y: {{samp_cov_db['samples'][samp]['cov']}},
         x: {{samp_cov_db['x_axis']}},
         mode: 'markers',
-        <!--marker: {color: {{many_colors[i]|tojson}}},-->
         text: {{samp_cov_db['samples'][samp]['samp_id']|tojson}},
         type: 'scatter'};
     data.push(trace1);
@@ -505,6 +504,7 @@
     {% endfor %}
     Plotly.newPlot('cov_plot', data, layout);
 </script>
+        <!--marker: {color: {{many_colors[i]|tojson}}},-->
 
 <script>
     $(document).ready(function(){
