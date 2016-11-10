@@ -17,7 +17,7 @@
         <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ url_for('batch') }}">NIPT</a>
+            <a class="navbar-brand" href="{{ url_for('batch') }}">NIPT 2.0</a>
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown">
@@ -49,13 +49,13 @@
 
 
     <div class="container">
-                    <div class="col-lg-16">
-                    <div class="panel">
-                        <div class="panel-body">
-                                <h2 class="page-header"><strong>Nipt Results </strong><br><small>Batch: {{batch_name}}</small><small><p align="right" id="demo"></p></small></h2>
-                                     <footer>
-                                    <div class="table-responsive">
-                                    <table id="batch_table" class="table table-bordered" >
+        <div class="col-lg-16">
+            <div class="panel">
+                <div class="panel-body">
+                    <h2 class="page-header"><strong>NIPT Results </strong><br><small>Batch: {{batch_name}}</small><small><p align="right" id="demo"></p></small></h2>
+                    <footer>
+                            <div class="table-responsive">
+                                <table id="batch_table" class="table table-bordered" >
                                     <thead>
                                         <tr>
                                             <th width="18%">Sample Id</th>
@@ -65,7 +65,7 @@
                                             <th>NCV_X</th>
                                             <th>NCV_Y</th>
                                             <th>Sex</th>
-                                            <th>Warn</th>
+                                            <th>Warning</th>
                                             <th>Class</th>
                                             <th width="18%">Comment</th>
                                         </tr>
@@ -86,25 +86,65 @@
                                         </tr>
                                         {% endfor %}
                                     </tbody>
+                                </table>
+                                <p>Sex :    XX, XY or ambigous. Automatically generated. Based on pre defined NCV trsholds </p>
+                                <p>Warning:    Warning for chomosome abnormality. Automatically generated. Based on pre defined NCV thresholds</p>
+                                <p>Class:   Classification in relation to confirmation data. Manually classified by user.</p>
+                            </div>
+                    </footer>
+                </div>
+                            {% if seq_warnings %}
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>QC Warnings </small></h2>
+                            <footer>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                            <th>Sample id</th>
+                                            <th>Missing data</th>
+                                            <th>QC Warning</th>
+                                            <th>QV Failure</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for s in seq_warnings %}
+                                        <tr>
+                                            <td> <a href={{ url_for('sample_page', sample_id=s) }}>{{ s }}</a></td>
+                                            <td>{{seq_warnings[s]['missing_data'] }}</td>
+                                            <td>{{ seq_warnings[s]['QC_warn'] }}</td>
+                                            <td>{{ seq_warnings[s]['QC_fail'] }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
                                     </table>
-                            <p>SEX :    XX, XY or ambigous. Automatically generated. Based on pre defined NCV trsholds </p>
-                            <p>Warn:    Warning for chomosome abnormality. Automatically generated. Based on pre defined NCV trsholds</p>
-                            <p>Class:   Chomosome abnormalies. Manually classified by user through the sample page</p>
+                                </div>
                             </div>
                             </footer>
+                            {% endif %}
+                            <footer>
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>NCV 13</small></h2>
+                            <div id="NCV131821NCV_13" style="min-width:600px; height:800px; margin-right: 1.8cm;"></div><br><br>
                             </div>
-                            <footer>
-                            <div id="NCV131821NCV_13" style="min-width:600px; height:800px; margin-right: 1.5cm;"></div><br><br>
-                            </footer>       
-                            <footer>
-                            <div id="NCV131821NCV_18" style="min-width:600px; height:800px; margin-right: 1.5cm;"></div><br><br>
                             </footer>
                             <footer>
-                            <div id="NCV131821NCV_21" style="min-width:600px; height:800px; margin-right: 1.5cm;"></div><br><br>
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>NCV 18 </small></h2>
+                            <div id="NCV131821NCV_18" style="min-width:600px; height:800px; margin-right: 1.8cm;"></div><br><br>
+                            </div>
                             </footer>
                             <footer>
-                            <div id="NCVXY" style="min-width:600px; height:800px; margin-right: 1.5cm;"></div>
-                            <div align="right">
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>NCV 21</small></h2>
+                            <div id="NCV131821NCV_21" style="min-width:600px; height:800px; margin-right: 1.8cm;"></div><br><br>
+                            </div>
+                            </footer>
+                            <footer>
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>NCV X vs Y</small></h2>
+                            <div id="NCVXY" style="min-width:600px; height:800px; margin-right: 1.8cm;"></div>
+                            <div align="right" style="margin-right: 1.8cm;" >
                                 <table width="300">
                                     <tr height="1" style="border-bottom: 1px solid black">
                                         <td><strong><p style="font-size:14px">Class</font></strong></td>
@@ -127,7 +167,11 @@
                             {% if bool_warns %}
                             </footer>
                             <footer>
-                            <div id="cov_plot" style="min-width:800px; height:800px; "></div>
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>Normalized Coverage</small></h2>
+                            <div id="cov_plot" style="min-width:600px; height:800px; margin-right: 1.8cm;"></div>
+                            </div>
+                            </footer>
                             {% endif %}
             </div>
         </div>
@@ -152,7 +196,6 @@ $(function () {
 {% for chrom in ['13','18','21'] %}
 var data = []
 var layout = {
-    title: 'NCV_{{chrom}}',
     xaxis :{showline: true,
             ticktext : {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
             tickvals : {{NCV_stat['NCV_'+chrom]['x_axis']}},
@@ -169,7 +212,7 @@ var layout = {
             showgrid: false,
             linecolor: '#636363',
             linewidth: 5,
-            title : 'NCV'
+            title : 'NCV_{{chrom}}' 
             }};
 {% for line  in tris_thresholds %} 
 var line = {x : [-1, {{NCV_stat['NCV_'+chrom]['x_axis'][-1]+2}}],
@@ -190,7 +233,7 @@ var verif = {
             text: {{tris_chrom_abn[chrom]['Verified']['s_name']|tojson}},                                       
         mode: 'markers',
         marker: {symbol :"square",
-                size: 5,
+                size: 8,
                 } ,                                                   
         type: 'scatter',                                                            
         }; 
@@ -228,7 +271,6 @@ Plotly.newPlot({{'NCV131821NCV_'+chrom}}, data, layout);
     var XY_plot = document.getElementById('NCVXY')
     var data = []
     var layout = {
-    title: 'X vs Y',
     legend:{hovermode:'closest' },
     hovermode:'closest',
     xaxis :{showline: true,
@@ -269,7 +311,7 @@ Plotly.newPlot({{'NCV131821NCV_'+chrom}}, data, layout);
             x: {{sex_chrom_abn[abn][abn_status]['NCV_X']}},
             text: {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}},                                       
         mode: 'markers',
-        marker: {size : 11,
+        marker: {size : 8,
                  symbol :"square",
                     color: "{{sex_chrom_abn[abn][abn_status]}}"} ,                                                   
                     type: 'scatter',  
@@ -335,7 +377,6 @@ Plotly.newPlot({{'NCV131821NCV_'+chrom}}, data, layout);
     var XY_plot = document.getElementById('cov_plot')
     var data = []
     var layout = {
-    title: 'Normalized Coverage',
     legend:{hovermode:'closest' },
     hovermode:'closest',
     xaxis :{showline: true,
