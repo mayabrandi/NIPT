@@ -1,0 +1,431 @@
+<html>
+<head>
+
+
+
+    <title>NIPT</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/1.0.8/css/sb-admin-2.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+<div id="wrapper">
+        <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ url_for('batch') }}">NIPT 2.0</a>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+            <li class="dropdown">
+                <a class="navbar-brand" data-toggle="dropdown">
+                    <i class="fa fa-align-justify fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <a class="active" href="{{ url_for('batch') }}"><i class="fa fa-home"></i> Start</a>
+                    <li class="divider"></li>
+                    <a class="active" href={{ url_for('statistics') }}><i class="fa fa-bar-chart"></i>  Statistics</a>
+                    <li class="divider"></li>
+                    <a class="active" href={{ url_for('samples') }}><i class="fa fa-table"></i>  Sample List</a>
+                    <li class="divider"></li>
+                    <a class="active" href={{"https://github.com/Clinical-Genomics/NIPT/issues/new"}}><i class="fa fa-comment-o"></i>  Issues</a>
+                    <li class="divider"></li>
+                    <a class="active" href={{ url_for('logout') }}><i class="fa fa-sign-out"></i>  Sign Out</a>
+                    <li class="divider"></li>
+                    <a class="active" href={{ url_for('submit') }}><i class="fa fa-user"></i>  New User</a>
+                    <li class="divider"></li>
+                    <a class="active" href={{ url_for('download') }}><i class="fa fa-arrow-down"></i>  Download DB</a>
+                </ul>
+            </li>
+        </ul>
+        <div class="navbar-right">
+            <a class="navbar-brand">{{current_user.name}}</a>
+        </div>
+    </nav>
+
+
+
+    <div class="container">
+        <div class="col-lg-16">
+            <div class="panel">
+                <div class="panel-body">
+                    <h2 class="page-header"><strong>NIPT Results </strong><br><small>Batch: {{batch_name}}</small><small><p align="right" id="demo"></p></small></h2>
+                    <footer>
+                            <div class="table-responsive">
+                                <table id="batch_table" class="table table-bordered" >
+                                    <thead>
+                                        <tr>
+                                            <th width="18%">Sample Id</th>
+                                            <th>NCV_13</th>
+                                            <th>NCV_18</th>
+                                            <th>NCV_21</th>
+                                            <th>NCV_X</th>
+                                            <th>NCV_Y</th>
+                                            <th>Sex</th>
+                                            <th>Warning</th>
+                                            <th>Class</th>
+                                            <th width="18%">Comment</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for s in NCV_samples %}
+                                        <tr>
+                                            <td width="18%"> {{ s.sample_ID }}</td>
+                                            <td>{{ NCV_rounded[s.sample_ID]['NCV_13']['val'] }}</td>
+                                            <td>{{ NCV_rounded[s.sample_ID]['NCV_18']['val'] }}</td>
+                                            <td>{{ NCV_rounded[s.sample_ID]['NCV_21']['val'] }}</td>
+                                            <td>{{ NCV_rounded[s.sample_ID]['NCV_X']['val'] }}</td>
+                                            <td>{{ NCV_rounded[s.sample_ID]['NCV_Y']['val'] }}</td>
+                                            <th><p> <small>{{ NCV_sex[s.sample_ID]  }}</small></p></th>
+                                            <th><p> <small>{{ warnings[s.sample_ID]  }}</small></p></th>
+                                            <th><p> <small>{{ man_class[s.sample_ID] }}</small></p></th>
+                                            <td width="18%">{{s.comment}}</textarea></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <p>Sex :    XX, XY or ambigous. Automatically generated. Based on pre defined NCV trsholds </p>
+                                <p>Warning:    Warning for chomosome abnormality. Automatically generated. Based on pre defined NCV thresholds</p>
+                                <p>Class:   Classification in relation to confirmation data. Manually classified by user.</p>
+                            </div>
+                    </footer>
+                </div>
+                            {% if seq_warnings %}
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>QC Warnings </small></h2>
+                            <footer>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                            <th>Sample id</th>
+                                            <th>Missing data</th>
+                                            <th>QC Warning</th>
+                                            <th>QV Failure</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for s in seq_warnings %}
+                                        <tr>
+                                            <td> <a href={{ url_for('sample_page', sample_id=s) }}>{{ s }}</a></td>
+                                            <td>{{seq_warnings[s]['missing_data'] }}</td>
+                                            <td>{{ seq_warnings[s]['QC_warn'] }}</td>
+                                            <td>{{ seq_warnings[s]['QC_fail'] }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            </footer>
+                            {% endif %}
+                            <footer>
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>NCV 13</small></h2>
+                            <div id="NCV131821NCV_13" style="min-width:600px; height:800px; margin-right: 1.8cm;"></div><br><br>
+                            </div>
+                            </footer>
+                            <footer>
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>NCV 18 </small></h2>
+                            <div id="NCV131821NCV_18" style="min-width:600px; height:800px; margin-right: 1.8cm;"></div><br><br>
+                            </div>
+                            </footer>
+                            <footer>
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>NCV 21</small></h2>
+                            <div id="NCV131821NCV_21" style="min-width:600px; height:800px; margin-right: 1.8cm;"></div><br><br>
+                            </div>
+                            </footer>
+                            <footer>
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>NCV X vs Y</small></h2>
+                            <div id="NCVXY" style="min-width:600px; height:800px; margin-right: 1.8cm;"></div>
+                            <div align="right" style="margin-right: 1.8cm;" >
+                                <table width="300">
+                                    <tr height="1" style="border-bottom: 1px solid black">
+                                        <td><strong><p style="font-size:14px">Class</font></strong></td>
+                                        <td><strong><p style="font-size:14px">XXX</p></strong></td>
+                                        <td><strong><p style="font-size:14px">XYY</p></strong></td>
+                                        <td><strong><p style="font-size:14px">XXY</p></strong></td>
+                                        <td><strong><p style="font-size:14px">X0</p></strong></td>
+                                    </tr>
+                                    {% for abn in ncv_abn_colors.keys() %}
+                                    <tr height="0,5">
+                                        <td><p style="font-size:14px"><strong>{{abn}}</strong></p></td>
+                                        <td><p style="font-size:14px">{{sex_chrom_abn["XXX"][abn]['nr_cases']}}</p></td>
+                                        <td><p style="font-size:14px">{{sex_chrom_abn["XYY"][abn]['nr_cases']}}</p></td>
+                                        <td><p style="font-size:14px">{{sex_chrom_abn["XXY"][abn]['nr_cases']}}</p></td>
+                                        <td><p style="font-size:14px">{{sex_chrom_abn["X0"][abn]['nr_cases']}}</p></td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            {% if bool_warns %}
+                            </footer>
+                            <footer>
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>Normalized Coverage</small></h2>
+                            <div id="cov_plot" style="min-width:600px; height:800px; margin-right: 1.8cm;"></div>
+                            </div>
+                            </footer>
+                            {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="https://cdn.plot.ly/plotly-1.5.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
+
+
+<script>
+$(function () {
+{% for chrom in ['13','18','21'] %}
+var data = []
+var layout = {
+    xaxis :{showline: true,
+            ticktext : {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
+            tickvals : {{NCV_stat['NCV_'+chrom]['x_axis']}},
+            tickangle : 20,
+            linecolor: '#636363',
+            linewidth: 5,
+            showgrid: true,
+            gridcolor: '#bdbdbd'
+            },
+            
+    yaxis :{range: [-10,],
+            zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'NCV_{{chrom}}' 
+            }};
+{% for line  in tris_thresholds %} 
+var line = {x : [-1, {{NCV_stat['NCV_'+chrom]['x_axis'][-1]+2}}],
+            y : [{{tris_thresholds[line]['NCV']}},{{tris_thresholds[line]['NCV']}}],
+            mode: 'lines',
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : '{{tris_thresholds[line]['color']}}',
+                width : 2},
+            name: "{{line}}"};
+data.push(line);
+{% endfor %}
+var verif = {                                                                  
+            name: "Verified T_{{chrom}}",                                                               
+            y: {{tris_chrom_abn[chrom]['Verified']['NCV']}},                                        
+            x: {{tris_chrom_abn[chrom]['Verified']['x_axis']}} ,
+            text: {{tris_chrom_abn[chrom]['Verified']['s_name']|tojson}},                                       
+        mode: 'markers',
+        marker: {symbol :"square",
+                size: 8,
+                } ,                                                   
+        type: 'scatter',                                                            
+        }; 
+data.push(verif);
+var trace1 = {
+    name: 'Case',
+      y: {{NCV_stat['NCV_'+chrom]['NCV_cases']}},
+      x: {{NCV_stat['NCV_'+chrom]['x_axis']}},
+      text: {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
+      mode: 'markers',
+      type: 'scatter',
+    marker: {
+            color: 'rgb(102, 102, 102)',
+            size: 10
+            }};
+var box = {
+    y: {{NCV_stat['NCV_'+chrom]['NCV_pass'][0]}},
+    boxpoints: 'all',
+//    jitter: 0.3,
+    pointpos: 30,
+    type: 'box',
+    marker: {
+        color: '#ccccb3'},
+    name: 'Validation samples (N={{nr_validation_samps}})',
+    boxpoints: 'suspectedoutliers',
+    hoverinfo:'none',};
+data.push(trace1)
+data.push(box)
+Plotly.newPlot({{'NCV131821NCV_'+chrom}}, data, layout);
+{% endfor %}    
+});
+</script>
+
+<script>
+    var XY_plot = document.getElementById('NCVXY')
+    var data = []
+    var layout = {
+    legend:{hovermode:'closest' },
+    hovermode:'closest',
+    xaxis :{showline: true,
+            zeroline: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            showgrid: false,
+            gridcolor: '#bdbdbd',
+            title: 'NCV_X'
+            },
+            
+    yaxis :{range: [-50,],
+            zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'NCV_Y'
+            },};
+    var backstat = {
+    y: {{NCV_stat['NCV_Y']['NCV_pass'][0]}},
+    x: {{NCV_stat['NCV_X']['NCV_pass'][0]}},
+    text: {{NCV_stat['NCV_X']['NCV_pass_names'][0]|tojson}},
+    name: 'Negative (N={{nr_validation_samps}})',
+    hoverinfo:'none',
+    mode: 'markers',
+    type: 'scatter',
+    marker: {color: '#ccccb3'},
+            size: 10}
+    data.push(backstat);
+    var i = 0
+
+    {% for abn  in sex_chrom_abn.keys() %} 
+    {% for abn_status  in abn_status_list %} 
+    var verif = {                                                                  
+            name: '{{abn}} {{abn_status}} (N={{sex_chrom_abn[abn][abn_status]['nr_cases']}})',                                                               
+            y: {{sex_chrom_abn[abn][abn_status]['NCV_Y']}},                                        
+            x: {{sex_chrom_abn[abn][abn_status]['NCV_X']}},
+            text: {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}},                                       
+        mode: 'markers',
+        marker: {size : 8,
+                 symbol :"square",
+                    color: "{{sex_chrom_abn[abn][abn_status]}}"} ,                                                   
+                    type: 'scatter',  
+                }; 
+    data.push(verif);
+    var i = i +1
+    {% endfor %}
+    {% endfor %}
+
+    {% for line  in sex_tresholds %} 
+    var line = {x : {{sex_tresholds[line]['x']}},
+            y : {{sex_tresholds[line]['y']}},
+            mode: 'lines',
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : 'red',
+                width : 2},
+            name: "{{line}}"};
+    data.push(line);
+    {% endfor %}
+    {% for i in samp_range %}
+    var trace1 = {
+    y: [{{NCV_stat['NCV_Y']['NCV_cases'][i]}}],
+    x: [{{NCV_stat['NCV_X']['NCV_cases'][i]}}],
+    name: {{NCV_stat['NCV_X']['X_labels'][i]|tojson}},
+    mode: 'markers',
+    text: {{NCV_stat['NCV_X']['X_labels'][i]|tojson}},
+    type: 'scatter',
+    marker: {
+            color: '{{many_colors[i]}}',
+            size: 12
+            }};
+    data.push(trace1);
+    {% endfor %}
+
+    var trace = {
+    x: [-8, 0, 8, -20, -8, 0],
+    y: [-40, -40, -40, 300, 300, 300],
+    mode: 'text',
+    name: 'NCV Clasifications',
+    text: ['X0', 'XX', 'XXX','XY','XYY','XXY'],
+    textposition: 'top',
+    showlegend: false,
+    textfont: {
+    size: 18,
+    },
+    type: 'scatter'
+    };
+
+    data.push(trace);
+    Plotly.newPlot('NCVXY', data, layout);
+    //XY_plot.on('plotly_click', function(verif){
+    // var pts = '';
+    // for(var i=0; i<verif.points.length; i++){
+    //      pts=verif.points[i].data.name
+    //   }
+    //    alert(pts);
+    //window.location.href = 'http://127.0.0.1:5000/NIPT/samples/'+pt;
+    //});
+</script>
+<script>
+    var XY_plot = document.getElementById('cov_plot')
+    var data = []
+    var layout = {
+    legend:{hovermode:'closest' },
+    hovermode:'closest',
+    xaxis :{showline: true,
+            zeroline: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            showgrid: true,
+            gridcolor: '#bdbdbd',
+            title: 'Chromosome',
+            tickvals :{{samp_cov_db['x_axis']}},
+            },            
+    yaxis :{zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'Normalized Coverage'
+            },};
+    {% for samp in samp_cov_db['samples'] %}
+    var trace1 = {
+      name: {{samp_cov_db['samples'][samp]['samp_id']|tojson}},
+        y: {{samp_cov_db['samples'][samp]['cov']}},
+        x: {{samp_cov_db['x_axis']}},
+        mode: 'markers',
+        text: {{samp_cov_db['samples'][samp]['samp_id']|tojson}},
+        type: 'scatter'};
+    data.push(trace1);
+    {% endfor %}
+    Plotly.newPlot('cov_plot', data, layout);
+</script>
+
+<script>
+$(document).ready(function() {
+    var table = $('#batch_table').DataTable( {
+        lengthChange: false,
+        paging:     false,
+        info: false,
+        searching:  false
+    } );
+} );
+</script>
+
+<script>
+var d = new Date();
+document.getElementById("demo").innerHTML = d.toDateString();
+</script>
+
+</body>
+</html>
+
+
+
