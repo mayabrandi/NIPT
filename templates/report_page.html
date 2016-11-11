@@ -400,6 +400,7 @@ Plotly.newPlot({{'NCV131821NCV_'+chrom}}, data, layout);
       name: {{samp_cov_db['samples'][samp]['samp_id']|tojson}},
         y: {{samp_cov_db['samples'][samp]['cov']}},
         x: {{samp_cov_db['x_axis']}},
+        marker: {color: {{cov_colors[loop.index]|tojson}}},
         mode: 'markers',
         text: {{samp_cov_db['samples'][samp]['samp_id']|tojson}},
         type: 'scatter'};

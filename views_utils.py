@@ -244,11 +244,10 @@ class PlottPage():
                             'XXX' : {'Verified': '#FFFF00', 'Probable' : '#CCCC00',"Suspected": '#999900','False Positive': '#666600'},
                             'XXY' : {'Verified': '#99FF99', 'Probable' : '#00FF00',"Suspected": '#00CC00','False Positive':'#006600' },
                             'XYY' : {'Verified': '#99FFFF', 'Probable' : '#99CCFF',"Suspected": '#0080FF','False Positive':'#0000FF' }}
-        many_colors = list([   '#000000', '#4682B4', '#FFB6C1', '#FFA500', '#FF0000', '#00FF00', '#0000FF', 
-                                    '#FFFF00', '#00FFFF', '#FF00FF', '#C0C0C0', '#808080', '#800000', '#808000', 
-                                    '#008000', '#800080', '#008080', '#000080', '#0b7b47','#7b0b3f','#7478fc']) 
-        self.many_colors = [ ['#000000']*15 for i in many_colors]
-
+        self.many_colors = list(['#000000', '#4682B4', '#FFB6C1', '#FFA500', '#FF0000', '#00FF00', '#0000FF', 
+                            '#FFFF00', '#00FFFF', '#FF00FF', '#C0C0C0', '#808080', '#800000', '#808000', 
+                            '#008000', '#800080', '#008080', '#000080', '#0b7b47','#7b0b3f','#7478fc']) 
+        self.cov_colors = [ [i]*22 for i in self.many_colors]
 
     def make_approved_stats(self, chrom):
         NCV_pass = []
