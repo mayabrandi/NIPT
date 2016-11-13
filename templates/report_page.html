@@ -190,12 +190,13 @@
 <script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
 
-
 <script>
-$(function () {
-{% for chrom in ['13','18','21'] %}
-var data = []
-var layout = {
+    $(function () {
+    {% for chrom in ['13','18','21'] %}
+    var data = []
+    var layout = {
+    legend:{hovermode:'closest' },
+    hovermode:'closest',
     xaxis :{showline: true,
             ticktext : {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
             tickvals : {{NCV_stat['NCV_'+chrom]['x_axis']}},
@@ -212,10 +213,10 @@ var layout = {
             showgrid: false,
             linecolor: '#636363',
             linewidth: 5,
-            title : 'NCV_{{chrom}}' 
+            title : 'NCV_{{chrom}}'
             }};
-{% for line  in tris_thresholds %} 
-var line = {x : [-1, {{NCV_stat['NCV_'+chrom]['x_axis'][-1]+2}}],
+    {% for line  in tris_thresholds %} 
+    var line = {x : {{NCV_stat['NCV_'+chrom]['x_range']}},
             y : [{{tris_thresholds[line]['NCV']}},{{tris_thresholds[line]['NCV']}}],
             mode: 'lines',
             showlegend: false,
@@ -224,22 +225,27 @@ var line = {x : [-1, {{NCV_stat['NCV_'+chrom]['x_axis'][-1]+2}}],
                 color : '{{tris_thresholds[line]['color']}}',
                 width : 2},
             name: "{{line}}"};
-data.push(line);
-{% endfor %}
-var verif = {                                                                  
-            name: "Verified T_{{chrom}}",                                                               
-            y: {{tris_chrom_abn[chrom]['Verified']['NCV']}},                                        
-            x: {{tris_chrom_abn[chrom]['Verified']['x_axis']}} ,
-            text: {{tris_chrom_abn[chrom]['Verified']['s_name']|tojson}},                                       
+    data.push(line);
+    {% endfor %}
+    {% for abn_status  in abn_status_list %}
+    var verif = {                                                                  
+            name: "{{abn_status}} T_{{chrom}} (N={{tris_chrom_abn[chrom][abn_status]['nr']}})",                                                               
+            y: {{tris_chrom_abn[chrom][abn_status]['NCV']}},                                        
+            x: {{tris_chrom_abn[chrom][abn_status]['x_axis']}} ,
+            text: {{tris_chrom_abn[chrom][abn_status]['s_name']|tojson}},                                       
         mode: 'markers',
         marker: {symbol :"square",
+                color: "{{ncv_abn_colors[abn_status]}}",
                 size: 8,
                 } ,                                                   
         type: 'scatter',                                                            
         }; 
-data.push(verif);
-var trace1 = {
-    name: 'Case',
+    data.push(verif);
+    {% endfor %}
+
+
+    var trace1 = {
+    name: "Current batch (N={{NCV_stat['NCV_'+chrom]['nr_cases']}})",
       y: {{NCV_stat['NCV_'+chrom]['NCV_cases']}},
       x: {{NCV_stat['NCV_'+chrom]['x_axis']}},
       text: {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
@@ -249,22 +255,20 @@ var trace1 = {
             color: 'rgb(102, 102, 102)',
             size: 10
             }};
-var box = {
+    var box = {
     y: {{NCV_stat['NCV_'+chrom]['NCV_pass'][0]}},
-    boxpoints: 'all',
-//    jitter: 0.3,
     pointpos: 30,
     type: 'box',
     marker: {
         color: '#ccccb3'},
-    name: 'Validation samples (N={{nr_validation_samps}})',
-    boxpoints: 'suspectedoutliers',
-    hoverinfo:'none',};
-data.push(trace1)
-data.push(box)
-Plotly.newPlot({{'NCV131821NCV_'+chrom}}, data, layout);
-{% endfor %}    
-});
+        name: 'Negative (N={{nr_validation_samps}})',
+        hoverinfo:'none'};
+
+    data.push(trace1)
+    data.push(box)
+    Plotly.newPlot({{'NCV131821NCV_'+chrom}}, data, layout);
+    {% endfor %}    
+    });
 </script>
 
 <script>
