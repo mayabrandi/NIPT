@@ -91,8 +91,10 @@ class DataClasifyer():
         self.exceptions = ['NA','']
         self.NCV_classified = {}
         self.NCV_sex = {}
+        self.sample_names = {}
         self.QC_warnings = {}
         self.NCV_comment = {}
+        self.NCV_included = {}
         self.man_class = {}
         self.batch = {}
         self.man_class_merged = {}
@@ -124,8 +126,10 @@ class DataClasifyer():
     def handle_NCV(self, NCV_db): ############ takes time
         """Get automated warnings, based on preset NCV tresholds"""
         for s in NCV_db:
+            self.sample_names[s.sample_ID] = s.sample_name
             s_id = s.sample_ID
             self.NCV_comment[s_id] = s.comment
+            self.NCV_included[s_id] = s.include
             self.batch[s_id] = {'id':s.batch_id ,'name':s.batch.batch_name}
             samp_warn = []
             self.NCV_data[s_id] = {}
@@ -222,6 +226,7 @@ class DataClasifyer():
 class PlottPage():
     """Class to preppare data for NCV plots"""
     def __init__(self, batch_id):
+        self.NCV_include = NCV.query.filter(NCV.include)
         self.batch_id = batch_id
         self.BDF = BatchDataFilter(batch_id)
         self.NCV_passed = self.BDF.NCV_passed
@@ -239,11 +244,10 @@ class PlottPage():
                             'XXX' : {'Verified': '#FFFF00', 'Probable' : '#CCCC00',"Suspected": '#999900','False Positive': '#666600'},
                             'XXY' : {'Verified': '#99FF99', 'Probable' : '#00FF00',"Suspected": '#00CC00','False Positive':'#006600' },
                             'XYY' : {'Verified': '#99FFFF', 'Probable' : '#99CCFF',"Suspected": '#0080FF','False Positive':'#0000FF' }}
-        self.many_colors = list([   '#000000', '#4682B4', '#FFB6C1', '#FFA500', '#FF0000', '#00FF00', '#0000FF', 
-                                    '#FFFF00', '#00FFFF', '#FF00FF', '#C0C0C0', '#808080', '#800000', '#808000', 
-                                    '#008000', '#800080', '#008080', '#000080', '#000000', '#4682B4', '#FFB6C1',
-                                    '#FFA500', '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#00FFFF', '#FF00FF', 
-                                    '#C0C0C0', '#808080', '#800000', '#808000', '#008000', '#800080', '#008080', '#000080'])
+        self.many_colors = list(['#000000', '#4682B4', '#FFB6C1', '#FFA500', '#FF0000', '#00FF00', '#0000FF', 
+                            '#FFFF00', '#00FFFF', '#FF00FF', '#C0C0C0', '#808080', '#800000', '#808000', 
+                            '#008000', '#800080', '#008080', '#000080', '#0b7b47','#7b0b3f','#7478fc']) 
+        self.cov_colors = [ [i]*22 for i in self.many_colors]
 
     def make_approved_stats(self, chrom):
         NCV_pass = []
@@ -251,9 +255,9 @@ class PlottPage():
         for s in self.NCV_passed:
             try: 
                 NCV_pass.append(float(s.__dict__[chrom])) 
-                NCV_pass_names.append(s.sample_ID)
+                NCV_pass_names.append(s.sample_name)
             except:
-                logging.exception('')
+                logging.exception()
                 pass
         
         return [NCV_pass], [NCV_pass_names]
@@ -263,7 +267,7 @@ class PlottPage():
         x_axis = range(1,23)
         self.coverage_plot['x_axis'] = x_axis
         for samp in cov:
-            self.coverage_plot['samples'][samp.sample_ID] = {'cov':[], 'samp_id':[samp.sample_ID]}
+            self.coverage_plot['samples'][samp.sample_ID] = {'cov':[], 'samp_id':[samp.sample.sample_name]}
             for i in x_axis:
                 try:
                     self.coverage_plot['samples'][samp.sample_ID]['cov'].append(float(samp.__dict__['Chr'+str(i)+'_Coverage']))
@@ -284,7 +288,7 @@ class PlottPage():
                 try:
                     NCV_list.append([s.__dict__['sample_ID'], round(float(s.__dict__[chrom]),2)])
                     NCV_cases.append(round(float(s.__dict__[chrom]),2))
-                    X_labels.append(s.__dict__['sample_ID'])
+                    X_labels.append(s.__dict__['sample_name'])
                 except:
                     #NCV_list.append([s.__dict__['sample_ID'], s.__dict__[chrom]])
                     #NCV_cases.append(s.__dict__[chrom])
@@ -304,7 +308,7 @@ class PlottPage():
 
     def make_chrom_abn(self):
         x = 1
-        status_x = {'Probable':0.1,'Verified':0.2,'False Positive':0.3,'False Negative':0.4, 'Suspected':0.5}
+        status_x = {'Probable':0.1,'Verified':0.2,'False Positive':0.3,'False Negative':0.4, 'Suspected':0.5, 'Other': 0.6}
         for status in self.sample_state_dict.keys():
             
             self.tris_abn[status] = {'NCV' : [], 's_name' : [], 'x_axis': []}
@@ -312,13 +316,14 @@ class PlottPage():
             for status in self.sample_state_dict.keys():                                      
                 self.tris_chrom_abn[abn][status] = {'NCV' : [], 's_name' : [], 'x_axis': [], 'nr': 0}             
                 for s in Sample.query.filter(Sample.__dict__['status_T'+abn] == status):
-                    NCV_val = NCV.query.filter_by(sample_ID = s.sample_ID).first().__dict__['NCV_' + abn]
-                    if NCV_val!='NA':
+                    S_NCV = NCV.query.filter_by(sample_ID = s.sample_ID).first()
+                    NCV_val = S_NCV.__dict__['NCV_' + abn]
+                    if S_NCV.include and (NCV_val!= 'NA'):
                         self.tris_abn[status]['NCV'].append(float(NCV_val))
-                        self.tris_abn[status]['s_name'].append(s.sample_ID)
+                        self.tris_abn[status]['s_name'].append(s.sample_name)
                         self.tris_abn[status]['x_axis'].append(x+status_x[status])
                         self.tris_chrom_abn[abn][status]['NCV'].append(float(NCV_val))
-                        self.tris_chrom_abn[abn][status]['s_name'].append(s.sample_ID)
+                        self.tris_chrom_abn[abn][status]['s_name'].append(s.sample_name)
                         self.tris_chrom_abn[abn][status]['x_axis'].append(status_x[status]-0.2)#.append(0)
                         self.tris_chrom_abn[abn][status]['nr']+=1
             x = x+1
@@ -328,11 +333,11 @@ class PlottPage():
                 cases = Sample.query.filter(Sample.__dict__['status_'+abn] == status)          
                 for s in cases:
                     NCV_db = NCV.query.filter_by(sample_ID = s.sample_ID).first()
-                    if NCV_db.NCV_X!='NA':
+                    if NCV_db.include and (NCV_db.NCV_X!='NA'):
                         self.sex_chrom_abn[abn][status]['NCV_X'].append(float(NCV_db.NCV_X))
-                    if NCV_db.NCV_Y!='NA':
+                    if NCV_db.include and NCV_db.NCV_Y!='NA':
                         self.sex_chrom_abn[abn][status]['NCV_Y'].append(float(NCV_db.NCV_Y))
-                    self.sex_chrom_abn[abn][status]['s_name'].append(s.sample_ID)
+                    self.sex_chrom_abn[abn][status]['s_name'].append(s.sample_name)
                     self.sex_chrom_abn[abn][status]['nr_cases']+=1
 
 
@@ -389,7 +394,7 @@ class Statistics():
                     try:
                         NCV_all.append(float(samp.NCV_X))
                     except:
-                        logging.exception('')
+                        logging.exception()
                         pass
                     try:
                         self.PCS[batch_id][samp.sample_ID] = {'x':[],'y':[],'sample':[]}
@@ -397,7 +402,7 @@ class Statistics():
                         self.PCS[batch_id][samp.sample_ID]['x'].append(i)
                         self.PCS[batch_id][samp.sample_ID]['sample'] = samp.sample_ID
                     except:
-                        logging.exception('')
+                        logging.exception()
                         pass
             i+=1
         med = float(statistics.median(NCV_all))
@@ -413,7 +418,7 @@ class Statistics():
                     self.Library_nM[batch_id]['y'].append(float(samp.Library_nM))
                     self.Library_nM[batch_id]['x'].append(i)
                 except:
-                    logging.exception('')
+                    logging.exception()
                     pass
             i+=1
 
@@ -427,7 +432,7 @@ class Statistics():
                     self.NonExcludedSites2Tags[batch_id]['y'].append(float(samp.NonExcludedSites2Tags))
                     self.NonExcludedSites2Tags[batch_id]['x'].append(i)
                 except:
-                    logging.exception('')
+                    logging.exception()
                     pass
             i+=1
 
@@ -441,7 +446,7 @@ class Statistics():
                     self.GCBias[batch_id]['y'].append(float(samp.GCBias))
                     self.GCBias[batch_id]['x'].append(i)
                 except:
-                    logging.exception('')
+                    logging.exception()
                     pass
             i+=1
 
@@ -455,7 +460,7 @@ class Statistics():
                     self.Tags2IndexedReads[batch_id]['y'].append(float(samp.Tags2IndexedReads))
                     self.Tags2IndexedReads[batch_id]['x'].append(i)
                 except:
-                    logging.exception('')
+                    logging.exception()
                     pass
             i+=1
 
@@ -469,7 +474,7 @@ class Statistics():
                     self.TotalIndexedReads2Clusters[batch_id]['y'].append(float(samp.TotalIndexedReads2Clusters))
                     self.TotalIndexedReads2Clusters[batch_id]['x'].append(i)
                 except:
-                    logging.exception('')
+                    logging.exception()
                     pass
             i+=1
 
@@ -489,7 +494,7 @@ class Statistics():
                     self.Ratio_21[batch_id]['y'].append(float(samp.Ratio_21))
                     self.Ratio_21[batch_id]['x'].append(i)
                 except:
-                    logging.exception('')
+                    logging.exception()
                     pass
             i+=1
 
@@ -505,6 +510,6 @@ class Statistics():
                     self.NCD_Y[batch_id]['y'].append(float(samp.NCD_Y))
                     self.NCD_Y[batch_id]['x'].append(i)
                 except:
-                    logging.exception('')
+                    logging.exception()
                     pass
             i+=1

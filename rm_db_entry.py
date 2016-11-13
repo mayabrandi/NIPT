@@ -42,16 +42,17 @@ def validation(batch_id):
         
     
 
-def main(batch_id):
-    remove_batch(batch_id)
-    validation(batch_id)
+def main(batch_ids):
+    for batch_id in batch_ids:
+        remove_batch(batch_id)
+        validation(batch_id)
     
 if __name__ == '__main__':
     parser = ArgumentParser(description=DESC)
-    parser.add_argument('-b', default = None, dest = 'batch_id', 
-                    help = '')
+    parser.add_argument('-b',  nargs='+', default = [] , dest = 'Flowcell_id', 
+                    help = 'List of flocell ids. Eg: AH3FMNADXY BH3FKLADXY AH2YNTADXY')
     args = parser.parse_args()
-    main(args.batch_id)
+    main(args.Flowcell_id)
 
 
 

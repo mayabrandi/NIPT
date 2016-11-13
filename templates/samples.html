@@ -73,7 +73,7 @@
         <div class="jumbotron vertical-center">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"><strong>NIPT Data</strong></h1>
+                    <h1 class="page-header"><strong>NIPT Samples</strong></h1>
                     <h5 class="page-header">{{nr_included_samps}} samples are currently included in the complete data set</h5>
                 </div>
             </div>
@@ -98,12 +98,13 @@
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Manually classified through the sample page.">XYY</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="left" title="Manually classified through the sample page.">X0</a></th>
                                                 <th><a href="#">Comment</a></th>
-                                                </tr>
+                                                <th><a href="#">Included</a></th>    
+                                            </tr>
                                             </thead>
                                             <tbody   class="list">
                                             {% for sample_ID in NCV_sex.keys() %}
                                             <tr>
-                                            <td class="Sample id"> <a href={{ url_for('sample_page', sample_id=sample_ID) }}>{{ sample_ID }}</a></td>
+                                            <td class="Sample id"> <a href={{ url_for('sample_page', sample_id=sample_ID) }}>{{ sample_names[sample_ID] }}</a></td>
                                             <td class="Batch id"> <a href={{ url_for('sample', batch_id=batch_info[sample_ID]['id']) }}>{{batch_info[sample_ID]['name']}}</a></td>
                                             <td class="sex"> {{NCV_sex[sample_ID] }}</td>
                                             <td class="warn"> {{NCV_warnings[sample_ID] }}</td>
@@ -115,6 +116,7 @@
                                             <td class="XYY"> {{NCV_man_class[sample_ID]['XYY'] }}</td>
                                             <td class="X0"> {{NCV_man_class[sample_ID]['X0']}}</td>
                                             <td class="comments">{{NCV_comment[sample_ID]}}</td>
+                                            <td class="Included">{{NCV_included[sample_ID]}}</td>
                                             </tr>
                                             {% endfor %}
                                             </tbody>

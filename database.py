@@ -53,6 +53,7 @@ class Sample(db.Model):
     batch_id = db.Column(db.String(255), db.ForeignKey('batch.batch_id'))
     batch = db.relationship('Batch', backref = db.backref('sample'))
     sample_ID = db.Column(db.String(255), unique = True)
+    sample_name = db.Column(db.String(255), unique = False)
     Flowcell = db.Column(db.String(255), unique = False)
     Description = db.Column(db.String(255), unique = False)
     IndexID = db.Column(db.String(255), unique = False)
@@ -99,7 +100,8 @@ class Sample(db.Model):
 
     def __init__(self, nipt_dict, batch):
         self.batch = batch
-        self.sample_ID = nipt_dict['SampleID']
+        self.sample_ID = nipt_dict['SampleID']+'_'+batch.batch_id
+        self.sample_name = nipt_dict['SampleID']
         self.Flowcell = nipt_dict['Flowcell']
         self.Description = nipt_dict['Description']
         self.SampleProject = nipt_dict['SampleProject']
@@ -268,6 +270,7 @@ class NCV(db.Model):
     __table_name__ = 'NCV'
     id = db.Column(db.Integer, primary_key = True)
     sample_ID = db.Column(db.String(255), db.ForeignKey('sample.sample_ID'))
+    sample_name = db.Column(db.String(255), unique = False)
     sample = db.relationship('Sample', backref = db.backref('NCV'))
     batch_id = db.Column(db.String(255), db.ForeignKey('batch.batch_id'))
     batch = db.relationship('Batch', backref = db.backref('NCV'))
@@ -294,6 +297,7 @@ class NCV(db.Model):
     def __init__(self, nipt_dict, sample, batch): 
         self.sample = sample
         self.batch = batch
+        self.sample_name = sample.sample_name
         self.SampleType = nipt_dict['SampleType']
         self.NCV_13 = nipt_dict['NCV_13']
         self.NCV_18 = nipt_dict['NCV_18']

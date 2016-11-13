@@ -125,9 +125,11 @@ def samples():
         nr_included_samps = NCV.query.filter(NCV.include).count(),
         NCV_db  = sample_db,
         NCV_sex = DC.NCV_sex,
+        sample_names = DC.sample_names,
         NCV_man_class = DC.man_class,
         NCV_warnings = DC.NCV_classified,
         NCV_comment = DC.NCV_comment,
+        NCV_included = DC.NCV_included,
         batch_info = DC.batch
         )
 
@@ -302,6 +304,7 @@ def sample(batch_id):
         sex_chrom_abn   = PP.sex_chrom_abn,
         abn_status_list = ['Verified','False Positive', 'Probable', 'Suspected'],
         many_colors     = PP.many_colors,
+        cov_colors      = PP.cov_colors  ,  
         ncv_abn_colors = PP.ncv_abn_colors,
         sex_abn_colors  = PP.sex_abn_colors,
         sex_tresholds   = DC.sex_tresholds,
@@ -340,6 +343,7 @@ def report(batch_id):
         tris_chrom_abn  = PP.tris_chrom_abn,
         sex_chrom_abn   = PP.sex_chrom_abn,
         abn_status_list = ['Verified','False Positive', 'Probable', 'Suspected'],
+        cov_colors      = PP.cov_colors,
         many_colors     = PP.many_colors,
         sex_abn_colors  = PP.sex_abn_colors,
         ncv_abn_colors = PP.ncv_abn_colors,
