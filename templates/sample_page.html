@@ -338,7 +338,7 @@ var legends = [true,false,false]
             showlegend: legends[i-1],
             marker: {
                 color: '#ccccb3'},
-            name: 'Negative (N={{nr_validation_samps}})',
+            name: 'Negative (N={{NCV_stat[chrom]['nr_pass']}})',
             hoverinfo:'none',
             boxpoints: 'suspectedoutliers',
             };
@@ -417,7 +417,7 @@ data.push(line);
 var backstat = {
     y: {{NCV_stat['NCV_Y']['NCV_pass'][0]}},
     x: {{NCV_stat['NCV_X']['NCV_pass'][0]}},
-    name: 'Negative (N={{nr_validation_samps}})',
+    name: 'Negative (N={{NCV_stat['NCV_X']['nr_pass']}})',
     hoverinfo:'none',
     mode: 'markers',
     type: 'scatter',
