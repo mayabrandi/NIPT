@@ -349,7 +349,7 @@
     type: 'box',
     marker: {
         color: '#ccccb3'},
-        name: 'Negative (N={{nr_validation_samps}})',
+        name: 'Negative (N={{NCV_stat['NCV_'+chrom]['nr_pass']}})',
         hoverinfo:'none'};
 
     data.push(trace1)
@@ -387,7 +387,7 @@
     y: {{NCV_stat['NCV_Y']['NCV_pass'][0]}},
     x: {{NCV_stat['NCV_X']['NCV_pass'][0]}},
     text: {{NCV_stat['NCV_X']['NCV_pass_names'][0]|tojson}},
-    name: 'Negative (N={{nr_validation_samps}})',
+    name: 'Negative (N={{NCV_stat['NCV_Y']['nr_pass']}})',
     hoverinfo:'none',
     mode: 'markers',
     type: 'scatter',

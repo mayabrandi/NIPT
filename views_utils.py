@@ -67,6 +67,12 @@ class BatchDataFilter():
         self.batch_id = batch_id
         self.filtered_NCV = self.fliter_NA()
         self.NCV_passed = self.filtered_NCV.filter(NCV.include)
+        self.NCV_normal = {'NCV_13' : self.NCV_passed.join(Sample).filter_by(status_T13 = "Normal"),
+                           'NCV_18' : self.NCV_passed.join(Sample).filter_by(status_T18 = "Normal"),
+                           'NCV_21' : self.NCV_passed.join(Sample).filter_by(status_T21 = "Normal"),
+                           'NCV_XY' : self.NCV_passed.join(Sample).filter_by(status_X0 = "Normal", 
+                                    status_XXX = "Normal", status_XXY = "Normal", 
+                                    status_XYY = "Normal")}
         self.cases = self.filtered_NCV.filter(NCV.batch_id == batch_id,
                                             NCV.sample_ID.notilike('%ref%'),
                                             NCV.sample_ID.notilike('%Control%'))
@@ -230,6 +236,7 @@ class PlottPage():
         self.batch_id = batch_id
         self.BDF = BatchDataFilter(batch_id)
         self.NCV_passed = self.BDF.NCV_passed
+        self.NCV_normal = self.BDF.NCV_normal
         self.nr_validation_samps = len(self.BDF.NCV_passed.all()) 
         self.cases = self.BDF.cases  
         self.NCV_stat = {'NCV_13':{}, 'NCV_18':{}, 'NCV_21':{}, 'NCV_X':{}, 'NCV_Y' : {}}
@@ -252,15 +259,18 @@ class PlottPage():
     def make_approved_stats(self, chrom):
         NCV_pass = []
         NCV_pass_names = []
-        for s in self.NCV_passed:
+        if chrom in ['NCV_X', 'NCV_Y']:
+            normal = self.NCV_normal['NCV_XY']
+        else:
+            normal = self.NCV_normal[chrom]
+        for s in normal:
             try: 
                 NCV_pass.append(float(s.__dict__[chrom])) 
                 NCV_pass_names.append(s.sample_name)
             except:
                 logging.exception()
                 pass
-        
-        return [NCV_pass], [NCV_pass_names]
+        return [NCV_pass], [NCV_pass_names], len(normal.all())
 
     def make_cov_plot_data(self):
         cov = Coverage.query.filter(Coverage.batch_id == self.batch_id) 
@@ -280,7 +290,7 @@ class PlottPage():
 
     def make_NCV_stat(self):
         for chrom in self.NCV_stat.keys():
-            NCV_pass , NCV_pass_names = self.make_approved_stats(chrom) 
+            NCV_pass , NCV_pass_names, nr_pass = self.make_approved_stats(chrom) 
             NCV_list = []
             NCV_cases = []
             X_labels = []
@@ -295,7 +305,7 @@ class PlottPage():
                     #X_labels.append(s.__dict__['sample_ID'])
                     pass
             self.NCV_stat[chrom] = {
-                'nr_pass' : len(NCV_pass[0]),
+                'nr_pass' : nr_pass,
                 'NCV_list' : NCV_list,
                 'NCV_cases' : NCV_cases,
                 'nr_cases' :len(NCV_cases),
