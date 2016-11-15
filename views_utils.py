@@ -209,10 +209,12 @@ class DataClasifyer():
        # for sample_id, warning in self.NCV_classified.items():
          #   self.QC_warnings[sample_id]['NCV_high'] = warning
         for sample in samples:
-            if (int(sample.NonExcludedSites) < 8000000) or sample.QCFailure or sample.QCWarning:
+            if (not sample.NonExcludedSites) or (int(sample.NonExcludedSites) < 8000000) or sample.QCFailure or sample.QCWarning:
                 self.QC_warnings[sample.sample_ID] = {'sample_ID' : sample, 'missing_data' : '', 'QC_warn' : '', 'QC_fail' : ''}
-            if int(sample.NonExcludedSites) < 8000000:  
-                self.QC_warnings[sample.sample_ID]['missing_data'] = sample.NonExcludedSites #'Less than 8M reads'
+            if not sample.NonExcludedSites:
+                self.QC_warnings[sample.sample_ID]['missing_data'] = 'No data'
+            elif int(sample.NonExcludedSites) < 8000000:  
+                self.QC_warnings[sample.sample_ID]['missing_data'] = 'Less than 8M reads'
             if sample.QCFailure:
                 self.QC_warnings[sample.sample_ID]['QC_fail'] = sample.QCFailure
             if sample.QCWarning:
