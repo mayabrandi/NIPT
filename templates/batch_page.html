@@ -36,7 +36,7 @@
     <div id="wrapper">
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-                <a class="navbar-brand" href="{{ url_for('batch')}}" >NIPT 2.0</a>
+                <a class="navbar-brand" href="{{ url_for('batch')}}" >Back to NIPT Batches</a>
             </div>
             <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
@@ -64,7 +64,7 @@
                 <a class="navbar-brand">{{current_user.name}}</a>
             </div>
         </nav>
-        <div class="container">
+        <div class="container-fluid">
             <div class="jumbotron vertical-center">
                 <div class="row">
                     <div class="col-lg-12">
@@ -146,7 +146,7 @@
                                             <th>NCV_Y</th>
                                             <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="XX, XY or ambigous. Automatically generated. Based on pre defined NCV trsholds">Sex</a></th>
                                             <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Warning for chomosome abnormality. Automatically generated. Based on pre defined NCV trsholds">Warning</a></th>
-                                            <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Chomosome abnormalies. Manually classified by user through the sample page">Class</a></th>
+                                            <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Chomosome abnormalies. Manually classified by user through the sample page">Status</a></th>
                                             <th width="1%">Include</th>
                                             <th width="18%">Comment</th>
                                             <th>Last Change</th>
@@ -176,25 +176,19 @@
                                         </tbody>
                                     </table>
                                     <table>
+                                        <tbody>
                                             <tr>
-                                            <td>
-                                            <p>Samples checked in the 'Include' column are added to the validation sample set for comparison. Check the checkboxes for samples to include and save. If all samples are ok, just press 'set all OK'.</p>
-                                            </td>
-                                                <input type=text name="sample_ids" value="{{sample_ids}}" hidden>
-                                            <td>
-                                            <td>
-                                                <input type=text name="current_user" value="{{current_user.name}}" hidden>
-                                            </td>
-                                                <p align="right">
+                                                    <p align="right">
                                                     <input type="submit" class="btn btn-warning" value="Save checked samples">
-                                                </p>
-                                            </td>
-                                            <td>
-                                                <p align="right">
                                                     <button type="submit" class="btn btn-warning" name="All samples" value="{{sample_ids}}"> Set all OK</button>
-                                                </p>
-                                            </td>
+                                                    </p>
                                             </tr>
+                                            <tr>
+                                                    <p>Samples checked in the 'Include' column are added to the validation sample set for comparison. Check the checkboxes for samples to include and save. If all samples are ok, just press 'set all OK'.</p>
+                                                <input type=text name="sample_ids" value="{{sample_ids}}" hidden>
+                                                <input type=text name="current_user" value="{{current_user.name}}" hidden>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </form>
                             </div>
