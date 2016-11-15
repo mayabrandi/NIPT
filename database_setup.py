@@ -48,8 +48,8 @@ class BatchMaker():
         if self.nipt_results and self.batch_name:
             reader = csv.DictReader(open(self.nipt_results, 'rb'))
             for row in reader:
-                sample = Sample.query.filter_by(sample_ID = row['SampleID']).first()
-                if not sample and row['SampleID'][0] != '#':
+                sample = Sample.query.filter_by(sample_ID = row['SampleID'], batch_id = batch.batch_id).first()
+                if (not sample) and (row['SampleID'][0] != '#'):
                     sample = Sample(row, batch)
                     self.db.session.add(sample)
                     cov = Coverage(row, sample, batch)
