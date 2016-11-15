@@ -343,13 +343,11 @@ class PlottPage():
                 cases = Sample.query.filter(Sample.__dict__['status_'+abn] == status)          
                 for s in cases:
                     NCV_db = NCV.query.filter_by(sample_ID = s.sample_ID).first()
-                    if NCV_db.include and (NCV_db.NCV_X!='NA'):
+                    if NCV_db.include and (NCV_db.NCV_X!='NA') and NCV_db.NCV_Y!='NA':
                         self.sex_chrom_abn[abn][status]['NCV_X'].append(float(NCV_db.NCV_X))
-                    if NCV_db.include and NCV_db.NCV_Y!='NA':
                         self.sex_chrom_abn[abn][status]['NCV_Y'].append(float(NCV_db.NCV_Y))
-                    self.sex_chrom_abn[abn][status]['s_name'].append(s.sample_name)
-                    self.sex_chrom_abn[abn][status]['nr_cases']+=1
-
+                        self.sex_chrom_abn[abn][status]['s_name'].append(s.sample_name)
+                        self.sex_chrom_abn[abn][status]['nr_cases']+=1
 
 ################################################################################################
 
