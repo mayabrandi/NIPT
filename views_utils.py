@@ -30,6 +30,10 @@ class DataBaseToCSV:
             encoded_data = {}
             for key, val in data.items():
                 try:
+                    val = val.replace(',','.')
+                except:
+                    pass
+                try:
                     encoded_data[key] = val.encode('utf-8')
                 except:
                     encoded_data[key] = val
