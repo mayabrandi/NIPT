@@ -217,7 +217,7 @@
                         <div class="panel-body">
                             <div id="plot_131821" style="min-width:400px; height:700px; "></div><br><br>
                                 <div>
-                                    <div align="right"> 
+                                    <div align="right" style="margin-right: 2.0cm;">
                                     <table width="300">
                                     <tr height="1" style="border-bottom: 1px solid black">
                                         <td></td>
@@ -243,7 +243,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div id="plot_sex" style="min-width:400px; height:700px; "></div><br><br>
-                                <div align="right">
+                            <div align="right" style="margin-right: 2.0cm;">
                                     <table width="300">
                                     <tr height="1" style="border-bottom: 1px solid black">
                                         <td><strong><p style="font-size:14px">Class</p></strong></td>
@@ -314,7 +314,7 @@ var data = []
         mode: 'markers',
         marker: {symbol :"square",
                  color : "{{ncv_abn_colors[abn_status]}}",
-                } ,                                                   
+                size: {{abn_size}}} ,                                                   
         type: 'scatter',                                                            
         }; 
 
@@ -351,7 +351,7 @@ var legends = [true,false,false]
         type: 'scatter',
         marker: {
                 color: colors[i-1],
-                size: 10}
+                size: {{case_size}}}
         };
 
 
@@ -436,10 +436,9 @@ var i = 0
             text: {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}},                                       
         mode: 'markers',
         marker: {symbol :"square",
-                 size: 11,
+                 size: {{abn_size}},
                  color : "{{ncv_abn_colors[abn_status]}}",
                 } ,    
-        showlegend: false,                                                
         type: 'scatter',                                                            
         }; 
     data.push(verif);
@@ -454,7 +453,7 @@ var sample_XY = {
     text: '{{sample.sample_name}}',
     mode: 'markers',
     type: 'scatter',
-    marker: {size: 12}
+    marker: {size: {{case_size}}}
         };
 data.push(sample_XY);
 
