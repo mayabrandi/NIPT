@@ -67,20 +67,22 @@ class DataBaseToCSV:
 ################################################################################################
 
 class BatchDataFilter():
-    def __init__(self, batch_id):
-        self.batch_id = batch_id
+    def __init__(self):
         self.filtered_NCV = self.fliter_NA()
         self.NCV_passed = self.filtered_NCV.filter(NCV.include)
+        self.NCV_passed_X = [float(s.NCV_X) for s in self.NCV_passed.all()]
         self.NCV_normal = {'NCV_13' : self.NCV_passed.join(Sample).filter_by(status_T13 = "Normal"),
                            'NCV_18' : self.NCV_passed.join(Sample).filter_by(status_T18 = "Normal"),
                            'NCV_21' : self.NCV_passed.join(Sample).filter_by(status_T21 = "Normal"),
                            'NCV_XY' : self.NCV_passed.join(Sample).filter_by(status_X0 = "Normal", 
                                     status_XXX = "Normal", status_XXY = "Normal", 
                                     status_XYY = "Normal")}
-        self.cases = self.filtered_NCV.filter(NCV.batch_id == batch_id,
+
+    def batch_data(self, batch_id):
+        return self.filtered_NCV.filter(NCV.batch_id == batch_id,
                                             NCV.sample_ID.notilike('%ref%'),
                                             NCV.sample_ID.notilike('%Control%'))
-        self.samples_on_batch = Sample.query.filter(Sample.batch_id == batch_id)
+
 
     def fliter_NA(self):
         """Filtering out NA. Could probably be done in a more preyyt way :/"""
@@ -95,7 +97,8 @@ class BatchDataFilter():
 
 
 class DataClasifyer():
-    def __init__(self):
+    def __init__(self, NCV_db):
+        self.NCV_db = NCV_db
         self.NCV_data = {} 
         self.NCV_names = ['13','18','21','X','Y']
         self.exceptions = ['NA','']
@@ -108,16 +111,29 @@ class DataClasifyer():
         self.man_class = {}
         self.batch = {}
         self.man_class_merged = {}
-        self.sex_tresholds = {'XY_horis' :  {'x' : [-40, 10],   'y' : [13, 13]},
-                                'XY_upper': {'x' : [-40, 5.05], 'y' : [707.777, 13.6016]},#-30,553.687
-                                'XY_lower': {'x' : [-40, -5.13],'y' : [551.659, 13.971]}, #-30,395.371
-                                'XXY' :     {'x' : [-4, -4],    'y' : [155, 700]},
-                                'X0' :      {'x' : [-4, -4],   'y' : [13, -40]},
-                                'XXX' :     {'x' : [4, 4],      'y' : [13, -40]}}
+        self.sex_tresholds   = {}
         self.tris_thresholds = {'soft_max': {'NCV': 3 , 'color': 'orange'},
                                 'soft_min': {'NCV': -4, 'color': 'orange'},
                                 'hard_max': {'NCV': 4 , 'color': 'red'},
                                 'hard_min': {'NCV': -5, 'color': 'red'} }
+
+
+    def make_sex_tresholds(self, x_list):
+        x_min =  min(x_list) - 1
+        if x_min > -40: 
+            x_min = -40 
+        x_max_upper = 5.05
+        x_max_lower = -5.13
+        y_min_upper = -15.409 * x_min + 91.417
+        y_max_upper = -15.409 * x_max_upper + 91.417
+        y_min_lower = -15.256 * x_min - 62.309
+        y_max_lower = -15.256 * x_max_lower - 62.309
+        self.sex_tresholds = {'XY_horis' :  {'x' : [x_min, 10],   'y' : [13, 13]},
+                                'XY_upper': {'x' : [x_min, x_max_upper], 'y' : [y_min_upper, y_max_upper]},
+                                'XY_lower': {'x' : [x_min, x_max_lower], 'y' : [y_min_lower, y_max_lower]},
+                                'XXY' :     {'x' : [-4, -4],    'y' : [155, y_min_upper]},
+                                'X0' :      {'x' : [-4, -4],   'y' : [13, -40]},
+                                'XXX' :     {'x' : [4, 4],      'y' : [13, -40]}}
 
     def get_manually_classified(self, sample_db):
         """Get the manually defined sample status"""
@@ -133,9 +149,9 @@ class DataClasifyer():
                     self.man_class[s.sample_ID][key] = '-'
             self.man_class_merged[s.sample_ID] = ', '.join(self.man_class_merged[s.sample_ID])       
 
-    def handle_NCV(self, NCV_db): ############ takes time
+    def handle_NCV(self): ############ takes time
         """Get automated warnings, based on preset NCV tresholds"""
-        for s in NCV_db:
+        for s in self.NCV_db:
             self.sample_names[s.sample_ID] = s.sample_name
             s_id = s.sample_ID
             self.NCV_comment[s_id] = s.comment
@@ -143,11 +159,11 @@ class DataClasifyer():
             self.batch[s_id] = {'id':s.batch_id ,'name':s.batch.batch_name}
             samp_warn = []
             self.NCV_data[s_id] = {}
-            samp_warn = self.get_tris_warn(s, samp_warn)
-            samp_warn = self.get_sex_warn(s, samp_warn)
+            samp_warn = self._get_tris_warn(s, samp_warn)
+            samp_warn = self._get_sex_warn(s, samp_warn)
             self.NCV_classified[s.sample_ID] = ', '.join(samp_warn)
 
-    def get_sex_warn(self,s, samp_warn):
+    def _get_sex_warn(self,s, samp_warn):
         """Get automated sex warnings, based on preset NCV tresholds"""
         sex_warn = ''
         if not set([s.NCV_X , s.NCV_Y]).issubset(self.exceptions):
@@ -183,7 +199,7 @@ class DataClasifyer():
         self.NCV_sex[s.sample_ID] = sex
         return samp_warn
 
-    def get_tris_warn(self, s, samp_warn):
+    def _get_tris_warn(self, s, samp_warn):
         """Get automated trisomi warnings, based on preset NCV tresholds"""
         for key in self.NCV_names:
             if s.__dict__['NCV_'+key] in self.exceptions:
@@ -237,30 +253,34 @@ class DataClasifyer():
 
 class PlottPage():
     """Class to preppare data for NCV plots"""
-    def __init__(self, batch_id):
-        self.NCV_include = NCV.query.filter(NCV.include)
-        self.batch_id = batch_id
-        self.BDF = BatchDataFilter(batch_id)
-        self.NCV_passed = self.BDF.NCV_passed
-        self.NCV_normal = self.BDF.NCV_normal
-        self.nr_validation_samps = len(self.BDF.NCV_passed.all()) 
-        self.cases = self.BDF.cases  
-        self.NCV_stat = {'NCV_13':{}, 'NCV_18':{}, 'NCV_21':{}, 'NCV_X':{}, 'NCV_Y' : {}}
-        self.coverage_plot = {'samples':{},'x_axis':[]}
-        self.tris_chrom_abn = {'13':{}, '18':{}, '21':{}}
-        self.sex_chrom_abn = {'X0':{}, 'XXX':{}, 'XXY':{},'XYY':{}}
-        self.tris_abn = {}
-        self.X_labels = self.make_X_labels()
-        self.sample_state_dict = {'Probable' : {},'False Positive':{},'Verified':{}, "False Negative": {}, "Other": {}, "Suspected": {}}
-        self.ncv_abn_colors = {"Suspected": '#F39C12', 'Probable' : "#0000FF",'False Positive':"#5DADE2",'Verified':"#77b300", "False Negative":"#E74C3C"}
-        self.sex_abn_colors = {  'X0' : {'Verified': '#FF9999', 'Probable' : '#FF3333',"Suspected": '#CC0000','False Positive': '#660000'},
-                            'XXX' : {'Verified': '#FFFF00', 'Probable' : '#CCCC00',"Suspected": '#999900','False Positive': '#666600'},
-                            'XXY' : {'Verified': '#99FF99', 'Probable' : '#00FF00',"Suspected": '#00CC00','False Positive':'#006600' },
-                            'XYY' : {'Verified': '#99FFFF', 'Probable' : '#99CCFF',"Suspected": '#0080FF','False Positive':'#0000FF' }}
-        self.many_colors = list(['#000000', '#4682B4', '#FFB6C1', '#FFA500', '#FF0000', '#00FF00', '#0000FF', 
-                            '#FFFF00', '#00FFFF', '#FF00FF', '#C0C0C0', '#808080', '#800000', '#808000', 
-                            '#008000', '#800080', '#008080', '#000080', '#0b7b47','#7b0b3f','#7478fc']) 
-        self.cov_colors = [ [i]*22 for i in self.many_colors]
+    def __init__(self, batch_id, BDF):
+        self.NCV_include        =   NCV.query.filter(NCV.include)
+        self.batch_id           =   batch_id
+        self.NCV_passed         =   BDF.NCV_passed
+        self.NCV_normal         =   BDF.NCV_normal
+        self.cases              =   BDF.batch_data(batch_id)  
+        self.NCV_stat           =   {'NCV_13':{}, 'NCV_18':{}, 'NCV_21':{}, 'NCV_X':{}, 'NCV_Y' : {}}
+        self.coverage_plot      =   {'samples':{},'x_axis':[]}
+        self.tris_chrom_abn     =   {'13':{}, '18':{}, '21':{}}
+        self.sex_chrom_abn      =   {'X0':{}, 'XXX':{}, 'XXY':{},'XYY':{}}
+        self.tris_abn           =   {}
+        self.case_size          =   10
+        self.abn_size           =   7
+        self.X_labels           =   self.make_X_labels()
+        self.sample_state_dict  =   {'Probable' : {},'False Positive':{},'Verified':{}, 
+                                    "False Negative": {}, "Other": {}, "Suspected": {}}
+        self.ncv_abn_colors     =   {"Suspected"    :   '#ffd750', 
+                                     'Probable'     :   "#0000FF",
+                                     'False Negative':  "#ff6699",
+                                     'Verified'     :   "#00CC00",
+                                     'Other'        :   "#603116", 
+                                     "False Positive":  "#E74C3C"}
+        self.many_colors        =   list(['#000000', '#4682B4', '#FFB6C1', '#FFA500', '#FF0000', 
+                                        '#00FF00', '#0000FF', '#FFFF00', '#00FFFF', '#FF00FF', 
+                                        '#C0C0C0', '#808080', '#800000', '#808000', '#008000', 
+                                        '#800080', '#008080', '#000080', '#0b7b47','#7b0b3f','#7478fc']) 
+        self.cov_colors         =   [[i]*22 for i in self.many_colors]
+
 
     def make_approved_stats(self, chrom):
         NCV_pass = []

@@ -8,9 +8,11 @@ from extentions import login_manager, google, app, mail, ssl, ctx
 import logging
 import os
 from datetime import datetime
-from views_utils import DataBaseToCSV, DataClasifyer, PlottPage, Statistics
+from views_utils import BatchDataFilter, DataBaseToCSV, DataClasifyer, PlottPage, Statistics
 import time
 
+
+BDF = BatchDataFilter()
 
 @app.route('/login/')
 def login():
@@ -118,8 +120,8 @@ def samples():
 #    import ipdb; ipdb.set_trace()
     NCV_db = NCV.query
     sample_db = Sample.query
-    DC = DataClasifyer()
-    DC.handle_NCV(NCV_db)
+    DC = DataClasifyer(NCV_db)
+    DC.handle_NCV()
     DC.get_manually_classified(sample_db)
     return render_template('samples.html',
         nr_included_samps = NCV.query.filter(NCV.include).count(),
@@ -242,39 +244,44 @@ def sample_page( sample_id):
     batch_id = sample.batch_id
     batch = Batch.query.filter_by(batch_id = batch_id).first()
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
-    DC = DataClasifyer()
-    DC.handle_NCV(NCV_db)
+    DC = DataClasifyer(NCV_db)
+    DC.handle_NCV()
+    DC.make_sex_tresholds(BDF.NCV_passed_X) 
     NCV_dat = NCV.query.filter_by(sample_ID = sample_id).first()
     chrom_abnorm = ['T13','T18', 'T21', 'X0', 'XXX','XXY','XYY']
     db_entries = {c:sample.__dict__['status_'+c].replace('\r\n', '').strip() for c in chrom_abnorm }
     db_entries_change = {c:sample.__dict__['status_change_'+c]  for c in chrom_abnorm}              
-    PP = PlottPage(batch_id)
+    PP = PlottPage(batch_id, BDF)
     PP.make_NCV_stat()
     PP.make_chrom_abn()
     return render_template('sample_page.html',
-            NCV_dat = NCV_dat,
-            tris_abn = PP.tris_abn,
-            sex_chrom_abn = PP.sex_chrom_abn,
-            abn_status_list = ['Other', 'Verified','False Positive', 'Probable', 'Suspected'],
-            sex_abn_colors  = PP.sex_abn_colors,
-            ncv_abn_colors = PP.ncv_abn_colors,
-            sample = sample, 
-            NCV_db = NCV.query.filter_by(sample_ID = sample_id).first(), 
-            batch_id = batch_id,
-            batch_name = batch.batch_name,
-            batch = batch,
-            nr_validation_samps = PP.nr_validation_samps,
-            sample_id = sample_id,
-            chrom_abnorm = chrom_abnorm,
-            db_entries = db_entries,
-            db_entries_change = db_entries_change,
-            NCV_stat = PP.NCV_stat,
-            NCV_131821 = ['NCV_13', 'NCV_18', 'NCV_21'],
-            sex_tresholds =     DC.sex_tresholds,
-            tris_thresholds =   DC.tris_thresholds,
-            tris_chrom_abn  = PP.tris_chrom_abn,
-            NCV_sex =           DC.NCV_sex[sample_id],
-            NCV_warn =          DC.NCV_classified[sample_id])
+        ## Header & Info Box
+        NCV_dat         = NCV_dat,
+        sample          = sample,
+        batch_id        = batch_id,
+        batch_name      = batch.batch_name,
+        batch           = batch,
+        NCV_sex         = DC.NCV_sex[sample_id],
+        NCV_warn        = DC.NCV_classified[sample_id],
+        ## Comment
+        NCV_db          = NCV.query.filter_by(sample_ID = sample_id).first(),
+        ## NCV Table
+        sample_id       = sample_id,
+        chrom_abnorm    = chrom_abnorm,
+        db_entries      = db_entries,
+        db_entries_change = db_entries_change,
+        ## Plots
+        tris_abn        = PP.tris_abn,
+        sex_chrom_abn   = PP.sex_chrom_abn,
+        case_size       = PP.case_size,
+        abn_size        = PP.abn_size,
+        abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
+        ncv_abn_colors  = PP.ncv_abn_colors,
+        NCV_stat        = PP.NCV_stat,
+        NCV_131821      = ['NCV_13', 'NCV_18', 'NCV_21'],
+        sex_tresholds   = DC.sex_tresholds,
+        tris_thresholds = DC.tris_thresholds,
+        tris_chrom_abn  = PP.tris_chrom_abn)
 
 @app.route('/NIPT/batches/<batch_id>/')
 @login_required
@@ -282,39 +289,46 @@ def sample(batch_id):
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
     sample_db = Sample.query.filter(Sample.batch_id == batch_id)
     batch = Batch.query.filter(Batch.batch_id == batch_id).first()
-    DC = DataClasifyer()
-    DC.handle_NCV(NCV_db)
+    DC = DataClasifyer(NCV_db)
+    DC.handle_NCV()
+    DC.make_sex_tresholds(BDF.NCV_passed_X)
     DC.get_QC_warnings(sample_db)
     DC.get_manually_classified(sample_db)
-    PP = PlottPage(batch_id)
+    PP = PlottPage(batch_id, BDF)
     PP.make_NCV_stat()
     PP.make_chrom_abn()
     PP.make_cov_plot_data()
     return render_template('batch_page.html',
-        NCV_samples     = NCV.query.filter(NCV.batch_id == batch_id),
-        batch_name      = batch.batch_name,
-        batch_id        = batch_id,
-        man_class       = DC.man_class_merged,
-        NCV_stat        = PP.NCV_stat,
-        NCV_sex         = DC.NCV_sex,
+        ##  Header
+        batch_name      = batch.batch_name,        
         seq_date        = batch.date,
-        nr_validation_samps = PP.nr_validation_samps,
+        ##  Warnings Table
+        seq_warnings    = DC.QC_warnings,
+        ##  NCV Table
+        NCV_samples     = NCV.query.filter(NCV.batch_id == batch_id),
+        man_class       = DC.man_class_merged,
+        NCV_sex         = DC.NCV_sex,
+        warnings        = DC.NCV_classified,
+        NCV_rounded     = DC.NCV_data,
+        ##  Plotts
+        NCV_stat        = PP.NCV_stat,
+        case_size       = PP.case_size,
+        abn_size        = PP.abn_size,
         samp_range      = range(len(PP.NCV_stat['NCV_X']['NCV_cases'])),
         tris_chrom_abn  = PP.tris_chrom_abn,
         sex_chrom_abn   = PP.sex_chrom_abn,
-        abn_status_list = ['Other', 'Verified','False Positive', 'Probable', 'Suspected'],
+        abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
+        cov_colors      = PP.cov_colors,
         many_colors     = PP.many_colors,
-        cov_colors      = PP.cov_colors  ,  
-        ncv_abn_colors = PP.ncv_abn_colors,
-        sex_abn_colors  = PP.sex_abn_colors,
+        ncv_abn_colors  = PP.ncv_abn_colors,
         sex_tresholds   = DC.sex_tresholds,
         tris_thresholds = DC.tris_thresholds,
-        seq_warnings = DC.QC_warnings,
-        warnings = DC.NCV_classified,
-        bool_warns  = filter(None, DC.NCV_classified.values()),
-        NCV_rounded = DC.NCV_data,
-        samp_cov_db = PP.coverage_plot,
-        sample_ids = ','.join(sample.sample_ID for sample in NCV_db))
+        ##  Coverage
+        bool_warns      = filter(None, DC.NCV_classified.values()),
+        samp_cov_db     = PP.coverage_plot,
+        ##  Buttons
+        batch_id        = batch_id,
+        sample_ids      = ','.join(sample.sample_ID for sample in NCV_db))
 
 @app.route('/NIPT/batches/<batch_id>/report')
 @login_required
@@ -322,39 +336,42 @@ def report(batch_id):
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
     sample_db = Sample.query.filter(Sample.batch_id == batch_id)
     batch = Batch.query.filter(Batch.batch_id == batch_id).first()
-    DC = DataClasifyer()
-    DC.handle_NCV(NCV_db)
+    DC = DataClasifyer(NCV_db)
+    DC.handle_NCV()
+    DC.make_sex_tresholds(BDF.NCV_passed_X)
     DC.get_QC_warnings(sample_db)
     DC.get_manually_classified(sample_db)
-    PP = PlottPage(batch_id)
+    PP = PlottPage(batch_id, BDF)
     PP.make_NCV_stat()
     PP.make_chrom_abn()
     PP.make_cov_plot_data()
-    print filter(None, DC.NCV_classified.values())
     return render_template('report_page.html',
-        NCV_samples     = NCV.query.filter(NCV.batch_id == batch_id),
+        ##  Header
         batch_name      = batch.batch_name,
+        ##  Warnings Table
+        seq_warnings    = DC.QC_warnings,
+        ##  NCV Table
+        NCV_samples     = NCV.query.filter(NCV.batch_id == batch_id),
         man_class       = DC.man_class_merged,
-        NCV_stat        = PP.NCV_stat,
         NCV_sex         = DC.NCV_sex,
-        seq_date        = batch.date,
-        nr_validation_samps = PP.nr_validation_samps,
+        warnings        = DC.NCV_classified,
+        NCV_rounded     = DC.NCV_data,
+        ##  Plotts
+        NCV_stat        = PP.NCV_stat,
+        case_size       = PP.case_size,
+        abn_size        = PP.abn_size,
         samp_range      = range(len(PP.NCV_stat['NCV_X']['NCV_cases'])),
         tris_chrom_abn  = PP.tris_chrom_abn,
         sex_chrom_abn   = PP.sex_chrom_abn,
-        abn_status_list = ['Other', 'Verified','False Positive', 'Probable', 'Suspected'],
+        abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
         cov_colors      = PP.cov_colors,
         many_colors     = PP.many_colors,
-        sex_abn_colors  = PP.sex_abn_colors,
-        ncv_abn_colors = PP.ncv_abn_colors,
+        ncv_abn_colors  = PP.ncv_abn_colors,
         sex_tresholds   = DC.sex_tresholds,
         tris_thresholds = DC.tris_thresholds,
-        seq_warnings = DC.QC_warnings,
-        bool_warns  = filter(None, DC.NCV_classified.values()),
-        warnings = DC.NCV_classified,
-        NCV_rounded = DC.NCV_data,
-        samp_cov_db = PP.coverage_plot,
-        sample_ids = ','.join(sample.sample_ID for sample in NCV_db))
+        ##  Coverage
+        bool_warns      = filter(None, DC.NCV_classified.values()),
+        samp_cov_db     = PP.coverage_plot)
 
 
 @app.route('/NIPT/statistics/')
