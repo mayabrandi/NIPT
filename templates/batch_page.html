@@ -277,52 +277,68 @@
     {% for chrom in ['13','18','21'] %}
     var data = []
     var layout = {
-    legend:{hovermode:'closest' },
-    hovermode:'closest',
-    xaxis :{showline: true,
-            ticktext : {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
-            tickvals : {{NCV_stat['NCV_'+chrom]['x_axis']}},
-            tickangle : 20,
-            linecolor: '#636363',
-            linewidth: 5,
-            showgrid: true,
-            gridcolor: '#bdbdbd'
-            },
+        legend:{hovermode:'closest' },
+        hovermode:'closest',
+        annotations : [],
+        xaxis :{showline: true,
+                ticktext : {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
+                tickvals : {{NCV_stat['NCV_'+chrom]['x_axis']}},
+                tickangle : 20,
+                linecolor: '#636363',
+                linewidth: 5,
+                showgrid: true,
+                gridcolor: '#bdbdbd'
+                },
             
-    yaxis :{range: [-10,],
-            zeroline: false,
-            showline: true,
-            showgrid: false,
-            linecolor: '#636363',
-            linewidth: 5,
-            title : 'NCV_{{chrom}}'
-            }};
-    {% for line  in tris_thresholds %} 
-    var line = {x : {{NCV_stat['NCV_'+chrom]['x_range']}},
+        yaxis :{range: [-10,],
+                zeroline: false,
+                showline: true,
+                showgrid: false,
+                linecolor: '#636363',
+                linewidth: 5,
+                title : 'NCV_{{chrom}}'
+                }};
+
+    {% for line  in tris_thresholds %}
+        layout["annotations"].push({
+            x: {{NCV_stat['NCV_'+chrom]['x_range'][-1]}},
+            y: {{tris_thresholds[line]['NCV']}},
+            xref: 'x',
+            yref: 'y',
+            text: "{{tris_thresholds[line]['text']}}",
+            showarrow: false,
+            xanchor:'left',
+            ax: 20,
+            ay: -30,
+            font: {
+            color:"{{tris_thresholds[line]["color"]}}",
+            family: 'Courier New, monospace',
+            size: 15
+             }})
+        var line = {x : {{NCV_stat['NCV_'+chrom]['x_range']}},
             y : [{{tris_thresholds[line]['NCV']}},{{tris_thresholds[line]['NCV']}}],
             mode: 'lines',
             showlegend: false,
             line: {
-                dash: 'dot',
-                color : '{{tris_thresholds[line]['color']}}',
+                dash  : "dot",
+                color : "{{tris_thresholds[line]["color"]}}",
                 width : 2},
-            name: "{{line}}"};
-    data.push(line);
+                name  : "{{line}}"};
+        data.push(line);
     {% endfor %}
+
     {% for abn_status  in abn_status_list %}
-    var verif = {                                                                  
-            name: "{{abn_status}} T_{{chrom}} (N={{tris_chrom_abn[chrom][abn_status]['nr']}})",                                                               
+        var verif = {                                                                  
+            name: "{{abn_status}} T_{{chrom}} (N={{tris_chrom_abn[chrom][abn_status]['nr']}})",
             y: {{tris_chrom_abn[chrom][abn_status]['NCV']}},                                        
             x: {{tris_chrom_abn[chrom][abn_status]['x_axis']}} ,
             text: {{tris_chrom_abn[chrom][abn_status]['s_name']|tojson}},                                       
-        mode: 'markers',
-        marker: {symbol :"square",
-                color: "{{ncv_abn_colors[abn_status]}}", 
-                size: {{abn_size}},
-                } ,                                                   
-        type: 'scatter',                                                            
-        }; 
-    data.push(verif);
+            mode: 'markers',
+            marker: {symbol :"square",
+                     color: "{{ncv_abn_colors[abn_status]}}", 
+                     size: {{abn_size}}},                                                   
+            type: 'scatter'}; 
+        data.push(verif);
     {% endfor %}
 
 
@@ -357,6 +373,7 @@
     var XY_plot = document.getElementById('NCVXY')
     var data = []
     var layout = {
+    annotations : [],
     title: 'X vs Y',
     legend:{hovermode:'closest' },
     hovermode:'closest',
@@ -408,7 +425,27 @@
     {% endfor %}
 
     {% for line  in sex_tresholds %} 
-    var line = {x : {{sex_tresholds[line]['x']}},
+        layout["annotations"].push({
+            x: {{sex_tresholds[line]['text_position'][0]}},
+            y: {{sex_tresholds[line]['text_position'][1]}},
+            xref: 'x',
+            yref: 'y',
+            text: "{{sex_tresholds[line]['text']}}",
+            showarrow: true,
+            xanchor:'left',
+            arrowcolor:'red',
+            arrowwidth: 0.5,
+            arrowhead: 0.5,
+            opacity : 0.5,
+            ax: -50,
+            ay: 30,
+            font: {
+                color: 'red',
+                family: 'Courier New, monospace',
+                size: 15
+             }})
+        var line = {
+            x : {{sex_tresholds[line]['x']}},
             y : {{sex_tresholds[line]['y']}},
             mode: 'lines',
             showlegend: false,
@@ -435,11 +472,13 @@
     {% endfor %}
 
     var trace = {
-    x: [-8, 0, 8, -20, -8, 0],
-    y: [-40, -40, -40, 300, 300, 300],
+    x: [-15, 0, 8, -20, -8, 0],
+    y: [-50, -50, -50, 300, 300, 300],
     mode: 'text',
     name: 'NCV Clasifications',
-    text: ['X0', 'XX', 'XXX','XY','XYY','XXY'],
+    text: ['<b>X0</b>', '<b>XX</b>', '<b>XXX</b>','<b>XY</b>','<b>XYY</b>','<b>XXY</b>'],
+    hoverinfo:'none',
+    opacity : 0.7,
     textposition: 'top',
     showlegend: false,
     textfont: {
