@@ -6,6 +6,7 @@ import csv
 import statistics
 from datetime import datetime
 import ast
+import numpy as np
 
 
 ################################################################################################
@@ -112,10 +113,10 @@ class DataClasifyer():
         self.batch = {}
         self.man_class_merged = {}
         self.sex_tresholds   = {}
-        self.tris_thresholds = {'soft_max': {'NCV': 3 , 'color': 'orange'},
-                                'soft_min': {'NCV': -4, 'color': 'orange'},
-                                'hard_max': {'NCV': 4 , 'color': 'red'},
-                                'hard_min': {'NCV': -5, 'color': 'red'} }
+        self.tris_thresholds = {'soft_max': {'NCV': 3 , 'color': 'orange', 'text' : 'Warning treshold = 3'},
+                                'soft_min': {'NCV': -4, 'color': 'orange', 'text' : 'Warning treshold = -4'},
+                                'hard_max': {'NCV': 4 , 'color': 'red', 'text' : 'Treshold = 4'},
+                                'hard_min': {'NCV': -5, 'color': 'red', 'text' : 'Treshold = -5'} }
 
 
     def make_sex_tresholds(self, x_list):
@@ -128,12 +129,28 @@ class DataClasifyer():
         y_max_upper = -15.409 * x_max_upper + 91.417
         y_min_lower = -15.256 * x_min - 62.309
         y_max_lower = -15.256 * x_max_lower - 62.309
-        self.sex_tresholds = {'XY_horis' :  {'x' : [x_min, 10],   'y' : [13, 13]},
-                                'XY_upper': {'x' : [x_min, x_max_upper], 'y' : [y_min_upper, y_max_upper]},
-                                'XY_lower': {'x' : [x_min, x_max_lower], 'y' : [y_min_lower, y_max_lower]},
-                                'XXY' :     {'x' : [-4, -4],    'y' : [155, y_min_upper]},
-                                'X0' :      {'x' : [-4, -4],   'y' : [13, -40]},
-                                'XXX' :     {'x' : [4, 4],      'y' : [13, -40]}}
+        self.sex_tresholds = {'XY_horis' :  {'x' : [x_min, 10],         
+                                             'y' : [13, 13],
+                                            'text' : 'NCV Y = 13'},
+                                'XY_upper': {'x' : [x_min, x_max_upper],
+                                             'y' : [y_min_upper, y_max_upper],
+                                            'text' : 'NCV Y = -15.3X+91.4'},
+                                'XY_lower': {'x' : [x_min, x_max_lower],
+                                             'y' : [y_min_lower, y_max_lower],
+                                            'text' : 'NCV Y = -15.3X-62.3'},
+                                'XXY' :     {'x' : [-4, -4],    
+                                             'y' : [155, y_min_upper],
+                                            'text' : 'NCV X = -4'},
+                                'X0' :      {'x' : [-4, -4],   
+                                             'y' : [13, -40],
+                                             'text' : 'NCV X = -4'},
+                                'XXX' :     {'x' : [4, 4],      
+                                             'y' : [13, -40],
+                                             'text' : 'NCV X = 4'}}
+        for key, val in self.sex_tresholds.items():
+            val['text_position'] = [np.mean(val['x']), np.mean(val['y'])]
+            self.sex_tresholds[key] = val
+        print self.sex_tresholds        
 
     def get_manually_classified(self, sample_db):
         """Get the manually defined sample status"""

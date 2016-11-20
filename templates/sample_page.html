@@ -286,6 +286,7 @@ var layout = {
     title: "Sample: {{sample.sample_name}}",
     legend:{hovermode:'closest' },
     hovermode:'closest',
+    annotations : [],
     xaxis :{showline: true,
             tickvals : [1,2,3],
             ticktext : {{NCV_131821|tojson}},
@@ -362,7 +363,22 @@ var legends = [true,false,false]
 
 
 {% for line  in tris_thresholds.keys() %} 
-var line = {x : [0.5, 3.5],
+        layout["annotations"].push({
+            x: 3.7,
+            y: {{tris_thresholds[line]['NCV']}},
+            xref: 'x',
+            yref: 'y',
+            text: "{{tris_thresholds[line]['text']}}",
+            showarrow: false,
+            xanchor:'left',
+            ax: 20,
+            ay: -30,
+            font: {
+            color:"{{tris_thresholds[line]["color"]}}",
+            family: 'Courier New, monospace',
+            size: 15
+             }})
+var line = {x : [0.5, 3.7],
             y : [{{tris_thresholds[line]['NCV']}},{{tris_thresholds[line]['NCV']}}],
             mode: 'lines',
             showlegend: false,
@@ -381,6 +397,7 @@ Plotly.newPlot('plot_131821',data,  layout);
 <script>
 var data = []
 var layout = {
+    annotations : [],
     title: "Sample: {{sample.sample_name}}",
     legend:{hovermode:'closest' },
     hovermode:'closest',
@@ -401,8 +418,27 @@ var layout = {
             },
 };
 
-{% for line  in sex_tresholds %} 
-var line = {x : {{sex_tresholds[line]['x']}},
+{% for line  in sex_tresholds %}
+    layout["annotations"].push({
+            x: {{sex_tresholds[line]['text_position'][0]}},
+            y: {{sex_tresholds[line]['text_position'][1]}},
+            xref: 'x',
+            yref: 'y',
+            text: "{{sex_tresholds[line]['text']}}",
+            showarrow: true,
+            xanchor:'left',
+            arrowcolor:'red',
+            arrowwidth: 0.5,
+            arrowhead: 0.5,
+            opacity : 0.5,
+            ax: -50,
+            ay: 30,
+            font: {
+                color: 'red',
+                family: 'Courier New, monospace',
+                size: 15
+             }})
+    var line = {x : {{sex_tresholds[line]['x']}},
             y : {{sex_tresholds[line]['y']}},
             mode: 'lines',
             line: {
@@ -411,7 +447,7 @@ var line = {x : {{sex_tresholds[line]['x']}},
                 width : 2},
             showlegend: false,
             name: "{{line}}"};
-data.push(line);
+    data.push(line);
 {% endfor %}
 
 var backstat = {
@@ -457,19 +493,21 @@ var sample_XY = {
         };
 data.push(sample_XY);
 
-var trace = {
-  x: [-8, 0, 8, -20, -8, 0],
-  y: [-40, -40, -40, 300, 300, 300],
-  mode: 'text',
-  name: 'NCV Clasifications',
-  text: ['X0', 'XX', 'XXX','XY','XYY','XXY'],
-  textposition: 'top',
-  showlegend: false,
-  textfont: {
+    var trace = {
+    x: [-15, 0, 8, -20, -8, 0],
+    y: [-50, -50, -50, 300, 300, 300],
+    mode: 'text',
+    name: 'NCV Clasifications',
+    text: ['<b>X0</b>', '<b>XX</b>', '<b>XXX</b>','<b>XY</b>','<b>XYY</b>','<b>XXY</b>'],
+    hoverinfo:'none',
+    opacity : 0.7,
+    textposition: 'top',
+    showlegend: false,
+    textfont: {
     size: 18,
     },
-  type: 'scatter'
-};
+    type: 'scatter'
+    };
 
 data.push(trace);
 
