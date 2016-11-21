@@ -115,13 +115,13 @@
             <ul class="nav nav-tabs" id="myTab">
                                 <li><a href="#table" data-toggle="tab">NCV Table</a>
                                 </li>
-                                <li><a href="#NCV_13" data-toggle="tab">NCV_13</a>
+                                <li><a href="#NCV_13" data-toggle="tab">NCV13</a>
                                 </li>
-                                <li><a href="#NCV_18" data-toggle="tab">NCV_18</a>
+                                <li><a href="#NCV_18" data-toggle="tab">NCV18</a>
                                 </li>
-                                <li><a href="#NCV_21" data-toggle="tab">NCV_21</a>
+                                <li><a href="#NCV_21" data-toggle="tab">NCV21</a>
                                 </li>
-                                <li><a href="#NCV_XY" data-toggle="tab">NCV_XY</a>
+                                <li><a href="#NCV_XY" data-toggle="tab">NCVXY</a>
                                 </li>
                                 {% if bool_warns %}
                                 <li><a href="#norm_cov" data-toggle="tab">Coverage (Chr 1-22)</a>
@@ -138,17 +138,17 @@
                                     <table id="batch_table" class="table table-bordered table-hover" >
                                         <thead>
                                             <tr>
-                                            <th width="20%">Sample_Name</th>
-                                            <th>NCV_13</th>
-                                            <th>NCV_18</th>
-                                            <th>NCV_21</th>
-                                            <th>NCV_X</th>
-                                            <th>NCV_Y</th>
+                                            <th>Sample Name</th>
+                                            <th>NCV13</th>
+                                            <th>NCV18</th>
+                                            <th>NCV21</th>
+                                            <th>NCVX</th>
+                                            <th>NCVY</th>
                                             <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="XX, XY or ambigous. Automatically generated. Based on pre defined NCV trsholds">Sex</a></th>
                                             <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Warning for chomosome abnormality. Automatically generated. Based on pre defined NCV trsholds">Warning</a></th>
                                             <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Chomosome abnormalies. Manually classified by user through the sample page">Status</a></th>
-                                            <th width="1%">Include</th>
-                                            <th width="18%">Comment</th>
+                                            <th>Include</th>
+                                            <th>Comment</th>
                                             <th>Last Change</th>
                                             </tr>
                                         </thead>
@@ -156,12 +156,12 @@
                                         {% for s in NCV_samples %}
                                         <tr>
                                             <td width="20%"> <a href={{ url_for('sample_page', sample_id=s.sample_ID) }}>{{ s.sample_name }}</a></td>
-                                            <td class = "{{ NCV_rounded[s.sample_ID]['NCV_13']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_13']['val'] }}</td>
-                                            <td class = "{{ NCV_rounded[s.sample_ID]['NCV_18']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_18']['val'] }}</td>
-                                            <td class = "{{ NCV_rounded[s.sample_ID]['NCV_21']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_21']['val'] }}</td>
-                                            <td class = "{{ NCV_rounded[s.sample_ID]['NCV_X']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_X']['val'] }}</td>
-                                            <td class = "{{ NCV_rounded[s.sample_ID]['NCV_Y']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_Y']['val'] }}</td>
-                                            <th><p> <small>{{ NCV_sex[s.sample_ID]  }}</small></p></th>
+                                            <td width="4%" class = "{{ NCV_rounded[s.sample_ID]['NCV_13']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_13']['val'] }}</td>
+                                            <td width="4%" class = "{{ NCV_rounded[s.sample_ID]['NCV_18']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_18']['val'] }}</td>
+                                            <td width="4%" class = "{{ NCV_rounded[s.sample_ID]['NCV_21']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_21']['val'] }}</td>
+                                            <td width="4%" class = "{{ NCV_rounded[s.sample_ID]['NCV_X']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_X']['val'] }}</td>
+                                            <td width="4%" class = "{{ NCV_rounded[s.sample_ID]['NCV_Y']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_Y']['val'] }}</td>
+                                            <th width="2%"><p> <small>{{ NCV_sex[s.sample_ID]  }}</small></p></th>
                                             <th><p> <small>{{ warnings[s.sample_ID]  }}</small></p></th>
                                             <th><p> <small>{{ man_class[s.sample_ID] }}</small></p></th>
                                             <td width="1%" {% if s.include %}class="success"{% endif %}> <input type="checkbox" name="{{ s.sample_ID }}" {% if s.include %}checked{% endif %}></td>
@@ -296,7 +296,7 @@
                 showgrid: false,
                 linecolor: '#636363',
                 linewidth: 5,
-                title : 'NCV_{{chrom}}'
+                title : 'NCV{{chrom}}'
                 }};
 
     {% for line  in tris_thresholds %}
@@ -329,7 +329,7 @@
 
     {% for abn_status  in abn_status_list %}
         var verif = {                                                                  
-            name: "{{abn_status}} T_{{chrom}} (N={{tris_chrom_abn[chrom][abn_status]['nr']}})",
+            name: "{{abn_status}} T{{chrom}} (N={{tris_chrom_abn[chrom][abn_status]['nr']}})",
             y: {{tris_chrom_abn[chrom][abn_status]['NCV']}},                                        
             x: {{tris_chrom_abn[chrom][abn_status]['x_axis']}} ,
             text: {{tris_chrom_abn[chrom][abn_status]['s_name']|tojson}},                                       
@@ -383,7 +383,7 @@
             linewidth: 5,
             showgrid: false,
             gridcolor: '#bdbdbd',
-            title: 'NCV_X'
+            title: 'NCVX'
             },
             
     yaxis :{range: [-50,],
@@ -392,7 +392,7 @@
             showgrid: false,
             linecolor: '#636363',
             linewidth: 5,
-            title : 'NCV_Y'
+            title : 'NCVY'
             },};
     var backstat = {
     y: {{NCV_stat['NCV_Y']['NCV_pass'][0]}},

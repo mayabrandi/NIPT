@@ -59,11 +59,11 @@
                                     <thead>
                                         <tr>
                                             <th width="18%">Sample Id</th>
-                                            <th>NCV_13</th>
-                                            <th>NCV_18</th>
-                                            <th>NCV_21</th>
-                                            <th>NCV_X</th>
-                                            <th>NCV_Y</th>
+                                            <th>NCV13</th>
+                                            <th>NCV18</th>
+                                            <th>NCV21</th>
+                                            <th>NCVX</th>
+                                            <th>NCVY</th>
                                             <th>Sex</th>
                                             <th>Warning</th>
                                             <th>Class</th>
@@ -214,7 +214,7 @@
             showgrid: false,
             linecolor: '#636363',
             linewidth: 5,
-            title : 'NCV_{{chrom}}'
+            title : 'NCV{{chrom}}'
             }};
 
     {% for line  in tris_thresholds %} 
@@ -246,7 +246,7 @@
     {% endfor %}
     {% for abn_status  in abn_status_list %}
     var verif = {                                                                  
-            name: "{{abn_status}} T_{{chrom}} (N={{tris_chrom_abn[chrom][abn_status]['nr']}})",                                                               
+            name: "{{abn_status}} T{{chrom}} (N={{tris_chrom_abn[chrom][abn_status]['nr']}})",                                                               
             y: {{tris_chrom_abn[chrom][abn_status]['NCV']}},                                        
             x: {{tris_chrom_abn[chrom][abn_status]['x_axis']}} ,
             text: {{tris_chrom_abn[chrom][abn_status]['s_name']|tojson}},                                       
@@ -301,7 +301,7 @@
             linewidth: 5,
             showgrid: false,
             gridcolor: '#bdbdbd',
-            title: 'NCV_X'
+            title: 'NCVX'
             },
             
         yaxis :{range: [-50,],
@@ -310,7 +310,7 @@
             showgrid: false,
             linecolor: '#636363',
             linewidth: 5,
-            title : 'NCV_Y'
+            title : 'NCVY'
             },};
     var backstat = {
     y: {{NCV_stat['NCV_Y']['NCV_pass'][0]}},

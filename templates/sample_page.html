@@ -221,9 +221,9 @@
                                     <table width="300">
                                     <tr height="1" style="border-bottom: 1px solid black">
                                         <td></td>
-                                        <td><strong><p style="font-size:14px">T_13</p></strong></td>
-                                        <td><strong><p style="font-size:14px">T_18</p></strong></td>
-                                        <td><strong><p style="font-size:14px">T_21</p></strong></td>
+                                        <td><strong><p style="font-size:14px">T13</p></strong></td>
+                                        <td><strong><p style="font-size:14px">T18</p></strong></td>
+                                        <td><strong><p style="font-size:14px">T21</p></strong></td>
                                     </tr>
                                     {% for abn in ncv_abn_colors.keys() %}
                                     <tr>
@@ -289,7 +289,7 @@ var layout = {
     annotations : [],
     xaxis :{showline: true,
             tickvals : [1,2,3],
-            ticktext : {{NCV_131821|tojson}},
+            ticktext : ['NCV13','NCV18','NCV21'],
             linecolor: '#636363',
             linewidth: 5,
             showgrid: true,
@@ -325,13 +325,13 @@ var data = []
 var i = 0
 var colors = ['#1a1aff','#00bfff','#1affff']
 var legends = [true,false,false]
-{% for chrom  in NCV_131821 %}
+{% for chrom  in ['13','18','21'] %}
     var i = i + 1
 
     var x = []
-    for (var j = 0; j < {{NCV_stat[chrom]['nr_pass']}}; j++) x[j] = i
+    for (var j = 0; j < {{NCV_stat['NCV_'+chrom]['nr_pass']}}; j++) x[j] = i
     var box = {
-            y: {{NCV_stat[chrom]['NCV_pass'][0]}},
+            y: {{NCV_stat['NCV_'+chrom]['NCV_pass'][0]}},
             x: x,
             //jitter: 0.3,
             pointpos: 30,
@@ -339,13 +339,13 @@ var legends = [true,false,false]
             showlegend: legends[i-1],
             marker: {
                 color: '#ccccb3'},
-            name: 'Negative (N={{NCV_stat[chrom]['nr_pass']}})',
+            name: 'Negative (N={{NCV_stat['NCV_'+chrom]['nr_pass']}})',
             hoverinfo:'none',
             boxpoints: 'suspectedoutliers',
             };
 
     var samp = {
-        y: [{{NCV_dat.__dict__[chrom]}}],
+        y: [{{NCV_dat.__dict__['NCV_'+chrom]}}],
         x: [i],
         name: "{{chrom}}",
         mode: 'markers',
@@ -406,7 +406,7 @@ var layout = {
             linecolor: '#636363',
             showgrid: false,
             linewidth: 5,
-            title : 'NCV_X'
+            title : 'NCVX'
             },
             
     yaxis :{zeroline: false,
@@ -414,7 +414,7 @@ var layout = {
             showgrid: false,
             linecolor: '#636363',
             linewidth: 5,
-            title : 'NCV_Y'
+            title : 'NCVY'
             },
 };
 
