@@ -150,7 +150,6 @@ class DataClasifyer():
         for key, val in self.sex_tresholds.items():
             val['text_position'] = [np.mean(val['x']), np.mean(val['y'])]
             self.sex_tresholds[key] = val
-        print self.sex_tresholds        
 
     def get_manually_classified(self, sample_db):
         """Get the manually defined sample status"""
