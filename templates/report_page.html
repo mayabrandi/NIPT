@@ -414,6 +414,8 @@
     //window.location.href = 'http://127.0.0.1:5000/NIPT/samples/'+pt;
     //});
 </script>
+
+
 <script>
     var XY_plot = document.getElementById('cov_plot')
     var data = []
@@ -436,14 +438,14 @@
             linewidth: 5,
             title : 'Normalized Coverage'
             },};
-    {% for samp in samp_cov_db['samples'] %}
+    {% for key, samp in samp_cov_db['samples'] %}
     var trace1 = {
-      name: {{samp_cov_db['samples'][samp]['samp_id']|tojson}},
-        y: {{samp_cov_db['samples'][samp]['cov']}},
+        name: {{samp['samp_id']|tojson}},
+        y: {{samp['cov']}},
         x: {{samp_cov_db['x_axis']}},
-        marker: {color: {{cov_colors[loop.index]|tojson}}},
         mode: 'markers',
-        text: {{samp_cov_db['samples'][samp]['samp_id']|tojson}},
+        marker: {color: {{cov_colors[loop.index]|tojson}}},
+        text: {{samp['samp_id']|tojson}},
         type: 'scatter'};
     data.push(trace1);
     {% endfor %}

@@ -524,14 +524,14 @@
             linewidth: 5,
             title : 'Normalized Coverage'
             },};
-    {% for samp in samp_cov_db['samples'] %}
+    {% for key, samp in samp_cov_db['samples'] %}
     var trace1 = {
-      name: {{samp_cov_db['samples'][samp]['samp_id']|tojson}},
-        y: {{samp_cov_db['samples'][samp]['cov']}},
+        name: {{samp['samp_id']|tojson}},
+        y: {{samp['cov']}},
         x: {{samp_cov_db['x_axis']}},
         mode: 'markers',
         marker: {color: {{cov_colors[loop.index]|tojson}}},
-        text: {{samp_cov_db['samples'][samp]['samp_id']|tojson}},
+        text: {{samp['samp_id']|tojson}},
         type: 'scatter'};
     data.push(trace1);
     {% endfor %}

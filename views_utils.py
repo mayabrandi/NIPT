@@ -276,7 +276,7 @@ class PlottPage():
         self.NCV_normal         =   BDF.NCV_normal
         self.cases              =   BDF.batch_data(batch_id)  
         self.NCV_stat           =   {'NCV_13':{}, 'NCV_18':{}, 'NCV_21':{}, 'NCV_X':{}, 'NCV_Y' : {}}
-        self.coverage_plot      =   {'samples':{},'x_axis':[]}
+        self.coverage_plot      =   {'samples':[],'x_axis':[]}
         self.tris_chrom_abn     =   {'13':{}, '18':{}, '21':{}}
         self.sex_chrom_abn      =   {'X0':{}, 'XXX':{}, 'XXY':{},'XYY':{}}
         self.tris_abn           =   {}
@@ -319,12 +319,13 @@ class PlottPage():
         x_axis = range(1,23)
         self.coverage_plot['x_axis'] = x_axis
         for samp in cov:
-            self.coverage_plot['samples'][samp.sample_ID] = {'cov':[], 'samp_id':[samp.sample.sample_name]}
+            samp_cov = []
             for i in x_axis:
                 try:
-                    self.coverage_plot['samples'][samp.sample_ID]['cov'].append(float(samp.__dict__['Chr'+str(i)+'_Coverage']))
+                    samp_cov.append(float(samp.__dict__['Chr'+str(i)+'_Coverage']))
                 except:
                     pass
+            self.coverage_plot['samples'].append((samp.sample_ID, {'cov':samp_cov, 'samp_id':[samp.sample.sample_name]}))
 
     def make_X_labels(self):
         X_labels = [s.__dict__['sample_ID'] for s in self.cases]
