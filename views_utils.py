@@ -113,10 +113,10 @@ class DataClasifyer():
         self.batch = {}
         self.man_class_merged = {}
         self.sex_tresholds   = {}
-        self.tris_thresholds = {'soft_max': {'NCV': 3 , 'color': 'orange', 'text' : 'Warning treshold = 3'},
-                                'soft_min': {'NCV': -4, 'color': 'orange', 'text' : 'Warning treshold = -4'},
-                                'hard_max': {'NCV': 4 , 'color': 'red', 'text' : 'Treshold = 4'},
-                                'hard_min': {'NCV': -5, 'color': 'red', 'text' : 'Treshold = -5'} }
+        self.tris_thresholds = {'soft_max': {'NCV': 3 , 'color': 'orange', 'text' : 'Warning threshold = 3'},
+                                'soft_min': {'NCV': -4, 'color': 'orange', 'text' : 'Warning threshold = -4'},
+                                'hard_max': {'NCV': 4 , 'color': 'red', 'text' : 'Threshold = 4'},
+                                'hard_min': {'NCV': -5, 'color': 'red', 'text' : 'Threshold = -5'} }
 
 
     def make_sex_tresholds(self, x_list):
@@ -166,7 +166,7 @@ class DataClasifyer():
             self.man_class_merged[s.sample_ID] = ', '.join(self.man_class_merged[s.sample_ID])       
 
     def handle_NCV(self): ############ takes time
-        """Get automated warnings, based on preset NCV tresholds"""
+        """Get automated warnings, based on preset NCV thresholds"""
         for s in self.NCV_db:
             self.sample_names[s.sample_ID] = s.sample_name
             s_id = s.sample_ID
@@ -180,7 +180,7 @@ class DataClasifyer():
             self.NCV_classified[s.sample_ID] = ', '.join(samp_warn)
 
     def _get_sex_warn(self,s, samp_warn):
-        """Get automated sex warnings, based on preset NCV tresholds"""
+        """Get automated sex warnings, based on preset NCV thresholds"""
         sex_warn = ''
         if not set([s.NCV_X , s.NCV_Y]).issubset(self.exceptions):
             x = float(s.NCV_X)
@@ -216,7 +216,7 @@ class DataClasifyer():
         return samp_warn
 
     def _get_tris_warn(self, s, samp_warn):
-        """Get automated trisomi warnings, based on preset NCV tresholds"""
+        """Get automated trisomi warnings, based on preset NCV thresholds"""
         for key in self.NCV_names:
             if s.__dict__['NCV_'+key] in self.exceptions:
                 val = s.__dict__['NCV_'+key]
