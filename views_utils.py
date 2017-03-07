@@ -544,8 +544,8 @@ class Statistics():
                     self.Ratio_18[batch_id]['x'].append(i)
                     self.Ratio_21[batch_id]['y'].append(float(samp.Ratio_21))
                     self.Ratio_21[batch_id]['x'].append(i)
-                except:
-                    logging.exception()
+                except Exception as e:
+                    logging.exception(e)
                     pass
             i+=1
 
