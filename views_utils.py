@@ -444,16 +444,16 @@ class Statistics():
                 if samp.sample_ID.split('-')[0].lower()=='pcs':
                     try:
                         NCV_all.append(float(samp.NCV_X))
-                    except:
-                        logging.exception()
+                    except Exception as e:
+                        logging.exception(e)
                         pass
                     try:
                         self.PCS[batch_id][samp.sample_ID] = {'x':[],'y':[],'sample':[]}
                         self.PCS[batch_id][samp.sample_ID]['y'].append(float(samp.NCV_X))
                         self.PCS[batch_id][samp.sample_ID]['x'].append(i)
                         self.PCS[batch_id][samp.sample_ID]['sample'] = samp.sample_ID
-                    except:
-                        logging.exception()
+                    except Exception as e:
+                        logging.exception(e)
                         pass
             i+=1
         med = float(statistics.median(NCV_all))
@@ -468,8 +468,8 @@ class Statistics():
                 try:                    
                     self.Library_nM[batch_id]['y'].append(float(samp.Library_nM))
                     self.Library_nM[batch_id]['x'].append(i)
-                except:
-                    logging.exception()
+                except Exception as e:
+                    logging.exception(e)
                     pass
             i+=1
 
@@ -482,8 +482,8 @@ class Statistics():
                 try:
                     self.NonExcludedSites2Tags[batch_id]['y'].append(float(samp.NonExcludedSites2Tags))
                     self.NonExcludedSites2Tags[batch_id]['x'].append(i)
-                except:
-                    logging.exception()
+                except Exception as e:
+                    logging.exception(e)
                     pass
             i+=1
 
@@ -496,8 +496,8 @@ class Statistics():
                 try:
                     self.GCBias[batch_id]['y'].append(float(samp.GCBias))
                     self.GCBias[batch_id]['x'].append(i)
-                except:
-                    logging.exception()
+                except Exception as e:
+                    logging.exception(e)
                     pass
             i+=1
 
@@ -510,8 +510,8 @@ class Statistics():
                 try:
                     self.Tags2IndexedReads[batch_id]['y'].append(float(samp.Tags2IndexedReads))
                     self.Tags2IndexedReads[batch_id]['x'].append(i)
-                except:
-                    logging.exception()
+                except Exception as e:
+                    logging.exception(e)
                     pass
             i+=1
 
@@ -524,8 +524,8 @@ class Statistics():
                 try:
                     self.TotalIndexedReads2Clusters[batch_id]['y'].append(float(samp.TotalIndexedReads2Clusters))
                     self.TotalIndexedReads2Clusters[batch_id]['x'].append(i)
-                except:
-                    logging.exception()
+                except Exception as e:
+                    logging.exception(e)
                     pass
             i+=1
 
@@ -560,7 +560,7 @@ class Statistics():
                 try:
                     self.NCD_Y[batch_id]['y'].append(float(samp.NCD_Y))
                     self.NCD_Y[batch_id]['x'].append(i)
-                except:
-                    logging.exception()
+                except Exception as e:
+                    logging.exception(e)
                     pass
             i+=1
