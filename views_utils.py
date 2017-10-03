@@ -131,24 +131,24 @@ class DataClasifyer():
         y_max_lower = -15.256 * x_max_lower - 62.309
         self.sex_tresholds = {'XY_horis' :  {'x' : [x_min, 10],         
                                              'y' : [13, 13],
-                                            'text' : 'NCVY = 13'},
+                                            'text' : 'NCV=13'},
                                 'XY_upper': {'x' : [x_min, x_max_upper],
                                              'y' : [y_min_upper, y_max_upper],
-                                            'text' : 'NCVY = -15.3X+91.4'},
+                                            'text' : ''},
                                 'XY_lower': {'x' : [x_min, x_max_lower],
                                              'y' : [y_min_lower, y_max_lower],
-                                            'text' : 'NCVY = -15.3X-62.3'},
+                                            'text' : ''},
                                 'XXY' :     {'x' : [-4, -4],    
                                              'y' : [155, y_min_upper],
-                                            'text' : 'NCVX = -4'},
+                                            'text' : ''},
                                 'X0' :      {'x' : [-4, -4],   
-                                             'y' : [13, -40],
-                                             'text' : 'NCVX = -4'},
+                                             'y' : [13, -60],
+                                             'text' : 'NCV=-4'},
                                 'XXX' :     {'x' : [4, 4],      
-                                             'y' : [13, -40],
-                                             'text' : 'NCVX = 4'}}
+                                             'y' : [13, -60],
+                                             'text' : 'NCV=4'}}
         for key, val in self.sex_tresholds.items():
-            val['text_position'] = [np.mean(val['x']), np.mean(val['y'])]
+            val['text_position'] = [val['x'][1], val['y'][1]-15]
             self.sex_tresholds[key] = val
 
     def get_manually_classified(self, sample_db):
@@ -406,7 +406,7 @@ class Statistics():
         self.Library_nM = {}
         self.batch_ids = []
         self.dates = []
-        self.batch_names = {}
+        self.batch_names = []
         self.Ratio_13 = {}
         self.Ratio_18 = {}
         self.Ratio_21 = {}
@@ -424,15 +424,15 @@ class Statistics():
             'NCD_Y': {'lower' : 80}}
 
     def get_20_latest(self):
-        all_batches = {}
+        all_batches = []
         for batch in self.batches:
-            all_batches[batch.date] = batch
-        last_20 = sorted(all_batches.items(), reverse=True)[0:20]   
-        last_20 = sorted(last_20)
+            all_batches.append((batch.date, batch))
+        last_40 = sorted(all_batches, reverse=True)[0:40]
+        last_20 = sorted(last_40)
         for date, batch in last_20:
             self.batch_ids.append(batch.batch_id)        
             self.dates.append(date)
-            self.batch_names[batch.batch_id] = batch.batch_name
+            self.batch_names.append(batch.batch_name)
 
     def make_PCS(self):
         i=1
@@ -444,16 +444,16 @@ class Statistics():
                 if samp.sample_ID.split('-')[0].lower()=='pcs':
                     try:
                         NCV_all.append(float(samp.NCV_X))
-                    except Exception as e:
-                        logging.exception(e)
+                    except:
+                        logging.exception()
                         pass
                     try:
                         self.PCS[batch_id][samp.sample_ID] = {'x':[],'y':[],'sample':[]}
                         self.PCS[batch_id][samp.sample_ID]['y'].append(float(samp.NCV_X))
                         self.PCS[batch_id][samp.sample_ID]['x'].append(i)
                         self.PCS[batch_id][samp.sample_ID]['sample'] = samp.sample_ID
-                    except Exception as e:
-                        logging.exception(e)
+                    except:
+                        logging.exception()
                         pass
             i+=1
         med = float(statistics.median(NCV_all))
@@ -468,8 +468,8 @@ class Statistics():
                 try:                    
                     self.Library_nM[batch_id]['y'].append(float(samp.Library_nM))
                     self.Library_nM[batch_id]['x'].append(i)
-                except Exception as e:
-                    logging.exception(e)
+                except:
+                    logging.exception()
                     pass
             i+=1
 
@@ -482,8 +482,8 @@ class Statistics():
                 try:
                     self.NonExcludedSites2Tags[batch_id]['y'].append(float(samp.NonExcludedSites2Tags))
                     self.NonExcludedSites2Tags[batch_id]['x'].append(i)
-                except Exception as e:
-                    logging.exception(e)
+                except:
+                    logging.exception()
                     pass
             i+=1
 
@@ -496,8 +496,8 @@ class Statistics():
                 try:
                     self.GCBias[batch_id]['y'].append(float(samp.GCBias))
                     self.GCBias[batch_id]['x'].append(i)
-                except Exception as e:
-                    logging.exception(e)
+                except:
+                    logging.exception()
                     pass
             i+=1
 
@@ -510,8 +510,8 @@ class Statistics():
                 try:
                     self.Tags2IndexedReads[batch_id]['y'].append(float(samp.Tags2IndexedReads))
                     self.Tags2IndexedReads[batch_id]['x'].append(i)
-                except Exception as e:
-                    logging.exception(e)
+                except:
+                    logging.exception()
                     pass
             i+=1
 
@@ -524,8 +524,8 @@ class Statistics():
                 try:
                     self.TotalIndexedReads2Clusters[batch_id]['y'].append(float(samp.TotalIndexedReads2Clusters))
                     self.TotalIndexedReads2Clusters[batch_id]['x'].append(i)
-                except Exception as e:
-                    logging.exception(e)
+                except:
+                    logging.exception()
                     pass
             i+=1
 
@@ -560,7 +560,7 @@ class Statistics():
                 try:
                     self.NCD_Y[batch_id]['y'].append(float(samp.NCD_Y))
                     self.NCD_Y[batch_id]['x'].append(i)
-                except Exception as e:
-                    logging.exception(e)
+                except:
+                    logging.exception()
                     pass
             i+=1
