@@ -28,6 +28,7 @@ class BatchMaker():
 
     def get_run_folder_info(self):
         try:
+            print self.sample_sheet
             folder = self.sample_sheet.split('/')[-2] 
             f_name_info = folder.split('_')
             self.batch_id = f_name_info[3]
@@ -48,8 +49,8 @@ class BatchMaker():
         if self.nipt_results and self.batch_name:
             reader = csv.DictReader(open(self.nipt_results, 'rb'))
             for row in reader:
-                sample = Sample.query.filter_by(sample_ID = row['SampleID'], batch_id = batch.batch_id).first()
-                if (not sample) and (row['SampleID'][0] != '#'):
+                sample = Sample.query.filter_by(sample_ID = row['SampleID']).first()
+                if not sample:
                     sample = Sample(row, batch)
                     self.db.session.add(sample)
                     cov = Coverage(row, sample, batch)
@@ -112,6 +113,7 @@ def main(flowcell_ids, users_file):
     NDBS.set_users(users_file)
 
     for flowcell_id in flowcell_ids:
+        import ipdb; ipdb.set_trace()
         BM = BatchMaker(db)
         BM.parse_path(flowcell_id)
         BM.get_run_folder_info()

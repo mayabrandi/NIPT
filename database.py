@@ -96,7 +96,7 @@ class Sample(db.Model):
     comment_XXX = db.Column(db.String(255), unique = False)
     comment_XXY = db.Column(db.String(255), unique = False)
     comment_XYY = db.Column(db.String(255), unique = False)
-
+    FF_Formatted = db.Column(db.String(255), unique = False)
 
     def __init__(self, nipt_dict, batch):
         self.batch = batch
@@ -147,6 +147,7 @@ class Sample(db.Model):
         self.comment_XXY = ''
         self.comment_XYY = ''
         self.comment_X0 = ''
+        self.FF_Formatted =  nipt_dict['FF_Formatted']
 
     def __repr__(self):
         return '<User %r>' % self.sample_ID
