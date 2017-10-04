@@ -412,6 +412,7 @@ class Statistics():
         self.Ratio_21 = {}
         self.NCD_Y = {}
         self.PCS = {}
+        self.FF_Formatted = {}
         self.thresholds = {
             'GCBias': {'upper': 0.5, 'lower': -0.5},
             'NonExcludedSites2Tags': {'upper':1, 'lower':0.8},
@@ -421,7 +422,8 @@ class Statistics():
             'Ratio_13': {'upper':0.20043, 'lower':0.1996},
             'Ratio_18': {'upper':0.25061, 'lower':0.2495},
             'Ratio_21': {'upper':0.25083, 'lower':0.2492},
-            'NCD_Y': {'lower' : 80}}
+            'NCD_Y': {'lower' : 80},
+            'FF_Formatted': {'lower':2}} 
 
     def get_20_latest(self):
         all_batches = []
@@ -433,6 +435,24 @@ class Statistics():
             self.batch_ids.append(batch.batch_id)        
             self.dates.append(date)
             self.batch_names.append(batch.batch_name)
+
+
+    def make_FF_Formatted(self):
+        i=1
+        for batch_id in self.batch_ids:
+            self.FF_Formatted[batch_id]={'x':[],'y':[]}
+            samps = Sample.query.filter(Sample.batch_id==batch_id)
+            for samp in samps:
+                print samp.FF_Formatted
+                print samp.FF_Formatted.rstrip('%')
+                FF = samp.FF_Formatted.rstrip('%')
+                try:
+                    self.FF_Formatted[batch_id]['y'].append(float(FF))
+                    self.FF_Formatted[batch_id]['x'].append(i)
+                except:
+                    logging.exception('Failed to read FF')
+                    pass
+            i+=1
 
     def make_PCS(self):
         i=1
@@ -552,8 +572,6 @@ class Statistics():
     def make_NCD_Y(self):
         i=1
         for batch_id in self.batch_ids:
-            self.NCD_Y[batch_id]={'x':[],'y':[]}
-            self.NCD_Y[batch_id]={'x':[],'y':[]}
             self.NCD_Y[batch_id]={'x':[],'y':[]}
             samps = NCV.query.filter(NCV.batch_id==batch_id)
             for samp in samps:

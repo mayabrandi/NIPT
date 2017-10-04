@@ -345,6 +345,9 @@ def report(batch_id):
     PP.make_NCV_stat()
     PP.make_chrom_abn()
     PP.make_cov_plot_data()
+    ST = Statistics()
+    ST.get_20_latest()
+    ST.make_FF_Formatted()
     return render_template('report_page.html',
         ##  Header
         batch_name      = batch.batch_name,
@@ -357,6 +360,11 @@ def report(batch_id):
         warnings        = DC.NCV_classified,
         NCV_rounded     = DC.NCV_data,
         ##  Plotts
+        ticks           = range(1,len(ST.FF_Formatted)+1),
+        FF_Formatted    = ST.FF_Formatted,
+        batch_names     = ST.batch_names,
+        thresholds      = ST.thresholds,
+        batch_ids       = ST.batch_ids,
         NCV_stat        = PP.NCV_stat,
         case_size       = PP.case_size,
         abn_size        = PP.abn_size,
@@ -387,6 +395,7 @@ def statistics():
     ST.make_TotalIndexedReads2Clusters()
     ST.make_Library_nM()
     ST.make_PCS()
+    ST.make_FF_Formatted()
     return render_template('statistics.html',
         ticks = range(1,len(ST.NonExcludedSites2Tags)+1),
         NonExcludedSites2Tags = ST.NonExcludedSites2Tags,
@@ -394,6 +403,7 @@ def statistics():
         Ratio_13 = ST.Ratio_13,
         Ratio_18 = ST.Ratio_18,
         Ratio_21 = ST.Ratio_21,
+        FF_Formatted = ST.FF_Formatted,
         NCD_Y = ST.NCD_Y,
         PCS = ST.PCS,
         thresholds = ST.thresholds,
