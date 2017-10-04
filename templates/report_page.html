@@ -64,6 +64,7 @@
                                             <th>NCV21</th>
                                             <th>NCVX</th>
                                             <th>NCVY</th>
+                                            <th>FF</th>
                                             <th>Sex</th>
                                             <th>Warning</th>
                                             <th>Class</th>
@@ -79,6 +80,7 @@
                                             <td>{{ NCV_rounded[s.sample_ID]['NCV_21']['val'] }}</td>
                                             <td>{{ NCV_rounded[s.sample_ID]['NCV_X']['val'] }}</td>
                                             <td>{{ NCV_rounded[s.sample_ID]['NCV_Y']['val'] }}</td>
+                                            <td>{{s.sample.FF_Formatted}}</td>
                                             <th><p> <small>{{ NCV_sex[s.sample_ID]  }}</small></p></th>
                                             <th><p> <small>{{ warnings[s.sample_ID]  }}</small></p></th>
                                             <th><p> <small>{{ man_class[s.sample_ID] }}</small></p></th>

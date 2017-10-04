@@ -177,7 +177,17 @@ class DataClasifyer():
             self.NCV_data[s_id] = {}
             samp_warn = self._get_tris_warn(s, samp_warn)
             samp_warn = self._get_sex_warn(s, samp_warn)
+            samp_warn = self._get_FF_warning(s, samp_warn)
             self.NCV_classified[s.sample_ID] = ', '.join(samp_warn)
+            
+    def _get_FF_warning(self, s, samp_warn):
+        try:
+            FetalFraction = int(s.sample.FF_Formatted.rstrip('%').lstrip('<'))
+        except:
+            FetalFraction = None
+        if FetalFraction and FetalFraction < 2:
+            samp_warn.append('FF')
+        return samp_warn
 
     def _get_sex_warn(self,s, samp_warn):
         """Get automated sex warnings, based on preset NCV thresholds"""
@@ -359,7 +369,7 @@ class PlottPage():
                 'NCV_pass' : NCV_pass,
                 'NCV_pass_names' : NCV_pass_names}
 
-    def make_chrom_abn(self):
+    def make_chrom_abn(self): 
         x = 1
         status_x = {'Probable':0.1,'Verified':0.2,'False Positive':0.3,'False Negative':0.4, 'Suspected':0.5, 'Other': 0.6}
         for status in self.sample_state_dict.keys():
