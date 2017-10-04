@@ -443,9 +443,7 @@ class Statistics():
             self.FF_Formatted[batch_id]={'x':[],'y':[]}
             samps = Sample.query.filter(Sample.batch_id==batch_id)
             for samp in samps:
-                print samp.FF_Formatted
-                print samp.FF_Formatted.rstrip('%')
-                FF = samp.FF_Formatted.rstrip('%')
+                FF = samp.FF_Formatted.rstrip('%').lstrip('<')
                 try:
                     self.FF_Formatted[batch_id]['y'].append(float(FF))
                     self.FF_Formatted[batch_id]['x'].append(i)
