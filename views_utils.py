@@ -440,7 +440,7 @@ class Statistics():
             'Ratio_13': {'upper':0.2012977, 'lower':0.1996}, ##
             'Ratio_18': {'upper':0.2517526, 'lower':0.2495}, ##
             'Ratio_21': {'upper':0.2524342, 'lower':0.2492}, ##
-            'NCD_Y': {'lower' : 80}, ## 80 --> -100
+            'NCD_Y': {'lower' : 80, 'lower2': -100,'upper': 1000}, ##
             'FF_Formatted': {'lower':2},
             'Stdev_13' : {'upper' : 0.000673, 'lower' : 0},
             'Stdev_18' : {'upper' : 0.00137, 'lower' : 0},
