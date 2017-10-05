@@ -309,7 +309,7 @@ def sample(batch_id):
         man_class       = DC.man_class_merged,
         NCV_sex         = DC.NCV_sex,
         warnings        = DC.NCV_classified,
-        NCV_rounded     = DC.NCV_data,
+        batch_table_data     = DC.NCV_data,
         ##  Plotts
         NCV_stat        = PP.NCV_stat,
         case_size       = PP.case_size,
@@ -358,7 +358,7 @@ def report(batch_id):
         man_class       = DC.man_class_merged,
         NCV_sex         = DC.NCV_sex,
         warnings        = DC.NCV_classified,
-        NCV_rounded     = DC.NCV_data,
+        batch_table_data     = DC.NCV_data,
         ##  Plotts
         ticks           = range(1,len(ST.FF_Formatted)+1),
         FF_Formatted    = ST.FF_Formatted,
@@ -396,6 +396,7 @@ def statistics():
     ST.make_Library_nM()
     ST.make_PCS()
     ST.make_FF_Formatted()
+    ST.make_Stdev()
     return render_template('statistics.html',
         ticks = range(1,len(ST.NonExcludedSites2Tags)+1),
         NonExcludedSites2Tags = ST.NonExcludedSites2Tags,
@@ -403,6 +404,9 @@ def statistics():
         Ratio_13 = ST.Ratio_13,
         Ratio_18 = ST.Ratio_18,
         Ratio_21 = ST.Ratio_21,
+        Stdev_13 = ST.Stdev_13,
+        Stdev_18 = ST.Stdev_18,
+        Stdev_21 = ST.Stdev_21,
         FF_Formatted = ST.FF_Formatted,
         NCD_Y = ST.NCD_Y,
         PCS = ST.PCS,

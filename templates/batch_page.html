@@ -157,12 +157,12 @@
                                         {% for s in NCV_samples %}
                                         <tr>
                                             <td width="20%"> <a href={{ url_for('sample_page', sample_id=s.sample_ID) }}>{{ s.sample_name }}</a></td>
-                                            <td width="4%" class = "{{ NCV_rounded[s.sample_ID]['NCV_13']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_13']['val'] }}</td>
-                                            <td width="4%" class = "{{ NCV_rounded[s.sample_ID]['NCV_18']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_18']['val'] }}</td>
-                                            <td width="4%" class = "{{ NCV_rounded[s.sample_ID]['NCV_21']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_21']['val'] }}</td>
-                                            <td width="4%" class = "{{ NCV_rounded[s.sample_ID]['NCV_X']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_X']['val'] }}</td>
-                                            <td width="4%" class = "{{ NCV_rounded[s.sample_ID]['NCV_Y']['warn']}}">{{ NCV_rounded[s.sample_ID]['NCV_Y']['val'] }}</td>
-                                            <td width="4%" class = "{{s.sample.FF_Formatted}}">{{s.sample.FF_Formatted}}</td>
+                                            <td width="4%" class = "{{ batch_table_data[s.sample_ID]['NCV_13']['warn']}}">{{ batch_table_data[s.sample_ID]['NCV_13']['val'] }}</td>
+                                            <td width="4%" class = "{{ batch_table_data[s.sample_ID]['NCV_18']['warn']}}">{{ batch_table_data[s.sample_ID]['NCV_18']['val'] }}</td>
+                                            <td width="4%" class = "{{ batch_table_data[s.sample_ID]['NCV_21']['warn']}}">{{ batch_table_data[s.sample_ID]['NCV_21']['val'] }}</td>
+                                            <td width="4%" class = "{{ batch_table_data[s.sample_ID]['NCV_X']['warn']}}">{{ batch_table_data[s.sample_ID]['NCV_X']['val'] }}</td>
+                                            <td width="4%" class = "{{ batch_table_data[s.sample_ID]['NCV_Y']['warn']}}">{{ batch_table_data[s.sample_ID]['NCV_Y']['val'] }}</td>
+                                            <td width="4%" class = "{{batch_table_data[s.sample_ID]['FF_Formatted']['warn']}}">{{s.sample.FF_Formatted}}</td>
                                             <th width="2%"><p> <small>{{ NCV_sex[s.sample_ID]  }}</small></p></th>
                                             <th><p> <small>{{ warnings[s.sample_ID]  }}</small></p></th>
                                             <th><p> <small>{{ man_class[s.sample_ID] }}</small></p></th>

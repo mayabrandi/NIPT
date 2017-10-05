@@ -181,12 +181,17 @@ class DataClasifyer():
             self.NCV_classified[s.sample_ID] = ', '.join(samp_warn)
             
     def _get_FF_warning(self, s, samp_warn):
+        self.NCV_data[s.sample_ID]['FF_Formatted'] = {}
         try:
             FetalFraction = int(s.sample.FF_Formatted.rstrip('%').lstrip('<'))
         except:
             FetalFraction = None
         if FetalFraction and FetalFraction < 2:
             samp_warn.append('FF')
+            print 'hej'
+            self.NCV_data[s.sample_ID]['FF_Formatted']['warn'] = "danger"
+        else:
+            self.NCV_data[s.sample_ID]['FF_Formatted']['warn'] = "default"
         return samp_warn
 
     def _get_sex_warn(self,s, samp_warn):
@@ -420,20 +425,26 @@ class Statistics():
         self.Ratio_13 = {}
         self.Ratio_18 = {}
         self.Ratio_21 = {}
+        self.Stdev_13 = {}
+        self.Stdev_18 = {}
+        self.Stdev_21 = {}
         self.NCD_Y = {}
         self.PCS = {}
         self.FF_Formatted = {}
         self.thresholds = {
-            'GCBias': {'upper': 0.5, 'lower': -0.5},
-            'NonExcludedSites2Tags': {'upper':1, 'lower':0.8},
-            'Tags2IndexedReads': {'upper':0.9, 'lower':0.75},
-            'TotalIndexedReads2Clusters': {'upper':1, 'lower':0.7},
+            'GCBias': {'upper': 0.5, 'lower': -0.5}, #
+            'NonExcludedSites2Tags': {'upper':1, 'lower':0.8}, #
+            'Tags2IndexedReads': {'upper':0.9, 'lower':0.75}, # 
+            'TotalIndexedReads2Clusters': {'upper':1, 'lower':0.7},#
             'Library_nM': {'upper':150, 'lower':10, 'wished':40},
-            'Ratio_13': {'upper':0.20043, 'lower':0.1996},
-            'Ratio_18': {'upper':0.25061, 'lower':0.2495},
-            'Ratio_21': {'upper':0.25083, 'lower':0.2492},
-            'NCD_Y': {'lower' : 80},
-            'FF_Formatted': {'lower':2}} 
+            'Ratio_13': {'upper':0.2012977, 'lower':0.1996}, ##
+            'Ratio_18': {'upper':0.2517526, 'lower':0.2495}, ##
+            'Ratio_21': {'upper':0.2524342, 'lower':0.2492}, ##
+            'NCD_Y': {'lower' : 80}, ## 80 --> -100
+            'FF_Formatted': {'lower':2},
+            'Stdev_13' : {'upper' : 0.000673, 'lower' : 0},
+            'Stdev_18' : {'upper' : 0.00137, 'lower' : 0},
+            'Stdev_21' : {'upper' : 0.00133, 'lower' : 0}} 
 
     def get_20_latest(self):
         all_batches = []
@@ -544,6 +555,7 @@ class Statistics():
             i+=1
 
     def make_TotalIndexedReads2Clusters(self):
+        ## This plot 
         i=1
         for batch_id in self.batch_ids:
             self.TotalIndexedReads2Clusters[batch_id]={'x':[],'y':[]}
@@ -552,6 +564,26 @@ class Statistics():
                 try:
                     self.TotalIndexedReads2Clusters[batch_id]['y'].append(float(samp.TotalIndexedReads2Clusters))
                     self.TotalIndexedReads2Clusters[batch_id]['x'].append(i)
+                except:
+                    logging.exception()
+                    pass
+            i+=1
+
+    def make_Stdev(self):
+        i=1
+        for batch_id in self.batch_ids:
+            self.Stdev_13[batch_id]={'x':[],'y':[]}
+            self.Stdev_18[batch_id]={'x':[],'y':[]}
+            self.Stdev_21[batch_id]={'x':[],'y':[]}
+            batch_stat = BatchStat.query.filter(BatchStat.batch_id==batch_id)
+            for samp in batch_stat: ##should always be only one
+                try:
+                    self.Stdev_13[batch_id]['y'].append(float(samp.Stdev_13))
+                    self.Stdev_13[batch_id]['x'].append(i)
+                    self.Stdev_18[batch_id]['y'].append(float(samp.Stdev_18))
+                    self.Stdev_18[batch_id]['x'].append(i)
+                    self.Stdev_21[batch_id]['y'].append(float(samp.Stdev_21))
+                    self.Stdev_21[batch_id]['x'].append(i)
                 except:
                     logging.exception()
                     pass

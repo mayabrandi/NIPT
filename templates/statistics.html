@@ -89,6 +89,9 @@
                 <li><a href="#Ratio_13" data-toggle="tab">Ratio_13</a></li>
                 <li><a href="#Ratio_18" data-toggle="tab">Ratio_18</a></li>
                 <li><a href="#Ratio_21" data-toggle="tab">Ratio_21</a></li>
+                <li><a href="#Stdev_13" data-toggle="tab">Stdev_13</a></li>
+                <li><a href="#Stdev_18" data-toggle="tab">Stdev_18</a></li>
+                <li><a href="#Stdev_21" data-toggle="tab">Stdev_21</a></li>
                 <li><a href="#NCD_Y" data-toggle="tab">NCD_Y</a></li>
                 <li><a href="#PCS" data-toggle="tab">NCV_X for PCS</a></li>
             </ul>
@@ -119,6 +122,15 @@
                 </div>
                 <div class="tab-pane active" id='Ratio_21'>
                     <div id="Ratio_21" style="min-width:1000px; height:600px; "></div>
+                </div>
+                <div class="tab-pane active" id='Stdev_13'>
+                    <div id="Stdev_13" style="min-width:1000px; height:600px; "></div>
+                </div>
+                <div class="tab-pane active" id='Stdev_18'>
+                    <div id="Stdev_18" style="min-width:1000px; height:600px; "></div>
+                </div>
+                <div class="tab-pane active" id='Stdev_21'>
+                    <div id="Stdev_21" style="min-width:1000px; height:600px; "></div>
                 </div>
                 <div class="tab-pane active" id='NCD_Y'>
                     <div id="NCD_Y" style="min-width:1000px; height:600px; "></div>
@@ -436,6 +448,182 @@ Plotly.newPlot('Ratio_21', data, layout);
 
 
 <script>
+
+////////////////// Stdev_13 //////////////////
+
+var XY_plot = document.getElementById('')
+var data = []
+
+var layout = {
+    title: 'Stdev 13 - (40 most recent batches)',
+    hovermode:'closest',
+    margin : {b: 100},
+    xaxis :{showline: true,
+            tickvals : {{ticks}},
+            ticktext : {{batch_names|tojson}},
+            tickangle : 40,
+            zeroline: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            gridcolor: '#bdbdbd',
+            
+            },
+            
+    yaxis :{zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'Stdev_13'
+            },};
+
+{% for batch_id  in batch_ids %}
+    var box = {
+            y: {{Stdev_13[batch_id]['y']}},
+            x: {{Stdev_13[batch_id]['x']}},
+            type: 'scatter',
+            mode: 'markers',
+            showlegend: false,
+            text: "{{batch_id}} {{sample}}",
+            name: "{{sample}}",
+            };
+    data.push(box); 
+{% endfor %}
+{% for tres in thresholds['Stdev_13'].keys() %} 
+var line = {x : [0.5, 40.5],
+            y : [{{thresholds['Stdev_13'][tres]}},{{thresholds['Stdev_13'][tres]}}],
+            mode: 'lines',
+            name: "{{tres}}",
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : "red",
+                width : 2}};
+data.push(line);
+{% endfor %}
+
+Plotly.newPlot('Stdev_13', data, layout);
+</script>
+
+<script>
+
+////////////////// Stdev_18 //////////////////
+
+var XY_plot = document.getElementById('')
+var data = []
+
+var layout = {
+    title: 'Stdev 13 - (40 most recent batches)',
+    hovermode:'closest',
+    margin : {b: 100},
+    xaxis :{showline: true,
+            tickvals : {{ticks}},
+            ticktext : {{batch_names|tojson}},
+            tickangle : 40,
+            zeroline: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            gridcolor: '#bdbdbd',
+            
+            },
+            
+    yaxis :{zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'Stdev_18'
+            },};
+
+{% for batch_id  in batch_ids %}
+    var box = {
+            y: {{Stdev_18[batch_id]['y']}},
+            x: {{Stdev_18[batch_id]['x']}},
+            type: 'scatter',
+            mode: 'markers',
+            showlegend: false,
+            text: "{{batch_id}} {{sample}}",
+            name: "{{sample}}",
+            };
+    data.push(box); 
+{% endfor %}
+{% for tres in thresholds['Stdev_18'].keys() %} 
+var line = {x : [0.5, 40.5],
+            y : [{{thresholds['Stdev_18'][tres]}},{{thresholds['Stdev_18'][tres]}}],
+            mode: 'lines',
+            name: "{{tres}}",
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : "red",
+                width : 2}};
+data.push(line);
+{% endfor %}
+
+Plotly.newPlot('Stdev_18', data, layout);
+</script>
+
+<script>
+
+////////////////// Stdev_21 //////////////////
+
+var XY_plot = document.getElementById('')
+var data = []
+
+var layout = {
+    title: 'Stdev 13 - (40 most recent batches)',
+    hovermode:'closest',
+    margin : {b: 100},
+    xaxis :{showline: true,
+            tickvals : {{ticks}},
+            ticktext : {{batch_names|tojson}},
+            tickangle : 40,
+            zeroline: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            gridcolor: '#bdbdbd',
+            
+            },
+            
+    yaxis :{zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'Stdev_21'
+            },};
+
+{% for batch_id  in batch_ids %}
+    var box = {
+            y: {{Stdev_21[batch_id]['y']}},
+            x: {{Stdev_21[batch_id]['x']}},
+            type: 'scatter',
+            mode: 'markers',
+            showlegend: false,
+            text: "{{batch_id}} {{sample}}",
+            name: "{{sample}}",
+            };
+    data.push(box); 
+{% endfor %}
+{% for tres in thresholds['Stdev_21'].keys() %} 
+var line = {x : [0.5, 40.5],
+            y : [{{thresholds['Stdev_21'][tres]}},{{thresholds['Stdev_21'][tres]}}],
+            mode: 'lines',
+            name: "{{tres}}",
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : "red",
+                width : 2}};
+data.push(line);
+{% endfor %}
+
+Plotly.newPlot('Stdev_21', data, layout);
+</script>
+
+
+<script>
+
 ////////////////// NCD_Y //////////////////
 
 var XY_plot = document.getElementById('')
