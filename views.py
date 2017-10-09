@@ -404,7 +404,6 @@ def statistics():
         Clusters = ST.Clusters,
         NonExcludedSites = ST.NonExcludedSites,
         PerfectMatchTags2Tags = ST.PerfectMatchTags2Tags,
-        #IndexedReads2Clusters = ST.IndexedReads2Clusters,
         FF_Formatted = ST.FF_Formatted,
         NCD_Y = ST.NCD_Y,
         PCS = ST.PCS,

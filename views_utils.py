@@ -433,7 +433,6 @@ class Statistics():
         self.Clusters = {}
         self.NonExcludedSites = {}
         self.PerfectMatchTags2Tags = {}
-       # self.IndexedReads2Clusters = {}
         self.thresholds = {
             'GCBias': {'upper': 0.5, 'lower': -0.5}, #
             'NonExcludedSites2Tags': {'upper':1, 'lower':0.8}, #
@@ -451,7 +450,6 @@ class Statistics():
             'Clusters' : {'upper' : 450000000, 'lower' : 250000000},
             'NonExcludedSites' : {'upper' : 100000000, 'lower' : 8000000},
             'PerfectMatchTags2Tags' : {'upper' : 1, 'lower' : 0.7},
-#            'IndexedReads2Clusters' : {'upper' : 0.00133, 'lower' : 0}
             }           
 
     def get_20_latest(self):
@@ -479,7 +477,6 @@ class Statistics():
             self.Clusters[batch_id] = {'x':[], 'y':[]}
             self.NonExcludedSites[batch_id] = {'x':[], 'y':[]}
             self.PerfectMatchTags2Tags[batch_id] = {'x':[], 'y':[]}
-            #self.IndexedReads2Clusters[batch_id] = {'x':[], 'y':[]}
             samps = Sample.query.filter(Sample.batch_id==batch_id)
             for samp in samps:
                 FF = samp.FF_Formatted.rstrip('%').lstrip('<')
@@ -538,12 +535,6 @@ class Statistics():
                 except:
                     logging.exception('')
                     pass
-                #try:
-                #    self.IndexedReads2Clusters[batch_id]['y'].append(float(samp.IndexedReads2Clusters))
-                #    self.IndexedReads2Clusters[batch_id]['x'].append(i)
-                #except:
-                #    logging.exception('')
-                #    pass
             print self.NonExcludedSites[batch_id]
             i+=1
 
