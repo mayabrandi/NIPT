@@ -347,7 +347,6 @@ def report(batch_id):
     PP.make_cov_plot_data()
     ST = Statistics()
     ST.get_20_latest()
-    ST.make_FF_Formatted()
     return render_template('report_page.html',
         ##  Header
         batch_name      = batch.batch_name,
@@ -360,8 +359,6 @@ def report(batch_id):
         warnings        = DC.NCV_classified,
         batch_table_data     = DC.NCV_data,
         ##  Plotts
-        ticks           = range(1,len(ST.FF_Formatted)+1),
-        FF_Formatted    = ST.FF_Formatted,
         batch_names     = ST.batch_names,
         thresholds      = ST.thresholds,
         batch_ids       = ST.batch_ids,

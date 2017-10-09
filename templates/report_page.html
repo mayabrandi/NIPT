@@ -175,12 +175,6 @@
                             </div>
                             </footer>
                             {% endif %}
-                            <footer>
-                            <div class="panel-body">
-                            <h2 class="page-header"><small>Fetal Fraction</small></h2>
-                            <div id="FetalFraction" style="min-width:600px; height:800px; margin-right: 2.0cm;"></div><br><br>
-                            </div>
-                            </footer>
             </div>
         </div>
     </div>
@@ -471,64 +465,6 @@ $(document).ready(function() {
 } );
 </script>
 
-<script>
-////////////////// FetalFraction //////////////////
-
-var XY_plot = document.getElementById('')
-var data = []
-
-var layout = {
-    title: 'Fetal Fraction - (40 most recent batches)',
-    hovermode:'closest',
-    margin : {b: 100},
-    xaxis :{showline: true,
-            tickvals : {{ticks}},
-            ticktext : {{batch_names|tojson}},
-            tickangle : 40,
-            zeroline: false,
-            linecolor: '#636363',
-            linewidth: 5,
-            gridcolor: '#bdbdbd',
-            
-            },
-            
-    yaxis :{zeroline: false,
-            showline: true,
-            showgrid: false,
-            linecolor: '#636363',
-            linewidth: 5,
-            title : 'FetalFraction'
-            },};
-
-{% for batch_id  in batch_ids %}
-    var box = {
-            y: {{FF_Formatted[batch_id]['y']}},
-            x: {{FF_Formatted[batch_id]['x']}},
-            type: 'box',
-            showlegend: false,
-            boxpoints: 'suspectedoutliers',
-            };
-
-
-    data.push(box); 
-{% endfor %}
-
-{% for tres in thresholds['FF_Formatted'].keys() %} 
-var line = {x : [0.5, 40.5],
-            y : [{{thresholds['FF_Formatted'][tres]}},{{thresholds['FF_Formatted'][tres]}}],
-            mode: 'lines',
-            name: "{{tres}}",
-            showlegend: false,
-            line: {
-                dash: 'dot',
-                color : "red",
-                width : 2}};
-data.push(line);
-{% endfor %}
-
-
-Plotly.newPlot('FetalFraction', data, layout);
-</script>
 
 <script>
 var d = new Date();
