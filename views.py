@@ -387,16 +387,10 @@ def report(batch_id):
 def statistics():
     ST = Statistics()
     ST.get_20_latest()
-    ST.make_NonExcludedSites2Tags()
-    ST.make_GCBias()
-    ST.make_Ratio()
-    ST.make_NCD_Y()
-    ST.make_Tags2IndexedReads()
-    ST.make_TotalIndexedReads2Clusters()
-    ST.make_Library_nM()
     ST.make_PCS()
-    ST.make_FF_Formatted()
     ST.make_Stdev()
+    ST.make_statistics_from_database_Sample()
+    ST.make_statistics_from_database_NCV()
     return render_template('statistics.html',
         ticks = range(1,len(ST.NonExcludedSites2Tags)+1),
         NonExcludedSites2Tags = ST.NonExcludedSites2Tags,
@@ -407,6 +401,10 @@ def statistics():
         Stdev_13 = ST.Stdev_13,
         Stdev_18 = ST.Stdev_18,
         Stdev_21 = ST.Stdev_21,
+        Clusters = ST.Clusters,
+        NonExcludedSites = ST.NonExcludedSites,
+        PerfectMatchTags2Tags = ST.PerfectMatchTags2Tags,
+        #IndexedReads2Clusters = ST.IndexedReads2Clusters,
         FF_Formatted = ST.FF_Formatted,
         NCD_Y = ST.NCD_Y,
         PCS = ST.PCS,

@@ -92,6 +92,10 @@
                 <li><a href="#Stdev_13" data-toggle="tab">Stdev_13</a></li>
                 <li><a href="#Stdev_18" data-toggle="tab">Stdev_18</a></li>
                 <li><a href="#Stdev_21" data-toggle="tab">Stdev_21</a></li>
+                <li><a href="#Clusters" data-toggle="tab">Clusters</a></li>
+                <li><a href="#NonExcludedSites" data-toggle="tab">NonExcludedSites</a></li>
+                <li><a href="#PerfectMatchTags2Tags" data-toggle="tab">PerfectMatchTags2Tags</a></li>
+                <!--li><a href="#IndexedReads2Clusters" data-toggle="tab">IndexedReads2Clusters</a></li-->
                 <li><a href="#NCD_Y" data-toggle="tab">NCD_Y</a></li>
                 <li><a href="#PCS" data-toggle="tab">NCV_X for PCS</a></li>
             </ul>
@@ -132,6 +136,18 @@
                 <div class="tab-pane active" id='Stdev_21'>
                     <div id="Stdev_21" style="min-width:1000px; height:600px; "></div>
                 </div>
+                <div class="tab-pane active" id='Clusters'>
+                    <div id="Clusters" style="min-width:1000px; height:600px; "></div>
+                </div>
+                <div class="tab-pane active" id='NonExcludedSites'>
+                    <div id="NonExcludedSites" style="min-width:1000px; height:600px; "></div>
+                </div>
+                <div class="tab-pane active" id='PerfectMatchTags2Tags'>
+                    <div id="PerfectMatchTags2Tags" style="min-width:1000px; height:600px; "></div>
+                </div>
+                <!--div class="tab-pane active" id='IndexedReads2Clusters'>
+                    <div id="IndexedReads2Clusters" style="min-width:1000px; height:600px; "></div>
+                </div-->
                 <div class="tab-pane active" id='NCD_Y'>
                     <div id="NCD_Y" style="min-width:1000px; height:600px; "></div>
                 </div>
@@ -448,6 +464,183 @@ data.push(line);
 {% endfor %}
 
 Plotly.newPlot('Ratio_21', data, layout);
+</script>
+
+<script>
+////////////////// Clusters //////////////////
+
+var XY_plot = document.getElementById('')
+var data = []
+
+var layout = {
+    title: 'Cluster Density - (40 most recent batches)',
+    hovermode:'closest',
+    margin : {b: 100},
+    xaxis :{showline: true,
+            tickvals : {{ticks}},
+            ticktext : {{batch_names|tojson}},
+            tickangle : 40,
+            zeroline: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            gridcolor: '#bdbdbd',
+            
+            },
+            
+    yaxis :{zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'Cluster Density'
+            },};
+
+{% for batch_id  in batch_ids %}
+    var box = {
+            y: {{Clusters[batch_id]['y']}},
+            x: {{Clusters[batch_id]['x']}},
+            type: 'scatter',
+            mode: 'markers',
+            showlegend: false,
+            name: "{{batch_names[batch_id]}}",
+            boxpoints: 'suspectedoutliers',
+            };
+    data.push(box); 
+{% endfor %}
+{% for tres in thresholds['Clusters'].keys() %} 
+var line = {x : [0.5, 40.5],
+            y : [{{thresholds['Clusters'][tres]}},{{thresholds['Clusters'][tres]}}],
+            mode: 'lines',
+            name: "{{tres}}",
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : "red",
+                width : 2}};
+data.push(line);
+{% endfor %}
+
+Plotly.newPlot('Clusters', data, layout);
+</script>
+
+<script>
+////////////////// NonExcludedSites //////////////////
+
+var XY_plot = document.getElementById('')
+var data = []
+
+var layout = {
+    title: 'NonExcludedSites - (40 most recent batches)',
+    hovermode:'closest',
+    margin : {b: 100},
+    xaxis :{showline: true,
+            tickvals : {{ticks}},
+            ticktext : {{batch_names|tojson}},
+            tickangle : 40,
+            zeroline: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            gridcolor: '#bdbdbd',
+            
+            },
+            
+    yaxis :{zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'NonExcludedSites'
+            },};
+
+{% for batch_id  in batch_ids %}
+    var box = {
+            y: {{NonExcludedSites[batch_id]['y']}},
+            x: {{NonExcludedSites[batch_id]['x']}},
+            //jitter: 0.3,
+            //pointpos: 30,
+            type: 'box',
+            showlegend: false,
+            //name: "{{batch_names[batch_id]}}",
+            boxpoints: 'suspectedoutliers',
+            };
+
+
+    data.push(box); 
+{% endfor %}
+{% for tres in thresholds['NonExcludedSites'].keys() %} 
+var line = {x : [0.5, 40.5],
+            y : [{{thresholds['NonExcludedSites'][tres]}},{{thresholds['NonExcludedSites'][tres]}}],
+            mode: 'lines',
+            name: "{{tres}}",
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : "red",
+                width : 2}};
+data.push(line);
+{% endfor %}
+
+Plotly.newPlot('NonExcludedSites', data, layout);
+</script>
+
+<script>
+////////////////// PerfectMatchTags2Tags //////////////////
+
+var XY_plot = document.getElementById('')
+var data = []
+
+var layout = {
+    title: 'PerfectMatchTags2Tags - (40 most recent batches)',
+    hovermode:'closest',
+    margin : {b: 100},
+    xaxis :{showline: true,
+            tickvals : {{ticks}},
+            ticktext : {{batch_names|tojson}},
+            tickangle : 40,
+            zeroline: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            gridcolor: '#bdbdbd',
+            
+            },
+            
+    yaxis :{zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'PerfectMatchTags2Tags'
+            },};
+
+{% for batch_id  in batch_ids %}
+    var box = {
+            y: {{PerfectMatchTags2Tags[batch_id]['y']}},
+            x: {{PerfectMatchTags2Tags[batch_id]['x']}},
+            //jitter: 0.3,
+            //pointpos: 30,
+            type: 'box',
+            showlegend: false,
+            //name: "{{batch_names[batch_id]}}",
+            boxpoints: 'suspectedoutliers',
+            };
+
+
+    data.push(box); 
+{% endfor %}
+{% for tres in thresholds['PerfectMatchTags2Tags'].keys() %} 
+var line = {x : [0.5, 40.5],
+            y : [{{thresholds['PerfectMatchTags2Tags'][tres]}},{{thresholds['PerfectMatchTags2Tags'][tres]}}],
+            mode: 'lines',
+            name: "{{tres}}",
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : "red",
+                width : 2}};
+data.push(line);
+{% endfor %}
+
+Plotly.newPlot('PerfectMatchTags2Tags', data, layout);
 </script>
 
 

@@ -431,6 +431,10 @@ class Statistics():
         self.NCD_Y = {}
         self.PCS = {}
         self.FF_Formatted = {}
+        self.Clusters = {}
+        self.NonExcludedSites = {}
+        self.PerfectMatchTags2Tags = {}
+       # self.IndexedReads2Clusters = {}
         self.thresholds = {
             'GCBias': {'upper': 0.5, 'lower': -0.5}, #
             'NonExcludedSites2Tags': {'upper':1, 'lower':0.8}, #
@@ -444,7 +448,12 @@ class Statistics():
             'FF_Formatted': {'lower':2},
             'Stdev_13' : {'upper' : 0.000673, 'lower' : 0},
             'Stdev_18' : {'upper' : 0.00137, 'lower' : 0},
-            'Stdev_21' : {'upper' : 0.00133, 'lower' : 0}} 
+            'Stdev_21' : {'upper' : 0.00133, 'lower' : 0},
+            'Clusters' : {'upper' : 450000000, 'lower' : 250000000},
+            'NonExcludedSites' : {'upper' : 100000000, 'lower' : 8000000},
+            'PerfectMatchTags2Tags' : {'upper' : 1, 'lower' : 0.7},
+#            'IndexedReads2Clusters' : {'upper' : 0.00133, 'lower' : 0}
+            }           
 
     def get_20_latest(self):
         all_batches = []
@@ -458,10 +467,20 @@ class Statistics():
             self.batch_names.append(batch.batch_name)
 
 
-    def make_FF_Formatted(self):
+   
+    def make_statistics_from_database_Sample(self):
         i=1
         for batch_id in self.batch_ids:
+            self.Library_nM[batch_id]={'x':[],'y':[]}
+            self.NonExcludedSites2Tags[batch_id]={'x':[],'y':[]}
+            self.GCBias[batch_id]={'x':[],'y':[]}
+            self.Tags2IndexedReads[batch_id]={'x':[],'y':[]}
             self.FF_Formatted[batch_id]={'x':[],'y':[]}
+            self.TotalIndexedReads2Clusters[batch_id]={'x':[],'y':[]}
+            self.Clusters[batch_id] = {'x':[], 'y':[]}
+            self.NonExcludedSites[batch_id] = {'x':[], 'y':[]}
+            self.PerfectMatchTags2Tags[batch_id] = {'x':[], 'y':[]}
+            #self.IndexedReads2Clusters[batch_id] = {'x':[], 'y':[]}
             samps = Sample.query.filter(Sample.batch_id==batch_id)
             for samp in samps:
                 FF = samp.FF_Formatted.rstrip('%').lstrip('<')
@@ -471,6 +490,83 @@ class Statistics():
                 except:
                     logging.exception('Failed to read FF')
                     pass
+                try:
+                    self.Library_nM[batch_id]['y'].append(float(samp.Library_nM))
+                    self.Library_nM[batch_id]['x'].append(i)
+                except:
+                    logging.exception('')
+                    pass
+                try:
+                    self.NonExcludedSites2Tags[batch_id]['y'].append(float(samp.NonExcludedSites2Tags))
+                    self.NonExcludedSites2Tags[batch_id]['x'].append(i)
+                except:
+                    logging.exception('')
+                    pass
+                try:
+                    self.GCBias[batch_id]['y'].append(float(samp.GCBias))
+                    self.GCBias[batch_id]['x'].append(i)
+                except:
+                    logging.exception('')
+                    pass
+                try:
+                    self.Tags2IndexedReads[batch_id]['y'].append(float(samp.Tags2IndexedReads))
+                    self.Tags2IndexedReads[batch_id]['x'].append(i)
+                except:
+                    logging.exception('')
+                    pass
+                try:
+                    self.TotalIndexedReads2Clusters[batch_id]['y'].append(float(samp.TotalIndexedReads2Clusters))
+                    self.TotalIndexedReads2Clusters[batch_id]['x'].append(i)
+                except:
+                    logging.exception('')
+                    pass
+                try:
+                    print samp.Clusters
+                    self.Clusters[batch_id]['y'].append(float(samp.Clusters))
+                    self.Clusters[batch_id]['x'].append(i)
+                except:
+                    logging.exception('')
+                    pass
+                try:
+                    self.NonExcludedSites[batch_id]['y'].append(float(samp.NonExcludedSites))
+                    self.NonExcludedSites[batch_id]['x'].append(i)
+                except:
+                    logging.exception('')
+                    pass
+                try:
+                    self.PerfectMatchTags2Tags[batch_id]['y'].append(float(samp.PerfectMatchTags2Tags))
+                    self.PerfectMatchTags2Tags[batch_id]['x'].append(i)
+                except:
+                    logging.exception('')
+                    pass
+                #try:
+                #    self.IndexedReads2Clusters[batch_id]['y'].append(float(samp.IndexedReads2Clusters))
+                #    self.IndexedReads2Clusters[batch_id]['x'].append(i)
+                #except:
+                #    logging.exception('')
+                #    pass
+            print self.NonExcludedSites[batch_id]
+            i+=1
+
+
+    def make_Stdev(self):
+        i=1
+        for batch_id in self.batch_ids:
+            self.Stdev_13[batch_id]={'x':[],'y':[]}
+            self.Stdev_18[batch_id]={'x':[],'y':[]}
+            self.Stdev_21[batch_id]={'x':[],'y':[]}
+            batch_stat = BatchStat.query.filter(BatchStat.batch_id==batch_id)
+            for samp in batch_stat: ##should always be only one
+                try:
+                    self.Stdev_13[batch_id]['y'].append(float(samp.Stdev_13))
+                    self.Stdev_13[batch_id]['x'].append(i)
+                    self.Stdev_18[batch_id]['y'].append(float(samp.Stdev_18))
+                    self.Stdev_18[batch_id]['x'].append(i)
+                    self.Stdev_21[batch_id]['y'].append(float(samp.Stdev_21))
+                    self.Stdev_21[batch_id]['x'].append(i)
+                except:
+                    logging.exception('')
+                    pass
             i+=1
 
     def make_PCS(self):
@@ -478,7 +574,7 @@ class Statistics():
         PCS_all = {}
         for batch_id in self.batch_ids:
             samps = NCV.query.filter(NCV.batch_id==batch_id)
-            self.PCS[batch_id] = {} #{'x':[],'y':[],'sample':[]}
+            self.PCS[batch_id] = {} 
             for samp in samps:
                 if samp.sample_ID.split('-')[0].lower()=='pcs':
                     pcs_id = samp.sample_ID.split('_')[0].lower()
@@ -502,106 +598,16 @@ class Statistics():
         for pcs in PCS_all:
             med = float(statistics.median(PCS_all[pcs]['values']))
             PCS_all[pcs]['tresholds']['lower'] = [med - 1.45]*len(PCS_all[pcs]['ticks'])
-            PCS_all[pcs]['tresholds']['upper'] = [med + 1.45]*len(PCS_all[pcs]['ticks']) 
+            PCS_all[pcs]['tresholds']['upper'] = [med + 1.45]*len(PCS_all[pcs]['ticks'])
         self.thresholds['PCS'] = PCS_all
-         
-    def make_Library_nM(self):
-        i=1
-        for batch_id in self.batch_ids:
-            self.Library_nM[batch_id]={'x':[],'y':[]}
-            samps = Sample.query.filter(Sample.batch_id==batch_id)
-            for samp in samps:
-                try:                    
-                    self.Library_nM[batch_id]['y'].append(float(samp.Library_nM))
-                    self.Library_nM[batch_id]['x'].append(i)
-                except:
-                    logging.exception('')
-                    pass
-            i+=1
 
-    def make_NonExcludedSites2Tags(self):
+    def make_statistics_from_database_NCV(self):
         i=1
         for batch_id in self.batch_ids:
-            self.NonExcludedSites2Tags[batch_id]={'x':[],'y':[]}
-            samps = Sample.query.filter(Sample.batch_id==batch_id)
-            for samp in samps:
-                try:
-                    self.NonExcludedSites2Tags[batch_id]['y'].append(float(samp.NonExcludedSites2Tags))
-                    self.NonExcludedSites2Tags[batch_id]['x'].append(i)
-                except:
-                    logging.exception('')
-                    pass
-            i+=1
-
-    def make_GCBias(self):
-        i=1
-        for batch_id in self.batch_ids:
-            self.GCBias[batch_id]={'x':[],'y':[]}
-            samps = Sample.query.filter(Sample.batch_id==batch_id)
-            for samp in samps:
-                try:
-                    self.GCBias[batch_id]['y'].append(float(samp.GCBias))
-                    self.GCBias[batch_id]['x'].append(i)
-                except:
-                    logging.exception('')
-                    pass
-            i+=1
-
-    def make_Tags2IndexedReads(self):
-        i=1
-        for batch_id in self.batch_ids:
-            self.Tags2IndexedReads[batch_id]={'x':[],'y':[]}
-            samps = Sample.query.filter(Sample.batch_id==batch_id)
-            for samp in samps:
-                try:
-                    self.Tags2IndexedReads[batch_id]['y'].append(float(samp.Tags2IndexedReads))
-                    self.Tags2IndexedReads[batch_id]['x'].append(i)
-                except:
-                    logging.exception('')
-                    pass
-            i+=1
-
-    def make_TotalIndexedReads2Clusters(self):
-        ## This plot 
-        i=1
-        for batch_id in self.batch_ids:
-            self.TotalIndexedReads2Clusters[batch_id]={'x':[],'y':[]}
-            samps = Sample.query.filter(Sample.batch_id==batch_id)
-            for samp in samps:
-                try:
-                    self.TotalIndexedReads2Clusters[batch_id]['y'].append(float(samp.TotalIndexedReads2Clusters))
-                    self.TotalIndexedReads2Clusters[batch_id]['x'].append(i)
-                except:
-                    logging.exception('')
-                    pass
-            i+=1
-
-    def make_Stdev(self):
-        i=1
-        for batch_id in self.batch_ids:
-            self.Stdev_13[batch_id]={'x':[],'y':[]}
-            self.Stdev_18[batch_id]={'x':[],'y':[]}
-            self.Stdev_21[batch_id]={'x':[],'y':[]}
-            batch_stat = BatchStat.query.filter(BatchStat.batch_id==batch_id)
-            for samp in batch_stat: ##should always be only one
-                try:
-                    self.Stdev_13[batch_id]['y'].append(float(samp.Stdev_13))
-                    self.Stdev_13[batch_id]['x'].append(i)
-                    self.Stdev_18[batch_id]['y'].append(float(samp.Stdev_18))
-                    self.Stdev_18[batch_id]['x'].append(i)
-                    self.Stdev_21[batch_id]['y'].append(float(samp.Stdev_21))
-                    self.Stdev_21[batch_id]['x'].append(i)
-                except:
-                    logging.exception('')
-                    pass
-            i+=1
-
-    def make_Ratio(self):
-        i=1
-        for batch_id in self.batch_ids:
-            self.Ratio_13[batch_id]={'x':[],'y':[]}
-            self.Ratio_18[batch_id]={'x':[],'y':[]}
-            self.Ratio_21[batch_id]={'x':[],'y':[]}
+            self.Ratio_13[batch_id] = {'x':[],'y':[]}
+            self.Ratio_18[batch_id] = {'x':[],'y':[]}
+            self.Ratio_21[batch_id] = {'x':[],'y':[]}
+            self.NCD_Y[batch_id] = {'x':[],'y':[]}
             samps = NCV.query.filter(NCV.batch_id==batch_id)
             for samp in samps:
                 try:
@@ -614,18 +620,10 @@ class Statistics():
                 except Exception as e:
                     logging.exception(e)
                     pass
-            i+=1
-
-    def make_NCD_Y(self):
-        i=1
-        for batch_id in self.batch_ids:
-            self.NCD_Y[batch_id]={'x':[],'y':[]}
-            samps = NCV.query.filter(NCV.batch_id==batch_id)
-            for samp in samps:
                 try:
                     self.NCD_Y[batch_id]['y'].append(math.log10(float(samp.NCD_Y)))
                     self.NCD_Y[batch_id]['x'].append(i)
                 except:
                     logging.exception('')
-                    pass
             i+=1
+
