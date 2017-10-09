@@ -7,7 +7,6 @@ import statistics
 from datetime import datetime
 import ast
 import numpy as np
-import math
 
 
 ################################################################################################
@@ -444,7 +443,7 @@ class Statistics():
             'Ratio_13': {'upper':0.2012977, 'lower':0.1996}, ##
             'Ratio_18': {'upper':0.2517526, 'lower':0.2495}, ##
             'Ratio_21': {'upper':0.2524342, 'lower':0.2492}, ##
-            'NCD_Y': {'lower' : math.log10(80), 'upper': math.log10(1000)}, ##
+            'NCD_Y': {'lower' : 80, 'lower_nr2' : -100, 'upper': 1000}, ##
             'FF_Formatted': {'lower':2},
             'Stdev_13' : {'upper' : 0.000673, 'lower' : 0},
             'Stdev_18' : {'upper' : 0.00137, 'lower' : 0},
@@ -621,7 +620,7 @@ class Statistics():
                     logging.exception(e)
                     pass
                 try:
-                    self.NCD_Y[batch_id]['y'].append(math.log10(float(samp.NCD_Y)))
+                    self.NCD_Y[batch_id]['y'].append(float(samp.NCD_Y))
                     self.NCD_Y[batch_id]['x'].append(i)
                 except:
                     logging.exception('')
