@@ -7,6 +7,7 @@ import statistics
 from datetime import datetime
 import ast
 import numpy as np
+import math
 
 
 ################################################################################################
@@ -188,7 +189,6 @@ class DataClasifyer():
             FetalFraction = None
         if FetalFraction and FetalFraction < 2:
             samp_warn.append('FF')
-            print 'hej'
             self.NCV_data[s.sample_ID]['FF_Formatted']['warn'] = "danger"
         else:
             self.NCV_data[s.sample_ID]['FF_Formatted']['warn'] = "default"
@@ -440,7 +440,7 @@ class Statistics():
             'Ratio_13': {'upper':0.2012977, 'lower':0.1996}, ##
             'Ratio_18': {'upper':0.2517526, 'lower':0.2495}, ##
             'Ratio_21': {'upper':0.2524342, 'lower':0.2492}, ##
-            'NCD_Y': {'lower' : 80, 'lower2': -100,'upper': 1000}, ##
+            'NCD_Y': {'lower' : math.log10(80), 'upper': math.log10(1000)}, ##
             'FF_Formatted': {'lower':2},
             'Stdev_13' : {'upper' : 0.000673, 'lower' : 0},
             'Stdev_18' : {'upper' : 0.00137, 'lower' : 0},
@@ -475,14 +475,18 @@ class Statistics():
 
     def make_PCS(self):
         i=1
-        NCV_all = []
+        PCS_all = {}
         for batch_id in self.batch_ids:
             samps = NCV.query.filter(NCV.batch_id==batch_id)
             self.PCS[batch_id] = {} #{'x':[],'y':[],'sample':[]}
             for samp in samps:
                 if samp.sample_ID.split('-')[0].lower()=='pcs':
+                    pcs_id = samp.sample_ID.split('_')[0].lower()
+                    if not pcs_id in PCS_all.keys():
+                        PCS_all[pcs_id] = {'values' : [], 'ticks' : [], 'tresholds' : {}}
                     try:
-                        NCV_all.append(float(samp.NCV_X))
+                        PCS_all[pcs_id]['values'].append(float(samp.NCV_X))
+                        PCS_all[pcs_id]['ticks'].append(i)
                     except:
                         logging.exception('')
                         pass
@@ -495,9 +499,12 @@ class Statistics():
                         logging.exception('')
                         pass
             i+=1
-        med = float(statistics.median(NCV_all))
-        self.thresholds['PCS'] = {'lower' :med-1.45, 'upper':med +1.45}
- 
+        for pcs in PCS_all:
+            med = float(statistics.median(PCS_all[pcs]['values']))
+            PCS_all[pcs]['tresholds']['lower'] = [med - 1.45]*len(PCS_all[pcs]['ticks'])
+            PCS_all[pcs]['tresholds']['upper'] = [med + 1.45]*len(PCS_all[pcs]['ticks']) 
+        self.thresholds['PCS'] = PCS_all
+         
     def make_Library_nM(self):
         i=1
         for batch_id in self.batch_ids:
@@ -518,7 +525,6 @@ class Statistics():
             self.NonExcludedSites2Tags[batch_id]={'x':[],'y':[]}
             samps = Sample.query.filter(Sample.batch_id==batch_id)
             for samp in samps:
-                print samp.NonExcludedSites2Tags
                 try:
                     self.NonExcludedSites2Tags[batch_id]['y'].append(float(samp.NonExcludedSites2Tags))
                     self.NonExcludedSites2Tags[batch_id]['x'].append(i)
@@ -617,7 +623,7 @@ class Statistics():
             samps = NCV.query.filter(NCV.batch_id==batch_id)
             for samp in samps:
                 try:
-                    self.NCD_Y[batch_id]['y'].append(float(samp.NCD_Y))
+                    self.NCD_Y[batch_id]['y'].append(math.log10(float(samp.NCD_Y)))
                     self.NCD_Y[batch_id]['x'].append(i)
                 except:
                     logging.exception('')

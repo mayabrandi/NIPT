@@ -248,9 +248,11 @@ var layout = {
     data.push(box); 
 {% endfor %}
 {% endfor %}
-{% for tres in thresholds['PCS'].keys() %} 
-var line = {x : [0.5, 40.5],
-            y : [{{thresholds['PCS'][tres]}},{{thresholds['PCS'][tres]}}],
+
+{% for pcs in thresholds['PCS'].keys() %} 
+{% for tres in thresholds['PCS'][pcs]['tresholds'].keys() %} 
+var line = {x : {{thresholds['PCS'][pcs]['ticks']}},
+            y : {{thresholds['PCS'][pcs]['tresholds'][tres]}},
             mode: 'lines',
             showlegend: false, 
             name: "{{tres}}",
@@ -260,13 +262,16 @@ var line = {x : [0.5, 40.5],
                 width : 2}};
 data.push(line);
 {% endfor %}
+{% endfor %}
+
+
 Plotly.newPlot('PCS', data, layout);
 </script>
 
 
 
 <script>
-////////////////// XY_plot //////////////////
+////////////////// Ratio_13 //////////////////
 
 var XY_plot = document.getElementById('')
 var data = []
