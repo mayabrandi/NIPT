@@ -11,12 +11,11 @@ from datetime import datetime
 from views_utils import BatchDataFilter, DataBaseToCSV, DataClasifyer, PlottPage, Statistics
 import time
 
-
 BDF = BatchDataFilter()
 
 @app.route('/login/')
 def login():
-    callback_url = url_for('authorized', _external = True)
+    callback_url = url_for('authorized', _external=True)
     return google.authorize(callback=callback_url)
 
 
