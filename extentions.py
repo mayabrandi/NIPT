@@ -11,6 +11,7 @@ from flask.ext.login import LoginManager
 from flask_oauthlib.client import OAuth
 from flask_sslify import SSLify
 import ssl
+from werkzeug.contrib.fixers import ProxyFix
 
 
 # (ext lacks init_app...)
@@ -33,6 +34,8 @@ def ssl(app):
 
 app = Flask(__name__)
 app.config.from_pyfile('../../config/config.py')
+app.wsgi_app = ProxyFix(app.wsgi_app)
+
 mail = Mail(app)
 
 login_manager = LoginManager(app)
