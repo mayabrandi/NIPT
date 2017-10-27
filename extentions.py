@@ -1,7 +1,5 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask.ext.mail import Mail
-from argparse import ArgumentParser
 import json
 import csv
 import logging
@@ -9,26 +7,7 @@ import sys
 import glob
 from flask.ext.login import LoginManager
 from flask_oauthlib.client import OAuth
-from flask_sslify import SSLify
-import ssl
 from werkzeug.contrib.fixers import ProxyFix
-
-
-# (ext lacks init_app...)
-ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
-
-
-def ssl(app):
-  """Proxy function to setup Flask-SSLify extension."""
-  # Setup SSL: http://flask.pocoo.org/snippets/111/
-  if not app.debug:
-    ctx.load_cert_chain(app.config.get('SSL_CERT_PATH'),
-                        app.config.get('SSL_KEY_PATH'))
-
-  # https://github.com/kennethreitz/flask-sslify
-  # Force SSL. Redirect all incoming requests to HTTPS.
-  # Only takes effect when DEBUG=False
-  return SSLify(app)
 
 
 

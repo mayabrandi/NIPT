@@ -4,7 +4,7 @@ from flask_login import login_user,logout_user, current_user, login_required
 from flask.ext.mail import Message
 from flask_oauthlib.client import OAuthException
 from database import User, Sample, Batch, Coverage, NCV, BatchStat, db
-from extentions import login_manager, google, app, mail, ssl, ctx
+from extentions import login_manager, google, app, mail
 import logging
 import os
 from datetime import datetime
