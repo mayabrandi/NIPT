@@ -8,5 +8,8 @@
 *.py[cod]
 __pycache__/
 
+PNIPT.egg-info/
+instance/
+
 # ignore log
 NIPT_log
