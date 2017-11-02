@@ -113,9 +113,9 @@
                 {% endif %}
             </div> <!--jumbotron-->
             <ul class="nav nav-tabs" id="myTab">
-                                <li class="active"><a href="{{url_for('sample', batch_id = batch_id)}}">NCV Table</a>
+                                <li><a href="{{url_for('sample', batch_id = batch_id)}}">NCV Table</a>
                                 </li>
-                                <li><a href="{{url_for('NCV13_plot', batch_id = batch_id)}}" >NCV13</a>
+                                <li class="active"><a href="{{url_for('NCV13_plot', batch_id = batch_id)}}" >NCV13</a>
                                 </li>
                                 <li><a href="{{url_for('NCV18_plot', batch_id = batch_id)}}">NCV18</a>
                                 </li>
@@ -128,73 +128,10 @@
                                 </li>
                                 {% endif %}
             </ul>
-            <div class="tab-content">
-            <div class="tab-pane fade in active" id='table'>
-                <div class="col-lg-16">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <form action="{{ url_for('update') }}" method="post">
-                                    <table id="batch_table" class="table table-bordered table-hover" >
-                                        <thead>
-                                            <tr>
-                                            <th>Sample Name</th>
-                                            <th>NCV13</th>
-                                            <th>NCV18</th>
-                                            <th>NCV21</th>
-                                            <th>NCVX</th>
-                                            <th>NCVY</th>
-                                            <th>FF</th>
-                                            <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="XX, XY or ambigous. Automatically generated. Based on pre defined NCV trsholds">Sex</a></th>
-                                            <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Warning for chomosome abnormality. Automatically generated. Based on pre defined NCV trsholds">Warning</a></th>
-                                            <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Chomosome abnormalies. Manually classified by user through the sample page">Status</a></th>
-                                            <th>Include</th>
-                                            <th>Comment</th>
-                                            <th>Last Change</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for s in NCV_samples %}
-                                        <tr>
-                                            <td width="20%"> <a href={{ url_for('sample_page', sample_id=s.sample_ID) }}>{{ s.sample_name }}</a></td>
-                                            <td width="4%" class = "{{ batch_table_data[s.sample_ID]['NCV_13']['warn']}}">{{ batch_table_data[s.sample_ID]['NCV_13']['val'] }}</td>
-                                            <td width="4%" class = "{{ batch_table_data[s.sample_ID]['NCV_18']['warn']}}">{{ batch_table_data[s.sample_ID]['NCV_18']['val'] }}</td>
-                                            <td width="4%" class = "{{ batch_table_data[s.sample_ID]['NCV_21']['warn']}}">{{ batch_table_data[s.sample_ID]['NCV_21']['val'] }}</td>
-                                            <td width="4%" class = "{{ batch_table_data[s.sample_ID]['NCV_X']['warn']}}">{{ batch_table_data[s.sample_ID]['NCV_X']['val'] }}</td>
-                                            <td width="4%" class = "{{ batch_table_data[s.sample_ID]['NCV_Y']['warn']}}">{{ batch_table_data[s.sample_ID]['NCV_Y']['val'] }}</td>
-                                            <td width="4%" class = "{{batch_table_data[s.sample_ID]['FF_Formatted']['warn']}}">{{s.sample.FF_Formatted}}</td>
-                                            <th width="2%"><p> <small>{{ NCV_sex[s.sample_ID]  }}</small></p></th>
-                                            <th><p> <small>{{ warnings[s.sample_ID]  }}</small></p></th>
-                                            <th><p> <small>{{ man_class[s.sample_ID] }}</small></p></th>
-                                            <td width="1%" {% if s.include %}class="success"{% endif %}> <input type="checkbox" name="{{ s.sample_ID }}" {% if s.include %}checked{% endif %}></td>
-                                            <td width="18%">
-                                                <div class="form-group">
-                                                    <textarea class="form-control" rows="1" name = "comment_{{ s.sample_ID }}">{{s.comment}}</textarea>
-                                                </div>
-                                            </td>
-                                            <td ><small>{{s.change_include_date}}</small></td>
-                                        </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                    <p align="right">
-                                                    <input type="submit" class="btn btn-warning" value="Save checked samples">
-                                                    <button type="submit" class="btn btn-warning" name="All samples" value="{{sample_ids}}"> Set all OK</button>
-                                                    </p>
-                                            </tr>
-                                            <tr>
-                                                    <p>Samples checked in the 'Include' column are added to the validation sample set for comparison. Check the checkboxes for samples to include and save. If all samples are ok, just press 'set all OK'.</p>
-                                                <input type=text name="sample_ids" value="{{sample_ids}}" hidden>
-                                                <input type=text name="current_user" value="{{current_user.name}}" hidden>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </form>
-                            </div>
-                        </div>
+            <div class="tab-pane active" id='NCV_13'>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="NCV131821NCV_13" style="min-width:400px; height:800px; "></div><br><br>
                     </div>
                 </div>
             </div>
@@ -213,6 +150,103 @@
 <script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.colVis.min.js"></script>
+
+<script>
+    $(function () {
+    {% for chrom in ['13'] %}
+    var data = []
+    var layout = {
+        legend:{hovermode:'closest' },
+        hovermode:'closest',
+        annotations : [],
+        xaxis :{showline: true,
+                ticktext : {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
+                tickvals : {{NCV_stat['NCV_'+chrom]['x_axis']}},
+                tickangle : 20,
+                linecolor: '#636363',
+                linewidth: 5,
+                showgrid: true,
+                gridcolor: '#bdbdbd'
+                },
+            
+        yaxis :{range: [-10,],
+                zeroline: false,
+                showline: true,
+                showgrid: false,
+                linecolor: '#636363',
+                linewidth: 5,
+                title : 'NCV{{chrom}}'
+                }};
+
+    {% for line  in tris_thresholds %}
+        layout["annotations"].push({
+            x: {{NCV_stat['NCV_'+chrom]['x_range'][-1]}},
+            y: {{tris_thresholds[line]['NCV']}},
+            xref: 'x',
+            yref: 'y',
+            text: "{{tris_thresholds[line]['text']}}",
+            showarrow: false,
+            xanchor:'left',
+            ax: 20,
+            ay: -30,
+            font: {
+            color:"{{tris_thresholds[line]["color"]}}",
+            family: 'Courier New, monospace',
+            size: 15
+             }})
+        var line = {x : {{NCV_stat['NCV_'+chrom]['x_range']}},
+            y : [{{tris_thresholds[line]['NCV']}},{{tris_thresholds[line]['NCV']}}],
+            mode: 'lines',
+            showlegend: false,
+            line: {
+                dash  : "dot",
+                color : "{{tris_thresholds[line]["color"]}}",
+                width : 2},
+                name  : "{{line}}"};
+        data.push(line);
+    {% endfor %}
+
+    {% for abn_status  in abn_status_list %}
+        var verif = {                                                                  
+            name: "{{abn_status}} T{{chrom}} (N={{tris_chrom_abn[chrom][abn_status]['nr']}})",
+            y: {{tris_chrom_abn[chrom][abn_status]['NCV']}},                                        
+            x: {{tris_chrom_abn[chrom][abn_status]['x_axis']}} ,
+            text: {{tris_chrom_abn[chrom][abn_status]['s_name']|tojson}},                                       
+            mode: 'markers',
+            marker: {symbol :"square",
+                     color: "{{ncv_abn_colors[abn_status]}}", 
+                     size: {{abn_size}}},                                                   
+            type: 'scatter'}; 
+        data.push(verif);
+    {% endfor %}
+
+
+    var trace1 = {
+    name: "Current batch (N={{NCV_stat['NCV_'+chrom]['nr_cases']}})",
+      y: {{NCV_stat['NCV_'+chrom]['NCV_cases']}},
+      x: {{NCV_stat['NCV_'+chrom]['x_axis']}},
+      text: {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
+      mode: 'markers',
+      type: 'scatter',
+    marker: {
+            color: 'rgb(102, 102, 102)',
+            size: {{case_size}}
+            }};
+    var box = {
+    y: {{NCV_stat['NCV_'+chrom]['NCV_pass'][0]}},
+    pointpos: 30,
+    type: 'box',
+    marker: {
+        color: '#ccccb3'},
+        name: 'Negative (N={{NCV_stat['NCV_'+chrom]['nr_pass']}})',
+        hoverinfo:'none'};
+
+    data.push(trace1)
+    data.push(box)
+    Plotly.newPlot({{'NCV131821NCV_'+chrom}}, data, layout);
+    {% endfor %}    
+    });
+</script>
 
 <script>
     $(document).ready(function(){

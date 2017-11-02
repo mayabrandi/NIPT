@@ -22,6 +22,5 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 app.debug = True
 
 # set a 'SECRET_KEY' to enable the Flask session cookies
-app.config['SECRET_KEY'] = 'hemlignyckel'
-
+#app.config['RECORD_QUERIES'] = True
 toolbar = DebugToolbarExtension(app)

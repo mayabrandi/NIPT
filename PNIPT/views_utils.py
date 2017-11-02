@@ -285,7 +285,6 @@ class DataClasifyer():
 class PlottPage():
     """Class to preppare data for NCV plots"""
     def __init__(self, batch_id, BDF):
-        self.NCV_include        =   NCV.query.filter(NCV.include)
         self.batch_id           =   batch_id
         self.NCV_passed         =   BDF.NCV_passed
         self.NCV_normal         =   BDF.NCV_normal
@@ -374,16 +373,44 @@ class PlottPage():
                 'NCV_pass' : NCV_pass,
                 'NCV_pass_names' : NCV_pass_names}
 
+    def _build_tris_chrom_abn_dict(self):
+        tris_chrom_abn     =   {'13':{}, '18':{}, '21':{}}
+        for abn in tris_chrom_abn:
+            for status in self.sample_state_dict.keys():
+                tris_chrom_abn[abn][status] = {'NCV' : [], 's_name' : [], 'x_axis': [], 'nr': 0} 
+        self.tris_chrom_abn = tris_chrom_abn
+
+
+ 
+
+    def make_tris_chrom_abn(self, abnorm_samples, abn):
+        self._build_tris_chrom_abn_dict()
+        status_x = {'Probable':0.1,'Verified':0.2,'False Positive':0.3,'False Negative':0.4, 'Suspected':0.5, 'Other': 0.6}
+        for status in self.sample_state_dict.keys():
+            self.tris_abn[status] = {'NCV' : [], 's_name' : [], 'x_axis': []}
+        #t[0].NCV[0].NCV_13    
+
+        for sample in abnorm_samples:
+            status = sample.__dict__['status_T' + abn]
+            NCV_val = sample.NCV[0].__dict__['NCV_' + abn] 
+            if NCV_val!= 'NA':
+                self.tris_abn[status]['NCV'].append(float(NCV_val))
+                self.tris_abn[status]['s_name'].append(sample.sample_name)
+                self.tris_abn[status]['x_axis'].append(status_x[status])
+                self.tris_chrom_abn[abn][status]['NCV'].append(float(NCV_val))
+                self.tris_chrom_abn[abn][status]['s_name'].append(sample.sample_name)
+                self.tris_chrom_abn[abn][status]['x_axis'].append(status_x[status]-0.2)#.append(0)
+                self.tris_chrom_abn[abn][status]['nr']+=1
+
     def make_chrom_abn(self): 
         x = 1
         status_x = {'Probable':0.1,'Verified':0.2,'False Positive':0.3,'False Negative':0.4, 'Suspected':0.5, 'Other': 0.6}
         for status in self.sample_state_dict.keys():
-            
             self.tris_abn[status] = {'NCV' : [], 's_name' : [], 'x_axis': []}
         for abn in ['13','18','21']:
             for status in self.sample_state_dict.keys():                                      
                 self.tris_chrom_abn[abn][status] = {'NCV' : [], 's_name' : [], 'x_axis': [], 'nr': 0}             
-                for s in Sample.query.filter(Sample.__dict__['status_T'+abn] == status):
+                for s in Sample.query.filter(Sample.__dict__['status_T' + abn] == status):
                     S_NCV = NCV.query.filter_by(sample_ID = s.sample_ID).first()
                     NCV_val = S_NCV.__dict__['NCV_' + abn]
                     if S_NCV.include and (NCV_val!= 'NA'):

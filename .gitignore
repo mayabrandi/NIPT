@@ -10,6 +10,8 @@ __pycache__/
 
 PNIPT.egg-info/
 instance/
+build/
+dist/
 
 # ignore log
 NIPT_log
