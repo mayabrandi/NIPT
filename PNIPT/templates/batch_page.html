@@ -113,18 +113,18 @@
                 {% endif %}
             </div> <!--jumbotron-->
             <ul class="nav nav-tabs" id="myTab">
-                                <li class="active"><a href="{{url_for('sample', batch_id = batch_id)}}">NCV Table</a>
+                                <li><a href="#table" data-toggle="tab">NCV Table</a>
                                 </li>
-                                <li><a href="{{url_for('NCV13_plot', batch_id = batch_id)}}" >NCV13</a>
+                                <li><a href="#NCV_13" data-toggle="tab">NCV13</a>
                                 </li>
-                                <li><a href="{{url_for('NCV18_plot', batch_id = batch_id)}}">NCV18</a>
+                                <li><a href="#NCV_18" data-toggle="tab">NCV18</a>
                                 </li>
-                                <li><a href="{{url_for('NCV21_plot', batch_id = batch_id)}}">NCV21</a>
+                                <li><a href="#NCV_21" data-toggle="tab">NCV21</a>
                                 </li>
-                                <li><a href="{{url_for('NCVXY_plot', batch_id = batch_id)}}">NCVXY</a>
+                                <li><a href="#NCV_XY" data-toggle="tab">NCVXY</a>
                                 </li>
                                 {% if bool_warns %}
-                                <li><a href="{{url_for('coverage_plot', batch_id = batch_id)}}">Coverage (Chr 1-22)</a>
+                                <li><a href="#norm_cov" data-toggle="tab">Coverage (Chr 1-22)</a>
                                 </li>
                                 {% endif %}
             </ul>
@@ -198,6 +198,66 @@
                     </div>
                 </div>
             </div>
+            <div class="tab-pane active" id='NCV_13'>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="NCV131821NCV_13" style="min-width:400px; height:800px; "></div><br><br>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane active" id='NCV_18'>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="NCV131821NCV_18" style="min-width:400px; height:800px; "></div><br><br>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane active" id='NCV_21'>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="NCV131821NCV_21" style="min-width:400px; height:800px; "></div><br><br>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane active" id='NCV_XY'>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="NCVXY" style="min-width:400px; height:800px; ">
+                        </div>
+                            <div align="right" style="margin-right: 2.0cm;">
+                                <table width="300">
+                                    <tr height="1" style="border-bottom: 1px solid black">
+                                        <td><strong><p style="font-size:12px">Class</font></strong></td>
+                                        <td><strong><p style="font-size:12px">XXX</p></strong></td>
+                                        <td><strong><p style="font-size:12px">XYY</p></strong></td>
+                                        <td><strong><p style="font-size:12px">XXY</p></strong></td>
+                                        <td><strong><p style="font-size:12px">X0</p></strong></td>
+                                    </tr>
+                                    {% for abn in ncv_abn_colors.keys() %}
+                                    <tr height="0,5">
+                                        <td><p style="font-size:12px"><font color="{{ncv_abn_colors[abn]}}"><strong>{{abn}}</strong></font></p></td>
+                                        <td><p style="font-size:12px">{{sex_chrom_abn["XXX"][abn]['nr_cases']}}</p></td>
+                                        <td><p style="font-size:12px">{{sex_chrom_abn["XYY"][abn]['nr_cases']}}</p></td>
+                                        <td><p style="font-size:12px">{{sex_chrom_abn["XXY"][abn]['nr_cases']}}</p></td>
+                                        <td><p style="font-size:12px">{{sex_chrom_abn["X0"][abn]['nr_cases']}}</p></td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if bool_warns %}
+                <div class="tab-pane active" id='norm_cov'>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div id="cov_plot" style="min-width:400px; height:800px; "></div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div> <!--tab-pane fade in active-->
+            </div> <!--tab-conten-->
         </div> <!--container-->
     </div>  <!--wrapper-->
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -214,6 +274,271 @@
 <script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.colVis.min.js"></script>
 
+<script>
+    $(function () {
+    {% for chrom in ['13','18','21'] %}
+    var data = []
+    var layout = {
+        legend:{hovermode:'closest' },
+        hovermode:'closest',
+        annotations : [],
+        xaxis :{showline: true,
+                ticktext : {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
+                tickvals : {{NCV_stat['NCV_'+chrom]['x_axis']}},
+                tickangle : 20,
+                linecolor: '#636363',
+                linewidth: 5,
+                showgrid: true,
+                gridcolor: '#bdbdbd'
+                },
+            
+        yaxis :{range: [-10,],
+                zeroline: false,
+                showline: true,
+                showgrid: false,
+                linecolor: '#636363',
+                linewidth: 5,
+                title : 'NCV{{chrom}}'
+                }};
+
+    {% for line  in tris_thresholds %}
+        layout["annotations"].push({
+            x: {{NCV_stat['NCV_'+chrom]['x_range'][-1]}},
+            y: {{tris_thresholds[line]['NCV']}},
+            xref: 'x',
+            yref: 'y',
+            text: "{{tris_thresholds[line]['text']}}",
+            showarrow: false,
+            xanchor:'left',
+            ax: 20,
+            ay: -30,
+            font: {
+            color:"{{tris_thresholds[line]["color"]}}",
+            family: 'Courier New, monospace',
+            size: 15
+             }})
+        var line = {x : {{NCV_stat['NCV_'+chrom]['x_range']}},
+            y : [{{tris_thresholds[line]['NCV']}},{{tris_thresholds[line]['NCV']}}],
+            mode: 'lines',
+            showlegend: false,
+            line: {
+                dash  : "dot",
+                color : "{{tris_thresholds[line]["color"]}}",
+                width : 2},
+                name  : "{{line}}"};
+        data.push(line);
+    {% endfor %}
+
+    {% for abn_status  in abn_status_list %}
+        var verif = {                                                                  
+            name: "{{abn_status}} T{{chrom}} (N={{tris_chrom_abn[chrom][abn_status]['nr']}})",
+            y: {{tris_chrom_abn[chrom][abn_status]['NCV']}},                                        
+            x: {{tris_chrom_abn[chrom][abn_status]['x_axis']}} ,
+            text: {{tris_chrom_abn[chrom][abn_status]['s_name']|tojson}},                                       
+            mode: 'markers',
+            marker: {symbol :"square",
+                     color: "{{ncv_abn_colors[abn_status]}}", 
+                     size: {{abn_size}}},                                                   
+            type: 'scatter'}; 
+        data.push(verif);
+    {% endfor %}
+
+
+    var trace1 = {
+    name: "Current batch (N={{NCV_stat['NCV_'+chrom]['nr_cases']}})",
+      y: {{NCV_stat['NCV_'+chrom]['NCV_cases']}},
+      x: {{NCV_stat['NCV_'+chrom]['x_axis']}},
+      text: {{NCV_stat['NCV_'+chrom]['X_labels']|tojson}},
+      mode: 'markers',
+      type: 'scatter',
+    marker: {
+            color: 'rgb(102, 102, 102)',
+            size: {{case_size}}
+            }};
+    var box = {
+    y: {{NCV_stat['NCV_'+chrom]['NCV_pass'][0]}},
+    pointpos: 30,
+    type: 'box',
+    marker: {
+        color: '#ccccb3'},
+        name: 'Negative (N={{NCV_stat['NCV_'+chrom]['nr_pass']}})',
+        hoverinfo:'none'};
+
+    data.push(trace1)
+    data.push(box)
+    Plotly.newPlot({{'NCV131821NCV_'+chrom}}, data, layout);
+    {% endfor %}    
+    });
+</script>
+
+<script>
+    var XY_plot = document.getElementById('NCVXY')
+    var data = []
+    var layout = {
+    annotations : [],
+    title: 'X vs Y',
+    legend:{hovermode:'closest' },
+    hovermode:'closest',
+    xaxis :{showline: true,
+            zeroline: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            showgrid: false,
+            gridcolor: '#bdbdbd',
+            title: 'NCVX'
+            },
+            
+    yaxis :{range: [-50,],
+            zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'NCVY'
+            },};
+    var backstat = {
+    y: {{NCV_stat['NCV_Y']['NCV_pass'][0]}},
+    x: {{NCV_stat['NCV_X']['NCV_pass'][0]}},
+    text: {{NCV_stat['NCV_X']['NCV_pass_names'][0]|tojson}},
+    name: 'Negative (N={{NCV_stat['NCV_Y']['nr_pass']}})',
+    hoverinfo:'none',
+    mode: 'markers',
+    type: 'scatter',
+    marker: {color: '#ccccb3'}}
+    data.push(backstat);
+    var i = 0
+
+    {% for abn  in sex_chrom_abn.keys() %} 
+    {% for abn_status  in abn_status_list %} 
+    var verif = {                                                                  
+            name: '{{abn}} {{abn_status}} (N={{sex_chrom_abn[abn][abn_status]['nr_cases']}})',                                                               
+            y: {{sex_chrom_abn[abn][abn_status]['NCV_Y']}},                                        
+            x: {{sex_chrom_abn[abn][abn_status]['NCV_X']}},
+            text: {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}},                                       
+        mode: 'markers',
+        marker: {   size: {{abn_size}},
+                    symbol :"square",
+                    color: "{{ncv_abn_colors[abn_status]}}"} ,                                                   
+                    type: 'scatter'              
+                }; 
+    data.push(verif);
+    var i = i +1
+    {% endfor %}
+    {% endfor %}
+
+    {% for line  in sex_tresholds %} 
+        layout["annotations"].push({
+            x: {{sex_tresholds[line]['text_position'][0]}},
+            y: {{sex_tresholds[line]['text_position'][1]}},
+            xref: 'x',
+            yref: 'y',
+            text: "{{sex_tresholds[line]['text']}}",
+            showarrow: true,
+            xanchor:'left',
+            arrowcolor:'red',
+            arrowwidth: 0.5,
+            arrowhead: 0.5,
+            opacity : 0.5,
+            ax: -50,
+            ay: 30,
+            font: {
+                color: 'red',
+                family: 'Courier New, monospace',
+                size: 15
+             }})
+        var line = {
+            x : {{sex_tresholds[line]['x']}},
+            y : {{sex_tresholds[line]['y']}},
+            mode: 'lines',
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : 'red',
+                width : 2},
+            name: "{{line}}"};
+    data.push(line);
+    {% endfor %}
+    {% for i in samp_range %}
+    var trace1 = {
+    y: [{{NCV_stat['NCV_Y']['NCV_cases'][i]}}],
+    x: [{{NCV_stat['NCV_X']['NCV_cases'][i]}}],
+    name: {{NCV_stat['NCV_X']['X_labels'][i]|tojson}},
+    mode: 'markers',
+    text: {{NCV_stat['NCV_X']['X_labels'][i]|tojson}},
+    type: 'scatter',
+    marker: {
+            color: '{{many_colors[i]}}',
+            size: {{case_size}}
+            }};
+    data.push(trace1);
+    {% endfor %}
+
+    var trace = {
+    x: [-15, 0, 8, -20, -8, 0],
+    y: [-50, -50, -50, 300, 300, 300],
+    mode: 'text',
+    name: 'NCV Clasifications',
+    text: ['<b>X0</b>', '<b>XX</b>', '<b>XXX</b>','<b>XY</b>','<b>XYY</b>','<b>XXY</b>'],
+    hoverinfo:'none',
+    opacity : 0.7,
+    textposition: 'top',
+    showlegend: false,
+    textfont: {
+    size: 18,
+    },
+    type: 'scatter'
+    };
+
+    data.push(trace);
+    Plotly.newPlot('NCVXY', data, layout);
+    //XY_plot.on('plotly_click', function(verif){
+    // var pts = '';
+    // for(var i=0; i<verif.points.length; i++){
+    //      pts=verif.points[i].data.name
+    //   }
+    //    alert(pts);
+    //window.location.href = 'http://127.0.0.1:5000/NIPT/samples/'+pt;
+    //});
+</script>
+
+
+
+<script>
+    var XY_plot = document.getElementById('cov_plot')
+    var data = []
+    var layout = {
+    title: 'Normalized Coverage',
+    legend:{hovermode:'closest' },
+    hovermode:'closest',
+    xaxis :{showline: true,
+            zeroline: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            showgrid: true,
+            gridcolor: '#bdbdbd',
+            title: 'Chromosome',
+            tickvals :{{samp_cov_db['x_axis']}},
+            },            
+    yaxis :{zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'Normalized Coverage'
+            },};
+    {% for key, samp in samp_cov_db['samples'] %}
+    var trace1 = {
+        name: {{samp['samp_id']|tojson}},
+        y: {{samp['cov']}},
+        x: {{samp_cov_db['x_axis']}},
+        mode: 'markers',
+        marker: {color: {{cov_colors[loop.index]|tojson}}},
+        text: {{samp['samp_id']|tojson}},
+        type: 'scatter'};
+    data.push(trace1);
+    {% endfor %}
+    Plotly.newPlot('cov_plot', data, layout);
+</script>
 <script>
     $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   

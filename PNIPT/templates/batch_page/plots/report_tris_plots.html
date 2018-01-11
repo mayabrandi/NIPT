@@ -1,0 +1,84 @@
+{% block content %}
+<script>
+    tris_dict = {{tris_chrom_abn|tojson}}
+    case_data={{case_data|tojson}}
+    $(function () {
+    {% for chrom in ['13','18','21'] %}
+    var data = []
+    var layout = {
+    legend:{hovermode:'closest' },
+    hovermode:'closest',
+    annotations : [],
+    xaxis :{showline: true,
+            ticktext : {{case_data['NCV_'+chrom]['X_labels']|tojson}},
+            tickvals : {{case_data['NCV_'+chrom]['x_axis']}},
+            tickangle : 20,
+            linecolor: '#636363',
+            linewidth: 5,
+            showgrid: true,
+            gridcolor: '#bdbdbd'
+            },
+            
+    yaxis :{range: [-10,],
+            zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'NCV{{chrom}}'
+            }};
+    {% for line  in tris_thresholds %} 
+       
+        var line = {x : {{case_data['NCV_'+chrom]['x_range']}},
+            y : [{{tris_thresholds[line]['NCV']}},{{tris_thresholds[line]['NCV']}}],
+            mode: 'lines',
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : '{{tris_thresholds[line]['color']}}',
+                width : 2},
+            name: "{{line}}"};
+    data.push(line);
+    {% endfor %}
+    {% for abn_status  in abn_status_list %}
+    var verif = {                                                                  
+            name: "{{abn_status}} T{{chrom}} (N={{tris_chrom_abn[chrom][abn_status]['nr']}})",                                                               
+            y: {{tris_chrom_abn[chrom][abn_status]['NCV']}},                                        
+            x: {{tris_chrom_abn[chrom][abn_status]['x_axis']}} ,
+            text: {{tris_chrom_abn[chrom][abn_status]['s_name']|tojson}},                                       
+        mode: 'markers',
+        marker: {symbol :"{{abn_symbol}}",
+                color: "{{ncv_abn_colors[abn_status]}}",
+                size: {{abn_size}},
+                } ,                                                   
+        type: 'scatter',                                                            
+        }; 
+    data.push(verif);
+    {% endfor %}
+    var trace1 = {
+    name: "Current batch (N={{case_data['NCV_'+chrom]['nr_cases']}})",
+      y: {{case_data['NCV_'+chrom]['NCV_cases']}},
+      x: {{case_data['NCV_'+chrom]['x_axis']}},
+      text: {{case_data['NCV_'+chrom]['X_labels']|tojson}},
+      mode: 'markers',
+      type: 'scatter',
+    marker: {
+            color: 'rgb(102, 102, 102)',
+            size: {{case_size}}
+            }};
+    var box = {
+    y: {{case_data['NCV_'+chrom]['NCV_pass']}},
+    pointpos: 30,
+    type: 'box',
+    marker: {
+        color: '#ccccb3'},
+        name: 'Negative (N={{case_data['NCV_'+chrom]['nr_pass']}})',
+        hoverinfo:'none'};
+    data.push(trace1)
+    data.push(box)
+    Plotly.newPlot({{'NCV131821NCV_'+chrom}}, data, layout);
+    {% endfor %}    
+    });
+</script>
+
+{% endblock %}

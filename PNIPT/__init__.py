@@ -23,4 +23,4 @@ app.debug = True
 
 # set a 'SECRET_KEY' to enable the Flask session cookies
 #app.config['RECORD_QUERIES'] = True
-toolbar = DebugToolbarExtension(app)
+#toolbar = DebugToolbarExtension(app)
