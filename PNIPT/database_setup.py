@@ -11,8 +11,8 @@ import logging
 import os
 import sys
 import glob
-from extentions import app
-from database import db, Batch, NCV, Coverage, Sample, User ,BatchStat
+from PNIPT import app
+from PNIPT.database import db, Batch, NCV, Coverage, Sample, User ,BatchStat
 
 class BatchMaker():
 
@@ -81,8 +81,12 @@ class BatchMaker():
 
     def parse_path(self, flowcell_id):
         nipt_results = app.config.get('ANALYSIS_PATH') +'*' + flowcell_id + '*/*NIPT_RESULTS.csv'
-        sample_sheet = app.config.get('RUN_FOLDER_PATH')+'*' + flowcell_id + '*/SampleSheet.csv'        
-        if glob.glob(nipt_results) and glob.glob(sample_sheet):
+        sample_sheet = app.config.get('RUN_FOLDER_PATH')+'*' + flowcell_id + '*/SampleSheet.csv'
+        if not glob.glob(sample_sheet):
+            logging.exception('Sample sheet missing') 
+        elif not glob.glob(nipt_results):
+            logging.exception('Results file missing') 
+        else:      
             self.nipt_results = glob.glob(nipt_results)[0]
             self.sample_sheet = glob.glob(sample_sheet)[0]
 
@@ -112,6 +116,7 @@ def main(flowcell_ids, users_file):
     NDBS.set_users(users_file)
 
     for flowcell_id in flowcell_ids:
+        #import ipdb; ipdb.set_trace()
         BM = BatchMaker(db)
         BM.parse_path(flowcell_id)
         BM.get_run_folder_info()

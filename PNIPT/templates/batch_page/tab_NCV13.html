@@ -1,0 +1,39 @@
+{% extends 'layout/layout.html' %}
+
+{% block body %}
+{% include 'layout/navigation.html' %}
+<div class="container-fluid">
+    {% include 'batch_page/batch_header.html' %}
+    <ul class="nav nav-tabs" id="myTab">
+        <li><a href="{{url_for('sample', batch_id = batch_id)}}">NCV Table</a>
+        </li>
+        <li class="active"><a href="{{url_for('NCV13_plot', batch_id = batch_id)}}" >NCV13</a>
+        </li>
+        <li><a href="{{url_for('NCV18_plot', batch_id = batch_id)}}">NCV18</a>
+        </li>
+        <li><a href="{{url_for('NCV21_plot', batch_id = batch_id)}}">NCV21</a>
+        </li>
+        <li><a href="{{url_for('NCVXY_plot', batch_id = batch_id)}}">NCVXY</a>
+        </li>
+        {% if bool_warns %}
+        <li><a href="{{url_for('coverage_plot', batch_id = batch_id)}}">Coverage (Chr 1-22)</a>
+        </li>
+        {% endif %}
+    </ul>
+    <div class="tab-pane active" id='NCV_13'>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div id="NCV_plot" style="min-width:400px; height:800px; "></div><br><br>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% include 'batch_page/plots/batch_tris_plot.html' %}
+{% endblock %}
+
+
+
+

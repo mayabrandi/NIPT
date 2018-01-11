@@ -3,18 +3,8 @@ DESC="""Model definitions for the NIPT-database.
 
 Written by Maya Brandi"""
 
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask.ext.mail import Mail
-from argparse import ArgumentParser
-import json
-import csv
-import logging
-import sys
-import glob
-from flask.ext.login import LoginManager
-from flask_oauthlib.client import OAuth
-from extentions import app
+from PNIPT import app
 db = SQLAlchemy(app)
 
 
@@ -96,7 +86,7 @@ class Sample(db.Model):
     comment_XXX = db.Column(db.String(255), unique = False)
     comment_XXY = db.Column(db.String(255), unique = False)
     comment_XYY = db.Column(db.String(255), unique = False)
-
+    FF_Formatted = db.Column(db.String(255), unique = False)
 
     def __init__(self, nipt_dict, batch):
         self.batch = batch
@@ -147,6 +137,7 @@ class Sample(db.Model):
         self.comment_XXY = ''
         self.comment_XYY = ''
         self.comment_X0 = ''
+        self.FF_Formatted =  nipt_dict['FF_Formatted']
 
     def __repr__(self):
         return '<User %r>' % self.sample_ID
