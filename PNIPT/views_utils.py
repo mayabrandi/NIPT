@@ -106,6 +106,7 @@ class BatchDataFilter():
             control_normal_X.append(float(s.NCV_X))
             control_normal_Y.append(float(s.NCV_Y))
             control_normal_XY_names.append(s.sample_name)
+
         return control_normal_X, control_normal_Y, control_normal_XY_names 
 
     def batch_data(self, batch_id):
@@ -213,14 +214,16 @@ class DataClasifyer():
     def _get_FF_warning(self, s, samp_warn):
         self.NCV_data[s.sample_ID]['FF_Formatted'] = {}
         try:
-            FetalFraction = int(s.sample.FF_Formatted.rstrip('%').lstrip('<'))
+            FetalFraction = float(s.sample.FF_Formatted.rstrip('%').lstrip('<'))
         except:
             FetalFraction = None
-        if FetalFraction and FetalFraction < 2:
-            samp_warn.append('FF')
-            self.NCV_data[s.sample_ID]['FF_Formatted']['warn'] = "danger"
-        else:
-            self.NCV_data[s.sample_ID]['FF_Formatted']['warn'] = "default"
+        if FetalFraction:
+            self.NCV_data[s.sample_ID]['FF_Formatted']['val'] = FetalFraction
+            if FetalFraction < 2:
+                samp_warn.append('FF')
+                self.NCV_data[s.sample_ID]['FF_Formatted']['warn'] = "danger"
+            else:
+                self.NCV_data[s.sample_ID]['FF_Formatted']['warn'] = "default"
         return samp_warn
 
     def _get_sex_warn(self,s, samp_warn):
@@ -401,6 +404,66 @@ class PlottPage():
 
 
 ################################################################################################
+
+class FetalFraction():
+    """Class to prepare Fetal Fraction Plots"""
+    def __init__(self,batch_id):
+        self.dbNCV = NCV.query.filter(NCV.batch_id == batch_id).all()
+        self.dbSample = Sample.query.filter(Sample.batch_id == batch_id).all()  
+        self.samples = {}
+        self.control = {'NCV_X':[],'NCV_Y':[],'FF':[]}
+        self.perdiction = {'NCV_X':{},'NCV_Y':{}}
+
+    def form_prediction_interval(self):
+        
+        #y=0.0545x + 5.9299
+        self.perdiction['NCV_Y']['max'] = {'x':[0,500],'y':[5.9299,33.1799]}
+        
+        #y=0.0545x - 3.3899
+        self.perdiction['NCV_Y']['min'] = {'x':[0,500],'y':[-3.3899,23.8601]}
+
+        #y=-0.8074x + 7.861
+        self.perdiction['NCV_X']['min'] = {'x':[-30,5],'y':[32.083,3.824]}
+
+        #y=-0.8062x - 3.2337
+        self.perdiction['NCV_X']['max'] = {'x':[-30,5],'y':[20.9523,-7.2647]}
+
+
+    def format_case_dict(self):
+        for samp in self.dbSample:
+            self.samples[samp.sample_name] = {}
+            self.samples[samp.sample_name]['FF'] = int(samp.FF_Formatted.rstrip('%'))
+        for samp in self.dbNCV:
+            self.samples[samp.sample_name]['NCVY'] = float(samp.NCV_Y)
+            self.samples[samp.sample_name]['NCVX'] = float(samp.NCV_X)
+
+    def format_contol_dict(self):
+        FF_normal = Sample.query.filter(Sample.FF_Formatted!=None,
+                                        Sample.status_X0 == "Normal",
+                                        Sample.status_XXX == "Normal",
+                                        Sample.status_XXY == "Normal",
+                                        Sample.status_XYY == "Normal")
+        FF_normal=FF_normal.join(NCV).filter(NCV.NCV_X!='NA', NCV.NCV_Y!='NA',NCV.include==True).all()
+
+        NCV_normal = NCV.query.filter(NCV.NCV_X!='NA', NCV.NCV_Y!='NA',NCV.include==True)
+        NCV_normal=NCV_normal.join(Sample).filter(Sample.FF_Formatted!=None,
+                                        Sample.status_X0 == "Normal",
+                                        Sample.status_XXX == "Normal",
+                                        Sample.status_XXY == "Normal",
+                                        Sample.status_XYY == "Normal").all()
+
+
+        for sample in FF_normal:
+            self.control['FF'].append(int(sample.FF_Formatted.rstrip('%')))
+
+        for sample in NCV_normal:
+            self.control['NCV_X'].append(float(sample.NCV_X))
+            self.control['NCV_Y'].append(float(sample.NCV_Y))
+
+
+
+
+
 
 class Statistics():
     """Class to preppare data for NCV plots"""

@@ -15,6 +15,8 @@
         </li>
         <li><a href="{{url_for('NCVXY_plot', batch_id = batch_id)}}">NCVXY</a>
         </li>
+        <li><a href="{{url_for('FF_plot', batch_id = batch_id)}}">FF</a>
+        </li>
         {% if bool_warns %}
         <li><a href="{{url_for('coverage_plot', batch_id = batch_id)}}">Coverage (Chr 1-22)</a>
         </li>
