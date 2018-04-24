@@ -1,0 +1,147 @@
+{% block content %}
+<script>
+        var XY_plot = document.getElementById('FFNCVY')
+        var data = []
+        var layout = {
+        annotations : [],
+        legend:{hovermode:'closest' },
+        hovermode:'closest',
+        xaxis :{range:[-5,450],
+                showline: true,
+                zeroline: false,
+                linecolor: '#636363',
+                linewidth: 5,
+                showgrid: false,
+                gridcolor: '#bdbdbd',
+                title: 'NCVY'
+                },
+                
+        yaxis :{range: [0,35],
+                zeroline: false,
+                showline: true,
+                showgrid: false,
+                linecolor: '#636363',
+                linewidth: 5,
+                title : 'FF'
+                },};
+        var backstat = {
+        y: {{control['FF']}},
+        x: {{control['NCV_Y']}},
+        name: 'Negative (N=10)',
+        hoverinfo:'none',
+        mode: 'markers',
+        type: 'scatter',
+        marker: {color: '#ccccb3'}}
+        data.push(backstat);
+
+        var max = {
+                x : {{predict['NCV_Y']['max']['x']}},
+                y : {{predict['NCV_Y']['max']['y']}},
+                mode: 'lines',
+                showlegend: false,
+                line: {
+                    dash: 'dot',
+                    color : 'gray',
+                    width : 2},
+                name: "max"};
+        var min = {
+                x : {{predict['NCV_Y']['min']['x']}},
+                y : {{predict['NCV_Y']['min']['y']}},
+                mode: 'lines',
+                showlegend: false,
+                line: {
+                    dash: 'dot',
+                    color : 'red',
+                    width : 2},
+                name: "min"};
+        data.push(max,min);
+
+        {% for sample in cases.keys() %}
+        var trace1 = {
+        y: [{{cases[sample]['FF']}}],
+        x: [{{cases[sample]['NCVY']}}],
+        name: {{sample|tojson}},
+        mode: 'markers',
+        text: {{sample|tojson}},
+        type: 'scatter',
+        marker: {
+                size: {{case_size}}
+                }};
+        data.push(trace1);
+        {% endfor %}
+    
+        Plotly.newPlot('FFNCVY', data, layout);
+    </script>
+<script>
+        var XY_plot = document.getElementById('FFNCVX')
+        var data = []
+        var layout = {
+        annotations : [],
+        legend:{hovermode:'closest' },
+        hovermode:'closest',
+        xaxis :{showline: true,
+                zeroline: false,
+                linecolor: '#636363',
+                linewidth: 5,
+                showgrid: false,
+                gridcolor: '#bdbdbd',
+                title: 'NCVX'
+                },
+                
+        yaxis :{range: [0,35],
+                zeroline: false,
+                showline: true,
+                showgrid: false,
+                linecolor: '#636363',
+                linewidth: 5,
+                title : 'FF'
+                },};
+        var backstat = {
+        y: {{control['FF']}},
+        x: {{control['NCV_X']}},
+        name: 'Negative (N=10)',
+        hoverinfo:'none',
+        mode: 'markers',
+        type: 'scatter',
+        marker: {color: '#ccccb3'}}
+        data.push(backstat);
+
+        var max = {
+                x : {{predict['NCV_X']['max']['x']}},
+                y : {{predict['NCV_X']['max']['y']}},
+                mode: 'lines',
+                showlegend: false,
+                line: {
+                    dash: 'dot',
+                    color : 'gray',
+                    width : 2},
+                name: "max"};
+        var min = {
+                x : {{predict['NCV_X']['min']['x']}},
+                y : {{predict['NCV_X']['min']['y']}},
+                mode: 'lines',
+                showlegend: false,
+                line: {
+                    dash: 'dot',
+                    color : 'red',
+                    width : 2},
+                name: "min"};
+        data.push(max,min);
+
+        {% for sample in cases.keys() %}
+        var trace1 = {
+        y: [{{cases[sample]['FF']}}],
+        x: [{{cases[sample]['NCVX']}}],
+        name: {{sample|tojson}},
+        mode: 'markers',
+        text: {{sample|tojson}},
+        type: 'scatter',
+        marker: {
+                size: {{case_size}}
+                }};
+        data.push(trace1);
+        {% endfor %}
+    
+        Plotly.newPlot('FFNCVX', data, layout);
+    </script>
+{% endblock %}

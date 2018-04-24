@@ -8,7 +8,7 @@ from extentions import login_manager, google, app, mail
 import logging
 import os
 from datetime import datetime
-from views_utils import PlottPage, BatchDataFilter, DataBaseToCSV, DataClasifyer, Statistics
+from views_utils import PlottPage, BatchDataFilter, DataBaseToCSV, DataClasifyer, Statistics, FetalFraction
 import time
 import json
 from datetime import datetime
@@ -242,6 +242,7 @@ def sample(batch_id):
     DC.handle_NCV()
     DC.get_QC_warnings(sample_db)
     DC.get_manually_classified(sample_db)
+    print DC.NCV_data
     return render_template('batch_page/batch_page.html',
         ##  Header
         batch_name      = batch.batch_name,
@@ -558,6 +559,27 @@ def NCVXY_plot(batch_id):
         ##  Buttons
         batch_id        = batch_id,
         sample_ids      = ','.join(sample.sample_ID for sample in NCV_db))
+
+@app.route('/NIPT/batches/<batch_id>/FF_plot/')
+@login_required
+def FF_plot(batch_id):
+    FF = FetalFraction(batch_id)
+    FF.format_case_dict()
+    FF.format_contol_dict()
+    FF.form_prediction_interval()
+    batch = Batch.query.filter(Batch.batch_id == batch_id).first()
+
+    return render_template('batch_page/tab_FF.html',
+        ##  Header
+        batch_name      = batch.batch_name,
+        batch_id        = batch_id,
+        seq_date        = batch.date,
+        ##  Plotts
+        predict         = FF.perdiction,
+        cases           = FF.samples,
+        control         = FF.control,
+        case_size       = len(FF.samples),
+        )
 
 @app.route('/NIPT/batches/<batch_id>/coverage_plot/')
 @login_required
