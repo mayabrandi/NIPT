@@ -575,6 +575,7 @@ def FF_plot(batch_id):
         batch_id        = batch_id,
         seq_date        = batch.date,
         ##  Plotts
+        nr_contol_samples = FF.nr_contol_samples,
         predict         = FF.perdiction,
         cases           = FF.samples,
         control         = FF.control,
