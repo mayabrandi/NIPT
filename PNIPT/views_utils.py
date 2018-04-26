@@ -413,6 +413,7 @@ class FetalFraction():
         self.samples = {}
         self.control = {'NCV_X':[],'NCV_Y':[],'FF':[]}
         self.perdiction = {'NCV_X':{},'NCV_Y':{}}
+        self.nr_contol_samples = None
 
     def form_prediction_interval(self):
         
@@ -422,11 +423,17 @@ class FetalFraction():
         #y=0.0545x - 3.3899
         self.perdiction['NCV_Y']['min'] = {'x':[0,500],'y':[-3.3899,23.8601]}
 
+        self.perdiction['NCV_Y']['ff_min'] = {'x':[0, 500],'y':[2, 2]}
+        self.perdiction['NCV_Y']['NCV_Y_min'] = {'x':[20, 20],'y':[0, 35]}
+
         #y=-0.8074x + 7.861
         self.perdiction['NCV_X']['min'] = {'x':[-30,5],'y':[32.083,3.824]}
 
         #y=-0.8062x - 3.2337
         self.perdiction['NCV_X']['max'] = {'x':[-30,5],'y':[20.9523,-7.2647]}
+
+        self.perdiction['NCV_X']['ff_min'] = {'x':[-30,5],'y':[2, 2]}
+
 
 
     def format_case_dict(self):
@@ -452,13 +459,14 @@ class FetalFraction():
                                         Sample.status_XXY == "Normal",
                                         Sample.status_XYY == "Normal").all()
 
-
         for sample in FF_normal:
             self.control['FF'].append(int(sample.FF_Formatted.rstrip('%')))
 
         for sample in NCV_normal:
             self.control['NCV_X'].append(float(sample.NCV_X))
             self.control['NCV_Y'].append(float(sample.NCV_Y))
+
+        self.nr_contol_samples = len(self.control['FF'])
 
 
 
