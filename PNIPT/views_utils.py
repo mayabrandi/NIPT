@@ -162,22 +162,22 @@ class DataClasifyer():
         y_max_lower = -15.256 * x_max_lower - 62.309
         self.sex_tresholds = {'XY_horis' :  {'x' : [x_min, 10],         
                                              'y' : [13, 13],
-                                            'text' : 'NCVX=13'},
+                                            'text' : 'X=13'},
                                 'XY_upper': {'x' : [x_min, x_max_upper],
                                              'y' : [y_min_upper, y_max_upper],
-                                            'text' : 'NCVY = -15.3X+91.4'},
+                                            'text' : 'Y = -15.3X+91.4'},
                                 'XY_lower': {'x' : [x_min, x_max_lower],
                                              'y' : [y_min_lower, y_max_lower],
-                                            'text' : 'NCVY = -15.3X-62.3'},
+                                            'text' : 'Y = -15.3X-62.3'},
                                 'XXY' :     {'x' : [-4, -4],    
                                              'y' : [155, y_min_upper],
-                                            'text' : 'NCVX=-4'},
+                                            'text' : 'X=-4'},
                                 'X0' :      {'x' : [-4, -4],   
                                              'y' : [13, -60],
-                                             'text' : 'NCVX=-4'},
+                                             'text' : 'X=-4'},
                                 'XXX' :     {'x' : [4, 4],      
                                              'y' : [13, -60],
-                                             'text' : 'NCVX=4'}}
+                                             'text' : 'X=4'}}
         for key, val in self.sex_tresholds.items():
             val['text_position'] = [np.mean(val['x']), np.mean(val['y'])]
             self.sex_tresholds[key] = val
