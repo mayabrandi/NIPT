@@ -35,6 +35,27 @@
         marker: {color: '#ccccb3'}}
         data.push(backstat);
 
+        {% for abn  in pos_contol.keys() %} 
+        {% for abn_status  in pos_contol[abn] %} 
+        var verif = { 
+                name :  '{{abn}} {{abn_status}}', 
+                showlegend: false,                                                               
+                y: {{pos_contol[abn][abn_status]['CovY']}},                                        
+                x: {{pos_contol[abn][abn_status]['CovX']}},
+                text: {{pos_contol[abn][abn_status]['s_name']|tojson}},                                       
+                mode: 'markers',
+                marker: {symbol :"{{abn_symbol}}",
+                size: {{abn_size}},
+                line: {width:{{abn_line}}},
+                color : "{{abn_colors[abn_status]}}",
+        } ,    
+        type: 'scatter',                                                            
+        }; 
+        data.push(verif);
+        var i = i +1
+        {% endfor %}
+        {% endfor %}        
+
         {% for sample in cases.keys() %}
         var trace1 = {
         y: [{{cases[sample]['CovY']}}],

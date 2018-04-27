@@ -320,6 +320,7 @@ class Layout():
                                         '#C0C0C0', '#808080', '#800000', '#808000', '#008000',
                                         '#800080', '#008080', '#000080', '#0b7b47','#7b0b3f','#7478fc'])
         self.cov_colors = [[i]*22 for i in self.many_colors]
+        self.abn_status_X = {'Probable':0,'Verified':0.1,'False Positive':0.2,'False Negative':0.3, 'Suspected':0.4, 'Other': 0.5}
 
 
 class PlottPage():
@@ -478,10 +479,13 @@ class FetalFraction():
 class CovXCovY():
     """Class to prepare CovX vs CovY Plots"""
     def __init__(self,batch_id):
+        self.pos_contol = {'X0':{}, 'XXX':{}, 'XXY':{},'XYY':{}} 
         self.batch_id = batch_id
         self.samples = {}
         self.control = {'CovY':[],'CovX':[]}
         self.nr_contol_samples = None
+        self.coverage_query = Coverage.query.filter(Coverage.ChrX_Coverage != 'NA', Coverage.ChrX_Coverage!='NA')
+        
 
     def format_case_dict(self):
         dbCoverage = Coverage.query.filter(Coverage.batch_id == self.batch_id).all()
@@ -490,8 +494,7 @@ class CovXCovY():
                                             'CovX' : float(samp.ChrX_Coverage)}
 
     def format_contol_dict(self):
-        XY_normal = Coverage.query.filter(Coverage.ChrX_Coverage != 'NA', Coverage.ChrX_Coverage!='NA')
-        XY_normal = XY_normal.join(Sample).filter(Sample.status_X0 == "Normal",
+        XY_normal = self.coverage_query.join(Sample).filter(Sample.status_X0 == "Normal",
                                         Sample.status_XXX == "Normal",
                                         Sample.status_XXY == "Normal",
                                         Sample.status_XYY == "Normal")
@@ -503,6 +506,17 @@ class CovXCovY():
 
         self.nr_contol_samples = len(self.control['CovY'])
 
+    def format_pos_contol(self): 
+        """Preparing sex aabnormality control samples"""
+        for abn in self.pos_contol:
+            for status in Layout().abn_status_X.keys():
+                self.pos_contol[abn][status] = {'CovX' : [], 'CovY' : [], 's_name' : []}
+                pos_controls = self.coverage_query.join(Sample).filter(Sample.__dict__['status_'+abn] == status)
+                pos_controls = pos_controls.join(NCV).filter(NCV.include==True).all()
+                for sample in pos_controls:
+                    self.pos_contol[abn][status]['CovX'].append(float(sample.ChrX_Coverage))
+                    self.pos_contol[abn][status]['CovY'].append(float(sample.ChrY_Coverage))
+                    self.pos_contol[abn][status]['s_name'].append(sample.sample_ID)
 
 
 
@@ -616,7 +630,6 @@ class Statistics():
                     logging.exception('')
                     pass
                 try:
-                    print samp.Clusters
                     self.Clusters[batch_id]['y'].append(float(samp.Clusters))
                     self.Clusters[batch_id]['x'].append(i)
                 except:
@@ -634,7 +647,6 @@ class Statistics():
                 except:
                     logging.exception('')
                     pass
-            print self.NonExcludedSites[batch_id]
             i+=1
 
 

@@ -242,7 +242,6 @@ def sample(batch_id):
     DC.handle_NCV()
     DC.get_QC_warnings(sample_db)
     DC.get_manually_classified(sample_db)
-    print DC.NCV_data
     return render_template('batch_page/batch_page.html',
         ##  Header
         batch_name      = batch.batch_name,
@@ -603,6 +602,7 @@ def covX_covY(batch_id):
     CC = CovXCovY(batch_id)
     CC.format_case_dict()
     CC.format_contol_dict()
+    CC.format_pos_contol()
     batch = Batch.query.filter(Batch.batch_id == batch_id).first()
 
     return render_template('batch_page/tab_covX_covY.html',
@@ -614,8 +614,13 @@ def covX_covY(batch_id):
         nr_contol_samples = CC.nr_contol_samples,
         cases           = CC.samples,
         control         = CC.control,
+        pos_contol      = CC.pos_contol,
         case_size       = L.case_size,
-        case_line       = L.case_line
+        case_line       = L.case_line,
+        abn_colors      = L.ncv_abn_colors,
+        abn_size        = L.abn_size,
+        abn_line        = L.abn_line,
+        abn_symbol      = L.abn_symbol 
         )
 
 
