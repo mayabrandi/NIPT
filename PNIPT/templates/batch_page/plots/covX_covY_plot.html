@@ -1,0 +1,54 @@
+{% block content %}
+<script>
+        var XY_plot = document.getElementById('CovXY')
+        var data = []
+        var layout = {
+        title:'NCVY and fetal fraction correlation.',
+        annotations : [],
+        legend:{hovermode:'closest' },
+        hovermode:'closest',
+        xaxis :{range:[],
+                showline: true,
+                zeroline: false,
+                linecolor: '#636363',
+                linewidth: 5,
+                showgrid: false,
+                gridcolor: '#bdbdbd',
+                title: 'Covarege X'
+                },
+                
+        yaxis :{range: [],
+                zeroline: false,
+                showline: true,
+                showgrid: false,
+                linecolor: '#636363',
+                linewidth: 5,
+                title : 'Coverage Y'
+                },};
+        var backstat = {
+        y: {{control['CovY']}},
+        x: {{control['CovX']}},
+        name: 'Negative (N={{nr_contol_samples}})',
+        hoverinfo:'none',
+        mode: 'markers',
+        type: 'scatter',
+        marker: {color: '#ccccb3'}}
+        data.push(backstat);
+
+        {% for sample in cases.keys() %}
+        var trace1 = {
+        y: [{{cases[sample]['CovY']}}],
+        x: [{{cases[sample]['CovX']}}],
+        name: {{sample|tojson}},
+        mode: 'markers',
+        text: {{sample|tojson}},
+        type: 'scatter',
+        marker: {
+                size: {{case_size}}
+                }};
+        data.push(trace1);
+        {% endfor %}
+    
+        Plotly.newPlot('CovXY', data, layout);
+    </script>
+{% endblock %}

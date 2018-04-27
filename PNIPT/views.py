@@ -8,7 +8,7 @@ from extentions import login_manager, google, app, mail
 import logging
 import os
 from datetime import datetime
-from views_utils import PlottPage, BatchDataFilter, DataBaseToCSV, DataClasifyer, Statistics, FetalFraction
+from views_utils import PlottPage, BatchDataFilter, DataBaseToCSV, DataClasifyer, Statistics, FetalFraction, CovXCovY
 import time
 import json
 from datetime import datetime
@@ -329,7 +329,6 @@ def sample_xy_plot( sample_id):
         NCV_sex         = DC.NCV_sex[sample_id],
         NCV_warn        = DC.NCV_classified[sample_id],
         ## Plots
-        tris_abn        = PP.tris_abn,
         sex_chrom_abn   = PP.sex_chrom_abn,
         case_size       = PP.case_size,
         abn_size        = PP.abn_size,
@@ -337,10 +336,7 @@ def sample_xy_plot( sample_id):
         abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
         ncv_abn_colors  = PP.ncv_abn_colors,
         case_data        = PP.case_data,
-        NCV_131821      = ['NCV_13', 'NCV_18', 'NCV_21'],
-        sex_tresholds   = DC.sex_tresholds,
-        tris_thresholds = DC.tris_thresholds,
-        tris_chrom_abn  = PP.tris_chrom_abn)
+        sex_tresholds   = DC.sex_tresholds)
 
 
 @app.route('/NIPT/samples/<sample_id>/tris_plot')
@@ -581,6 +577,27 @@ def FF_plot(batch_id):
         control         = FF.control,
         case_size       = len(FF.samples),
         )
+
+@app.route('/NIPT/batches/<batch_id>/covX_covY/')
+@login_required
+def covX_covY(batch_id):
+    CC = CovXCovY(batch_id)
+    CC.format_case_dict()
+    CC.format_contol_dict()
+    batch = Batch.query.filter(Batch.batch_id == batch_id).first()
+
+    return render_template('batch_page/tab_covX_covY.html',
+        ##  Header
+        batch_name      = batch.batch_name,
+        batch_id        = batch_id,
+        seq_date        = batch.date,
+        ##  Plotts
+        nr_contol_samples = CC.nr_contol_samples,
+        cases           = CC.samples,
+        control         = CC.control,
+        case_size       = len(CC.samples),
+        )
+
 
 @app.route('/NIPT/batches/<batch_id>/coverage_plot/')
 @login_required

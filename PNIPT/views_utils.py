@@ -162,7 +162,7 @@ class DataClasifyer():
         y_max_lower = -15.256 * x_max_lower - 62.309
         self.sex_tresholds = {'XY_horis' :  {'x' : [x_min, 10],         
                                              'y' : [13, 13],
-                                            'text' : 'NCV=13'},
+                                            'text' : 'NCVX=13'},
                                 'XY_upper': {'x' : [x_min, x_max_upper],
                                              'y' : [y_min_upper, y_max_upper],
                                             'text' : 'NCVY = -15.3X+91.4'},
@@ -171,13 +171,13 @@ class DataClasifyer():
                                             'text' : 'NCVY = -15.3X-62.3'},
                                 'XXY' :     {'x' : [-4, -4],    
                                              'y' : [155, y_min_upper],
-                                            'text' : '-4'},
+                                            'text' : 'NCVX=-4'},
                                 'X0' :      {'x' : [-4, -4],   
                                              'y' : [13, -60],
-                                             'text' : 'NCV=-4'},
+                                             'text' : 'NCVX=-4'},
                                 'XXX' :     {'x' : [4, 4],      
                                              'y' : [13, -60],
-                                             'text' : 'NCV=4'}}
+                                             'text' : 'NCVX=4'}}
         for key, val in self.sex_tresholds.items():
             val['text_position'] = [np.mean(val['x']), np.mean(val['y'])]
             self.sex_tresholds[key] = val
@@ -315,7 +315,7 @@ class PlottPage():
         for status in self.abn_status_X.keys():
             self.tris_abn[status] = {'NCV' : [], 's_name' : [], 'x_axis': []}
         self.coverage_plot = {'samples':[],'x_axis':[]}
-        self.case_size = 10
+        self.case_size = 15
         self.abn_size = 7
         self.abn_symbol = 'circle-open'
         self.ncv_abn_colors  = {"Suspected"    :   '#DBA901',
@@ -404,22 +404,21 @@ class PlottPage():
 
 
 ################################################################################################
-
 class FetalFraction():
     """Class to prepare Fetal Fraction Plots"""
     def __init__(self,batch_id):
         self.dbNCV = NCV.query.filter(NCV.batch_id == batch_id).all()
-        self.dbSample = Sample.query.filter(Sample.batch_id == batch_id).all()  
+        self.dbSample = Sample.query.filter(Sample.batch_id == batch_id).all()
         self.samples = {}
         self.control = {'NCV_X':[],'NCV_Y':[],'FF':[]}
         self.perdiction = {'NCV_X':{},'NCV_Y':{}}
         self.nr_contol_samples = None
 
     def form_prediction_interval(self):
-        
+
         #y=0.0545x + 5.9299
         self.perdiction['NCV_Y']['max'] = {'x':[0,500],'y':[5.9299,33.1799]}
-        
+
         #y=0.0545x - 3.3899
         self.perdiction['NCV_Y']['min'] = {'x':[0,500],'y':[-3.3899,23.8601]}
 
@@ -467,6 +466,36 @@ class FetalFraction():
             self.control['NCV_Y'].append(float(sample.NCV_Y))
 
         self.nr_contol_samples = len(self.control['FF'])
+
+
+################################################################################################
+class CovXCovY():
+    """Class to prepare CovX vs CovY Plots"""
+    def __init__(self,batch_id):
+        self.batch_id = batch_id
+        self.samples = {}
+        self.control = {'CovY':[],'CovX':[]}
+        self.nr_contol_samples = None
+
+    def format_case_dict(self):
+        dbCoverage = Coverage.query.filter(Coverage.batch_id == self.batch_id).all()
+        for samp in dbCoverage:
+            self.samples[samp.sample_ID] = {'CovY' : float(samp.ChrY_Coverage),
+                                            'CovX' : float(samp.ChrX_Coverage)}
+
+    def format_contol_dict(self):
+        XY_normal = Coverage.query.filter(Coverage.ChrX_Coverage != 'NA', Coverage.ChrX_Coverage!='NA')
+        XY_normal = XY_normal.join(Sample).filter(Sample.status_X0 == "Normal",
+                                        Sample.status_XXX == "Normal",
+                                        Sample.status_XXY == "Normal",
+                                        Sample.status_XYY == "Normal")
+        XY_normal = XY_normal.join(NCV).filter(NCV.include==True).all()
+
+        for sample in XY_normal:
+            self.control['CovX'].append(float(sample.ChrX_Coverage))
+            self.control['CovY'].append(float(sample.ChrY_Coverage))
+
+        self.nr_contol_samples = len(self.control['CovY'])
 
 
 

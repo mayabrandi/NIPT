@@ -43,7 +43,8 @@
                 x: {{sex_chrom_abn[abn][abn_status]['NCV_X']}},
                 text: {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}},                                       
             mode: 'markers',
-            marker: {   size: {{abn_size}},
+            marker: {   line: {width:2},
+                        size: {{abn_size}},
                         symbol :"{{abn_symbol}}",
                         color: "{{ncv_abn_colors[abn_status]}}"} ,                                                   
                         type: 'scatter'              
@@ -59,6 +60,7 @@
                 y : {{sex_tresholds[line]['y']}},
                 mode: 'lines',
                 showlegend: false,
+                text: "{{sex_tresholds[line]['text']}}",
                 line: {
                     dash: 'dot',
                     color : 'red',
@@ -76,8 +78,8 @@
         type: 'scatter',
         marker: {
                 color: '{{many_colors[i]}}',
-                size: {{case_size}}
-                }};
+                size: {{case_size}},
+                line: {width:2}}};
         data.push(trace1);
         {% endfor %}
     
