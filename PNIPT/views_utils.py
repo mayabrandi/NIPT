@@ -315,7 +315,7 @@ class PlottPage():
         for status in self.abn_status_X.keys():
             self.tris_abn[status] = {'NCV' : [], 's_name' : [], 'x_axis': []}
         self.coverage_plot = {'samples':[],'x_axis':[]}
-        self.case_size = 15
+        self.case_size = 11
         self.abn_size = 7
         self.abn_symbol = 'circle-open'
         self.ncv_abn_colors  = {"Suspected"    :   '#DBA901',
