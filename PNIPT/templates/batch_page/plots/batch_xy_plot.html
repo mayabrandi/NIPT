@@ -43,7 +43,7 @@
                 x: {{sex_chrom_abn[abn][abn_status]['NCV_X']}},
                 text: {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}},                                       
             mode: 'markers',
-            marker: {   line: {width:2},
+            marker: {   line: {width:{{abn_line}}},
                         size: {{abn_size}},
                         symbol :"{{abn_symbol}}",
                         color: "{{ncv_abn_colors[abn_status]}}"} ,                                                   
@@ -79,7 +79,7 @@
         marker: {
                 color: '{{many_colors[i]}}',
                 size: {{case_size}},
-                line: {width:1}}};
+                line: {width:{{case_line}}} }};
         data.push(trace1);
         {% endfor %}
     

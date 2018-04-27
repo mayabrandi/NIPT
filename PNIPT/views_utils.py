@@ -302,6 +302,26 @@ class DataClasifyer():
 
 ################################################################################################
 
+class Layout():
+    def __init__(self):
+        self.case_size = 11
+        self.case_line = 1
+        self.abn_size = 7
+        self.abn_line = 2
+        self.abn_symbol = 'circle-open'
+        self.ncv_abn_colors  = {"Suspected"    :   '#DBA901',
+                                     'Probable'     :   "#0000FF",
+                                     'False Negative':  "#ff6699",
+                                     'Verified'     :   "#00CC00",
+                                     'Other'        :   "#603116",
+                                     "False Positive":  "#E74C3C"}
+        self.many_colors = list(['#000000', '#4682B4', '#FFB6C1', '#FFA500', '#FF0000',
+                                        '#00FF00', '#0000FF', '#FFFF00', '#00FFFF', '#FF00FF',
+                                        '#C0C0C0', '#808080', '#800000', '#808000', '#008000',
+                                        '#800080', '#008080', '#000080', '#0b7b47','#7b0b3f','#7478fc'])
+        self.cov_colors = [[i]*22 for i in self.many_colors]
+
+
 class PlottPage():
     """Class to preppare data for NCV plots"""
     def __init__(self, batch_id, cases):
@@ -315,20 +335,6 @@ class PlottPage():
         for status in self.abn_status_X.keys():
             self.tris_abn[status] = {'NCV' : [], 's_name' : [], 'x_axis': []}
         self.coverage_plot = {'samples':[],'x_axis':[]}
-        self.case_size = 11
-        self.abn_size = 7
-        self.abn_symbol = 'circle-open'
-        self.ncv_abn_colors  = {"Suspected"    :   '#DBA901',
-                                     'Probable'     :   "#0000FF",
-                                     'False Negative':  "#ff6699",
-                                     'Verified'     :   "#00CC00",
-                                     'Other'        :   "#603116",
-                                     "False Positive":  "#E74C3C"}
-        self.many_colors = list(['#000000', '#4682B4', '#FFB6C1', '#FFA500', '#FF0000',
-                                        '#00FF00', '#0000FF', '#FFFF00', '#00FFFF', '#FF00FF',
-                                        '#C0C0C0', '#808080', '#800000', '#808000', '#008000',
-                                        '#800080', '#008080', '#000080', '#0b7b47','#7b0b3f','#7478fc'])
-        self.cov_colors = [[i]*22 for i in self.many_colors]
 
     def make_cov_plot_data(self):
         """Preparing coverage plot data"""

@@ -58,8 +58,8 @@
         text: {{sample|tojson}},
         type: 'scatter',
         marker: {
-                size: {{case_size}}
-                }};
+                size: {{case_size}},
+                line: {width:{{case_line}}} }};
         data.push(trace1);
         {% endfor %}
     
@@ -123,7 +123,8 @@
         text: {{sample|tojson}},
         type: 'scatter',
         marker: {
-                size: {{case_size}}
+                size: {{case_size}},
+                line: {width:{{case_line}}}
                 }};
         data.push(trace1);
         {% endfor %}

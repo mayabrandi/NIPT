@@ -8,7 +8,7 @@ from extentions import login_manager, google, app, mail
 import logging
 import os
 from datetime import datetime
-from views_utils import PlottPage, BatchDataFilter, DataBaseToCSV, DataClasifyer, Statistics, FetalFraction, CovXCovY
+from views_utils import PlottPage, BatchDataFilter, DataBaseToCSV, DataClasifyer, Statistics, FetalFraction, CovXCovY, Layout
 import time
 import json
 from datetime import datetime
@@ -296,6 +296,7 @@ def sample_page( sample_id):
 @app.route('/NIPT/samples/<sample_id>/sex_plot')
 @login_required
 def sample_xy_plot( sample_id):
+    L = Layout()
     sample = Sample.query.filter_by(sample_ID = sample_id).first()
     NCV_dat = NCV.query.filter_by(sample_ID = sample_id)
 
@@ -330,11 +331,12 @@ def sample_xy_plot( sample_id):
         NCV_warn        = DC.NCV_classified[sample_id],
         ## Plots
         sex_chrom_abn   = PP.sex_chrom_abn,
-        case_size       = PP.case_size,
-        abn_size        = PP.abn_size,
-        abn_symbol      = PP.abn_symbol,
+        case_size       = L.case_size,
+        abn_size        = L.abn_size,
+        abn_symbol      = L.abn_symbol,
+        abn_line        = L.abn_line,
         abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
-        ncv_abn_colors  = PP.ncv_abn_colors,
+        ncv_abn_colors  = L.ncv_abn_colors,
         case_data        = PP.case_data,
         sex_tresholds   = DC.sex_tresholds)
 
@@ -342,6 +344,7 @@ def sample_xy_plot( sample_id):
 @app.route('/NIPT/samples/<sample_id>/tris_plot')
 @login_required
 def sample_tris_plot( sample_id):
+    L = Layout()
     sample = Sample.query.filter_by(sample_ID = sample_id).first()
     NCV_dat = NCV.query.filter_by(sample_ID = sample_id)
 
@@ -377,11 +380,12 @@ def sample_tris_plot( sample_id):
         NCV_warn        = DC.NCV_classified[sample_id],
         ## Plots
         tris_abn        = PP.tris_abn,
-        case_size       = PP.case_size,
-        abn_size        = PP.abn_size,
-        abn_symbol      = PP.abn_symbol,
+        case_size       = L.case_size,
+        abn_size        = L.abn_size,
+        abn_symbol      = L.abn_symbol,
+        abn_line        = L.abn_line,
         abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
-        ncv_abn_colors  = PP.ncv_abn_colors,
+        ncv_abn_colors  = L.ncv_abn_colors,
         case_data        = PP.case_data,
         tris_thresholds = DC.tris_thresholds,
         tris_chrom_abn  = PP.tris_chrom_abn)
@@ -391,6 +395,7 @@ def sample_tris_plot( sample_id):
 def NCV13_plot(batch_id):
 
     # Getting and formating sample and NCV data for the samples in the batch
+    L = Layout()
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
     sample_db = Sample.query.filter(Sample.batch_id == batch_id)
     batch = Batch.query.filter(Batch.batch_id == batch_id).first()
@@ -414,12 +419,14 @@ def NCV13_plot(batch_id):
         ##  Plotts
         chrom           = '13',
         case_data        = PP.case_data['NCV_13'],
-        case_size       = PP.case_size,
-        abn_size        = PP.abn_size,
-        abn_symbol      = PP.abn_symbol,
+        case_size       = L.case_size,
+        case_line       = L.case_line,
+        abn_size        = L.abn_size,
+        abn_line        = L.abn_line,
+        abn_symbol      = L.abn_symbol,
         tris_chrom_abn  = PP.tris_chrom_abn['13'],
         abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
-        ncv_abn_colors  = PP.ncv_abn_colors,
+        ncv_abn_colors  = L.ncv_abn_colors,
         tris_thresholds = DC.tris_thresholds,
         ##  Coverage
         bool_warns      = filter(None, DC.NCV_classified.values()),
@@ -431,6 +438,7 @@ def NCV13_plot(batch_id):
 @app.route('/NIPT/batches/<batch_id>/NCV18_plot/')
 @login_required
 def NCV18_plot(batch_id):
+    L = Layout()
     
     # Getting and formating sample and NCV data for the samples in the batch
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
@@ -456,12 +464,14 @@ def NCV18_plot(batch_id):
         ##  Plotts
         chrom           = '18',
         case_data        = PP.case_data['NCV_18'],
-        case_size       = PP.case_size,
-        abn_size        = PP.abn_size,
-        abn_symbol      = PP.abn_symbol,
+        case_size       = L.case_size,
+        case_line       = L.case_line,
+        abn_size        = L.abn_size,
+        abn_line        = L.abn_line,
+        abn_symbol      = L.abn_symbol,
         tris_chrom_abn  = PP.tris_chrom_abn['18'],
         abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
-        ncv_abn_colors  = PP.ncv_abn_colors,
+        ncv_abn_colors  = L.ncv_abn_colors,
         tris_thresholds = DC.tris_thresholds,
         ##  Coverage
         bool_warns      = filter(None, DC.NCV_classified.values()),
@@ -473,6 +483,7 @@ def NCV18_plot(batch_id):
 @app.route('/NIPT/batches/<batch_id>/NCV21_plot/')
 @login_required
 def NCV21_plot(batch_id):
+    L = Layout()
 
     # Getting and formating sample and NCV data for the samples in the batch
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
@@ -498,12 +509,14 @@ def NCV21_plot(batch_id):
         ##  Plotts
         chrom           = '21',
         case_data        = PP.case_data['NCV_21'],
-        case_size       = PP.case_size,
-        abn_size        = PP.abn_size,
-        abn_symbol      = PP.abn_symbol,
+        case_size       = L.case_size,
+        case_line       = L.case_line,
+        abn_size        = L.abn_size,
+        abn_line        = L.abn_line,
+        abn_symbol      = L.abn_symbol,
         tris_chrom_abn  = PP.tris_chrom_abn['21'],
         abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
-        ncv_abn_colors  = PP.ncv_abn_colors,
+        ncv_abn_colors  = L.ncv_abn_colors,
         tris_thresholds = DC.tris_thresholds,
         ##  Coverage
         bool_warns      = filter(None, DC.NCV_classified.values()),
@@ -514,6 +527,7 @@ def NCV21_plot(batch_id):
 @app.route('/NIPT/batches/<batch_id>/NCVXY_plot/')
 @login_required
 def NCVXY_plot(batch_id):
+    L = Layout()
 
     # Getting and formating sample and NCV data for the samples in the batch
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
@@ -541,15 +555,17 @@ def NCVXY_plot(batch_id):
         ##  Plotts
         NCV_pass_names  = control_normal_XY_names,
         case_data        = PP.case_data,
-        case_size       = PP.case_size,
-        abn_size        = PP.abn_size,
-        abn_symbol      = PP.abn_symbol,
+        case_size       = L.case_size,
+        case_line       = L.case_line,
+        abn_size        = L.abn_size,
+        abn_line        = L.abn_line,
+        abn_symbol      = L.abn_symbol,
         samp_range      = range(len(PP.case_data['NCV_X']['NCV_cases'])),
         sex_chrom_abn   = PP.sex_chrom_abn,
         abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
-        many_colors     = PP.many_colors,
+        many_colors     = L.many_colors,
         sex_tresholds   = DC.sex_tresholds,
-        ncv_abn_colors  = PP.ncv_abn_colors,
+        ncv_abn_colors  = L.ncv_abn_colors,
         ##  Coverage
         bool_warns      = filter(None, DC.NCV_classified.values()),
         ##  Buttons
@@ -559,6 +575,7 @@ def NCVXY_plot(batch_id):
 @app.route('/NIPT/batches/<batch_id>/FF_plot/')
 @login_required
 def FF_plot(batch_id):
+    L = Layout()
     FF = FetalFraction(batch_id)
     FF.format_case_dict()
     FF.format_contol_dict()
@@ -575,12 +592,14 @@ def FF_plot(batch_id):
         predict         = FF.perdiction,
         cases           = FF.samples,
         control         = FF.control,
-        case_size       = len(FF.samples),
+        case_size       = L.case_size,
+        case_line       = L.case_line
         )
 
 @app.route('/NIPT/batches/<batch_id>/covX_covY/')
 @login_required
 def covX_covY(batch_id):
+    L = Layout()
     CC = CovXCovY(batch_id)
     CC.format_case_dict()
     CC.format_contol_dict()
@@ -595,13 +614,15 @@ def covX_covY(batch_id):
         nr_contol_samples = CC.nr_contol_samples,
         cases           = CC.samples,
         control         = CC.control,
-        case_size       = len(CC.samples),
+        case_size       = L.case_size,
+        case_line       = L.case_line
         )
 
 
 @app.route('/NIPT/batches/<batch_id>/coverage_plot/')
 @login_required
 def coverage_plot(batch_id):
+    L = Layout()
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
     sample_db = Sample.query.filter(Sample.batch_id == batch_id)
     batch = Batch.query.filter(Batch.batch_id == batch_id).first()
@@ -626,7 +647,7 @@ def coverage_plot(batch_id):
         ##  Coverage
         bool_warns      = filter(None, DC.NCV_classified.values()),
         samp_cov_db     = PP.coverage_plot,
-        cov_colors      = PP.cov_colors,
+        cov_colors      = L.cov_colors,
         ##  Buttons
         batch_id        = batch_id,
         sample_ids      = ','.join(sample.sample_ID for sample in NCV_db))
@@ -636,6 +657,7 @@ import json
 @app.route('/NIPT/batches/<batch_id>/report')
 @login_required
 def report(batch_id):
+    L = Layout()
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
     sample_db = Sample.query.filter(Sample.batch_id == batch_id)
     batch = Batch.query.filter(Batch.batch_id == batch_id).first()
@@ -679,16 +701,16 @@ def report(batch_id):
         thresholds      = ST.thresholds,
         batch_ids       = ST.batch_ids,
         case_data        =PP.case_data,
-        case_size       = PP.case_size,
-        abn_size        = PP.abn_size,
-        abn_symbol      = PP.abn_symbol,
+        case_size       = L.case_size,
+        abn_size        = L.abn_size,
+        abn_symbol      = L.abn_symbol,
         samp_range      = range(len(PP.case_data['NCV_X']['NCV_cases'])),
         tris_chrom_abn  = PP.tris_chrom_abn,
         sex_chrom_abn   = PP.sex_chrom_abn,
         abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
-        cov_colors      = PP.cov_colors,
-        many_colors     = PP.many_colors,
-        ncv_abn_colors  = PP.ncv_abn_colors,
+        cov_colors      = L.cov_colors,
+        many_colors     = L.many_colors,
+        ncv_abn_colors  = L.ncv_abn_colors,
         sex_tresholds   = DC.sex_tresholds,
         tris_thresholds = DC.tris_thresholds,
         NCV_pass_names  = control_normal_XY_names,
