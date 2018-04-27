@@ -9,7 +9,7 @@
         </li>
         <li><a href="{{url_for('NCV13_plot', batch_id = batch_id)}}" >NCV13</a>
         </li>
-        <li class="active"><a href="{{url_for('NCV18_plot', batch_id = batch_id)}}">NCV18</a>
+        <li><a href="{{url_for('NCV18_plot', batch_id = batch_id)}}">NCV18</a>
         </li>
         <li><a href="{{url_for('NCV21_plot', batch_id = batch_id)}}">NCV21</a>
         </li>
@@ -17,26 +17,31 @@
         </li>
         <li><a href="{{url_for('FF_plot', batch_id = batch_id)}}">FF</a>
         </li>
-        <li><a href="{{url_for('covX_covY', batch_id = batch_id)}}">CovX vs CovY</a>
+        <li class="active"><a href="{{url_for('covX_covY', batch_id = batch_id)}}">CovX vs CovY</a>
         </li>
         {% if bool_warns %}
         <li><a href="{{url_for('coverage_plot', batch_id = batch_id)}}">Coverage (Chr 1-22)</a>
         </li>
         {% endif %}
     </ul>
-    <div class="tab-pane active" id='NCV_18'>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div id="NCV_plot" style="min-width:400px; height:800px; "></div><br><br>
+    <div class="tab-content">
+        <div class="tab-pane active" id='NCV_XY'>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="CovXY" style="min-width:400px; height:800px; ">
+                    </div>
+                </div>
             </div>
         </div>
+    </div> <!--tab-conten-->
     </div>
-</div>
-{% endblock %}
-
-{% block scripts %}
-{% include 'batch_page/plots/batch_tris_plot.html' %}
-{% endblock %}
-
-
-
+    {% endblock %}
+    
+    {% block scripts %}
+    {% include 'batch_page/plots/covX_covY_plot.html' %}
+    {% endblock %}
+    
+    
+    
+    
+    

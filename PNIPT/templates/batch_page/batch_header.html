@@ -1,9 +1,11 @@
 {% block content %}
 <div class="vertical-center">
     <div class="row">
+        <div class="col-lg-10"><h1>Batch: {{batch_name}}</h1></div>
+        <div class="col-lg-2"><h1><small><em> Sequenced {{seq_date}}</em></small></h1></div>
+    </div>
+    <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Batch: {{batch_name}}</h1>
-            <h1><small><em> Sequenced {{seq_date}}</em></small></h1>
             <p align="right">
                 <a href={{ url_for('report', batch_id=batch_id) }}> Batch Report</a>
             </p>

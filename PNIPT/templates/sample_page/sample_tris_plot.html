@@ -78,8 +78,9 @@
         text: {{tris_abn[abn_status]['s_name']|tojson}},
         mode: 'markers',
         marker: {symbol :"{{abn_symbol}}",
-        color : "{{ncv_abn_colors[abn_status]}}",
-        size: {{abn_size}}} ,                                                   
+            line: {width:{{abn_line}}}, 
+            color : "{{ncv_abn_colors[abn_status]}}",
+            size: {{abn_size}}} ,                                                  
         type: 'scatter',                                                            
     };    
     data.push(ncv_abn)
@@ -130,6 +131,7 @@
         var line = {x : [0.5, 3.7],
             y : [{{tris_thresholds[line]['NCV']}},{{tris_thresholds[line]['NCV']}}],
             mode: 'lines',
+            text: "{{tris_thresholds[line]['text']}}",
             showlegend: false,
             line: {
                 dash: 'dot',

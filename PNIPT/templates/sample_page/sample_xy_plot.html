@@ -75,16 +75,17 @@
     
     {% for line  in sex_tresholds %}
     var line = {x : {{sex_tresholds[line]['x']}},
-    y : {{sex_tresholds[line]['y']}},
-    mode: 'lines',
-    line: {
-        dash: 'dot',
-        color : 'red',
-        width : 2},
-        showlegend: false,
-        name: "{{line}}"};
-        data.push(line);
-        {% endfor %}
+                y : {{sex_tresholds[line]['y']}},
+                mode: 'lines',
+                text: "{{sex_tresholds[line]['text']}}",
+                line: {
+                        dash: 'dot',
+                        color : 'red',
+                        width : 2},
+                showlegend: false,
+                name: "{{line}}"};
+    data.push(line);
+    {% endfor %}
         
         var backstat = {
             y: {{case_data['NCV_Y']['NCV_pass']}},
@@ -109,6 +110,7 @@
             mode: 'markers',
             marker: {symbol :"{{abn_symbol}}",
             size: {{abn_size}},
+            line: {width:{{abn_line}}},
             color : "{{ncv_abn_colors[abn_status]}}",
         } ,    
         type: 'scatter',                                                            
