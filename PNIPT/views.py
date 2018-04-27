@@ -676,6 +676,10 @@ def report(batch_id, coverage):
     PP.make_tris_chrom_abn(control_abnormal, '21')
 
     PP.make_cov_plot_data()
+    CC = CovXCovY(batch_id)
+    CC.format_case_dict()
+    CC.format_contol_dict()
+    CC.format_pos_contol()
     ST = Statistics()
     ST.get_20_latest()
     return render_template('batch_page/report_page.html',
@@ -706,12 +710,17 @@ def report(batch_id, coverage):
         cov_colors      = L.cov_colors,
         many_colors     = L.many_colors,
         ncv_abn_colors  = L.ncv_abn_colors,
+        abn_colors  = L.ncv_abn_colors,
         sex_tresholds   = DC.sex_tresholds,
         tris_thresholds = DC.tris_thresholds,
         NCV_pass_names  = control_normal_XY_names,
         ##  Coverage
         coverage        = coverage,
-        samp_cov_db     = PP.coverage_plot)
+        samp_cov_db     = PP.coverage_plot,
+        nr_contol_samples = CC.nr_contol_samples,
+        cases           = CC.samples,
+        control         = CC.control,
+        pos_contol      = CC.pos_contol,)
 
 
 

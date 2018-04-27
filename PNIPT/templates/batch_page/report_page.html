@@ -123,10 +123,17 @@
                             </footer>
                             <footer>
                             <div class="panel-body">
-                            <h2 class="page-header"><small>Normalized Coverage</small></h2>
+                            <h2 class="page-header"><small>Normalized Coverage Chr 1-22</small></h2>
                             <div id="cov_plot" style="min-width:600px; height:800px; margin-right: 5.0cm;"></div>
                             </div>
                             </footer>
+                            <footer>
+                                    <div class="panel-body">
+                                    <h2 class="page-header"><small>Coverage ChrX vs ChrY</small></h2>
+                                    <div id="CovXY" style="min-width:600px; height:800px; margin-right: 5.0cm;"></div>
+                                    </div>
+                            </footer>
+                            
                             {% endif %}
             </div>
         </div>
@@ -136,6 +143,7 @@
         
         {% block scripts %}
         {% include 'batch_page/plots/coverage_plot.html' %}
+        {% include 'batch_page/plots/covX_covY_plot.html' %}
         {% include 'batch_page/plots/report_tris_plots.html' %}
         {% include 'batch_page/plots/batch_xy_plot.html' %}
         {% endblock %}
