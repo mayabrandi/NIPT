@@ -19,12 +19,9 @@
         </li>
         <li><a href="{{url_for('covX_covY', batch_id = batch_id)}}">CovX vs CovY</a>
         </li>
-        {% if bool_warns %}
         <li class="active"><a href="{{url_for('coverage_plot', batch_id = batch_id)}}">Coverage (Chr 1-22)</a>
         </li>
-        {% endif %}
     </ul>
-    {% if bool_warns %}
     <div class="tab-pane active" id='norm_cov'>
         <div class="panel panel-default">
             <div class="panel-body">
@@ -32,7 +29,6 @@
             </div>
         </div>
     </div>
-    {% endif %}
 </div>
 {% endblock %}
 {% block scripts %}

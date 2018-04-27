@@ -50,9 +50,11 @@
         marker: {symbol :"{{abn_symbol}}",
                 color: "{{ncv_abn_colors[abn_status]}}",
                 size: {{abn_size}},
+                line: {width:{{abn_line}}},
                 } ,                                                   
         type: 'scatter',                                                            
         }; 
+
     data.push(verif);
     {% endfor %}
     var trace1 = {
