@@ -21,10 +21,8 @@
         </li>
         <li><a href="{{url_for('covX_covY', batch_id = batch_id)}}">CovX vs CovY</a>
         </li>
-        {% if bool_warns %}
         <li><a href="{{url_for('coverage_plot', batch_id = batch_id)}}">Coverage (Chr 1-22)</a>
         </li>
-        {% endif %}
     </ul>
     <div class="tab-content">
         <div class="tab-pane fade in active" id='table'>

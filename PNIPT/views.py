@@ -254,8 +254,6 @@ def sample(batch_id):
         NCV_sex         = DC.NCV_sex,
         warnings        = DC.NCV_classified,
         batch_table_data     = DC.NCV_data,
-        ##  Coverage
-        bool_warns      = filter(None, DC.NCV_classified.values()),
         ##  Buttons
         batch_id        = batch_id,
         sample_ids      = ','.join(sample.sample_ID for sample in NCV_db))
@@ -427,8 +425,6 @@ def NCV13_plot(batch_id):
         abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
         ncv_abn_colors  = L.ncv_abn_colors,
         tris_thresholds = DC.tris_thresholds,
-        ##  Coverage
-        bool_warns      = filter(None, DC.NCV_classified.values()),
         ##  Buttons
         batch_id        = batch_id,
         sample_ids      = ','.join(sample.sample_ID for sample in NCV_db))
@@ -472,8 +468,6 @@ def NCV18_plot(batch_id):
         abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
         ncv_abn_colors  = L.ncv_abn_colors,
         tris_thresholds = DC.tris_thresholds,
-        ##  Coverage
-        bool_warns      = filter(None, DC.NCV_classified.values()),
         ##  Buttons
         batch_id        = batch_id,
         sample_ids      = ','.join(sample.sample_ID for sample in NCV_db))
@@ -517,8 +511,6 @@ def NCV21_plot(batch_id):
         abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
         ncv_abn_colors  = L.ncv_abn_colors,
         tris_thresholds = DC.tris_thresholds,
-        ##  Coverage
-        bool_warns      = filter(None, DC.NCV_classified.values()),
         ##  Buttons
         batch_id        = batch_id,
         sample_ids      = ','.join(sample.sample_ID for sample in NCV_db))
@@ -565,8 +557,6 @@ def NCVXY_plot(batch_id):
         many_colors     = L.many_colors,
         sex_tresholds   = DC.sex_tresholds,
         ncv_abn_colors  = L.ncv_abn_colors,
-        ##  Coverage
-        bool_warns      = filter(None, DC.NCV_classified.values()),
         ##  Buttons
         batch_id        = batch_id,
         sample_ids      = ','.join(sample.sample_ID for sample in NCV_db))
@@ -649,8 +639,6 @@ def coverage_plot(batch_id):
         seq_date        = batch.date,
         ##  Warnings Table
         seq_warnings    = DC.QC_warnings,
-        ##  Coverage
-        bool_warns      = filter(None, DC.NCV_classified.values()),
         samp_cov_db     = PP.coverage_plot,
         cov_colors      = L.cov_colors,
         ##  Buttons
@@ -659,9 +647,9 @@ def coverage_plot(batch_id):
 
 
 import json
-@app.route('/NIPT/batches/<batch_id>/report')
+@app.route('/NIPT/batches/<batch_id>/report/<coverage>')
 @login_required
-def report(batch_id):
+def report(batch_id, coverage):
     L = Layout()
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
     sample_db = Sample.query.filter(Sample.batch_id == batch_id)
@@ -709,6 +697,8 @@ def report(batch_id):
         case_size       = L.case_size,
         abn_size        = L.abn_size,
         abn_symbol      = L.abn_symbol,
+        case_line       = L.case_line,
+        abn_line        = L.abn_line,
         samp_range      = range(len(PP.case_data['NCV_X']['NCV_cases'])),
         tris_chrom_abn  = PP.tris_chrom_abn,
         sex_chrom_abn   = PP.sex_chrom_abn,
@@ -720,7 +710,7 @@ def report(batch_id):
         tris_thresholds = DC.tris_thresholds,
         NCV_pass_names  = control_normal_XY_names,
         ##  Coverage
-        bool_warns      = filter(None, DC.NCV_classified.values()),
+        coverage        = coverage,
         samp_cov_db     = PP.coverage_plot)
 
 
