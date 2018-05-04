@@ -3,7 +3,7 @@
         var XY_plot = document.getElementById('CovXY')
         var data = []
         var layout = {
-        title:'NCVY and fetal fraction correlation.',
+        title:'Coverage NCVX vs NCVY.',
         annotations : [],
         legend:{hovermode:'closest' },
         hovermode:'closest',
@@ -52,19 +52,19 @@
         type: 'scatter',                                                            
         }; 
         data.push(verif);
-        var i = i +1
         {% endfor %}
         {% endfor %}        
 
-        {% for sample in cases.keys() %}
+        {% for sample in sample_list %}
         var trace1 = {
         y: [{{cases[sample]['CovY']}}],
         x: [{{cases[sample]['CovX']}}],
-        name: {{sample|tojson}},
+        name: {{cases[sample]['name']|tojson}},
         mode: 'markers',
-        text: {{sample|tojson}},
+        text: {{cases[sample]['name']|tojson}},
         type: 'scatter',
         marker: {
+                color: '{{many_colors[sample]}}',
                 size: {{case_size}},
                 line: {width:{{case_line}}}
                 }};

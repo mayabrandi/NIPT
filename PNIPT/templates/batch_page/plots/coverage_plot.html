@@ -27,7 +27,10 @@
             y: {{samp['cov']}},
             x: {{samp_cov_db['x_axis']}},
             mode: 'markers',
-            marker: {color: {{cov_colors[loop.index]|tojson}}},
+            marker: {color: {{cov_colors[key]|tojson}},
+            size: {{case_size}},
+                line: {width:{{case_line}}}
+                },
             text: {{samp['samp_id']|tojson}},
             type: 'scatter'};
         data.push(trace1);

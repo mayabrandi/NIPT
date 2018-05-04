@@ -8,7 +8,7 @@ from extentions import login_manager, google, app, mail
 import logging
 import os
 from datetime import datetime
-from views_utils import PlottPage, BatchDataFilter, DataBaseToCSV, DataClasifyer, Statistics, FetalFraction, CovXCovY, Layout
+from views_utils import TrisAbnormality, PlottPage, BatchDataFilter, DataBaseToCSV, DataClasifyer, Statistics, FetalFraction, CovXCovY, Layout
 import time
 import json
 from datetime import datetime
@@ -391,134 +391,112 @@ def sample_tris_plot( sample_id):
 @login_required
 def NCV13_plot(batch_id):
 
-    # Getting and formating sample and NCV data for the samples in the batch
-    L = Layout()
-    NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
-    sample_db = Sample.query.filter(Sample.batch_id == batch_id)
-    batch = Batch.query.filter(Batch.batch_id == batch_id).first()
-    DC = DataClasifyer(NCV_db)
-    DC.handle_NCV()
-    DC.get_QC_warnings(sample_db)
-
+    #getting thresholds and layout
+    DC = DataClasifyer()
+    L = Layout(batch_id)
 
     # Getting and formating sample and NCV data for the control samples in the plot
     control_normal, control_abnormal = BDF.control_NCV13()
-    PP = PlottPage(batch_id, NCV_db)
-    PP.make_case_data_new('NCV_13', control_normal)
-    PP.make_tris_chrom_abn(control_abnormal, '13')
-    
+
+    # Getting and formating sample and NCV data for the samples in the batch
+    batch = Batch.query.filter(Batch.batch_id == batch_id).first()
+    NCV_db = NCV.query.filter(NCV.batch_id == batch_id).all()
+    TA = TrisAbnormality(batch_id, '13', NCV_db)
+    TA.make_case_data_new(control_normal)
+    TA.make_tris_chrom_abn(control_abnormal)
+
     return render_template('batch_page/tab_NCV13.html',
         ##  Header
         batch_name      = batch.batch_name,
         seq_date        = batch.date,
-        ##  Warnings Table
-        seq_warnings    = DC.QC_warnings,
+        batch_id        = batch_id,
         ##  Plotts
-        chrom           = '13',
-        case_data        = PP.case_data['NCV_13'],
+        chrom           = TA.chrom,
+        case_data       = TA.case_data,
+        tris_chrom_abn  = TA.tris_chrom_abn,
         case_size       = L.case_size,
         case_line       = L.case_line,
         abn_size        = L.abn_size,
         abn_line        = L.abn_line,
         abn_symbol      = L.abn_symbol,
-        tris_chrom_abn  = PP.tris_chrom_abn['13'],
-        abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
         ncv_abn_colors  = L.ncv_abn_colors,
-        tris_thresholds = DC.tris_thresholds,
-        ##  Buttons
-        batch_id        = batch_id,
-        sample_ids      = ','.join(sample.sample_ID for sample in NCV_db))
+        tris_thresholds = DC.tris_thresholds)
 
 
 @app.route('/NIPT/batches/<batch_id>/NCV18_plot/')
 @login_required
 def NCV18_plot(batch_id):
-    L = Layout()
-    
-    # Getting and formating sample and NCV data for the samples in the batch
-    NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
-    sample_db = Sample.query.filter(Sample.batch_id == batch_id)
-    batch = Batch.query.filter(Batch.batch_id == batch_id).first()
-    DC = DataClasifyer(NCV_db)
-    DC.handle_NCV()
-    DC.get_QC_warnings(sample_db)
-    
+    #getting thresholds and layout
+    DC = DataClasifyer()
+    L = Layout(batch_id)
 
     # Getting and formating sample and NCV data for the control samples in the plot
     control_normal, control_abnormal = BDF.control_NCV18()
-    PP = PlottPage(batch_id, NCV_db)
-    PP.make_case_data_new('NCV_18', control_normal)
-    PP.make_tris_chrom_abn(control_abnormal, '18')
+
+    # Getting and formating sample and NCV data for the samples in the batch
+    batch = Batch.query.filter(Batch.batch_id == batch_id).first()
+    NCV_db = NCV.query.filter(NCV.batch_id == batch_id).all()
+    TA = TrisAbnormality(batch_id, '18', NCV_db)
+    TA.make_case_data_new(control_normal)
+    TA.make_tris_chrom_abn(control_abnormal)
 
     return render_template('batch_page/tab_NCV18.html',
         ##  Header
         batch_name      = batch.batch_name,
         seq_date        = batch.date,
-        ##  Warnings Table
-        seq_warnings    = DC.QC_warnings,
+        batch_id        = batch_id,
         ##  Plotts
-        chrom           = '18',
-        case_data        = PP.case_data['NCV_18'],
+        chrom           = TA.chrom,
+        case_data       = TA.case_data,
+        tris_chrom_abn  = TA.tris_chrom_abn,
         case_size       = L.case_size,
         case_line       = L.case_line,
         abn_size        = L.abn_size,
         abn_line        = L.abn_line,
         abn_symbol      = L.abn_symbol,
-        tris_chrom_abn  = PP.tris_chrom_abn['18'],
-        abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
         ncv_abn_colors  = L.ncv_abn_colors,
-        tris_thresholds = DC.tris_thresholds,
-        ##  Buttons
-        batch_id        = batch_id,
-        sample_ids      = ','.join(sample.sample_ID for sample in NCV_db))
+        tris_thresholds = DC.tris_thresholds)
 
 
 @app.route('/NIPT/batches/<batch_id>/NCV21_plot/')
 @login_required
 def NCV21_plot(batch_id):
-    L = Layout()
 
-    # Getting and formating sample and NCV data for the samples in the batch
-    NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
-    sample_db = Sample.query.filter(Sample.batch_id == batch_id)
-    batch = Batch.query.filter(Batch.batch_id == batch_id).first()
-    DC = DataClasifyer(NCV_db)
-    DC.handle_NCV()
-    DC.get_QC_warnings(sample_db)
-
+    #getting thresholds and layout
+    DC = DataClasifyer()
+    L = Layout(batch_id)
 
     # Getting and formating sample and NCV data for the control samples in the plot
     control_normal, control_abnormal = BDF.control_NCV21()
-    PP = PlottPage(batch_id, NCV_db)
-    PP.make_case_data_new('NCV_21', control_normal)
-    PP.make_tris_chrom_abn(control_abnormal, '21')
+
+    # Getting and formating sample and NCV data for the samples in the batch
+    batch = Batch.query.filter(Batch.batch_id == batch_id).first()
+    NCV_db = NCV.query.filter(NCV.batch_id == batch_id).all()
+    TA = TrisAbnormality(batch_id, '21', NCV_db)
+    TA.make_case_data_new(control_normal)
+    TA.make_tris_chrom_abn(control_abnormal)
 
     return render_template('batch_page/tab_NCV21.html',
         ##  Header
         batch_name      = batch.batch_name,
         seq_date        = batch.date,
-        ##  Warnings Table
-        seq_warnings    = DC.QC_warnings,
+        batch_id        = batch_id,
         ##  Plotts
-        chrom           = '21',
-        case_data        = PP.case_data['NCV_21'],
+        chrom           = TA.chrom,
+        case_data       = TA.case_data,
+        tris_chrom_abn  = TA.tris_chrom_abn,
         case_size       = L.case_size,
         case_line       = L.case_line,
         abn_size        = L.abn_size,
         abn_line        = L.abn_line,
         abn_symbol      = L.abn_symbol,
-        tris_chrom_abn  = PP.tris_chrom_abn['21'],
-        abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
         ncv_abn_colors  = L.ncv_abn_colors,
-        tris_thresholds = DC.tris_thresholds,
-        ##  Buttons
-        batch_id        = batch_id,
-        sample_ids      = ','.join(sample.sample_ID for sample in NCV_db))
+        tris_thresholds = DC.tris_thresholds)
 
 @app.route('/NIPT/batches/<batch_id>/NCVXY_plot/')
 @login_required
 def NCVXY_plot(batch_id):
-    L = Layout()
+    L = Layout(batch_id)
 
     # Getting and formating sample and NCV data for the samples in the batch
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
@@ -551,25 +529,27 @@ def NCVXY_plot(batch_id):
         abn_size        = L.abn_size,
         abn_line        = L.abn_line,
         abn_symbol      = L.abn_symbol,
-        samp_range      = range(len(PP.case_data['NCV_X']['NCV_cases'])),
+        samp_range      = range(len(PP.case_data['NCV_X']['samples'])),
         sex_chrom_abn   = PP.sex_chrom_abn,
         abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
-        many_colors     = L.many_colors,
+        many_colors     = L.many_colors_dict,
         sex_tresholds   = DC.sex_tresholds,
         ncv_abn_colors  = L.ncv_abn_colors,
         ##  Buttons
         batch_id        = batch_id,
-        sample_ids      = ','.join(sample.sample_ID for sample in NCV_db))
+        sample_ids      = ','.join(sample.sample_ID for sample in NCV_db),
+        sample_list     = PP.sample_list)
 
 @app.route('/NIPT/batches/<batch_id>/FF_plot/')
 @login_required
 def FF_plot(batch_id):
-    L = Layout()
+    L = Layout(batch_id)
     FF = FetalFraction(batch_id)
     FF.format_case_dict()
     FF.format_contol_dict()
     FF.form_prediction_interval()
     batch = Batch.query.filter(Batch.batch_id == batch_id).first()
+    DC.get_QC_warnings(sample_db)
 
     return render_template('batch_page/tab_FF.html',
         ##  Header
@@ -582,13 +562,15 @@ def FF_plot(batch_id):
         cases           = FF.samples,
         control         = FF.control,
         case_size       = L.case_size,
-        case_line       = L.case_line
+        case_line       = L.case_line,
+        many_colors     = L.many_colors_dict,
+        sample_list     = FF.sample_list
         )
 
 @app.route('/NIPT/batches/<batch_id>/covX_covY/')
 @login_required
 def covX_covY(batch_id):
-    L = Layout()
+    L = Layout(batch_id)
     CC = CovXCovY(batch_id)
     CC.format_case_dict()
     CC.format_contol_dict()
@@ -610,23 +592,20 @@ def covX_covY(batch_id):
         abn_colors      = L.ncv_abn_colors,
         abn_size        = L.abn_size,
         abn_line        = L.abn_line,
-        abn_symbol      = L.abn_symbol 
+        abn_symbol      = L.abn_symbol,
+        many_colors     = L.many_colors_dict,
+        sample_list     = CC.sample_list
         )
 
 
 @app.route('/NIPT/batches/<batch_id>/coverage_plot/')
 @login_required
 def coverage_plot(batch_id):
-    L = Layout()
+    L = Layout(batch_id)
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
     sample_db = Sample.query.filter(Sample.batch_id == batch_id)
     batch = Batch.query.filter(Batch.batch_id == batch_id).first()
 
-   # from sqlalchemy import func
-   # query = Sample.query.filter(func.or_(
-   #     Sample.sample_name.like(f"%{query}%"),
-   #     Batch.batch_name.like(f"%{query}%)
-   # ))
 
     DC = DataClasifyer(NCV_db)
     DC.handle_NCV()
@@ -641,16 +620,19 @@ def coverage_plot(batch_id):
         seq_warnings    = DC.QC_warnings,
         samp_cov_db     = PP.coverage_plot,
         cov_colors      = L.cov_colors,
+        case_size       = L.case_size,
+        case_line       = L.case_line,
         ##  Buttons
         batch_id        = batch_id,
-        sample_ids      = ','.join(sample.sample_ID for sample in NCV_db))
+        sample_ids      = ','.join(sample.sample_ID for sample in NCV_db),
+        sample_list     = PP.sample_list)
 
 
 import json
 @app.route('/NIPT/batches/<batch_id>/report/<coverage>')
 @login_required
 def report(batch_id, coverage):
-    L = Layout()
+    L = Layout(batch_id)
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id)
     sample_db = Sample.query.filter(Sample.batch_id == batch_id)
     batch = Batch.query.filter(Batch.batch_id == batch_id).first()
@@ -703,12 +685,10 @@ def report(batch_id, coverage):
         abn_symbol      = L.abn_symbol,
         case_line       = L.case_line,
         abn_line        = L.abn_line,
-        samp_range      = range(len(PP.case_data['NCV_X']['NCV_cases'])),
+        samp_range      = range(len(PP.case_data['NCV_X']['samples'])),
         tris_chrom_abn  = PP.tris_chrom_abn,
         sex_chrom_abn   = PP.sex_chrom_abn,
         abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
-        cov_colors      = L.cov_colors,
-        many_colors     = L.many_colors,
         ncv_abn_colors  = L.ncv_abn_colors,
         abn_colors  = L.ncv_abn_colors,
         sex_tresholds   = DC.sex_tresholds,
