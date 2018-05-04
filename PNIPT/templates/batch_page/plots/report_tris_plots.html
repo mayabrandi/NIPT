@@ -1,7 +1,7 @@
 {% block content %}
 <script>
     tris_dict = {{tris_chrom_abn|tojson}}
-    case_data={{case_data|tojson}}
+    case_data={{tris_case_data|tojson}}
     $(function () {
     {% for chrom in ['13','18','21'] %}
     var data = []
@@ -10,8 +10,8 @@
     hovermode:'closest',
     annotations : [],
     xaxis :{showline: true,
-            ticktext : {{case_data['NCV_'+chrom]['X_labels']|tojson}},
-            tickvals : {{case_data['NCV_'+chrom]['x_axis']}},
+            ticktext : {{tris_case_data['NCV_'+chrom]['X_labels']|tojson}},
+            tickvals : {{tris_case_data['NCV_'+chrom]['x_axis']}},
             tickangle : 20,
             linecolor: '#636363',
             linewidth: 5,
@@ -29,7 +29,7 @@
             }};
     {% for line  in tris_thresholds %} 
        
-        var line = {x : {{case_data['NCV_'+chrom]['x_range']}},
+        var line = {x : {{tris_case_data['NCV_'+chrom]['x_range']}},
             y : [{{tris_thresholds[line]['NCV']}},{{tris_thresholds[line]['NCV']}}],
             mode: 'lines',
             showlegend: false,
@@ -58,10 +58,10 @@
     data.push(verif);
     {% endfor %}
     var trace1 = {
-    name: "Current batch (N={{case_data['NCV_'+chrom]['nr_cases']}})",
-      y: {{case_data['NCV_'+chrom]['NCV_cases']}},
-      x: {{case_data['NCV_'+chrom]['x_axis']}},
-      text: {{case_data['NCV_'+chrom]['X_labels']|tojson}},
+    name: "Current batch (N={{tris_case_data['NCV_'+chrom]['nr_cases']}})",
+      y: {{tris_case_data['NCV_'+chrom]['NCV_cases']}},
+      x: {{tris_case_data['NCV_'+chrom]['x_axis']}},
+      text: {{tris_case_data['NCV_'+chrom]['X_labels']|tojson}},
       mode: 'markers',
       type: 'scatter',
     marker: {
@@ -69,12 +69,12 @@
             size: {{case_size}}
             }};
     var box = {
-    y: {{case_data['NCV_'+chrom]['NCV_pass']}},
+    y: {{tris_case_data['NCV_'+chrom]['NCV_pass']}},
     pointpos: 30,
     type: 'box',
     marker: {
         color: '#ccccb3'},
-        name: 'Negative (N={{case_data['NCV_'+chrom]['nr_pass']}})',
+        name: 'Negative (N={{tris_case_data['NCV_'+chrom]['nr_pass']}})',
         hoverinfo:'none'};
     data.push(trace1)
     data.push(box)
