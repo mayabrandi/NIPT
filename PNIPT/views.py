@@ -549,7 +549,6 @@ def FF_plot(batch_id):
     FF.format_contol_dict()
     FF.form_prediction_interval()
     batch = Batch.query.filter(Batch.batch_id == batch_id).first()
-    DC.get_QC_warnings(sample_db)
 
     return render_template('batch_page/tab_FF.html',
         ##  Header
