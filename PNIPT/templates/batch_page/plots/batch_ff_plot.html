@@ -49,15 +49,16 @@
         data.push(treshold);
         {% endfor %}
 
-        {% for sample in cases.keys() %}
+        {% for sample in sample_list %}
         var trace1 = {
         y: [{{cases[sample]['FF']}}],
         x: [{{cases[sample]['NCVY']}}],
-        name: {{sample|tojson}},
+        name: {{cases[sample]['name']|tojson}},
         mode: 'markers',
-        text: {{sample|tojson}},
+        text: {{cases[sample]['name']|tojson}},
         type: 'scatter',
         marker: {
+                color: '{{many_colors[sample]}}',
                 size: {{case_size}},
                 line: {width:{{case_line}}} }};
         data.push(trace1);
@@ -114,15 +115,16 @@
         data.push(treshold);
         {% endfor %}
 
-        {% for sample in cases.keys() %}
+        {% for sample in sample_list %}
         var trace1 = {
         y: [{{cases[sample]['FF']}}],
         x: [{{cases[sample]['NCVX']}}],
-        name: {{sample|tojson}},
+        name: {{cases[sample]['name']|tojson}},
         mode: 'markers',
-        text: {{sample|tojson}},
+        text: {{cases[sample]['name']|tojson}},
         type: 'scatter',
         marker: {
+                color: '{{many_colors[sample]}}',
                 size: {{case_size}},
                 line: {width:{{case_line}}}
                 }};

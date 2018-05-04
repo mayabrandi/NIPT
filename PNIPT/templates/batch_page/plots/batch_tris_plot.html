@@ -39,7 +39,7 @@
                 name  : "{{line}}"};
         data.push(line);
     {% endfor %}
-    {% for abn_status  in abn_status_list %}
+    {% for abn_status  in tris_chrom_abn.keys() %}
         var verif = {                                                                  
             name: "{{abn_status}} T{{chrom}} (N="+tris_chrom_abn["{{abn_status}}"]['nr']+")",
             y: tris_chrom_abn["{{abn_status}}"]['NCV'],                                        

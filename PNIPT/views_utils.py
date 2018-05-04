@@ -127,10 +127,8 @@ class BatchDataFilter():
 
 
 ################################################################################################
-
-
 class DataClasifyer():
-    def __init__(self, NCV_db):
+    def __init__(self, NCV_db=None):
         self.NCV_db = NCV_db
         self.NCV_data = {} 
         self.exceptions = ['NA','']
@@ -144,6 +142,7 @@ class DataClasifyer():
         self.batch = {}
         self.man_class_merged = {}
         self.sex_tresholds   = {}
+        self.ncvy = 20
         self.tris_thresholds = {'soft_max': {'NCV': 3 , 'color': 'orange', 'text' : 'Warning threshold = 3'},
                                 'soft_min': {'NCV': -4, 'color': 'orange', 'text' : 'Warning threshold = -4'},
                                 'hard_max': {'NCV': 4 , 'color': 'red', 'text' : 'Threshold = 4'},
@@ -161,8 +160,8 @@ class DataClasifyer():
         y_min_lower = -15.256 * x_min - 62.309
         y_max_lower = -15.256 * x_max_lower - 62.309
         self.sex_tresholds = {'XY_horis' :  {'x' : [x_min, 10],         
-                                             'y' : [13, 13],
-                                            'text' : 'X=13'},
+                                             'y' : [self.ncvy, self.ncvy],
+                                            'text' : 'Y='+str(self.ncvy)},
                                 'XY_upper': {'x' : [x_min, x_max_upper],
                                              'y' : [y_min_upper, y_max_upper],
                                             'text' : 'Y = -15.3X+91.4'},
@@ -173,10 +172,10 @@ class DataClasifyer():
                                              'y' : [155, y_min_upper],
                                             'text' : 'X=-4'},
                                 'X0' :      {'x' : [-4, -4],   
-                                             'y' : [13, -60],
+                                             'y' : [self.ncvy, -60],
                                              'text' : 'X=-4'},
                                 'XXX' :     {'x' : [4, 4],      
-                                             'y' : [13, -60],
+                                             'y' : [self.ncvy, -60],
                                              'text' : 'X=4'}}
         for key, val in self.sex_tresholds.items():
             val['text_position'] = [np.mean(val['x']), np.mean(val['y'])]
@@ -236,15 +235,15 @@ class DataClasifyer():
             f_l = -15.256*x - 62.309 - y
             if 0>=f_h and x<=-4:
                 sex_warn = 'XYY'
-            elif 0>=f_h and x>=-4 and y>13:
+            elif 0>=f_h and x>=-4 and y>self.ncvy:
                 sex_warn = 'XXY'
-            elif y<13 and x>=4:
+            elif y<self.ncvy and x>=4:
                 sex_warn = 'XXX'
-            elif f_l<0<=f_h and y>13:
+            elif f_l<0<=f_h and y>self.ncvy:
                 sex_warn = 'XY'
             elif f_l>0 and x< -4:
                 sex_warn = 'X0'
-            elif -4<=x<=4 and y<13:
+            elif -4<=x<=4 and y<self.ncvy:
                 sex_warn = 'XX'
         if sex_warn in ['XX','XY']:
             self.NCV_data[s.sample_ID]['NCV_Y']['warn'] = "default"
@@ -303,7 +302,7 @@ class DataClasifyer():
 ################################################################################################
 
 class Layout():
-    def __init__(self):
+    def __init__(self, batch_id=None):
         self.case_size = 11
         self.case_line = 1
         self.abn_size = 7
@@ -319,8 +318,12 @@ class Layout():
                                         '#00FF00', '#0000FF', '#FFFF00', '#00FFFF', '#FF00FF',
                                         '#C0C0C0', '#808080', '#800000', '#808000', '#008000',
                                         '#800080', '#008080', '#000080', '#0b7b47','#7b0b3f','#7478fc'])
-        self.cov_colors = [[i]*22 for i in self.many_colors]
+        #self.cov_colors = [[i]*22 for i in self.many_colors]
         self.abn_status_X = {'Probable':0,'Verified':0.1,'False Positive':0.2,'False Negative':0.3, 'Suspected':0.4, 'Other': 0.5}
+        if batch_id:
+            samples = Sample.query.filter(Sample.batch_id == batch_id)                                        
+            self.many_colors_dict = {s.sample_ID:self.many_colors[i] for i, s in enumerate(samples)}  
+            self.cov_colors = {s.sample_ID: [self.many_colors[i]]*22 for i, s in enumerate(samples)} 
 
 
 class PlottPage():
@@ -336,6 +339,7 @@ class PlottPage():
         for status in self.abn_status_X.keys():
             self.tris_abn[status] = {'NCV' : [], 's_name' : [], 'x_axis': []}
         self.coverage_plot = {'samples':[],'x_axis':[]}
+        self.sample_list = []
 
     def make_cov_plot_data(self):
         """Preparing coverage plot data"""
@@ -350,27 +354,33 @@ class PlottPage():
                 except:
                     pass
             self.coverage_plot['samples'].append((samp.sample_ID, {'cov':samp_cov, 'samp_id':[samp.sample.sample_name]}))
+        self.coverage_plot['samples'].sort()
 
     def make_case_data_new(self, chrom, control_normal):
         """Preparing case data"""
-        NCV_cases = []
-        X_labels = []
+        samples = {}
+        sample_list = []
         for s in self.cases:
             try:
-                NCV_val = round(float(s.__dict__[chrom]),2)
-                NCV_cases.append(NCV_val)
-                X_labels.append(s.sample_name)
+                samples[s.sample_ID]={
+                "NCV_val" : round(float(s.__dict__[chrom]),2),
+                "X_labels" : s.sample_name}
+                sample_list.append(s.sample_ID)
             except:
                 pass
+        
+        sample_list.sort()
+        self.sample_list = sample_list
+
         self.case_data[chrom] = {
             'nr_pass' : len(control_normal),
-            'NCV_cases' : NCV_cases,
-            'nr_cases' :len(NCV_cases),
-            'x_axis' : range(2, len(NCV_cases)+2),
-            'x_range' : [-1, len(NCV_cases)+3],
-            'X_labels' : X_labels,
+            'samples' : samples,
+            'nr_cases' :len(samples),
+            'x_axis' : range(2, len(samples)+2),
+            'x_range' : [-1, len(samples)+3],
             'chrom' : chrom,
             'NCV_pass' : control_normal}
+
 
     def _build_tris_abn_dicts(self):
         for abn in self.tris_chrom_abn:
@@ -411,12 +421,64 @@ class PlottPage():
 
 
 ################################################################################################
+class TrisAbnormality():
+    def __init__(self,batch_id,chrom, cases):
+        self.chrom = chrom
+        self.cases = cases
+        self.case_data = {}
+        self.tris_chrom_abn = {}
+        self.tris_thresholds = {}
+        self.abn_status_X = {'Probable':0,'Verified':0.1,'False Positive':0.2,'False Negative':0.3, 'Suspected':0.4, 'Other': 0.5}
+    
+    def make_case_data_new(self, control_normal):
+        """Preparing case data"""
+        NCV_cases = []
+        X_labels = []
+        for s in self.cases:
+            try:
+                NCV_val = round(float(s.__dict__['NCV_'+self.chrom]),2)
+                NCV_cases.append(NCV_val)
+                X_labels.append(s.sample_name)
+            except:
+                pass
+        self.case_data = {
+            'nr_pass' : len(control_normal),
+            'NCV_cases' : NCV_cases,
+            'nr_cases' :len(NCV_cases),
+            'x_axis' : range(2, len(NCV_cases)+2),
+            'x_range' : [-1, len(NCV_cases)+3],
+            'X_labels' : X_labels,
+            'chrom' : self.chrom,
+            'NCV_pass' : control_normal}
+
+    def _build_tris_abn_dicts(self):
+        for status in self.abn_status_X.keys():
+            if not status in self.tris_chrom_abn:
+                self.tris_chrom_abn[status] = {'NCV' : [], 's_name' : [], 'x_axis': [], 'nr': 0}
+    
+    def make_tris_chrom_abn(self, abnorm_samples):
+        """Preparing trisomi control samples"""
+        self._build_tris_abn_dicts()
+        for sample in abnorm_samples:
+            sample_name = sample.sample_name
+            status = sample.__dict__['status_T' + self.chrom]
+            NCV_val = sample.NCV[0].__dict__['NCV_' + self.chrom]
+            if NCV_val!= 'NA' and status in self.tris_chrom_abn.keys():
+                self.tris_chrom_abn[status]['NCV'].append(float(NCV_val))
+                self.tris_chrom_abn[status]['s_name'].append(sample_name)
+                self.tris_chrom_abn[status]['x_axis'].append(self.abn_status_X[status]-0.2)
+                self.tris_chrom_abn[status]['nr']+=1  
+
+
+
+################################################################################################
 class FetalFraction():
     """Class to prepare Fetal Fraction Plots"""
     def __init__(self,batch_id):
-        self.dbNCV = NCV.query.filter(NCV.batch_id == batch_id).all()
-        self.dbSample = Sample.query.filter(Sample.batch_id == batch_id).all()
+        self.dbNCV = NCV.query.filter(NCV.batch_id == batch_id, NCV.NCV_Y!='NA',NCV.NCV_X!='NA').all()
+        self.dbSample = Sample.query.filter(Sample.batch_id == batch_id, Sample.FF_Formatted!='NA').all()
         self.samples = {}
+        self.sample_list = []
         self.control = {'NCV_X':[],'NCV_Y':[],'FF':[]}
         self.perdiction = {'NCV_X':{},'NCV_Y':{}}
         self.nr_contol_samples = None
@@ -444,11 +506,14 @@ class FetalFraction():
 
     def format_case_dict(self):
         for samp in self.dbSample:
-            self.samples[samp.sample_name] = {}
-            self.samples[samp.sample_name]['FF'] = int(samp.FF_Formatted.rstrip('%'))
+            self.samples[samp.sample_ID] = {}
+            self.samples[samp.sample_ID]['FF'] = int(samp.FF_Formatted.rstrip('%'))
         for samp in self.dbNCV:
-            self.samples[samp.sample_name]['NCVY'] = float(samp.NCV_Y)
-            self.samples[samp.sample_name]['NCVX'] = float(samp.NCV_X)
+            self.samples[samp.sample_ID]['name'] = samp.sample_name
+            self.samples[samp.sample_ID]['NCVY'] = float(samp.NCV_Y)
+            self.samples[samp.sample_ID]['NCVX'] = float(samp.NCV_X)
+        self.sample_list = self.samples.keys()
+        self.sample_list.sort()
 
     def format_contol_dict(self):
         FF_normal = Sample.query.filter(Sample.FF_Formatted!=None,
@@ -459,7 +524,7 @@ class FetalFraction():
         FF_normal=FF_normal.join(NCV).filter(NCV.NCV_X!='NA', NCV.NCV_Y!='NA',NCV.include==True).all()
 
         NCV_normal = NCV.query.filter(NCV.NCV_X!='NA', NCV.NCV_Y!='NA',NCV.include==True)
-        NCV_normal=NCV_normal.join(Sample).filter(Sample.FF_Formatted!=None,
+        NCV_normal=NCV_normal.join(Sample).filter(Sample.FF_Formatted!='NA',
                                         Sample.status_X0 == "Normal",
                                         Sample.status_XXX == "Normal",
                                         Sample.status_XXY == "Normal",
@@ -482,6 +547,7 @@ class CovXCovY():
         self.pos_contol = {'X0':{}, 'XXX':{}, 'XXY':{},'XYY':{}} 
         self.batch_id = batch_id
         self.samples = {}
+        self.sample_list = []
         self.control = {'CovY':[],'CovX':[]}
         self.nr_contol_samples = None
         self.coverage_query = Coverage.query.filter(Coverage.ChrX_Coverage != 'NA', Coverage.ChrX_Coverage!='NA')
@@ -491,7 +557,10 @@ class CovXCovY():
         dbCoverage = Coverage.query.filter(Coverage.batch_id == self.batch_id).all()
         for samp in dbCoverage:
             self.samples[samp.sample_ID] = {'CovY' : float(samp.ChrY_Coverage),
-                                            'CovX' : float(samp.ChrX_Coverage)}
+                                            'CovX' : float(samp.ChrX_Coverage),
+                                            'name' : samp.sample.sample_name}
+        self.sample_list = self.samples.keys()
+        self.sample_list.sort()
 
     def format_contol_dict(self):
         XY_normal = self.coverage_query.join(Sample).filter(Sample.status_X0 == "Normal",
