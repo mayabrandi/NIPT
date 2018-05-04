@@ -393,6 +393,8 @@ def NCV13_plot(batch_id):
 
     #getting thresholds and layout
     DC = DataClasifyer()
+    sample_db = Sample.query.filter(Sample.batch_id == batch_id)
+    DC.get_QC_warnings(sample_db)
     L = Layout(batch_id)
 
     # Getting and formating sample and NCV data for the control samples in the plot
@@ -406,6 +408,8 @@ def NCV13_plot(batch_id):
     TA.make_tris_chrom_abn(control_abnormal)
 
     return render_template('batch_page/tab_NCV13.html',
+        ##  Warnings Table
+        seq_warnings    = DC.QC_warnings,
         ##  Header
         batch_name      = batch.batch_name,
         seq_date        = batch.date,
@@ -428,6 +432,8 @@ def NCV13_plot(batch_id):
 def NCV18_plot(batch_id):
     #getting thresholds and layout
     DC = DataClasifyer()
+    sample_db = Sample.query.filter(Sample.batch_id == batch_id)
+    DC.get_QC_warnings(sample_db)
     L = Layout(batch_id)
 
     # Getting and formating sample and NCV data for the control samples in the plot
@@ -441,6 +447,8 @@ def NCV18_plot(batch_id):
     TA.make_tris_chrom_abn(control_abnormal)
 
     return render_template('batch_page/tab_NCV18.html',
+        ##  Warnings Table
+        seq_warnings    = DC.QC_warnings,
         ##  Header
         batch_name      = batch.batch_name,
         seq_date        = batch.date,
@@ -464,6 +472,8 @@ def NCV21_plot(batch_id):
 
     #getting thresholds and layout
     DC = DataClasifyer()
+    sample_db = Sample.query.filter(Sample.batch_id == batch_id)
+    DC.get_QC_warnings(sample_db)
     L = Layout(batch_id)
 
     # Getting and formating sample and NCV data for the control samples in the plot
@@ -477,6 +487,8 @@ def NCV21_plot(batch_id):
     TA.make_tris_chrom_abn(control_abnormal)
 
     return render_template('batch_page/tab_NCV21.html',
+        ##  Warnings Table
+        seq_warnings    = DC.QC_warnings,
         ##  Header
         batch_name      = batch.batch_name,
         seq_date        = batch.date,
@@ -549,8 +561,13 @@ def FF_plot(batch_id):
     FF.format_contol_dict()
     FF.form_prediction_interval()
     batch = Batch.query.filter(Batch.batch_id == batch_id).first()
+    sample_db = Sample.query.filter(Sample.batch_id == batch_id)
+    DC = DataClasifyer()
+    DC.get_QC_warnings(sample_db)
 
     return render_template('batch_page/tab_FF.html',
+        ##  Warnings Table
+        seq_warnings    = DC.QC_warnings,
         ##  Header
         batch_name      = batch.batch_name,
         batch_id        = batch_id,
@@ -575,8 +592,13 @@ def covX_covY(batch_id):
     CC.format_contol_dict()
     CC.format_pos_contol()
     batch = Batch.query.filter(Batch.batch_id == batch_id).first()
+    sample_db = Sample.query.filter(Sample.batch_id == batch_id)
+    DC = DataClasifyer()
+    DC.get_QC_warnings(sample_db)
 
     return render_template('batch_page/tab_covX_covY.html',
+        ##  Warnings Table
+        seq_warnings    = DC.QC_warnings,
         ##  Header
         batch_name      = batch.batch_name,
         batch_id        = batch_id,
