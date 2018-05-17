@@ -124,7 +124,7 @@ def samples():
     DC = DataClasifyer(NCV_db)
     DC.handle_NCV()
     DC.get_manually_classified(sample_db)
-    return render_template('samples_page.html',
+    return render_template('samples.html',
         nr_included_samps = NCV.query.filter(NCV.include).count(),
         NCV_db  = sample_db,
         NCV_sex = DC.NCV_sex,
