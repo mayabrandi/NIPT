@@ -245,22 +245,29 @@ class DataClasifyer():
                 sex_warn = 'X0'
             elif -4<=x<=4 and y<self.ncvy:
                 sex_warn = 'XX'
-        if sex_warn in ['XX','XY']:
-            self.NCV_data[s.sample_ID]['NCV_Y']['warn'] = "default"
-            self.NCV_data[s.sample_ID]['NCV_X']['warn'] = "default"
-            sex = sex_warn
-        elif sex_warn:
-            self.NCV_data[s.sample_ID]['NCV_Y']['warn'] = "danger"
-            self.NCV_data[s.sample_ID]['NCV_X']['warn'] = "danger"
-            samp_warn.append(sex_warn)
-            sex = 'ambiguous'
-        else:
-            self.NCV_data[s.sample_ID]['NCV_Y']['warn'] = "default"
-            self.NCV_data[s.sample_ID]['NCV_X']['warn'] = "default"
-            sex = 'ambiguous'
-        self.NCV_sex[s.sample_ID] = sex
+            
+            if sex_warn in ['XX','XY']:
+                self.NCV_data[s.sample_ID]['NCV_Y']['warn'] = "default"
+                self.NCV_data[s.sample_ID]['NCV_X']['warn'] = "default"
+                sex = sex_warn
+            elif sex_warn:
+                self.NCV_data[s.sample_ID]['NCV_Y']['warn'] = "danger"
+                self.NCV_data[s.sample_ID]['NCV_X']['warn'] = "danger"
+                samp_warn.append(sex_warn)
+                sex = 'ambiguous'
+            else:
+                self.NCV_data[s.sample_ID]['NCV_Y']['warn'] = "default"
+                self.NCV_data[s.sample_ID]['NCV_X']['warn'] = "default"
+                sex = 'ambiguous'
+            self.NCV_sex[s.sample_ID] = sex
+            if 20<=y<50:
+                samp_warn.append(' Compare NCVY with ff!')
+                self.NCV_data[s.sample_ID]['NCV_Y']['warn'] = "danger"
+        
+
         return samp_warn
 
+            
     def _get_tris_warn(self, s, samp_warn):
         """Get automated trisomi warnings, based on preset NCV thresholds"""
         for key in ['13','18','21','X','Y']:
@@ -509,6 +516,8 @@ class FetalFraction():
             self.samples[samp.sample_ID] = {}
             self.samples[samp.sample_ID]['FF'] = int(samp.FF_Formatted.rstrip('%'))
         for samp in self.dbNCV:
+            if not samp.sample_ID in self.samples:
+               self.samples[samp.sample_ID] = {} 
             self.samples[samp.sample_ID]['name'] = samp.sample_name
             self.samples[samp.sample_ID]['NCVY'] = float(samp.NCV_Y)
             self.samples[samp.sample_ID]['NCVX'] = float(samp.NCV_X)
