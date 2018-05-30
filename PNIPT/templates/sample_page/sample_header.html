@@ -1,0 +1,73 @@
+{% block content %}
+
+<form action="{{ url_for('update') }}" method="post">
+    <div class="vertical-center">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Sample: {{sample.sample_name}}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h5>Info Box</h5>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered ">
+                                    <tr>
+                                        <td><strong>Batch:</strong></td>
+                                        <td><a href={{ url_for('sample', batch_id=batch_id) }}>{{ batch_name }}</a></td>
+                                        <td><strong># QCFlags:</strong></td>
+                                        <td>{{ sample.QCFlag}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Sequencing Date:</strong></td>
+                                        <td>{{batch_date }} </td>
+                                        <td><strong>Sex (NCV-classified):</strong></td>
+                                        <td>{{NCV_sex}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Sample Type:</strong></td>
+                                        <td>{{NCV_dat.SampleType}}</td>
+                                        <td><strong>Abn (NCV-classified):</strong></td>
+                                        <td>{{NCV_warn}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>NonExcludedSites:</strong></td>
+                                        <td>{{ sample.NonExcludedSites}}</td>
+                                        <td><strong>Included in Validation Data Set:</strong></td>
+                                        <td>{{NCV_dat.include}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {% if current_user.role=='RW' %}
+                    <div class="form-group">
+                        <textarea class="form-control" rows="2" name = "comment">{{NCV_dat.comment}}</textarea>
+                    </div>
+                    <td>
+                        <input type=text name="sample_id" value="{{sample_id}}" hidden>
+                    </td>
+                    <td>
+                        <p align="right">
+                            <input type="submit" class="btn btn-warning" value="Save comment">
+                        </p>
+                    </td>
+                    {% else %}
+                    <div class="panel panel-default">
+                            <div class="panel-heading">Comment</div>
+                            <div class="panel-body">{{NCV_dat.comment}}</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+    </form>
+</div>
+{% endblock %}
+

@@ -1,0 +1,40 @@
+{% block content %}
+<script>
+        var XY_plot = document.getElementById('cov_plot')
+        var data = []
+        var layout = {
+        legend:{hovermode:'closest' },
+        hovermode:'closest',
+        xaxis :{showline: true,
+                zeroline: false,
+                linecolor: '#636363',
+                linewidth: 5,
+                showgrid: true,
+                gridcolor: '#bdbdbd',
+                title: 'Chromosome',
+                tickvals :{{samp_cov_db['x_axis']}},
+                },            
+        yaxis :{zeroline: false,
+                showline: true,
+                showgrid: false,
+                linecolor: '#636363',
+                linewidth: 5,
+                title : 'Normalized Coverage'
+                },};
+        {% for key, samp in samp_cov_db['samples'] %}
+        var trace1 = {
+            name: {{samp['samp_id']|tojson}},
+            y: {{samp['cov']}},
+            x: {{samp_cov_db['x_axis']}},
+            mode: 'markers',
+            marker: {color: {{cov_colors[key]|tojson}},
+            size: {{case_size}},
+                line: {width:{{case_line}}}
+                },
+            text: {{samp['samp_id']|tojson}},
+            type: 'scatter'};
+        data.push(trace1);
+        {% endfor %}
+        Plotly.newPlot('cov_plot', data, layout);
+</script>
+{% endblock %}

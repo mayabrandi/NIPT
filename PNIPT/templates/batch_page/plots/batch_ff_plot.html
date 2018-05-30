@@ -1,0 +1,136 @@
+{% block content %}
+<script>
+        var XY_plot = document.getElementById('FFNCVY')
+        var data = []
+        var layout = {
+        title:'NCVY and fetal fraction correlation.',
+        annotations : [],
+        legend:{hovermode:'closest' },
+        hovermode:'closest',
+        xaxis :{range:[-5,450],
+                showline: true,
+                zeroline: false,
+                linecolor: '#636363',
+                linewidth: 5,
+                showgrid: false,
+                gridcolor: '#bdbdbd',
+                title: 'NCVY'
+                },
+                
+        yaxis :{range: [0,35],
+                zeroline: false,
+                showline: true,
+                showgrid: false,
+                linecolor: '#636363',
+                linewidth: 5,
+                title : 'Fetal Fraction (%)'
+                },};
+        var backstat = {
+        y: {{control['FF']}},
+        x: {{control['NCV_Y']}},
+        name: 'Negative (N={{nr_contol_samples}})',
+        hoverinfo:'none',
+        mode: 'markers',
+        type: 'scatter',
+        marker: {color: '#ccccb3'}}
+        data.push(backstat);
+
+        {% for tres  in predict['NCV_Y'] %}
+        var treshold = {
+                x : {{predict['NCV_Y'][tres]['x']}},
+                y : {{predict['NCV_Y'][tres]['y']}},
+                mode: 'lines',
+                showlegend: false,
+                line: {
+                    dash: 'dot',
+                    color : 'red',
+                    width : 2},
+                name: "max"};
+        data.push(treshold);
+        {% endfor %}
+
+        {% for sample in sample_list %}
+        var trace1 = {
+        y: [{{cases[sample]['FF']}}],
+        x: [{{cases[sample]['NCVY']}}],
+        name: {{cases[sample]['name']|tojson}},
+        mode: 'markers',
+        text: {{cases[sample]['name']|tojson}},
+        type: 'scatter',
+        marker: {
+                color: '{{many_colors[sample]}}',
+                size: {{case_size}},
+                line: {width:{{case_line}}} }};
+        data.push(trace1);
+        {% endfor %}
+    
+        Plotly.newPlot('FFNCVY', data, layout);
+    </script>
+<script>
+        var XY_plot = document.getElementById('FFNCVX')
+        var data = []
+        var layout = {
+        title:'NCVX and fetal fraction correlation',
+        annotations : [],
+        legend:{hovermode:'closest' },
+        hovermode:'closest',
+        xaxis :{showline: true,
+                zeroline: false,
+                linecolor: '#636363',
+                linewidth: 5,
+                showgrid: false,
+                gridcolor: '#bdbdbd',
+                title: 'NCVX'
+                },
+                
+        yaxis :{range: [0,35],
+                zeroline: false,
+                showline: true,
+                showgrid: false,
+                linecolor: '#636363',
+                linewidth: 5,
+                title : 'Fetal fraction (%)'
+                },};
+        var backstat = {
+        y: {{control['FF']}},
+        x: {{control['NCV_X']}},
+        name: 'Negative (N={{nr_contol_samples}})',
+        hoverinfo:'none',
+        mode: 'markers',
+        type: 'scatter',
+        marker: {color: '#ccccb3'}}
+        data.push(backstat);
+
+        {% for tres  in predict['NCV_X'] %}
+        var treshold = {
+                x : {{predict['NCV_X'][tres]['x']}},
+                y : {{predict['NCV_X'][tres]['y']}},
+                mode: 'lines',
+                showlegend: false,
+                line: {
+                    dash: 'dot',
+                    color : 'red',
+                    width : 2},
+                name: "max"};
+        data.push(treshold);
+        {% endfor %}
+
+        {% for sample in sample_list %}
+        var trace1 = {
+        y: [{{cases[sample]['FF']}}],
+        x: [{{cases[sample]['NCVX']}}],
+        name: {{cases[sample]['name']|tojson}},
+        mode: 'markers',
+        text: {{cases[sample]['name']|tojson}},
+        type: 'scatter',
+        marker: {
+                color: '{{many_colors[sample]}}',
+                size: {{case_size}},
+                line: {width:{{case_line}}}
+                }};
+        data.push(trace1);
+        {% endfor %}
+    
+        Plotly.newPlot('FFNCVX', data, layout);
+    </script>
+{% endblock %}

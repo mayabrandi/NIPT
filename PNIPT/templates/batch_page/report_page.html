@@ -1,0 +1,151 @@
+{% extends 'layout/layout.html' %}
+{% block body %}
+{% include 'layout/navigation.html' %}
+<div class="container-fluid">
+        <div class="col-lg-16">
+            <div class="panel">
+                <div class="panel-body">
+                    <h2 class="page-header"><strong>NIPT Results </strong><br><small>Batch: {{batch_name}}</small><small><p align="right" id="demo"></p></small></h2>
+                    <footer>
+                            <div class="table-responsive">
+                                <table id="batch_table" class="table table-bordered" >
+                                    <thead>
+                                        <tr>
+                                            <th width="18%">Sample Id</th>
+                                            <th>NCV13</th>
+                                            <th>NCV18</th>
+                                            <th>NCV21</th>
+                                            <th>NCVX</th>
+                                            <th>NCVY</th>
+                                            <th>FF</th>
+                                            <th>Sex</th>
+                                            <th>Warning</th>
+                                            <th>Class</th>
+                                            <th width="18%">Comment</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for s in NCV_samples %}
+                                        <tr>
+                                            <td width="18%"> {{ s.sample_ID }}</td>
+                                            <td>{{ batch_table_data[s.sample_ID]['NCV_13']['val'] }}</td>
+                                            <td>{{ batch_table_data[s.sample_ID]['NCV_18']['val'] }}</td>
+                                            <td>{{ batch_table_data[s.sample_ID]['NCV_21']['val'] }}</td>
+                                            <td>{{ batch_table_data[s.sample_ID]['NCV_X']['val'] }}</td>
+                                            <td>{{ batch_table_data[s.sample_ID]['NCV_Y']['val'] }}</td>
+                                            <td>{{s.sample.FF_Formatted}}</td>
+                                            <th><p> <small>{{ NCV_sex[s.sample_ID]  }}</small></p></th>
+                                            <th><p> <small>{{ warnings[s.sample_ID]  }}</small></p></th>
+                                            <th><p> <small>{{ man_class[s.sample_ID] }}</small></p></th>
+                                            <td width="18%">{{s.comment}}</textarea></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <p>Sex :    XX, XY or ambigous. Automatically generated. Based on pre defined NCV thresholds. </p>
+                                <p>Warning:    Warning for chomosome abnormality. Automatically generated. Based on pre defined NCV thresholds</p>
+                                <p>Class:   Classification in relation to confirmation data. Manually classified by user.</p>
+                            </div>
+                    </footer>
+                </div>
+                            {% if seq_warnings %}
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>QC Warnings </small></h2>
+                            <footer>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                            <th>Sample id</th>
+                                            <th>Missing data</th>
+                                            <th>QC Warning</th>
+                                            <th>QC Failure</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for s in seq_warnings %}
+                                        <tr>
+                                            <td> <a href={{ url_for('sample_page', sample_id=s) }}>{{ s }}</a></td>
+                                            <td>{{seq_warnings[s]['missing_data'] }}</td>
+                                            <td>{{ seq_warnings[s]['QC_warn'] }}</td>
+                                            <td>{{ seq_warnings[s]['QC_fail'] }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            </footer>
+                            {% endif %}
+                            <footer>
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>NCV 13</small></h2>
+                            <div id="NCV131821NCV_13" style="min-width:600px; height:800px; margin-right: 5.0cm;"></div><br><br>
+                            </div>
+                            </footer>
+                            <footer>
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>NCV 18 </small></h2>
+                            <div id="NCV131821NCV_18" style="min-width:600px; height:800px; margin-right: 5.0cm;"></div><br><br>
+                            </div>
+                            </footer>
+                            <footer>
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>NCV 21</small></h2>
+                            <div id="NCV131821NCV_21" style="min-width:600px; height:800px; margin-right: 5.0cm;"></div><br><br>
+                            </div>
+                            </footer>
+                            <footer>
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>NCV X vs Y</small></h2>
+                            <div id="NCVXY" style="min-width:600px; height:800px; margin-right: 5.0cm;"></div>
+                            <div align="right" style="margin-right: 5.0cm;" >
+                                <table width="300">
+                                    <tr height="1" style="border-bottom: 1px solid black">
+                                        <td><strong><p style="font-size:14px">Class</font></strong></td>
+                                        <td><strong><p style="font-size:14px">XXX</p></strong></td>
+                                        <td><strong><p style="font-size:14px">XYY</p></strong></td>
+                                        <td><strong><p style="font-size:14px">XXY</p></strong></td>
+                                        <td><strong><p style="font-size:14px">X0</p></strong></td>
+                                    </tr>
+                                    {% for abn in ncv_abn_colors.keys() %}
+                                    <tr height="0,5">
+                                        <td><p style="font-size:14px"><strong>{{abn}}</strong></p></td>
+                                        <td><p style="font-size:14px">{{sex_chrom_abn["XXX"][abn]['nr_cases']}}</p></td>
+                                        <td><p style="font-size:14px">{{sex_chrom_abn["XYY"][abn]['nr_cases']}}</p></td>
+                                        <td><p style="font-size:14px">{{sex_chrom_abn["XXY"][abn]['nr_cases']}}</p></td>
+                                        <td><p style="font-size:14px">{{sex_chrom_abn["X0"][abn]['nr_cases']}}</p></td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            {% if coverage=="1" %}
+                            </footer>
+                            <footer>
+                            <div class="panel-body">
+                            <h2 class="page-header"><small>Normalized Coverage Chr 1-22</small></h2>
+                            <div id="cov_plot" style="min-width:600px; height:800px; margin-right: 5.0cm;"></div>
+                            </div>
+                            </footer>
+                            <footer>
+                                    <div class="panel-body">
+                                    <h2 class="page-header"><small>Coverage ChrX vs ChrY</small></h2>
+                                    <div id="CovXY" style="min-width:600px; height:800px; margin-right: 5.0cm;"></div>
+                                    </div>
+                            </footer>
+                            
+                            {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+        {% endblock %}
+        
+        {% block scripts %}
+        {% include 'batch_page/plots/coverage_plot.html' %}
+        {% include 'batch_page/plots/covX_covY_plot.html' %}
+        {% include 'batch_page/plots/report_tris_plots.html' %}
+        {% include 'batch_page/plots/batch_xy_plot.html' %}
+        {% endblock %}
+        
+        

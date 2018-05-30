@@ -1,0 +1,56 @@
+{% block content %}
+
+<div class="vertical-center">
+    <div class="row">
+        <div class="col-lg-9"><h1>Batch: {{batch_name}}</h1></div>
+        <div class="col-lg-3"></div>
+    </div>
+    <div class="row">
+            <div class="col-lg-9"><big><em> Sequenced {{seq_date}}</em></big></div>
+        <div class="col-lg-3">
+            <p>
+                <a href="{{ url_for('report', batch_id=batch_id , coverage=0) }}" class="btn btn-primary" role="button"> Report</a>
+                        <a href="{{ url_for('report', batch_id=batch_id , coverage=1) }}" class="btn btn-primary" role="button"> Report with coverage</a>
+                </p>
+            </div>
+    </div>
+    {% if seq_warnings %}
+    <div class="row">
+        <div id = "custom-tag"> </div>
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5>Batch Warnings </h5>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Sample id</th>
+                                    <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Warning if NonExcludedSites < 8000000.">Missing data</a></th>
+                                    <th>QC Warning</th>
+                                    <th>QC Failure</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for s in seq_warnings %}
+                                <tr>
+                                    <td> <a href={{ url_for('sample_page', sample_id=s) }}>{{ s }}</a></td>
+                                    <td>{{seq_warnings[s]['missing_data'] }}</td>
+                                    <td>{{ seq_warnings[s]['QC_warn'] }}</td>
+                                    <td>{{ seq_warnings[s]['QC_fail'] }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div> <!--jumbotron-->
+{% endblock %}
+
+

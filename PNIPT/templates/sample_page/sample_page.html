@@ -1,0 +1,97 @@
+{% extends 'layout/layout.html' %}
+
+{% block body %}
+{% include 'layout/navigation.html' %}
+<div class="container-fluid">
+    {% include 'sample_page/sample_header.html' %}
+    <ul class="nav nav-tabs" id="myTab">
+        <li class="active"><a href="{{url_for('sample_page', sample_id = sample_id)}}">Status table</a>
+        </li>
+        <li><a href="{{url_for('sample_tris_plot', sample_id = sample_id)}}">131821-Plot</a>
+        </li>
+        <li><a href="{{url_for('sample_xy_plot', sample_id = sample_id)}}">XY-Plot</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id='table'>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default"><br><br>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <form action="{{ url_for('update_trisomi_status', batch_id=batch_id, sample_id = sample_id) }}" method="post">
+                                    <table class="table table-bordered table-hover" >
+                                        <thead>
+                                            <tr>
+                                                <th>Chromosome abnormality</th>
+                                                <th>Status</th>
+                                                <th>Latest change</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for c in chrom_abnorm %}
+                                            <tr>
+                                                <td width=10%><strong>{{ c }}</strong></td>
+                                                {% if current_user.role=='RW' %}
+                                                <td width=10% {% if db_entries[c] == "Suspected" %} class="warning"{% endif %}
+                                                {% if db_entries[c] == "False Positive" %} class="success"{% endif %}
+                                                {% if db_entries[c] == "Verified" %} class="danger"{% endif %}
+                                                {% if db_entries[c] == "Probable" %} class="warning"{% endif %}
+                                                {% if db_entries[c] == "False Negative" %} class="danger"{% endif %}
+                                                {% if db_entries[c] == "Other" %} class="warning"{% endif %}
+                                                {% if db_entries[c] == "Failed" %} class="danger"{% endif %}><select  name="{{c}}" >
+                                                    <option {% if db_entries[c] == "Normal" %} selected {% endif %} value="Normal">Normal</option>
+                                                    <option {% if db_entries[c] == "Suspected" %} selected {% endif %} value="Suspected">Suspected</option>
+                                                    <option {% if db_entries[c] == "Probable" %} selected {% endif %} value="Probable">Probable</option>
+                                                    <option {% if db_entries[c] == "Verified" %} selected {% endif %} value="Verified">Verified</option>
+                                                    <option {% if db_entries[c] == "False Positive" %} selected {% endif %} value="False Positive">False Positive</option>
+                                                    <option {% if db_entries[c] == "False Negative" %} selected {% endif %} value="False Negative">False Negative</option>          
+                                                    <option {% if db_entries[c] == "Other" %} selected {% endif %} value="Other">Other</option>
+                                                    <option {% if db_entries[c] == "Failed" %} selected {% endif %} value="Failed">Failed</option>  
+                                                </select>
+                                            </div></td>
+                                            {% else%}
+                                            <td width=10% {% if db_entries[c] == "Suspected" %} class="warning"{% endif %}
+                                                {% if db_entries[c] == "False Positive" %} class="success"{% endif %}
+                                                {% if db_entries[c] == "Verified" %} class="danger"{% endif %}
+                                                {% if db_entries[c] == "Probable" %} class="warning"{% endif %}
+                                                {% if db_entries[c] == "False Negative" %} class="danger"{% endif %}
+                                                {% if db_entries[c] == "Other" %} class="warning"{% endif %}
+                                                {% if db_entries[c] == "Failed" %} class="danger"{% endif %}>{{db_entries[c]}}</td>
+                                            {% endif%}
+                                            <td width=10%> {{db_entries_change[c]}} </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type=text name="current_user" value="{{current_user.name}}" hidden>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <p align="right"> 
+                                            {% if current_user.role=='RW' %}
+                                            <button type="submit" class="btn btn-warning" name="trisomi status" value="ff"  > Save</button>     
+                                            {% endif %}     
+                                        </p>
+                                    </td>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.4.0/metisMenu.js" type="text/javascript"></script>
+{% endblock %}
+
+

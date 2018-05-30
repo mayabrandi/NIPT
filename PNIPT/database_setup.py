@@ -11,8 +11,8 @@ import logging
 import os
 import sys
 import glob
-from extentions import app
-from database import db, Batch, NCV, Coverage, Sample, User ,BatchStat
+from PNIPT import app
+from PNIPT.database import db, Batch, NCV, Coverage, Sample, User ,BatchStat
 
 class BatchMaker():
 

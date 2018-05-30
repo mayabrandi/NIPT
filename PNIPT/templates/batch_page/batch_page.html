@@ -1,0 +1,107 @@
+{% extends 'layout/layout.html' %}
+
+
+
+{% block body %}
+{% include 'layout/navigation.html' %}
+<div class="container-fluid">
+    {% include 'batch_page/batch_header.html' %}
+    <ul class="nav nav-tabs" id="myTab">
+        <li class="active"><a href="{{url_for('sample', batch_id = batch_id)}}">NCV Table</a>
+        </li>
+        <li><a href="{{url_for('NCV13_plot', batch_id = batch_id)}}" >NCV13</a>
+        </li>
+        <li><a href="{{url_for('NCV18_plot', batch_id = batch_id)}}">NCV18</a>
+        </li>
+        <li><a href="{{url_for('NCV21_plot', batch_id = batch_id)}}">NCV21</a>
+        </li>
+        <li><a href="{{url_for('NCVXY_plot', batch_id = batch_id)}}">NCVXY</a>
+        </li>
+        <li><a href="{{url_for('FF_plot', batch_id = batch_id)}}">FF</a>
+        </li>
+        <li><a href="{{url_for('covX_covY', batch_id = batch_id)}}">CovX vs CovY</a>
+        </li>
+        <li><a href="{{url_for('coverage_plot', batch_id = batch_id)}}">Coverage (Chr 1-22)</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id='table'>
+            <div class="col-lg-16">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <form action="{{ url_for('update') }}" method="post">
+                                <table id="batch_table" class="table table-bordered table-hover" >
+                                    <thead>
+                                        <tr>
+                                            <th>Sample Name</th>
+                                            <th>NCV13</th>
+                                            <th>NCV18</th>
+                                            <th>NCV21</th>
+                                            <th>NCVX</th>
+                                            <th>NCVY</th>
+                                            <th>FF</th>
+                                            <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="XX, XY or ambigous. Automatically generated. Based on pre defined NCV trsholds">Sex</a></th>
+                                            <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Warning for chomosome abnormality. Automatically generated. Based on pre defined NCV trsholds">Warning</a></th>
+                                            <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Chomosome abnormalies. Manually classified by user through the sample page">Status</a></th>
+                                            <th>Include</th>
+                                            <th>Comment</th>
+                                            <th>Last Change</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for s in NCV_samples %}
+                                        <tr>
+                                            <td width="20%"> <a href={{ url_for('sample_page', sample_id=s.sample_ID) }}>{{ s.sample_name }}</a></td>
+                                            <td width="4%" class = "{{ batch_table_data[s.sample_ID]['NCV_13']['warn']}}">{{ batch_table_data[s.sample_ID]['NCV_13']['val'] }}</td>
+                                            <td width="4%" class = "{{ batch_table_data[s.sample_ID]['NCV_18']['warn']}}">{{ batch_table_data[s.sample_ID]['NCV_18']['val'] }}</td>
+                                            <td width="4%" class = "{{ batch_table_data[s.sample_ID]['NCV_21']['warn']}}">{{ batch_table_data[s.sample_ID]['NCV_21']['val'] }}</td>
+                                            <td width="4%" class = "{{ batch_table_data[s.sample_ID]['NCV_X']['warn']}}">{{ batch_table_data[s.sample_ID]['NCV_X']['val'] }}</td>
+                                            <td width="4%" class = "{{ batch_table_data[s.sample_ID]['NCV_Y']['warn']}}">{{ batch_table_data[s.sample_ID]['NCV_Y']['val'] }}</td>
+                                            <td width="4%" class = "{{batch_table_data[s.sample_ID]['FF_Formatted']['warn']}}">{{s.sample.FF_Formatted}}</td>
+                                            <th width="2%"><p> <small>{{ NCV_sex[s.sample_ID]  }}</small></p></th>
+                                            <th><p> <small>{{ warnings[s.sample_ID]  }}</small></p></th>
+                                            <th><p> <small>{{ man_class[s.sample_ID] }}</small></p></th>
+                                            {% if current_user.role=='RW' %}
+                                            <td width="1%" {% if s.include %}class="success"{% endif %}> <input type="checkbox" name="{{ s.sample_ID }}" {% if s.include %}checked{% endif %}></td>
+                                            <td width="18%">
+                                                <div class="form-group">
+                                                    <textarea class="form-control" rows="1" name = "comment_{{ s.sample_ID }}">{{s.comment}}</textarea>
+                                                </div>
+                                            </td>
+                                            {% else %}
+                                            <td width="1%" {% if s.include %}class="success"{% endif %}>{{s.include }}</td>
+                                            <td width="18%">{{s.comment}}</td>
+                                            {% endif %}
+                                            <td ><small>{{s.change_include_date}}</small></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            {% if current_user.role=='RW' %}
+                                            <p align="right">
+                                                <input type="submit" class="btn btn-warning" value="Save checked samples">
+                                                <button type="submit" class="btn btn-warning" name="All samples" value="{{sample_ids}}"> Set all OK</button>
+                                            </p>
+                                            {% endif %}
+                                        </tr>
+                                        <tr>
+                                            <p>Samples checked in the 'Include' column are added to the validation sample set for comparison. Check the checkboxes for samples to include and save. If all samples are ok, just press 'set all OK'.</p>
+                                            <input type=text name="sample_ids" value="{{sample_ids}}" hidden>
+                                            <input type=text name="current_user" value="{{current_user.name}}" hidden>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!--container-->
+</div>
+{% endblock %}
+

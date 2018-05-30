@@ -3,25 +3,18 @@ DESC="""Model definitions for the NIPT-database.
 
 Written by Maya Brandi"""
 
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask.ext.mail import Mail
-from argparse import ArgumentParser
-import json
-import csv
-import logging
-import sys
-import glob
-from flask.ext.login import LoginManager
-from flask_oauthlib.client import OAuth
-from extentions import app
+from PNIPT import app
 db = SQLAlchemy(app)
+
+
 
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     email = db.Column(db.String(255), unique = True)
     name = db.Column(db.String(255), unique = False)
+    role = db.Column(db.String(255), unique = False)
 
     def __init__(self, email, name):
         self.email = email

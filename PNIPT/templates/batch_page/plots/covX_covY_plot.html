@@ -1,0 +1,76 @@
+{% block content %}
+<script>
+        var XY_plot = document.getElementById('CovXY')
+        var data = []
+        var layout = {
+        title:'Coverage Y vs Coverage X',
+        annotations : [],
+        legend:{hovermode:'closest' },
+        hovermode:'closest',
+        xaxis :{range:[],
+                showline: true,
+                zeroline: false,
+                linecolor: '#636363',
+                linewidth: 5,
+                showgrid: false,
+                gridcolor: '#bdbdbd',
+                title: 'Coverage X'
+                },
+                
+        yaxis :{range: [],
+                zeroline: false,
+                showline: true,
+                showgrid: false,
+                linecolor: '#636363',
+                linewidth: 5,
+                title : 'Coverage Y'
+                },};
+        var backstat = {
+        y: {{control['CovY']}},
+        x: {{control['CovX']}},
+        name: 'Negative (N={{nr_contol_samples}})',
+        hoverinfo:'none',
+        mode: 'markers',
+        type: 'scatter',
+        marker: {color: '#ccccb3'}}
+        data.push(backstat);
+
+        {% for abn  in pos_contol.keys() %} 
+        {% for abn_status  in pos_contol[abn] %} 
+        var verif = { 
+                name :  '{{abn}} {{abn_status}}', 
+                showlegend: false,                                                               
+                y: {{pos_contol[abn][abn_status]['CovY']}},                                        
+                x: {{pos_contol[abn][abn_status]['CovX']}},
+                text: {{pos_contol[abn][abn_status]['s_name']|tojson}},                                       
+                mode: 'markers',
+                marker: {symbol :"{{abn_symbol}}",
+                size: {{abn_size}},
+                line: {width:{{abn_line}}},
+                color : "{{abn_colors[abn_status]}}",
+        } ,    
+        type: 'scatter',                                                            
+        }; 
+        data.push(verif);
+        {% endfor %}
+        {% endfor %}        
+
+        {% for sample in sample_list %}
+        var trace1 = {
+        y: [{{cases[sample]['CovY']}}],
+        x: [{{cases[sample]['CovX']}}],
+        name: {{cases[sample]['name']|tojson}},
+        mode: 'markers',
+        text: {{cases[sample]['name']|tojson}},
+        type: 'scatter',
+        marker: {
+                color: '{{many_colors[sample]}}',
+                size: {{case_size}},
+                line: {width:{{case_line}}}
+                }};
+        data.push(trace1);
+        {% endfor %}
+    
+        Plotly.newPlot('CovXY', data, layout);
+    </script>
+{% endblock %}

@@ -1,0 +1,158 @@
+{% extends 'layout/layout.html' %}
+
+{% block body %}
+{% include 'layout/navigation.html' %}
+<div class="container-fluid">
+    {% include 'sample_page/sample_header.html' %}
+    
+    <ul class="nav nav-tabs" id="myTab">
+        <li><a href="{{url_for('sample_page', sample_id = sample_id)}}">Status table</a>
+        </li>
+        <li><a href="{{url_for('sample_tris_plot', sample_id = sample_id)}}">131821-Plot</a>
+        </li>
+        <li class="active"><a href="{{url_for('sample_xy_plot', sample_id = sample_id)}}">XY-Plot</a>
+        </li>
+    </ul>
+    <div class="tab-pane fade in active" id='XY'>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div id="plot_sex" style="min-width:400px; height:700px; "></div><br><br>
+                <div align="right" style="margin-right: 2.0cm;">
+                    <table width="300">
+                        <tr height="1" style="border-bottom: 1px solid black">
+                            <td><strong><p style="font-size:14px">Class</p></strong></td>
+                            <td><strong><p style="font-size:14px">XXX</p></strong></td>
+                            <td><strong><p style="font-size:14px">XYY</p></strong></td>
+                            <td><strong><p style="font-size:14px">XXY</p></strong></td>
+                            <td><strong><p style="font-size:14px">X0</p></strong></td>
+                        </tr>
+                        {% for abn in ncv_abn_colors.keys() %} 
+                        <tr height="0,5"><td><p style="font-size:14px"><font color="{{ncv_abn_colors[abn]}}"><strong>{{abn}}</strong></font></p></td>
+                            <td><p style="font-size:14px">{{sex_chrom_abn["XXX"][abn]['nr_cases']}}</p></td>
+                            <td><p style="font-size:14px">{{sex_chrom_abn["XYY"][abn]['nr_cases']}}</p></td>
+                            <td><p style="font-size:14px">{{sex_chrom_abn["XXY"][abn]['nr_cases']}}</p></td>
+                            <td><p style="font-size:14px">{{sex_chrom_abn["X0"][abn]['nr_cases']}}</p></td>
+                        </tr> 
+                        {% endfor %}            
+                    </table>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+    </div>
+    <!-- /.panel -->
+</div>
+<!-- /.col-lg-8 -->
+</div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    var data = []
+    var layout = {
+        annotations : [],
+        title: "Sample: {{sample_name}}",
+        legend:{hovermode:'closest' },
+        hovermode:'closest',
+        xaxis :{zeroline: false,
+            showline: true,
+            linecolor: '#636363',
+            showgrid: false,
+            linewidth: 5,
+            title : 'NCVX'
+        },
+        
+        yaxis :{zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'NCVY'
+        },
+    };
+    
+    {% for line  in sex_tresholds %}
+    var line = {x : {{sex_tresholds[line]['x']}},
+                y : {{sex_tresholds[line]['y']}},
+                mode: 'lines',
+                text: "{{sex_tresholds[line]['text']}}",
+                line: {
+                        dash: 'dot',
+                        color : 'red',
+                        width : 2},
+                showlegend: false,
+                name: "{{line}}"};
+    data.push(line);
+    {% endfor %}
+        
+        var backstat = {
+            y: {{case_data['NCV_Y']['NCV_pass']}},
+            x: {{case_data['NCV_X']['NCV_pass']}},
+            name: 'Negative (N={{case_data['NCV_X']['nr_pass']}})',
+            hoverinfo:'none',
+            mode: 'markers',
+            type: 'scatter',
+            marker: {color: '#ccccb3'},
+        }
+        data.push(backstat);
+        
+        var i = 0
+        
+        {% for abn  in sex_chrom_abn.keys() %} 
+        {% for abn_status  in abn_status_list %} 
+        var verif = {                                                                  
+            name: '{{abn_status}} {{abn}} (N={{sex_chrom_abn[abn][abn_status]['nr_cases']}})',                                                               
+            y: {{sex_chrom_abn[abn][abn_status]['NCV_Y']}},                                        
+            x: {{sex_chrom_abn[abn][abn_status]['NCV_X']}},
+            text: {{sex_chrom_abn[abn][abn_status]['s_name']|tojson}},                                       
+            mode: 'markers',
+            marker: {symbol :"{{abn_symbol}}",
+            size: {{abn_size}},
+            line: {width:{{abn_line}}},
+            color : "{{ncv_abn_colors[abn_status]}}",
+        } ,    
+        type: 'scatter',                                                            
+    }; 
+    data.push(verif);
+    var i = i +1
+    {% endfor %}
+    {% endfor %}
+    
+    var sample_XY = {
+        y: [{{NCV_dat.NCV_Y}}],
+        x: [{{NCV_dat.NCV_X}}],
+        name: '{{sample_name}}',
+        text: '{{sample_name}}',
+        mode: 'markers',
+        type: 'scatter',
+        marker: {size: {{case_size}}}
+    };
+    data.push(sample_XY);
+    
+    var trace = {
+        x: [-15, 0, 8, -20, -8, 0],
+        y: [-50, -50, -50, 300, 300, 300],
+        mode: 'text',
+        name: 'NCV Clasifications',
+        text: ['<b>X0</b>', '<b>XX</b>', '<b>XXX</b>','<b>XY</b>','<b>XYY</b>','<b>XXY</b>'],
+        hoverinfo:'none',
+        opacity : 0.7,
+        textposition: 'top',
+        showlegend: false,
+        textfont: {
+            size: 18,
+        },
+        type: 'scatter'
+    };
+    
+    data.push(trace);
+    
+    Plotly.newPlot('plot_sex',data,  layout);
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.4.0/metisMenu.js" type="text/javascript"></script>
+
+{% endblock %}
+
+

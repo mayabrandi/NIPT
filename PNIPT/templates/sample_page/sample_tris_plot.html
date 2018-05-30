@@ -1,0 +1,152 @@
+{% extends 'layout/layout.html' %}
+
+{% block body %}
+{% include 'layout/navigation.html' %}
+<div class="container-fluid">
+    {% include 'sample_page/sample_header.html' %}
+    <ul class="nav nav-tabs" id="myTab">
+        <li><a href="{{url_for('sample_page', sample_id = sample_id)}}">Status table</a>
+        </li>
+        <li class="active"><a href="{{url_for('sample_tris_plot', sample_id = sample_id)}}">131821-Plot</a>
+        </li>
+        <li><a href="{{url_for('sample_xy_plot', sample_id = sample_id)}}">XY-Plot</a>
+        </li>
+    </ul>
+    <div class="tab-pane fade in active" id='131821'>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div id="plot_131821" style="min-width:400px; height:700px; "></div><br><br>
+                <div>
+                    <div align="right" style="margin-right: 2.0cm;">
+                        <table width="300">
+                            <tr height="1" style="border-bottom: 1px solid black">
+                                <td></td>
+                                <td><strong><p style="font-size:14px">T13</p></strong></td>
+                                <td><strong><p style="font-size:14px">T18</p></strong></td>
+                                <td><strong><p style="font-size:14px">T21</p></strong></td>
+                            </tr>
+                            {% for abn in ncv_abn_colors.keys() %}
+                            <tr>
+                                <td><strong><p style="font-size:14px"><font color="{{ncv_abn_colors[abn]}}">{{abn}}</font></p></strong></td>
+                                <td><p style="font-size:14px">{{tris_chrom_abn["13"][abn]['nr']}}</p></td>
+                                <td><p style="font-size:14px">{{tris_chrom_abn["18"][abn]['nr']}}</p></td>
+                                <td><p style="font-size:14px">{{tris_chrom_abn["21"][abn]['nr']}}</p></td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>  
+    var layout = {
+        title: "Sample: {{sample.sample_name}}",
+        legend:{hovermode:'closest' },
+        hovermode:'closest',
+        annotations : [],
+        xaxis :{showline: true,
+            tickvals : [1,2,3],
+            ticktext : ['NCV13','NCV18','NCV21'],
+            linecolor: '#636363',
+            linewidth: 5,
+            showgrid: true,
+            gridcolor: '#bdbdbd',
+        },
+        
+        yaxis :{zeroline: false,
+            showline: true,
+            showgrid: false,
+            linecolor: '#636363',
+            linewidth: 5,
+            title : 'NCV'
+        },
+    };
+    
+    var data = []
+    {% for abn_status  in abn_status_list %} 
+    var ncv_abn = {                                                                  
+        name: "{{abn_status}}",                                                               
+        y: {{tris_abn[abn_status]['NCV']}},                                        
+        x: {{tris_abn[abn_status]['x_axis']}},
+        text: {{tris_abn[abn_status]['s_name']|tojson}},
+        mode: 'markers',
+        marker: {symbol :"{{abn_symbol}}",
+            line: {width:{{abn_line}}}, 
+            color : "{{ncv_abn_colors[abn_status]}}",
+            size: {{abn_size}}} ,                                                  
+        type: 'scatter',                                                            
+    };    
+    data.push(ncv_abn)
+    {% endfor %}
+
+    var i = 0
+    var colors = ['#1a1aff','#00bfff','#1affff']
+    var legends = [true,false,false]
+
+    {% for chrom  in ['13','18','21'] %}
+    var i = i + 1
+    
+    var x = []
+    for (var j = 0; j < {{case_data['NCV_'+chrom]['nr_pass']}}; j++) x[j] = i
+    var box = {
+        y: {{case_data['NCV_'+chrom]['NCV_pass']}},
+        x: x,
+        //jitter: 0.3,
+        pointpos: 30,
+        type: 'box',
+        showlegend: legends[i-1],
+        marker: {
+            color: '#ccccb3'},
+            name: 'Negative (N={{case_data['NCV_'+chrom]['nr_pass']}})',
+            hoverinfo:'none',
+            boxpoints: 'suspectedoutliers',
+        };
+        
+    var samp = {
+        y: [{{NCV_dat.__dict__['NCV_'+chrom]}}],
+        x: [i],
+        name: "{{chrom}}",
+        mode: 'markers',
+        type: 'scatter',
+        marker: {
+            color: colors[i-1],
+            size: {{case_size}}}
+        };
+            
+            
+    data.push(box); 
+    data.push(samp);
+    {% endfor %}
+            
+            
+            
+    {% for line  in tris_thresholds.keys() %} 
+        var line = {x : [0.5, 3.7],
+            y : [{{tris_thresholds[line]['NCV']}},{{tris_thresholds[line]['NCV']}}],
+            mode: 'lines',
+            text: "{{tris_thresholds[line]['text']}}",
+            showlegend: false,
+            line: {
+                dash: 'dot',
+                color : "{{tris_thresholds[line]['color']}}",
+                width : 2},
+                name: "{{line}}"};
+        data.push(line);
+    {% endfor %}
+                    
+                    
+Plotly.newPlot('plot_131821' ,data,  layout);
+</script>
+                
+<script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.4.0/metisMenu.js" type="text/javascript"></script>
+                
+{% endblock %}
+                
+                

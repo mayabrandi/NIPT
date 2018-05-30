@@ -1,0 +1,32 @@
+{% block content %}
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="{{ url_for('batch')}}" >Back to NIPT Batches</a>
+    </div>
+    <ul class="nav navbar-top-links navbar-right">
+        <li class="dropdown">
+            <a class="navbar-brand" data-toggle="dropdown">
+                <i class="fa fa-align-justify fa-fw"></i>  <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <a class="active" href="{{ url_for('batch') }}"><i class="fa fa-home"></i> Start</a>
+                <li class="divider"></li>
+                <a class="active" href={{ url_for('statistics') }}><i class="fa fa-bar-chart"></i>  QC</a>
+                <li class="divider"></li>
+                <a class="active" href={{ url_for('samples') }}><i class="fa fa-table"></i>  Sample List</a>
+                <li class="divider"></li>
+                <a class="active" href={{"https://github.com/Clinical-Genomics/NIPT/issues/new"}}><i class="fa fa-comment-o"></i>  Issues</a>
+                <li class="divider"></li>
+                <a class="active" href={{ url_for('logout') }}><i class="fa fa-sign-out"></i>  Sign Out</a>
+                <li class="divider"></li>
+                <a class="active" href={{ url_for('submit') }}><i class="fa fa-user"></i>  New User</a>
+                <li class="divider"></li>
+                <a class="active" href={{ url_for('download') }}><i class="fa fa-arrow-down"></i>  Download DB</a>
+            </ul>
+        </li>
+    </ul>
+    <div class="navbar-right">
+        <a class="navbar-brand">{{current_user.name}}</a>
+    </div>
+</nav>
+{% endblock %}
