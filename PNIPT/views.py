@@ -243,6 +243,7 @@ def sample(batch_id):
     DC.get_QC_warnings(sample_db)
     DC.get_manually_classified(sample_db)
     return render_template('batch_page/batch_page.html',
+        current_user       = current_user,
         ##  Header
         batch_name      = batch.batch_name,
         seq_date        = batch.date,
@@ -277,6 +278,7 @@ def sample_page( sample_id):
 
     return render_template('sample_page/sample_page.html',
         ## Header & Info Box
+        current_user       = current_user,
         NCV_dat         = NCV_dat.first(),
         sample          = sample,
         batch_id        = batch_id,

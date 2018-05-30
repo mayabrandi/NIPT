@@ -62,12 +62,17 @@
                                             <th width="2%"><p> <small>{{ NCV_sex[s.sample_ID]  }}</small></p></th>
                                             <th><p> <small>{{ warnings[s.sample_ID]  }}</small></p></th>
                                             <th><p> <small>{{ man_class[s.sample_ID] }}</small></p></th>
+                                            {% if current_user.role=='RW' %}
                                             <td width="1%" {% if s.include %}class="success"{% endif %}> <input type="checkbox" name="{{ s.sample_ID }}" {% if s.include %}checked{% endif %}></td>
                                             <td width="18%">
                                                 <div class="form-group">
                                                     <textarea class="form-control" rows="1" name = "comment_{{ s.sample_ID }}">{{s.comment}}</textarea>
                                                 </div>
                                             </td>
+                                            {% else %}
+                                            <td width="1%" {% if s.include %}class="success"{% endif %}>{{s.include }}</td>
+                                            <td width="18%">{{s.comment}}</td>
+                                            {% endif %}
                                             <td ><small>{{s.change_include_date}}</small></td>
                                         </tr>
                                         {% endfor %}
@@ -76,10 +81,12 @@
                                 <table>
                                     <tbody>
                                         <tr>
+                                            {% if current_user.role=='RW' %}
                                             <p align="right">
                                                 <input type="submit" class="btn btn-warning" value="Save checked samples">
                                                 <button type="submit" class="btn btn-warning" name="All samples" value="{{sample_ids}}"> Set all OK</button>
                                             </p>
+                                            {% endif %}
                                         </tr>
                                         <tr>
                                             <p>Samples checked in the 'Include' column are added to the validation sample set for comparison. Check the checkboxes for samples to include and save. If all samples are ok, just press 'set all OK'.</p>

@@ -33,6 +33,7 @@
                                             {% for c in chrom_abnorm %}
                                             <tr>
                                                 <td width=10%><strong>{{ c }}</strong></td>
+                                                {% if current_user.role=='RW' %}
                                                 <td width=10% {% if db_entries[c] == "Suspected" %} class="warning"{% endif %}
                                                 {% if db_entries[c] == "False Positive" %} class="success"{% endif %}
                                                 {% if db_entries[c] == "Verified" %} class="danger"{% endif %}
@@ -50,6 +51,15 @@
                                                     <option {% if db_entries[c] == "Failed" %} selected {% endif %} value="Failed">Failed</option>  
                                                 </select>
                                             </div></td>
+                                            {% else%}
+                                            <td width=10% {% if db_entries[c] == "Suspected" %} class="warning"{% endif %}
+                                                {% if db_entries[c] == "False Positive" %} class="success"{% endif %}
+                                                {% if db_entries[c] == "Verified" %} class="danger"{% endif %}
+                                                {% if db_entries[c] == "Probable" %} class="warning"{% endif %}
+                                                {% if db_entries[c] == "False Negative" %} class="danger"{% endif %}
+                                                {% if db_entries[c] == "Other" %} class="warning"{% endif %}
+                                                {% if db_entries[c] == "Failed" %} class="danger"{% endif %}>{{db_entries[c]}}</td>
+                                            {% endif%}
                                             <td width=10%> {{db_entries_change[c]}} </td>
                                         </tr>
                                         {% endfor %}
@@ -63,7 +73,9 @@
                                         <td>
                                         </td>
                                         <p align="right"> 
-                                            <button type="submit" class="btn btn-warning" name="trisomi status" value="ff"  > Save</button>          
+                                            {% if current_user.role=='RW' %}
+                                            <button type="submit" class="btn btn-warning" name="trisomi status" value="ff"  > Save</button>     
+                                            {% endif %}     
                                         </p>
                                     </td>
                                 </td>
