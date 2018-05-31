@@ -193,7 +193,8 @@ def update():
         sample = NCV.query.filter_by(sample_ID = sample_id).first()
         if request.form['comment'] != sample.comment:
             sample.comment = request.form['comment']
-    db.session.commit()
+    if current_user.role == 'RW':
+        db.session.commit()
     return redirect(request.referrer)
 
 
@@ -228,8 +229,9 @@ def update_trisomi_status(batch_id, sample_id):
         sample.status_change_XYY = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
         sample.status_XYY = request.form['XYY']
 
-    db.session.add(sample)
-    db.session.commit()
+    if current_user.role == 'RW':
+        db.session.add(sample)
+        db.session.commit()
     return redirect(request.referrer)
 
 @app.route('/NIPT/batches/<batch_id>/')
@@ -243,6 +245,7 @@ def sample(batch_id):
     DC.get_QC_warnings(sample_db)
     DC.get_manually_classified(sample_db)
     return render_template('batch_page/batch_page.html',
+        current_user       = current_user,
         ##  Header
         batch_name      = batch.batch_name,
         seq_date        = batch.date,
@@ -277,6 +280,7 @@ def sample_page( sample_id):
 
     return render_template('sample_page/sample_page.html',
         ## Header & Info Box
+        current_user       = current_user,
         NCV_dat         = NCV_dat.first(),
         sample          = sample,
         batch_id        = batch_id,

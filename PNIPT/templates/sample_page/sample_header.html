@@ -45,6 +45,7 @@
                             </div>
                         </div>
                     </div>
+                    {% if current_user.role=='RW' %}
                     <div class="form-group">
                         <textarea class="form-control" rows="2" name = "comment">{{NCV_dat.comment}}</textarea>
                     </div>
@@ -56,6 +57,12 @@
                             <input type="submit" class="btn btn-warning" value="Save comment">
                         </p>
                     </td>
+                    {% else %}
+                    <div class="panel panel-default">
+                            <div class="panel-heading">Comment</div>
+                            <div class="panel-body">{{NCV_dat.comment}}</div>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
