@@ -68,9 +68,11 @@
             title : 'NCV'
         },
     };
-    
+
+
     var data = []
     {% for abn_status  in abn_status_list %} 
+
     var ncv_abn = {                                                                  
         name: "{{abn_status}}",                                                               
         y: {{tris_abn[abn_status]['NCV']}},                                        
@@ -91,8 +93,23 @@
     var legends = [true,false,false]
 
     {% for chrom  in ['13','18','21'] %}
+    
     var i = i + 1
     
+    {% if batch_stat %}
+    var line = {x : [i-0.4, i+0.4],
+            y : ["{{batch_stat.__dict__['Median_'+chrom]}}","{{batch_stat.__dict__['Median_'+chrom]}}"],
+            mode: 'lines',
+            text: "{{"illumina median "+chrom}}",
+            showlegend: false,
+            line: {
+                dash  : "dot",
+                color : "grey",
+                width : 1},
+                name  : "{{"illumina median "+chrom}}"};
+    data.push(line);
+    {% endif %}
+
     var x = []
     for (var j = 0; j < {{case_data['NCV_'+chrom]['nr_pass']}}; j++) x[j] = i
     var box = {
