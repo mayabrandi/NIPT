@@ -51,7 +51,7 @@
                                                     <option {% if db_entries[c] == "Failed" %} selected {% endif %} value="Failed">Failed</option>  
                                                 </select>
                                             </div></td>
-                                            {% else%}
+                                            {% else %}
                                             <td width=10% {% if db_entries[c] == "Suspected" %} class="warning"{% endif %}
                                                 {% if db_entries[c] == "False Positive" %} class="success"{% endif %}
                                                 {% if db_entries[c] == "Verified" %} class="danger"{% endif %}
@@ -59,7 +59,7 @@
                                                 {% if db_entries[c] == "False Negative" %} class="danger"{% endif %}
                                                 {% if db_entries[c] == "Other" %} class="warning"{% endif %}
                                                 {% if db_entries[c] == "Failed" %} class="danger"{% endif %}>{{db_entries[c]}}</td>
-                                            {% endif%}
+                                            {% endif %}
                                             <td width=10%> {{db_entries_change[c]}} </td>
                                         </tr>
                                         {% endfor %}
