@@ -193,7 +193,8 @@ def update():
         sample = NCV.query.filter_by(sample_ID = sample_id).first()
         if request.form['comment'] != sample.comment:
             sample.comment = request.form['comment']
-    db.session.commit()
+    if current_user.role == 'RW':
+        db.session.commit()
     return redirect(request.referrer)
 
 
@@ -228,8 +229,9 @@ def update_trisomi_status(batch_id, sample_id):
         sample.status_change_XYY = ' '.join([user,dt.strftime('%Y/%m/%d %H:%M:%S')])
         sample.status_XYY = request.form['XYY']
 
-    db.session.add(sample)
-    db.session.commit()
+    if current_user.role == 'RW':
+        db.session.add(sample)
+        db.session.commit()
     return redirect(request.referrer)
 
 @app.route('/NIPT/batches/<batch_id>/')
