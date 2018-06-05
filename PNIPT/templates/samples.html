@@ -68,7 +68,7 @@
         </div>
     </nav>
     <div class="container-fluid">
-        <div class="jumbotron vertical-center">
+        <div class=" vertical-center">
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header"><strong>NIPT Samples</strong></h1>
@@ -76,6 +76,58 @@
                 </div>
             </div>
         </div>
+        <form action="{{ url_for('samples') }}">
+            
+
+
+            <div class="row">
+            <div class="col-lg-1">
+                Sample name: 
+                <input name="sample_name" class="form-control" value="{{filter_dict['sample_name']}}" ></input>
+            </div>
+            <div class="col-lg-1">
+                    Batch: 
+                    <input name="batch" class="form-control" value="{{filter_dict['batch']}}" >
+                    </input>
+                </div>
+                <div class="col-lg-1">
+                        Comment: 
+                        <input name="comment" class="form-control" value={{filter_dict['comment']}}>
+                        </input>
+                    </div>
+                    <div class="col-lg-1">
+                        Included: 
+                        <select name="include" class="form-control" >
+                            <option selected="selected" >{{filter_dict['include']}}</option>  
+                            <option></option>
+                            <option>True</option>
+                            <option>False</option>
+                        </select>
+                    </div>
+            {% for abn in chrom_abnorm %} 
+              <div class="col-lg-1">
+                {{abn}} : 
+                <select name="{{abn}}" class="form-control">
+                    <option selected="selected" >{{filter_dict[abn]}}</option>
+                    <option></option> 
+                    {% for stat in abn_status_list %} 
+                    <option>{{stat}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endfor %}
+            <div class="col-lg-1">
+                <button class="btn btn-primary">Search Samples</button>
+            </form>
+            <form action="{{ url_for('samples') }}">
+                <input type=text name="clear_filters" value="clear_filters" hidden></input>
+                <button class="btn btn-primary">Clear Filters</button>
+            </form>
+            </div>
+            </div>
+          
+
+
                     <div class="row">
                         <div class="panel panel-default">
                             <div id="sample_list">
@@ -152,7 +204,8 @@ $(document).ready(function() {
         lengthChange: false,
         buttons: [ 'excel', 'pdf' ],
         order: [[ 1, "dec" ]],
-        paging:         true
+        paging:         true,
+        searching: false,
     } );
  
     table.buttons().container()

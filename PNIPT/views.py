@@ -3,6 +3,8 @@ from flask import make_response, flash, abort, url_for, redirect, render_templat
 from flask_login import login_user,logout_user, current_user, login_required
 from flask.ext.mail import Message
 from flask_oauthlib.client import OAuthException
+from sqlalchemy import and_
+
 from database import User, Sample, Batch, Coverage, NCV, BatchStat, db
 from extentions import login_manager, google, app, mail
 import logging
@@ -115,16 +117,59 @@ def authorized(oauth_response):
     return redirect(url_for('index'))
 
 
+
 @app.route('/NIPT/samples')
 @login_required
 def samples():
-#    import ipdb; ipdb.set_trace()
+    ncv_columns = ['include', 'comment','sample_name']
+    sample_columns = ['T13','T18', 'T21', 'X0', 'XXX','XXY','XYY']
+    filter_dict = dict.fromkeys(ncv_columns+sample_columns+['batch'],'')
+
+    # making filters
+    ncv_filters = []
+    sample_filters = []
+    batch_filter = []
+    if not request.args.get('clear_filters'):
+        batch = request.args.get('batch')
+        if batch:
+            batch_filter.append(Batch.batch_name.contains(batch))
+            filter_dict['batch'] = batch
+        for column in ncv_columns:  
+            NCV_filter = request.args.get(column)
+            if NCV_filter:
+                filter_dict[column] = NCV_filter
+                if column in ['include']:
+                    ncv_filters.append(NCV.__dict__[column] == NCV_filter)
+                else:
+                    ncv_filters.append(NCV.__dict__[column].contains(NCV_filter))
+        for column in sample_columns:
+            NCV_filter = request.args.get(column)
+            if NCV_filter:
+                filter_dict[column] = NCV_filter
+                sample_filters.append(Sample.__dict__['status_'+ column] == NCV_filter)
+    
+    # filtering
     NCV_db = NCV.query
+    if ncv_filters:
+        NCV_db = NCV_db.filter(and_(* ncv_filters))
+    if sample_filters:
+        NCV_db = NCV_db.join(Sample).filter(and_(* sample_filters))
+    if batch_filter:
+        NCV_db = NCV_db.join(Batch).filter(and_(* batch_filter))    
+    if not (ncv_filters or sample_filters or batch_filter):
+        # show first 50
+        NCV_db = NCV.query.all()[0:50]
+    
+    # get clasifications 
     sample_db = Sample.query
     DC = DataClasifyer(NCV_db)
     DC.handle_NCV()
     DC.get_manually_classified(sample_db)
+
     return render_template('samples.html',
+        abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified','Failed'],
+        chrom_abnorm = sample_columns,
+        ncv_columns = ncv_columns,
         nr_included_samps = NCV.query.filter(NCV.include).count(),
         NCV_db  = sample_db,
         NCV_sex = DC.NCV_sex,
@@ -133,7 +178,8 @@ def samples():
         NCV_warnings = DC.NCV_classified,
         NCV_comment = DC.NCV_comment,
         NCV_included = DC.NCV_included,
-        batch_info = DC.batch
+        batch_info = DC.batch,
+        filter_dict = filter_dict
         )
 
 @app.route('/NIPT/')
@@ -195,6 +241,8 @@ def update():
             sample.comment = request.form['comment']
     if current_user.role == 'RW':
         db.session.commit()
+    else:
+        return '', 201
     return redirect(request.referrer)
 
 
@@ -232,7 +280,10 @@ def update_trisomi_status(batch_id, sample_id):
     if current_user.role == 'RW':
         db.session.add(sample)
         db.session.commit()
-    return redirect(request.referrer)
+        
+    else:
+        return '', 201
+    
 
 @app.route('/NIPT/batches/<batch_id>/')
 @login_required
