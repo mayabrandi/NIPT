@@ -139,7 +139,7 @@
                                                 <th><a href="#" data-toggle="tooltip" data-placement="right" title="Unique. Defined by ...?">Sample_Name</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Unique. Defined by ...?">Batch</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="(XX, XY) Automatically generated. Based on predefined NCV-tresholds.">Sex</a></th>
-                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="(T13,T18,T21,XXX,XXY,X0) Automatically generated. Based on predefined NCV-tresholds.">Warnings</a></th>
+                                                <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="(T13,T18,T21,XXX,XXY,XYY,X0) Automatically generated. Based on predefined NCV-tresholds.">Warnings</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Manually classified through the sample page.">T13</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Manually classified through the sample page.">T18</a></th>
                                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="Manually classified through the sample page.">T21</a></th>
@@ -152,21 +152,21 @@
                                             </tr>
                                             </thead>
                                             <tbody   class="list">
-                                            {% for sample_ID in NCV_sex.keys() %}
+                                            {% for sample in NCV_db %}
                                             <tr>
-                                            <td class="Sample id"> <a href={{ url_for('sample_page', sample_id=sample_ID) }}>{{ sample_names[sample_ID] }}</a></td>
-                                            <td class="Batch id"> <a href={{ url_for('sample', batch_id=batch_info[sample_ID]['id']) }}>{{batch_info[sample_ID]['name']}}</a></td>
-                                            <td class="sex"> {{NCV_sex[sample_ID] }}</td>
-                                            <td class="warn"> {{NCV_warnings[sample_ID] }}</td>
-                                            <td class="T13"> {{NCV_man_class[sample_ID]['T13'] }}</td>
-                                            <td class="T18"> {{NCV_man_class[sample_ID]['T18'] }}</td>
-                                            <td class="T21"> {{NCV_man_class[sample_ID]['T21']  }}</td>
-                                            <td class="XXX"> {{NCV_man_class[sample_ID]['XXX']  }}</td>
-                                            <td class="XXY"> {{NCV_man_class[sample_ID]['XXY']  }}</td>
-                                            <td class="XYY"> {{NCV_man_class[sample_ID]['XYY'] }}</td>
-                                            <td class="X0"> {{NCV_man_class[sample_ID]['X0']}}</td>
-                                            <td class="comments">{{NCV_comment[sample_ID]}}</td>
-                                            <td class="Included">{{NCV_included[sample_ID]}}</td>
+                                            <td class="Sample id"> <a href={{ url_for('sample_page', sample_id=sample.sample_ID) }}>{{ sample.sample_ID }}</a></td>
+                                            <td class="Batch id"> <a href={{ url_for('sample', batch_id=sample.batch.batch_id) }}>{{sample.batch.batch_name}}</a></td>
+                                            <td class="sex"> {{NCV_sex[sample.sample_ID] }}</td>
+                                            <td class="warn"> {{NCV_warnings[sample.sample_ID] }}</td>
+                                            <td class="T13"> {% if sample.sample.status_T13 == "Normal" %} - {% else %} sample.sample.status_T13 {% endif %}</td>
+                                            <td class="T18"> {% if sample.sample.status_T18 == "Normal" %} - {% else %} sample.sample.status_T18 {% endif %}</td>
+                                            <td class="T21"> {% if sample.sample.status_T21 == "Normal" %} - {% else %} sample.sample.status_T21 {% endif %}</td>
+                                            <td class="XXX"> {% if sample.sample.status_XXX == "Normal" %} - {% else %} sample.sample.status_XXX {% endif %}</td>
+                                            <td class="XXY"> {% if sample.sample.status_XXY == "Normal" %} - {% else %} sample.sample.status_XXY {% endif %}</td>
+                                            <td class="XYY"> {% if sample.sample.status_XYY == "Normal" %} - {% else %} sample.sample.status_XYY {% endif %}</td>
+                                            <td class="X0">  {% if sample.sample.status_X0 == "Normal" %} - {% else %} sample.sample.status_X0 {% endif %}</td>
+                                            <td class="comments">{{sample.comment}}</td>
+                                            <td class="Included">{{sample.include}}</td>
                                             </tr>
                                             {% endfor %}
                                             </tbody>
