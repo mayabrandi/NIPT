@@ -26,17 +26,6 @@
                 linewidth: 5,
                 title : 'NCV{{chrom}}'
                 }};
-    var line = {x : case_data['x_range'],
-            y : ["{{illumina_med}}","{{illumina_med}}"],
-            mode: 'lines',
-            text: "Illumina median",
-            showlegend: true,
-            line: {
-                dash  : "dot",
-                color : "grey",
-                width : 1},
-                name  : "illumina median"};
-    data.push(line);
     
     {% for line  in tris_thresholds %}
         var line = {x : case_data['x_range'],

@@ -454,10 +454,6 @@ def NCV13_plot(batch_id):
 
     # Getting and formating sample and NCV data for the samples in the batch
     batch = Batch.query.filter(Batch.batch_id == batch_id).first()
-    try:
-        illumina_med = BatchStat.query.filter(BatchStat.batch_id == batch_id).first().Median_13
-    except:
-        illumina_med = None
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id).all()
     TA = TrisAbnormality(batch_id, '13', NCV_db)
     TA.make_case_data_new(control_normal)
@@ -471,7 +467,6 @@ def NCV13_plot(batch_id):
         seq_date        = batch.date,
         batch_id        = batch_id,
         ##  Plotts
-        illumina_med    = illumina_med,
         chrom           = TA.chrom,
         case_data       = TA.case_data,
         tris_chrom_abn  = TA.tris_chrom_abn,
@@ -498,10 +493,6 @@ def NCV18_plot(batch_id):
 
     # Getting and formating sample and NCV data for the samples in the batch
     batch = Batch.query.filter(Batch.batch_id == batch_id).first()
-    try:
-        illumina_med = BatchStat.query.filter(BatchStat.batch_id == batch_id).first().Median_18
-    except:
-        illumina_med = None
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id).all()
     TA = TrisAbnormality(batch_id, '18', NCV_db)
     TA.make_case_data_new(control_normal)
@@ -515,7 +506,6 @@ def NCV18_plot(batch_id):
         seq_date        = batch.date,
         batch_id        = batch_id,
         ##  Plotts
-        illumina_med    = illumina_med,
         chrom           = TA.chrom,
         case_data       = TA.case_data,
         tris_chrom_abn  = TA.tris_chrom_abn,
@@ -543,10 +533,6 @@ def NCV21_plot(batch_id):
 
     # Getting and formating sample and NCV data for the samples in the batch
     batch = Batch.query.filter(Batch.batch_id == batch_id).first()
-    try:
-        illumina_med = BatchStat.query.filter(BatchStat.batch_id == batch_id).first().Median_21
-    except:
-        illumina_med = None
     NCV_db = NCV.query.filter(NCV.batch_id == batch_id).all()
     TA = TrisAbnormality(batch_id, '21', NCV_db)
     TA.make_case_data_new(control_normal)
@@ -560,7 +546,6 @@ def NCV21_plot(batch_id):
         seq_date        = batch.date,
         batch_id        = batch_id,
         ##  Plotts
-        illumina_med    = illumina_med,
         chrom           = TA.chrom,
         case_data       = TA.case_data,
         tris_chrom_abn  = TA.tris_chrom_abn,
