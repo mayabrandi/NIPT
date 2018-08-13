@@ -454,7 +454,7 @@ def NCV13_plot(batch_id):
 
     # Getting and formating sample and NCV data for the samples in the batch
     batch = Batch.query.filter(Batch.batch_id == batch_id).first()
-    NCV_db = NCV.query.filter(NCV.batch_id == batch_id).all()
+    NCV_db = NCV.query.filter(NCV.batch_id == batch_id, NCV.include).all()
     TA = TrisAbnormality(batch_id, '13', NCV_db)
     TA.make_case_data_new(control_normal)
     TA.make_tris_chrom_abn(control_abnormal)

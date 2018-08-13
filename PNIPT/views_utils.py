@@ -74,23 +74,23 @@ class BatchDataFilter():
         self.NCV_passed_X = [float(s.NCV_X) for s in self.NCV_passed.all()]
 
     def control_NCV13(self):
-        control_normal = self.NCV_passed.join(Sample).filter_by(status_T13 = "Normal")
+        control_normal =   self.NCV_passed.join(Sample).filter_by(status_T13 = "Normal")
         control_normal = [float(s.NCV_13) for s in control_normal]
-        control_abnormal = Sample.query.filter(Sample.status_T13 !='Normal',
+        control_abnormal = self.NCV_passed.join(Sample).filter(Sample.status_T13 !='Normal',
                         Sample.status_T13 !='Failed', Sample.status_T13 !=None).all()
         return control_normal, control_abnormal
 
     def control_NCV18(self):
         control_normal = self.NCV_passed.join(Sample).filter_by(status_T18 = "Normal")
         control_normal = [float(s.NCV_18) for s in control_normal]
-        control_abnormal = Sample.query.filter(Sample.status_T18 !='Normal',
+        control_abnormal = self.NCV_passed.join(Sample).filter(Sample.status_T18 !='Normal',
                         Sample.status_T18 !='Failed', Sample.status_T18 !=None).all()
         return control_normal, control_abnormal
 
     def control_NCV21(self):
         control_normal = self.NCV_passed.join(Sample).filter_by(status_T21 = "Normal")
         control_normal = [float(s.NCV_21) for s in control_normal]
-        control_abnormal = Sample.query.filter(Sample.status_T21 !='Normal',
+        control_abnormal = self.NCV_passed.join(Sample).filter(Sample.status_T21 !='Normal',
                         Sample.status_T21 !='Failed', Sample.status_T21 !=None).all()
         return control_normal, control_abnormal
 
@@ -401,8 +401,8 @@ class PlottPage():
         self._build_tris_abn_dicts()
         for sample in abnorm_samples:
             sample_name = sample.sample_name
-            status = sample.__dict__['status_T' + abn]
-            NCV_val = sample.NCV[0].__dict__['NCV_' + abn]
+            status = sample.sample.__dict__['status_T' + abn]
+            NCV_val = sample.__dict__['NCV_' + abn]
             if NCV_val!= 'NA':
                 self.tris_abn[status]['NCV'].append(float(NCV_val))
                 self.tris_abn[status]['s_name'].append(sample_name)
@@ -468,8 +468,8 @@ class TrisAbnormality():
         self._build_tris_abn_dicts()
         for sample in abnorm_samples:
             sample_name = sample.sample_name
-            status = sample.__dict__['status_T' + self.chrom]
-            NCV_val = sample.NCV[0].__dict__['NCV_' + self.chrom]
+            status = sample.sample.__dict__['status_T' + self.chrom]
+            NCV_val = sample.__dict__['NCV_' + self.chrom]
             if NCV_val!= 'NA' and status in self.tris_chrom_abn.keys():
                 self.tris_chrom_abn[status]['NCV'].append(float(NCV_val))
                 self.tris_chrom_abn[status]['s_name'].append(sample_name)
