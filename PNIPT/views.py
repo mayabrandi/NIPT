@@ -274,7 +274,7 @@ def update_trisomi_status(batch_id, sample_id):
     if current_user.role == 'RW':
         db.session.add(sample)
         db.session.commit()
-        
+        return redirect(request.referrer)
     else:
         return '', 201
     
