@@ -721,24 +721,28 @@ def report(batch_id, coverage):
     PP.make_sex_chrom_abn()
 
     control_normal, control_abnormal = BDF.control_NCV13()
-    PP.make_case_data_new('NCV_13', control_normal)
-    PP.make_tris_chrom_abn(control_abnormal, '13')
-    control_normal, control_abnormal = BDF.control_NCV18()
-    PP.make_case_data_new('NCV_18', control_normal)
-    PP.make_tris_chrom_abn(control_abnormal, '18')
-    control_normal, control_abnormal = BDF.control_NCV21()
-    PP.make_case_data_new('NCV_21', control_normal)
-    PP.make_tris_chrom_abn(control_abnormal, '21')
     TA13 = TrisAbnormality(batch_id, '13', NCV_db)
-    TA18 = TrisAbnormality(batch_id, '18', NCV_db)
-    TA21 = TrisAbnormality(batch_id, '21', NCV_db)
     TA13.make_case_data_new(control_normal)
+    TA13.make_tris_chrom_abn(control_abnormal)
+
+    control_normal, control_abnormal = BDF.control_NCV18()
+    TA18 = TrisAbnormality(batch_id, '18', NCV_db)
     TA18.make_case_data_new(control_normal)
+    TA18.make_tris_chrom_abn(control_abnormal)
+
+    control_normal, control_abnormal = BDF.control_NCV21()
+    TA21 = TrisAbnormality(batch_id, '21', NCV_db)
     TA21.make_case_data_new(control_normal)
     TA21.make_tris_chrom_abn(control_abnormal)
+    
     case_data = {'NCV_13':TA13.case_data,
                 'NCV_18':TA18.case_data,
                 'NCV_21':TA21.case_data}
+
+    tris_chrom_abn = {'13':TA13.tris_chrom_abn,
+                    '18':TA18.tris_chrom_abn,
+                    '21':TA21.tris_chrom_abn}
+                    
     PP.make_cov_plot_data()
     CC = CovXCovY(batch_id)
     CC.format_case_dict()
@@ -762,7 +766,7 @@ def report(batch_id, coverage):
         thresholds      = ST.thresholds,
         batch_ids       = ST.batch_ids,
         tris_case_data    = case_data,
-        case_data        = PP.case_data,
+        case_data        = PP.case_data, ## i xy-plot
         case_size       = L.case_size,
         abn_size        = L.abn_size,
         abn_symbol      = L.abn_symbol,
@@ -771,7 +775,7 @@ def report(batch_id, coverage):
         cov_colors      = L.cov_colors,
         many_colors     = L.many_colors_dict,
         samp_range      = range(len(PP.case_data['NCV_X']['samples'])),
-        tris_chrom_abn  = PP.tris_chrom_abn,
+        tris_chrom_abn  = tris_chrom_abn,
         sex_chrom_abn   = PP.sex_chrom_abn,
         abn_status_list = ['Other','False Positive','Suspected', 'Probable', 'Verified'],
         ncv_abn_colors  = L.ncv_abn_colors,
