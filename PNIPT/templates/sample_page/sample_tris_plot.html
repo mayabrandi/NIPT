@@ -25,12 +25,12 @@
                                 <td><strong><p style="font-size:14px">T18</p></strong></td>
                                 <td><strong><p style="font-size:14px">T21</p></strong></td>
                             </tr>
-                            {% for abn in ncv_abn_colors.keys() %}
+                            {% for status in ncv_abn_colors.keys() %}
                             <tr>
-                                <td><strong><p style="font-size:14px"><font color="{{ncv_abn_colors[abn]}}">{{abn}}</font></p></strong></td>
-                                <td><p style="font-size:14px">{{tris_chrom_abn["13"][abn]['nr']}}</p></td>
-                                <td><p style="font-size:14px">{{tris_chrom_abn["18"][abn]['nr']}}</p></td>
-                                <td><p style="font-size:14px">{{tris_chrom_abn["21"][abn]['nr']}}</p></td>
+                                <td><strong><p style="font-size:14px"><font color="{{ncv_abn_colors[status]}}">{{status}}</font></p></strong></td>
+                                <td><p style="font-size:14px">{{tris_abn[status]['chrom']["13"]}}</p></td>
+                                <td><p style="font-size:14px">{{tris_abn[status]['chrom']["18"]}}</p></td>
+                                <td><p style="font-size:14px">{{tris_abn[status]['chrom']["21"]}}</p></td>
                             </tr>
                             {% endfor %}
                         </table>

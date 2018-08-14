@@ -9,9 +9,9 @@ import ast
 import numpy as np
 
 
-################################################################################################
-
+############################################Managing Data####################################################
 class DataBaseToCSV:
+    """Merges all tables in the tatabase into one csv-file"""
     def __init__(self):
         self.columns = list(set(Sample.query.all()[0].__dict__.keys() + 
                                 Coverage.query.all()[0].__dict__.keys() + 
@@ -65,11 +65,11 @@ class DataBaseToCSV:
             db_dict.update(bs_dict)
             self.dict_data.append(db_dict)
 
-################################################################################################
 
 class BatchDataFilter():
+    """Class to filter out the control samples"""
     def __init__(self):
-        self.filtered_NCV = self.fliter_NA()
+        self.filtered_NCV = self._fliter_NA()
         self.NCV_passed = self.filtered_NCV.filter(NCV.include)
         self.NCV_passed_X = [float(s.NCV_X) for s in self.NCV_passed.all()]
 
@@ -109,13 +109,7 @@ class BatchDataFilter():
 
         return control_normal_X, control_normal_Y, control_normal_XY_names 
 
-    def batch_data(self, batch_id):
-        return self.filtered_NCV.filter(NCV.batch_id == batch_id,
-                                            NCV.sample_ID.notilike('%ref%'),
-                                            NCV.sample_ID.notilike('%Control%'))
-
-
-    def fliter_NA(self):
+    def _fliter_NA(self):
         """Filtering out NA. Could probably be done in a more preyyt way :/"""
         return NCV.query.filter(
                 NCV.NCV_13!='NA',
@@ -125,9 +119,8 @@ class BatchDataFilter():
                 NCV.NCV_Y!='NA')
 
 
-
-################################################################################################
 class DataClasifyer():
+    """Contains a bunch of functions for classifying samples in different ways."""
     def __init__(self, NCV_db=None):
         self.NCV_db = NCV_db
         self.NCV_data = {} 
@@ -147,7 +140,6 @@ class DataClasifyer():
                                 'soft_min': {'NCV': -4, 'color': 'orange', 'text' : 'Warning threshold = -4'},
                                 'hard_max': {'NCV': 4 , 'color': 'red', 'text' : 'Threshold = 4'},
                                 'hard_min': {'NCV': -5, 'color': 'red', 'text' : 'Threshold = -5'} }
-
 
     def make_sex_tresholds(self, x_list):
         x_min =  min(x_list) - 1
@@ -262,12 +254,9 @@ class DataClasifyer():
             self.NCV_sex[s.sample_ID] = sex
             if 20<=y<50:
                 samp_warn.append(' Compare NCVY with ff!')
-                self.NCV_data[s.sample_ID]['NCV_Y']['warn'] = "danger"
-        
-
+                self.NCV_data[s.sample_ID]['NCV_Y']['warn'] = "danger"        
         return samp_warn
-
-            
+  
     def _get_tris_warn(self, s, samp_warn):
         """Get automated trisomi warnings, based on preset NCV thresholds"""
         for key in ['13','18','21','X','Y']:
@@ -292,7 +281,6 @@ class DataClasifyer():
             self.NCV_data[s.sample_ID]['NCV_'+key] = {'val': val, 'warn': warn }
         return samp_warn
 
-
     def get_QC_warnings(self, samples):  ####### takes Time --
         for sample in samples:
             if (not sample.NonExcludedSites) or (int(sample.NonExcludedSites) < 8000000) or sample.QCFailure or sample.QCWarning:
@@ -306,8 +294,8 @@ class DataClasifyer():
             if sample.QCWarning:
                 self.QC_warnings[sample.sample_ID]['QC_warn'] = sample.QCWarning
 
-################################################################################################
 
+###########################################PLOTS#####################################################
 class Layout():
     def __init__(self, batch_id=None):
         self.case_size = 11
@@ -332,38 +320,39 @@ class Layout():
             self.many_colors_dict = {s.sample_ID:self.many_colors[i] for i, s in enumerate(samples)}  
             self.cov_colors = {s.sample_ID: [self.many_colors[i]]*22 for i, s in enumerate(samples)} 
 
-
-class PlottPage():
-    """Class to preppare data for NCV plots"""
-    def __init__(self, batch_id, cases):
+class CoveragePlot():
+    """Class to preppare data for the coverage plot"""
+    def __init__(self, batch_id):
         self.batch_id = batch_id
-        self.cases = cases
-        self.case_data = {'NCV_13':{}, 'NCV_18':{}, 'NCV_21':{}, 'NCV_X':{}, 'NCV_Y' : {}}
-        self.abn_status_X = {'Probable':0,'Verified':0.1,'False Positive':0.2,'False Negative':0.3, 'Suspected':0.4, 'Other': 0.5}
-        self.sex_chrom_abn = {'X0':{}, 'XXX':{}, 'XXY':{},'XYY':{}}
-        self.tris_chrom_abn = {'13':{}, '18':{}, '21':{}}
-        self.tris_abn = {} # This anoying dict is only for the sample_tris_plot, to make possible for one legend per abnormality
-        for status in self.abn_status_X.keys():
-            self.tris_abn[status] = {'NCV' : [], 's_name' : [], 'x_axis': []}
-        self.coverage_plot = {'samples':[],'x_axis':[]}
+        self.cov = Coverage.query.filter(Coverage.batch_id == self.batch_id)
+        self.coverage_plot = {'samples':[],'x_axis': range(1,23)}
         self.sample_list = []
 
     def make_cov_plot_data(self):
         """Preparing coverage plot data"""
-        cov = Coverage.query.filter(Coverage.batch_id == self.batch_id)
-        x_axis = range(1,23)
-        self.coverage_plot['x_axis'] = x_axis
-        for samp in cov:
+        for samp in self.cov:
             samp_cov = []
-            for i in x_axis:
+            for i in self.coverage_plot['x_axis']:
                 try:
                     samp_cov.append(float(samp.__dict__['Chr'+str(i)+'_Coverage']))
                 except:
                     pass
+            self.sample_list.append(samp.sample_ID)
             self.coverage_plot['samples'].append((samp.sample_ID, {'cov':samp_cov, 'samp_id':[samp.sample.sample_name]}))
         self.coverage_plot['samples'].sort()
 
-    def make_case_data_new(self, chrom, control_normal):
+class SexAbnormality():
+    """Class to preppare data for XY - NCV plots 
+    (both for batch lavel and sample level)"""
+    def __init__(self, batch_id, cases):
+        self.batch_id = batch_id
+        self.cases = cases
+        self.case_data = {'NCV_X':{}, 'NCV_Y' : {}}
+        self.abn_status_X = {'Probable':0,'Verified':0.1,'False Positive':0.2,'False Negative':0.3, 'Suspected':0.4, 'Other': 0.5}
+        self.sex_chrom_abn = {'X0':{}, 'XXX':{}, 'XXY':{},'XYY':{}}
+        self.sample_list = []
+
+    def make_case_data(self, chrom, control_normal):
         """Preparing case data"""
         samples = {}
         sample_list = []
@@ -388,32 +377,8 @@ class PlottPage():
             'chrom' : chrom,
             'NCV_pass' : control_normal}
 
-
-    def _build_tris_abn_dicts(self):
-        for abn in self.tris_chrom_abn:
-            for status in self.abn_status_X.keys():
-                if not status in self.tris_chrom_abn[abn]:
-                    self.tris_chrom_abn[abn][status] = {'NCV' : [], 's_name' : [], 'x_axis': [], 'nr': 0}
-
-    def make_tris_chrom_abn(self, abnorm_samples, abn):
-        """Preparing trisomi control samples"""
-        base_x = {'13':1,'18':2,'21':3}
-        self._build_tris_abn_dicts()
-        for sample in abnorm_samples:
-            sample_name = sample.sample_name
-            status = sample.sample.__dict__['status_T' + abn]
-            NCV_val = sample.__dict__['NCV_' + abn]
-            if NCV_val!= 'NA':
-                self.tris_abn[status]['NCV'].append(float(NCV_val))
-                self.tris_abn[status]['s_name'].append(sample_name)
-                self.tris_abn[status]['x_axis'].append(base_x[abn] + self.abn_status_X[status] - 0.25)
-                self.tris_chrom_abn[abn][status]['NCV'].append(float(NCV_val))
-                self.tris_chrom_abn[abn][status]['s_name'].append(sample_name)
-                self.tris_chrom_abn[abn][status]['x_axis'].append(self.abn_status_X[status]-0.2)
-                self.tris_chrom_abn[abn][status]['nr']+=1
-
     def make_sex_chrom_abn(self): 
-        """Preparing sex aabnormality control samples"""
+        """Preparing sex abnormality control samples"""
         for abn in self.sex_chrom_abn.keys():
             for status in self.abn_status_X.keys():
                 self.sex_chrom_abn[abn][status] = {'NCV_X' : [], 'NCV_Y' : [], 's_name' : [], 'nr_cases':0}
@@ -427,60 +392,74 @@ class PlottPage():
                         self.sex_chrom_abn[abn][status]['nr_cases']+=1
 
 
-################################################################################################
 class TrisAbnormality():
-    def __init__(self,batch_id,chrom, cases):
-        self.chrom = chrom
+    """Class to preppare data for tris - NCV plots 
+    (both for batch lavel and sample level)"""
+    def __init__(self,batch_id, cases):
         self.cases = cases
-        self.case_data = {}
-        self.tris_chrom_abn = {}
-        self.tris_thresholds = {}
         self.abn_status_X = {'Probable':0,'Verified':0.1,'False Positive':0.2,'False Negative':0.3, 'Suspected':0.4, 'Other': 0.5}
+        self.tris_abn = {} # This anoying dict is only for the sample_tris_plot, to make possible for one legend per abnormality
+        for status in self.abn_status_X.keys():
+            self.tris_abn[status] = {'NCV' : [], 's_name' : [], 'x_axis': [], 'chrom':{'13':0,'18':0,'21':0}}
+        self.tris_thresholds = {}
     
-    def make_case_data_new(self, control_normal):
+    def make_case_data(self, control_normal, chrom):
         """Preparing case data"""
         NCV_cases = []
         X_labels = []
+        case_data = {}
         for s in self.cases:
             try:
-                NCV_val = round(float(s.__dict__['NCV_'+self.chrom]),2)
+                NCV_val = round(float(s.__dict__['NCV_'+chrom]),2)
                 NCV_cases.append(NCV_val)
                 X_labels.append(s.sample_name)
             except:
                 pass
-        self.case_data = {
+        case_data = {
             'nr_pass' : len(control_normal),
             'NCV_cases' : NCV_cases,
             'nr_cases' :len(NCV_cases),
             'x_axis' : range(2, len(NCV_cases)+2),
             'x_range' : [-1, len(NCV_cases)+3],
             'X_labels' : X_labels,
-            'chrom' : self.chrom,
+            'chrom' : chrom,
             'NCV_pass' : control_normal}
+        return case_data
 
-    def _build_tris_abn_dicts(self):
-        for status in self.abn_status_X.keys():
-            if not status in self.tris_chrom_abn:
-                self.tris_chrom_abn[status] = {'NCV' : [], 's_name' : [], 'x_axis': [], 'nr': 0}
-    
-    def make_tris_chrom_abn(self, abnorm_samples):
+    def make_tris_chrom_abn(self, abnorm_samples, chrom):
         """Preparing trisomi control samples"""
-        self._build_tris_abn_dicts()
+        tris_chrom_abn = {}
+        for status in self.abn_status_X.keys():
+            if not status in tris_chrom_abn:
+                tris_chrom_abn[status] = {'NCV' : [], 's_name' : [], 'x_axis': [], 'nr': 0}
         for sample in abnorm_samples:
             sample_name = sample.sample_name
-            status = sample.sample.__dict__['status_T' + self.chrom]
-            NCV_val = sample.__dict__['NCV_' + self.chrom]
-            if NCV_val!= 'NA' and status in self.tris_chrom_abn.keys():
-                self.tris_chrom_abn[status]['NCV'].append(float(NCV_val))
-                self.tris_chrom_abn[status]['s_name'].append(sample_name)
-                self.tris_chrom_abn[status]['x_axis'].append(self.abn_status_X[status]-0.2)
-                self.tris_chrom_abn[status]['nr']+=1  
+            status = sample.sample.__dict__['status_T' + chrom]
+            NCV_val = sample.__dict__['NCV_' + chrom]
+            if NCV_val!= 'NA' and status in tris_chrom_abn.keys():
+                tris_chrom_abn[status]['NCV'].append(float(NCV_val))
+                tris_chrom_abn[status]['s_name'].append(sample_name)
+                tris_chrom_abn[status]['x_axis'].append(self.abn_status_X[status]-0.2)
+                tris_chrom_abn[status]['nr']+=1  
+        return tris_chrom_abn
+    
+    def make_tris_abn_sample_page(self, abnorm_samples):
+        """Preparing trisomi control samples for sample page"""
+        base_x = {'13':1,'18':2,'21':3}
+        for chrom in base_x.keys():
+            for sample in abnorm_samples:
+                sample_name = sample.sample_name
+                status = sample.sample.__dict__['status_T' + chrom]
+                NCV_val = sample.__dict__['NCV_' + chrom]
+                if NCV_val!= 'NA' and status in self.tris_abn.keys():
+                    self.tris_abn[status]['NCV'].append(float(NCV_val))
+                    self.tris_abn[status]['s_name'].append(sample_name)
+                    self.tris_abn[status]['x_axis'].append(base_x[chrom] + self.abn_status_X[status] - 0.25)
+                    self.tris_abn[status]['chrom'][chrom]+=1
 
 
-
-################################################################################################
 class FetalFraction():
-    """Class to prepare Fetal Fraction Plots"""
+    """Class to prepare Fetal Fraction Plot"""
     def __init__(self,batch_id):
         self.dbNCV = NCV.query.filter(NCV.batch_id == batch_id, NCV.NCV_Y!='NA',NCV.NCV_X!='NA').all()
         self.dbSample = Sample.query.filter(Sample.batch_id == batch_id, Sample.FF_Formatted!='NA').all()
@@ -509,8 +488,6 @@ class FetalFraction():
 
         self.perdiction['NCV_X']['ff_min'] = {'x':[-30,5],'y':[2, 2]}
 
-
-
     def format_case_dict(self):
         for samp in self.dbSample:
             self.samples[samp.sample_ID] = {}
@@ -531,7 +508,6 @@ class FetalFraction():
                                         Sample.status_XXY == "Normal",
                                         Sample.status_XYY == "Normal")
         FF_normal=FF_normal.join(NCV).filter(NCV.NCV_X!='NA', NCV.NCV_Y!='NA',NCV.include==True).all()
-
         NCV_normal = NCV.query.filter(NCV.NCV_X!='NA', NCV.NCV_Y!='NA',NCV.include==True)
         NCV_normal=NCV_normal.join(Sample).filter(Sample.FF_Formatted!='NA',
                                         Sample.status_X0 == "Normal",
@@ -549,9 +525,8 @@ class FetalFraction():
         self.nr_contol_samples = len(self.control['FF'])
 
 
-################################################################################################
 class CovXCovY():
-    """Class to prepare CovX vs CovY Plots"""
+    """Class to prepare CovX vs CovY Plot"""
     def __init__(self,batch_id):
         self.pos_contol = {'X0':{}, 'XXX':{}, 'XXY':{},'XYY':{}} 
         self.batch_id = batch_id
@@ -561,7 +536,6 @@ class CovXCovY():
         self.nr_contol_samples = None
         self.coverage_query = Coverage.query.filter(Coverage.ChrX_Coverage != 'NA', Coverage.ChrX_Coverage!='NA')
         
-
     def format_case_dict(self):
         dbCoverage = Coverage.query.filter(Coverage.batch_id == self.batch_id).all()
         for samp in dbCoverage:
@@ -597,11 +571,8 @@ class CovXCovY():
                     self.pos_contol[abn][status]['s_name'].append(sample.sample_ID)
 
 
-
-
-
 class Statistics():
-    """Class to preppare data for NCV plots"""
+    """Class to preppare data for statistics plots"""
     def __init__(self):
         self.batches = Batch.query.all()
         self.NonExcludedSites2Tags={}
@@ -654,8 +625,6 @@ class Statistics():
             self.dates.append(date)
             self.batch_names.append(batch.batch_name)
 
-
-   
     def make_statistics_from_database_Sample(self):
         i=1
         for batch_id in self.batch_ids:
@@ -726,7 +695,6 @@ class Statistics():
                     logging.exception('')
                     pass
             i+=1
-
 
     def make_Stdev(self):
         i=1
