@@ -37,7 +37,7 @@
                                 </tr>
                                 {% for abn in ncv_abn_colors.keys() %}
                                 <tr height="0,5">
-                                    <td><p style="font-size:12px"><font color="{{ncv_abn_colors[abn]}}"><strong>{{abn}}</strong></font></p></td>
+                                    <td><p style="font-size:12px"><font color="{{ncv_abn_colors[abn]}}"></font><strong>{{abn}}</strong></font></p></td>
                                     <td><p style="font-size:12px">{{sex_chrom_abn["XXX"][abn]['nr_cases']}}</p></td>
                                     <td><p style="font-size:12px">{{sex_chrom_abn["XYY"][abn]['nr_cases']}}</p></td>
                                     <td><p style="font-size:12px">{{sex_chrom_abn["XXY"][abn]['nr_cases']}}</p></td>
